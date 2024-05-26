@@ -1,0 +1,17 @@
+import { Departmentforms } from "@/app/components/drawers";
+import { DepartmentTable } from "@/app/components/tables";
+import React from "react";
+
+export default function Department() {
+  return (
+    <main className="m-4">
+      <div className="mb-4 flex justify-between flex-row">
+        <div className="text-xl font-bold text-blue-500">Organizational Department</div>
+        <Departmentforms/>
+      </div>
+      <div className="mt-16 bg-blue-100 shadow-lg shadow-blue-200 rounded-lg">
+        <DepartmentTable />
+      </div>
+    </main>
+  );
+}
