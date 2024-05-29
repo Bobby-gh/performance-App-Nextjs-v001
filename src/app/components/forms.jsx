@@ -26,13 +26,14 @@ export function LoginForm() {
           withCredentials: true,
         }
       );
+      alert("success")
 
       if (response.request.status === 200) {
         setAuth({
           token: response.data.response.token,
           role: response.data.response.userRole,
         });
-
+        alert("successful")
         if (token && role) {
           navigate("/dashboard", { replace: true });
         } else {
