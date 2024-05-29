@@ -11,7 +11,7 @@ export function LoginForm() {
   const { auth, setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     email: "",
-    passowrd: "",
+    password: "",
   });
 
   const handleSubmit = async (e) => {
@@ -20,20 +20,23 @@ export function LoginForm() {
     try {
       const response = await axios.post(
         LOGIN_URL,
-        JSON.stringify({ email, password }),
+        JSON.stringify({
+          email: userDetails.email,
+          password: userDetails.password,
+        }),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      alert("success")
+      alert("success");
 
       if (response.request.status === 200) {
         setAuth({
           token: response.data.response.token,
           role: response.data.response.userRole,
         });
-        alert("successful")
+        alert("successful");
         if (token && role) {
           navigate("/dashboard", { replace: true });
         } else {
@@ -41,9 +44,9 @@ export function LoginForm() {
         }
       }
     } catch (err) {
-      if (err.message.includes("Network Error")) {
-        alert("Network Error");
-      } 
+      if (err) {
+        alert(err);
+      }
     } finally {
       setLoading(false);
     }
