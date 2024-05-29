@@ -4,7 +4,6 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import axios from "../api/axios";
 import { useState } from "react";
-import { FaPlus, FaCheck } from "react-icons/fa";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -20,13 +19,6 @@ export function CreateGoal() {
     department: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

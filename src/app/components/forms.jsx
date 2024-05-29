@@ -1,20 +1,57 @@
 "use client";
-import { useState } from "react";
+import * as React from "react";
+import { useState, useContext } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import { AuthContext } from "../contex/context-context";
+import { LOGIN_URL } from "../api/routes";
+import axios from "../api/axios";
 
 export function LoginForm() {
   const [isLoading, setLoading] = useState(false);
+  const {auth, setAuth} = React.useContext(AuthContext)
   const [userDetails, setUserDetails] = useState({
     email: "",
     passowrd: "",
   });
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ email, password }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-    
+      if (response.request.status === 200) {
+        setAuth({
+          token: response.data.response.token,
+          role: response.data.response.userRole,
+        })
+
+        if (token && role) {
+          navigate("/dashboard", { replace: true });
+        } else {
+          alert("LogIn Unsuccessful")
+        }
+      }
+    } catch (err) {
+      if (err.message.includes("Network Error")) {
+        alert("Network Error")
+      } else if (err.request.status === 401) {
+        alert(err.request.status)
+      }
+    } 
+    finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <main className="w-96">
