@@ -42,9 +42,7 @@ export function LoginForm() {
     } catch (err) {
       if (err.message.includes("Network Error")) {
         alert("Network Error");
-      } else if (err.request.status === 401) {
-        alert(err.request.status);
-      }
+      } 
     } finally {
       setLoading(false);
     }
