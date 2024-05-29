@@ -8,12 +8,11 @@ import axios from "../api/axios";
 
 export function LoginForm() {
   const [isLoading, setLoading] = useState(false);
-  const {auth, setAuth} = React.useContext(AuthContext)
+  const { auth, setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     email: "",
     passowrd: "",
   });
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,26 +31,24 @@ export function LoginForm() {
         setAuth({
           token: response.data.response.token,
           role: response.data.response.userRole,
-        })
+        });
 
         if (token && role) {
           navigate("/dashboard", { replace: true });
         } else {
-          alert("LogIn Unsuccessful")
+          alert("LogIn Unsuccessful");
         }
       }
     } catch (err) {
       if (err.message.includes("Network Error")) {
-        alert("Network Error")
+        alert("Network Error");
       } else if (err.request.status === 401) {
-        alert(err.request.status)
+        alert(err.request.status);
       }
-    } 
-    finally {
+    } finally {
       setLoading(false);
     }
   };
-
 
   return (
     <main className="w-96">
@@ -63,37 +60,42 @@ export function LoginForm() {
             className="w-55 h-20"
           />
         </div>
-        <div className="flex flex-col">
-          <label>Email</label>
-          <input
-            type="email"
-            value={userDetails.email}
-            onChange={(e) => setUserDetails.email(e.target.value)}
-            className="border border-blue-500 rounded-lg p-4 my-2"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label>Password</label>
-          <input
-            type="password"
-            value={userDetails.passowrd}
-            onChange={(e) => setUserDetails.passowrd(e.target.value)}
-            className="border border-blue-500 rounded-lg p-4 my-2"></input>
-        </div>
-        <div className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-950">
-          <button type="submit" onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? (
-              <div className="flex flex-row justify-center">
-                <p className="text-sm pr-2">Loading</p>
-                <CircularProgress size={27} thickness={6} color="primary" />
-              </div>
-            ) : (
-              "Submit"
-            )}
-          </button>
-        </div>
+        <form autoComplete="off">
+          <div className="flex flex-col">
+            <label>Email</label>
+            <input
+              placeholder="Type email here"
+              autoComplete="off"
+              type="email"
+              value={userDetails.email}
+              onChange={(e) => setUserDetails({ email: e.target.value })}
+              className="border border-blue-500 rounded-lg p-4 my-2"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label>Password</label>
+            <input
+              placeholder="Enter password"
+              autoComplete="off"
+              type="password"
+              value={userDetails.passowrd}
+              onChange={(e) => setUserDetails({ password: e.target.value })}
+              className="border border-blue-500 rounded-lg p-4 my-2"></input>
+          </div>
+          <div className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-950">
+            <button type="submit" onClick={handleSubmit} disabled={isLoading}>
+              {isLoading ? (
+                <div className="flex flex-row justify-center">
+                  <p className="text-sm pr-2">Loading</p>
+                  <CircularProgress size={27} thickness={6} color="primary" />
+                </div>
+              ) : (
+                "Submit"
+              )}
+            </button>
+          </div>
+        </form>
       </div>
     </main>
   );
 }
-
