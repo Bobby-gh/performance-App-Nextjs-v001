@@ -29,7 +29,6 @@ export function LoginForm() {
           withCredentials: true,
         }
       );
-      alert("success");
 
       if (response.request.status === 200) {
         setAuth({
@@ -70,7 +69,10 @@ export function LoginForm() {
               autoComplete="off"
               type="email"
               value={userDetails.email}
-              onChange={(e) => setUserDetails({ email: e.target.value })}
+              onChange={(e) => setUserDetails(prevDetails => ({
+                ...prevDetails,
+                email: e.target.value
+              }))}
               className="border border-blue-500 rounded-lg p-4 my-2"
             />
           </div>
@@ -80,8 +82,11 @@ export function LoginForm() {
               placeholder="Enter password"
               autoComplete="off"
               type="password"
-              value={userDetails.passowrd}
-              onChange={(e) => setUserDetails({ password: e.target.value })}
+              value={userDetails.password}
+              onChange={(e) => setUserDetails(prevDetails => ({
+                ...prevDetails,
+                password: e.target.value
+              }))}
               className="border border-blue-500 rounded-lg p-4 my-2"></input>
           </div>
           <div className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-950">
