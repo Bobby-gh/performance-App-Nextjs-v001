@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useState } from "react";
+import { useState} from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
 import { LOGIN_URL } from "../api/routes";
@@ -36,9 +36,6 @@ export function LoginForm() {
           token: response.data.response.token,
           role: response.data.response.userRole,
         });
-      }
-      if (auth.token && auth.role) {
-        router.push('/home', { scroll: false })
       }
     } catch (err) {
       alert(err)
@@ -98,6 +95,7 @@ export function LoginForm() {
             </button>
           </div>
         </form>
+        {auth.token && auth.role && router.push('/home', { scroll: false })}
       </div>
     </main>
   );

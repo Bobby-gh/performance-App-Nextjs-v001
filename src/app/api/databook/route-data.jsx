@@ -184,31 +184,35 @@ export async function GetOrganizationalChartRouteData() {
   }
 }
 
-export async function GetGoalCountRouteData() {
+export const getGoalCountRouteData =()=> {
   const { auth } = useContext(AuthContext);
+  const [goalCount, setGoalCount] = useState(null);
+  const [error, setError] = useState(null);
 
-  const fetchGoalCount = async () => {
-    if (!auth || !auth.token) {
-      console.error('Auth token is missing');
-      return null;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(GOAL_COUNT_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setGoalCount(response.data);
+      } catch (err) {
+        setError(err);
+        console.error('Error fetching data:', err);
+      }
+    };
+
+    if (auth && auth.token) {
+      fetchData();
     }
+  }, [auth]);
 
-    try {
-      const response = await axios.get(GOAL_COUNT_URL, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        withCredentials: true,
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return null;
-    }
-  };
-
-  return fetchGoalCount;
+  return { goalCount, error };
 };
+
 
 /************************************************Post ROutes*************************************/

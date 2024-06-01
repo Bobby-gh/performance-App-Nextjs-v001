@@ -1,22 +1,15 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import { FaThumbsDown, FaTrophy, FaThumbsUp } from "react-icons/fa";
-import { GetGoalCountRouteData } from "../api/databook/route-data";
+import { getGoalCountRouteData } from "../api/databook/route-data";
 
 export function InformationalSummary() {
-  const [data, setData] = useState([]);
+  const { goalCount, error } = getGoalCountRouteData();
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const result = await GetGoalCountRouteData ();
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data for dashboard:', error);
-      }
-    }
-    fetchData();
-  }, []);
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+  alert(goalCount)
 
 console.log(data)
   return (
