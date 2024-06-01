@@ -1,10 +1,10 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import { FaThumbsDown, FaTrophy, FaThumbsUp } from "react-icons/fa";
-import { getGoalCountRouteData } from "../api/databook/route-data";
+import { useGoalCountRouteData } from "../api/databook/route-data";
 
 export function InformationalSummary() {
-  const { goalCount, error } = getGoalCountRouteData();
+  const { goalCount, error } = useGoalCountRouteData();
 
   if (error) {
     return <div>Error: {error.message}</div>;
