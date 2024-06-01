@@ -20,7 +20,7 @@ console.log(goalCount)
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-blue-900">Achieved Goals</h3>
-          <h3 className="font-bold text-xl">{achieved}</h3>
+          <h3 className="font-bold text-xl"></h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700"/>
@@ -36,7 +36,7 @@ console.log(goalCount)
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-blue-900">Partially Achieved Goals</h3>
-            <h3 className="font-bold text-xl">{partiallyAchieved}</h3>
+            <h3 className="font-bold text-xl"></h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -52,7 +52,7 @@ console.log(goalCount)
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-blue-900">Unachieved Goals</h3>
-            <h3 className="font-bold text-xl">{notAchieved}</h3>
+            <h3 className="font-bold text-xl"></h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
