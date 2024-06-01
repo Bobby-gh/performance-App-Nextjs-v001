@@ -213,7 +213,7 @@ export const useGoalCountRouteData = () => {
       fetchData();
     }
   }, [auth]);
-  console.log(goalCount, error)
+  
 
   return { goalCount, error };
 };
