@@ -2,13 +2,13 @@ import { FaThumbsDown, FaTrophy, FaThumbsUp } from "react-icons/fa";
 import { useGoalCountRouteData } from "../api/databook/route-data";
 
 export function InformationalSummary() {
-  const { goalCount, error } = useGoalCountRouteData();
-  const { achieved, notAchieved, partiallyAchieved } = goalCount;
-  
+  const { goalCount, error } = useGoalCountRouteData;
+  // const { achieved, notAchieved, partiallyAchieved } = goalCount;
+  console.log(goalCount)
  
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   
   return (
@@ -20,7 +20,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-green-900">Achieved Goals</h3>
-          <h3 className="font-bold text-xl">{achieved}</h3>
+          {/* <h3 className="font-bold text-xl">{achieved}</h3> */}
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700"/>
@@ -36,7 +36,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-yellow-500">Partially Achieved Goals</h3>
-            <h3 className="font-bold text-xl">{partiallyAchieved}</h3>
+            {/* <h3 className="font-bold text-xl">{partiallyAchieved}</h3> */}
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -52,7 +52,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-red-900">Unachieved Goals</h3>
-            <h3 className="font-bold text-xl">{notAchieved}</h3>
+            {/* <h3 className="font-bold text-xl">{notAchieved}</h3> */}
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
