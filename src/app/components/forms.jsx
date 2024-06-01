@@ -5,14 +5,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
 import { LOGIN_URL } from "../api/routes";
 import axios from "../api/axios";
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
   const [isLoading, setLoading] = useState(false);
-  const { auth, setAuth } = React.useContext(AuthContext);
+  const router = useRouter()
+  const { setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,15 +32,13 @@ export function LoginForm() {
           withCredentials: true,
         }
       );
-
       if (response.request.status === 200) {
         setAuth({
           token: response.data.response.token,
           role: response.data.response.userRole,
         });
-        alert("successful");
         if (token && role) {
-          navigate("/dashboard", { replace: true });
+          router.push('/home', { scroll: false })
         } else {
           alert("LogIn Unsuccessful");
         }
@@ -90,7 +91,7 @@ export function LoginForm() {
               className="border border-blue-500 rounded-lg p-4 my-2"></input>
           </div>
           <div className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-950">
-            <button type="submit" onClick={handleSubmit} disabled={isLoading}>
+            <button type="submit" onClick={handleSubmit} disabled={isLoading} className="px-16">
               {isLoading ? (
                 <div className="flex flex-row justify-center">
                   <p className="text-sm pr-2">Loading</p>
