@@ -10,13 +10,19 @@ import { useRouter } from "next/navigation";
 export function LoginForm() {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter()
-  const { setAuth } = React.useContext(AuthContext);
+  const { auth, setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
+  setAuth({
+    role: "user",
+    token: "someToken",
+    email: "user@example.com",
+    password: "password123",
+});
 
-
+console.log(auth)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -37,7 +43,7 @@ export function LoginForm() {
           token: response.data.response.token,
           role: response.data.response.userRole,
         });
-        if (token && role) {
+        if (auth.token && auth.role) {
           router.push('/home', { scroll: false })
         } else {
           alert("LogIn Unsuccessful");
