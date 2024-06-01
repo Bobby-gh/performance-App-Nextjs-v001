@@ -7,13 +7,13 @@ export function InformationalSummary() {
   const { goalCount, error } = useGoalCountRouteData();
   const { goalRatings } = goalCount;
   
+  if(!goalRatings){
+    alert("No goals available")
+  }
+  const { achieved, notAchieved, partiallyAchieved } = goalRatings;
   
   try{
-    if(!goalRatings){
-      alert("No goals available")
-    }else{
-      const { achieved, notAchieved, partiallyAchieved } = goalRatings;
-    }
+    
     if (error) {
       return <div>Error: {error.message}</div>;
     }
