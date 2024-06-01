@@ -163,22 +163,22 @@ export async function GetGeneralPerformanceChartRouteData() {
   }
 }
 
-export const useOrganizationalChartRouteData = () => {
+export async function GetOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
-  const [organizationChart, setOrganizationChart] = useState([]);
+  const [goalCount, setGoalCount] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(ORGANIZATIONAL_CHART_URL, {
+        const response = await axios.get(GOAL_COUNT_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
           },
           withCredentials: true,
         });
-        setOrganizationChart(response.data);
+        setGoalCount(response.data.goalRatings);
       } catch (err) {
         setError(err);
         console.error('Error fetching data:', err);
@@ -190,7 +190,7 @@ export const useOrganizationalChartRouteData = () => {
     }
   }, [auth]);
 
-  return { organizationChart, error };
+  return { goalCount, error };
 };
 
 export const useGoalCountRouteData = () => {

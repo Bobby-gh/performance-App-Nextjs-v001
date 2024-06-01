@@ -13,10 +13,10 @@ import {
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import { FcComboChart, FcBarChart } from "react-icons/fc";
-import { GetDepartmentGoalRouteData, useOrganizationalChartRouteData } from "../api/databook/route-data";
+import { GetDepartmentGoalRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
-  const { data, error } = useOrganizationalChartRouteData();
+  const { data, error } ;
 
   if (error) {
     return <div>Error: {error.message}</div>;
