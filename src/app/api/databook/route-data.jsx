@@ -163,7 +163,7 @@ export async function GetGeneralPerformanceChartRouteData() {
   }
 }
 
-export const useOrganizationalChartRouteData =()=>{
+export const useOrganizationalChartRouteData = () => {
   const { auth } = useContext(AuthContext);
   const [organizationChart, setOrganizationChart] = useState([]);
   const [error, setError] = useState(null);
