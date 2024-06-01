@@ -18,9 +18,9 @@ import { GetDepartmentGoalRouteData, } from "../api/databook/route-data";
 export function OrganizationPerformanceDashboard() {
   const data = "hi"
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
 
   return (
     <div className=" p-7 mt-5 pt-5 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
