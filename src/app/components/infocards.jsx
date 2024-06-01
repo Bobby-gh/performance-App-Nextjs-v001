@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+'use client'
+import React, { useEffect, useState } from "react";
 import { FaThumbsDown, FaTrophy, FaThumbsUp } from "react-icons/fa";
 import { GetGoalCountRouteData } from "../api/databook/route-data";
 
