@@ -1,3 +1,4 @@
+import { AuthContext } from "@/app/contex/context-context";
 import axios from "../axios";
 import {
   DEPARTMENTS_URL,
@@ -8,6 +9,8 @@ import {
   GOAL_COUNT_URL,
   ORGANIZATIONAL_CHART_URL,
 } from "../routes";
+import React from "react";
+
 
 /************************************************Get ROutes*************************************/
 
@@ -180,12 +183,14 @@ export async function GetOrganizationalChartRouteData() {
 }
 
 export async function GetGoalCountRouteData() {
+  const { auth } = React.useContext(AuthContext);
+  alert(auth);
   const fetchData = async () => {
     try {
       const response = await axios.get(GOAL_COUNT_URL, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
+          Authorization: "Bearer " + auth.token,
         },
         withCredentials: true,
       });
@@ -202,8 +207,5 @@ export async function GetGoalCountRouteData() {
     console.error("Error in trying function:", error);
   }
 }
-
-
-
 
 /************************************************Post ROutes*************************************/
