@@ -8,8 +8,8 @@ import axios from "../api/axios";
 import { useRouter } from "next/navigation";
 
 export function LoginForm() {
-  const [isLoading, setLoading] = useState(false);
   const router = useRouter()
+  const [isLoading, setLoading] = useState(false);
   const { auth, setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     email: "",
@@ -37,10 +37,11 @@ export function LoginForm() {
           role: response.data.response.userRole,
         });
       }
-    } catch (err) {
-      if (err) {
-        alert(err);
+      if (auth.token && auth.role) {
+        router.push('/home', { scroll: false })
       }
+    } catch (err) {
+      alert(err)
     } finally {
       setLoading(false);
     }
@@ -97,7 +98,6 @@ export function LoginForm() {
             </button>
           </div>
         </form>
-        {auth.token && auth.role && router.push('/home', { scroll: false })}
       </div>
     </main>
   );

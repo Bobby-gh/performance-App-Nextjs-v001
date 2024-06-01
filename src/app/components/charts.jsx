@@ -19,18 +19,6 @@ import { useEffect, useState } from "react";
 export function OrganizationPerformanceDashboard() {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const result = await GetDepartmentGoalRouteData();
-        setData(result);
-      } catch (error) {
-        alert('Error fetching data for dashboard:', error);
-      }
-    }
-    fetchData();
-  }, []);
-
   return (
     <div className=" p-7 mt-5 pt-5 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
