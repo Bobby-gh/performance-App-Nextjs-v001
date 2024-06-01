@@ -202,7 +202,7 @@ export const useGoalCountRouteData = () => {
           },
           withCredentials: true,
         });
-        setGoalCount(response.data);
+        setGoalCount(response.data.goalRatings);
       } catch (err) {
         setError(err);
         console.error('Error fetching data:', err);
