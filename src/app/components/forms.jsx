@@ -43,11 +43,6 @@ console.log(auth)
           token: response.data.response.token,
           role: response.data.response.userRole,
         });
-        if (auth.token && auth.role) {
-          router.push('/home', { scroll: false })
-        } else {
-          alert("LogIn Unsuccessful");
-        }
       }
     } catch (err) {
       if (err) {
@@ -109,6 +104,7 @@ console.log(auth)
             </button>
           </div>
         </form>
+        {auth.token && auth.role && router.push('/home', { scroll: false })}
       </div>
     </main>
   );
