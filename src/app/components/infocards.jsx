@@ -5,20 +5,11 @@ import { useGoalCountRouteData } from "../api/databook/route-data";
 
 export function InformationalSummary() {
   const { goalCount, error } = useGoalCountRouteData();
-  const { goalRatings } = goalCount;
+  const { achieved, notAchieved, partiallyAchieved } = goalCount;
   
-  if(!goalRatings){
-    alert("No goals available")
-  }
-  const { achieved, notAchieved, partiallyAchieved } = goalRatings;
-  
-  try{
-    
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    }
-  }catch(err){
-    alert(err)
+ 
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   
