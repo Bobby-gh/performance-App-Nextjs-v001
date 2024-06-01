@@ -2,7 +2,7 @@ import { FaThumbsDown, FaTrophy, FaThumbsUp } from "react-icons/fa";
 import { useGoalCountRouteData } from "../api/databook/route-data";
 
 export function InformationalSummary() {
-  const { goalCount, error } = useGoalCountRouteData;
+  const { goalCount, error } = useGoalCountRouteData();
   // const { achieved, notAchieved, partiallyAchieved } = goalCount;
   console.log(goalCount)
  
