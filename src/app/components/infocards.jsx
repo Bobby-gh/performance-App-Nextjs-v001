@@ -5,7 +5,8 @@ import { useGoalCountRouteData } from "../api/databook/route-data";
 
 export function InformationalSummary() {
   const { goalCount, error } = useGoalCountRouteData();
-  const { achieved, notAchieved, partiallyAchieved } = goalCount;
+  const { goalRatings } = goalCount;
+  const { achieved, notAchieved, partiallyAchieved } = goalRatings;
 
   if (error) {
     return <div>Error: {error.message}</div>;
