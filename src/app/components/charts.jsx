@@ -16,7 +16,7 @@ import { FcComboChart, FcBarChart } from "react-icons/fc";
 import { GetDepartmentGoalRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
-  const { data, error } ;
+  const { data, error } = 1;
 
   if (error) {
     return <div>Error: {error.message}</div>;
