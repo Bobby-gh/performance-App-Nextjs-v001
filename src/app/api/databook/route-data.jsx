@@ -163,29 +163,35 @@ export async function GetGeneralPerformanceChartRouteData() {
   }
 }
 
-export async function GetOrganizationalChartRouteData() {
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(ORGANIZATIONAL_CHART_URL, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        withCredentials: true,
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+export const useOrganizationalChartRouteData =()=>{
+  const { auth } = useContext(AuthContext);
+  const [organizationChart, setOrganizationChart] = useState([]);
+  const [error, setError] = useState(null);
 
-  try {
-    const data = await fetchData();
-    return data;
-  } catch (error) {
-    console.error("Error in trying function:", error);
-  }
-}
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(ORGANIZATIONAL_CHART_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setOrganizationChart(response.data.goalRatings);
+      } catch (err) {
+        setError(err);
+        console.error('Error fetching data:', err);
+      }
+    };
+
+    if (auth && auth.token) {
+      fetchData();
+    }
+  }, [auth]);
+
+  return { organizationChart, error };
+};
 
 export const useGoalCountRouteData = () => {
   const { auth } = useContext(AuthContext);

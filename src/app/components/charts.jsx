@@ -13,11 +13,15 @@ import {
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import { FcComboChart, FcBarChart } from "react-icons/fc";
-import { GetDepartmentGoalRouteData } from "../api/databook/route-data";
+import { GetDepartmentGoalRouteData, useOrganizationalChartRouteData } from "../api/databook/route-data";
 import { useEffect, useState } from "react";
 
 export function OrganizationPerformanceDashboard() {
-  const [data, setData] = useState([]);
+  const { data, error } = useOrganizationalChartRouteData();
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className=" p-7 mt-5 pt-5 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
@@ -30,8 +34,7 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={355}>
-        <BarChart>
-          
+        <BarChart data={data}>
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
           <YAxis />
@@ -112,7 +115,7 @@ export function GeneralPerformanceDashboard() {
             text={({ value }) => `${value}%`}
           />
         </div>
-      <hr className="h-px my-6 border-0 dark:bg-gray-700" />
+        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="mt-4 flex items-center">
           <IoIosTime />
           <span className="ml-2">last updated</span>
