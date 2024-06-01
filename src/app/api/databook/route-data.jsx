@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { AuthContext } from "@/app/contex/context-context";
 import axios from "../axios";
 import {
@@ -9,7 +10,8 @@ import {
   GOAL_COUNT_URL,
   ORGANIZATIONAL_CHART_URL,
 } from "../routes";
-import React from "react";
+
+
 
 
 /************************************************Get ROutes*************************************/
@@ -183,29 +185,30 @@ export async function GetOrganizationalChartRouteData() {
 }
 
 export async function GetGoalCountRouteData() {
-  const { auth } = React.useContext(AuthContext);
-  alert(auth);
-  const fetchData = async () => {
+  const { auth } = useContext(AuthContext);
+
+  const fetchGoalCount = async () => {
+    if (!auth || !auth.token) {
+      console.error('Auth token is missing');
+      return null;
+    }
+
     try {
       const response = await axios.get(GOAL_COUNT_URL, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
+          Authorization: `Bearer ${auth.token}`,
         },
         withCredentials: true,
       });
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
+      return null;
     }
   };
 
-  try {
-    const data = await fetchData();
-    return data;
-  } catch (error) {
-    console.error("Error in trying function:", error);
-  }
-}
+  return fetchGoalCount;
+};
 
 /************************************************Post ROutes*************************************/
