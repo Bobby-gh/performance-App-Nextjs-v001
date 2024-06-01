@@ -1,4 +1,6 @@
+'use client'
 import { useContext } from "react";
+import { useState, useEffect } from "react";
 import { AuthContext } from "@/app/contex/context-context";
 import axios from "../axios";
 import {
@@ -10,6 +12,7 @@ import {
   GOAL_COUNT_URL,
   ORGANIZATIONAL_CHART_URL,
 } from "../routes";
+
 
 
 
