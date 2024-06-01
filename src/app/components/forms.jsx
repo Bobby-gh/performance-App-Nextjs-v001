@@ -15,14 +15,7 @@ export function LoginForm() {
     email: "",
     password: "",
   });
-  setAuth({
-    role: "user",
-    token: "someToken",
-    email: "user@example.com",
-    password: "password123",
-});
 
-console.log(auth)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
