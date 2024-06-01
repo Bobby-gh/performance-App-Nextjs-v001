@@ -25,7 +25,7 @@ export function OrganizationPerformanceDashboard() {
         const result = await GetDepartmentGoalRouteData();
         setData(result);
       } catch (error) {
-        console.error('Error fetching data for dashboard:', error);
+        alert('Error fetching data for dashboard:', error);
       }
     }
     fetchData();
