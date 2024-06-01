@@ -12,56 +12,57 @@ export function InformationalSummary() {
 
   
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
-      <div className="card shadow-lg bg-gray-200 rounded-lg p-4 border border-2 border-slate-400">
-        <div className="flex justify-between">
-          <span className="p-4 bg-green-900 rounded-lg">
-            <FaTrophy />
-          </span>
-          <span className="flex flex-col items-end">
-            <h3 className="text-green-900">Achieved Goals</h3>
-          <h3 className="font-bold text-xl">{achieved}</h3>
-          </span>
-        </div>
-        <hr className="h-px my-6 border-0 dark:bg-gray-700"/>
-        <div className="flex">
-          <span className="text-blue-900">+55%</span>
-          <span className="ml-2">than last Month</span>
-        </div>
-      </div>
-      <div className="card shadow-lg bg-gray-200 rounded-lg p-4 border border-2 border-slate-400">
-        <div className="flex justify-between">
-          <span className="p-4 bg-yellow-500 rounded-lg">
-            <FaThumbsUp />
-          </span>
-          <span className="flex flex-col items-end">
-            <h3 className="text-yellow-500">Partially Achieved Goals</h3>
-            <h3 className="font-bold text-xl">{partiallyAchieved}</h3>
-          </span>
-        </div>
-        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
-        <div className="flex">
-          <span className="text-blue-900">+55%</span>
-          <span className="ml-2">than last Month</span>
-        </div>
-      </div>
-      <div className="card shadow-lg  bg-gray-200 rounded-lg p-4 border border-2 border-slate-400">
-        <div className="flex justify-between">
-          <span className="p-4 bg-red-900 rounded-lg">
-            <FaThumbsDown />
-          </span>
-          <span className="flex flex-col items-end">
-            <h3 className="text-red-900">Unachieved Goals</h3>
-            <h3 className="font-bold text-xl">{notAchieved}</h3>
-          </span>
-        </div>
-        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
-        <div className="flex">
-          <span className="text-blue-900">+55%</span>
-          <span className="ml-2">than last Month</span>
-        </div>
-      </div>
-    </div>
+    // <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
+    //   <div className="card shadow-lg bg-gray-200 rounded-lg p-4 border border-2 border-slate-400">
+    //     <div className="flex justify-between">
+    //       <span className="p-4 bg-green-900 rounded-lg">
+    //         <FaTrophy />
+    //       </span>
+    //       <span className="flex flex-col items-end">
+    //         <h3 className="text-green-900">Achieved Goals</h3>
+    //       <h3 className="font-bold text-xl">{achieved}</h3>
+    //       </span>
+    //     </div>
+    //     <hr className="h-px my-6 border-0 dark:bg-gray-700"/>
+    //     <div className="flex">
+    //       <span className="text-blue-900">+55%</span>
+    //       <span className="ml-2">than last Month</span>
+    //     </div>
+    //   </div>
+    //   <div className="card shadow-lg bg-gray-200 rounded-lg p-4 border border-2 border-slate-400">
+    //     <div className="flex justify-between">
+    //       <span className="p-4 bg-yellow-500 rounded-lg">
+    //         <FaThumbsUp />
+    //       </span>
+    //       <span className="flex flex-col items-end">
+    //         <h3 className="text-yellow-500">Partially Achieved Goals</h3>
+    //         <h3 className="font-bold text-xl">{partiallyAchieved}</h3>
+    //       </span>
+    //     </div>
+    //     <hr className="h-px my-6 border-0 dark:bg-gray-700" />
+    //     <div className="flex">
+    //       <span className="text-blue-900">+55%</span>
+    //       <span className="ml-2">than last Month</span>
+    //     </div>
+    //   </div>
+    //   <div className="card shadow-lg  bg-gray-200 rounded-lg p-4 border border-2 border-slate-400">
+    //     <div className="flex justify-between">
+    //       <span className="p-4 bg-red-900 rounded-lg">
+    //         <FaThumbsDown />
+    //       </span>
+    //       <span className="flex flex-col items-end">
+    //         <h3 className="text-red-900">Unachieved Goals</h3>
+    //         <h3 className="font-bold text-xl">{notAchieved}</h3>
+    //       </span>
+    //     </div>
+    //     <hr className="h-px my-6 border-0 dark:bg-gray-700" />
+    //     <div className="flex">
+    //       <span className="text-blue-900">+55%</span>
+    //       <span className="ml-2">than last Month</span>
+    //     </div>
+    //   </div>
+    // </div>
+    <div>hi</div>
   );
 }
 

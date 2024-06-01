@@ -6,7 +6,7 @@ export default function dashboard() {
   return (
     <main className="m-4">
       <div className="mb-4">Dashboard</div>
-      {/* <InformationalSummary /> */}
+      <InformationalSummary />
       <div className="grid xl:grid-cols-3 gap-4">
         <div className="xl:col-span-2">
           <OrganizationPerformanceDashboard />
