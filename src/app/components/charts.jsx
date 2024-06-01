@@ -33,7 +33,7 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={355}>
-        <BarChart data={data}>
+        <BarChart>
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
           <YAxis />
