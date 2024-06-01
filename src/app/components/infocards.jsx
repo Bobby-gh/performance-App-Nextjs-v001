@@ -1,7 +1,22 @@
 import React from "react";
 import { FaThumbsDown, FaTrophy, FaThumbsUp } from "react-icons/fa";
+import { GetGoalCountRouteData } from "../api/databook/route-data";
 
 export function InformationalSummary() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await GetGoalCountRouteData ();
+        setData(result);
+      } catch (error) {
+        console.error('Error fetching data for dashboard:', error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
       <div className="card shadow-lg bg-gray-200 rounded-lg p-4 border border-2 border-slate-400">
