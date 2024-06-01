@@ -14,7 +14,6 @@ import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import { FcComboChart, FcBarChart } from "react-icons/fc";
 import { GetDepartmentGoalRouteData, useOrganizationalChartRouteData } from "../api/databook/route-data";
-import { useEffect, useState } from "react";
 
 export function OrganizationPerformanceDashboard() {
   const { data, error } = useOrganizationalChartRouteData();

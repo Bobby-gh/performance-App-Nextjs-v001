@@ -178,7 +178,7 @@ export const useOrganizationalChartRouteData =()=>{
           },
           withCredentials: true,
         });
-        setOrganizationChart(response.data.goalRatings);
+        setOrganizationChart(response.data);
       } catch (err) {
         setError(err);
         console.error('Error fetching data:', err);
