@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "@/app/contex/context-context";
+import { AuthContext } from "../../contex/context-context";
 import axios from "../axios";
 import {
   DEPARTMENTS_URL,
