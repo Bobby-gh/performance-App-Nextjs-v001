@@ -3,13 +3,12 @@ import { useGoalCountRouteData } from "../api/databook/route-data";
 
 export function InformationalSummary() {
   const { goalCount, error } = useGoalCountRouteData();
-  const { achieved, notAchieved, partiallyAchieved } = goalCount;
-  
- 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+  alert(goalCount)
 
+console.log(data)
   
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
