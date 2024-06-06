@@ -17,6 +17,7 @@ import { useOrganizationalChartRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useOrganizationalChartRouteData();
+  console.log(organizationalChart)
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -41,7 +42,6 @@ export function OrganizationPerformanceDashboard() {
         </BarChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
-
       <div className="mt-4 flex items-center">
         <IoIosTime />
         <span className="ml-2">last updated</span>
