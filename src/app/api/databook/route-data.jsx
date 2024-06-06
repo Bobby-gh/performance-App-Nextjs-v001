@@ -195,10 +195,10 @@ export function useGoalCountRouteData(){
     const fetchData = async () => {
       if (!auth || !auth.token) {
         console.log('Auth token is missing');
-        console.log(auth)
+        
         return;
       }
-
+      console.log(auth)
       try {
         console.log('Fetching goal count data...');
         const response = await axios.get(GOAL_COUNT_URL, {
@@ -209,7 +209,7 @@ export function useGoalCountRouteData(){
           withCredentials: true,
         });
         console.log('Data fetched:', response.data.goalRatings);
-        setGoalCount(response);
+        setGoalCount(response.data.goalRatings);
       } catch (err) {
         setError(err);
         console.error('Error fetching data:', err);
