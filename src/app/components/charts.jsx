@@ -13,11 +13,11 @@ import {
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import { FcComboChart, FcBarChart } from "react-icons/fc";
-import { GetDepartmentGoalRouteData, } from "../api/databook/route-data";
+import { useOrganizationalChartRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
-  const { organizationalChart, error } = useGoalCountRouteData();
-  
+  const { organizationalChart, error } = useOrganizationalChartRouteData();
+  const [data] = organizationalChart;
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -34,7 +34,7 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={355}>
-        <BarChart>
+        <BarChart data={data}>
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
           <YAxis />
