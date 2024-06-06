@@ -17,11 +17,11 @@ import { GetDepartmentGoalRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useGoalCountRouteData();
-  const [data]= organizationalChart;
+  
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  console.log(data)
+  console.log(organizationalChart)
 
   return (
     <div className=" p-7 mt-5 pt-5 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
