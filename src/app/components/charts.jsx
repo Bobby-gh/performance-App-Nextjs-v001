@@ -16,11 +16,12 @@ import { FcComboChart, FcBarChart } from "react-icons/fc";
 import { GetDepartmentGoalRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
-  const data = "hi"
-
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
+  const { organizationalChart, error } = useGoalCountRouteData();
+  const [data]= organizationalChart;
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+  console.log(data)
 
   return (
     <div className=" p-7 mt-5 pt-5 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
