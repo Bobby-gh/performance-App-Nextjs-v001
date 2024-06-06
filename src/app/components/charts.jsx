@@ -37,8 +37,8 @@ export function OrganizationPerformanceDashboard() {
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
           <YAxis />
-          <XAxis datakey="departmentName" />
-          <Bar datakey="average" fill="#2394cc"/>
+          <XAxis dataKey="departmentName" />
+          <Bar dataKey="average" fill="#2394cc" />
         </BarChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
