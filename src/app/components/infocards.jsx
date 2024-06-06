@@ -1,3 +1,4 @@
+"use client"
 import { FaThumbsDown, FaTrophy, FaThumbsUp } from "react-icons/fa";
 import { useGoalCountRouteData } from "../api/databook/route-data";
 
