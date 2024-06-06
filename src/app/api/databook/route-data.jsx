@@ -188,35 +188,35 @@ export async function GetOrganizationalChartRouteData() {
 
 export function useGoalCountRouteData(){
   const { auth } = useContext(AuthContext);
-  const [goalCount, setGoalCount] = useState(null);
+  const [goalCount, setGoalCount] = useState(2);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!auth || !auth.token) {
-        console.log('Auth token is missing');
-        return;
-      }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (!auth || !auth.token) {
+  //       console.log('Auth token is missing');
+  //       return;
+  //     }
 
-      try {
-        console.log('Fetching goal count data...');
-        const response = await axios.get(GOAL_COUNT_URL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-        console.log('Data fetched:', response.data.goalRatings);
-        setGoalCount(response);
-      } catch (err) {
-        setError(err);
-        console.error('Error fetching data:', err);
-      }
-    };
+  //     try {
+  //       console.log('Fetching goal count data...');
+  //       const response = await axios.get(GOAL_COUNT_URL, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${auth.token}`,
+  //         },
+  //         withCredentials: true,
+  //       });
+  //       console.log('Data fetched:', response.data.goalRatings);
+  //       setGoalCount(response);
+  //     } catch (err) {
+  //       setError(err);
+  //       console.error('Error fetching data:', err);
+  //     }
+  //   };
 
-    fetchData();
-  }, [auth]);
+  //   fetchData();
+  // }, [auth]);
 
   return { goalCount, error };
 };
