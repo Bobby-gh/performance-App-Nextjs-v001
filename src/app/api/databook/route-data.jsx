@@ -186,7 +186,7 @@ export async function GetOrganizationalChartRouteData() {
   }
 }
 
-export const useGoalCountRouteData = () => {
+export function useGoalCountRouteData(){
   const { auth } = useContext(AuthContext);
   const [goalCount, setGoalCount] = useState(null);
   const [error, setError] = useState(null);
@@ -208,7 +208,7 @@ export const useGoalCountRouteData = () => {
           withCredentials: true,
         });
         console.log('Data fetched:', response.data.goalRatings);
-        setGoalCount(response.data.goalRatings);
+        setGoalCount(response);
       } catch (err) {
         setError(err);
         console.error('Error fetching data:', err);
