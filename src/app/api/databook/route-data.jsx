@@ -178,7 +178,8 @@ export function useOrganizationalChartRouteData() {
           },
           withCredentials: true,
         });
-        setOrganizationalChart(response.data.goalRatings);
+        console.log('Fetched goal count data...', response);
+        setOrganizationalChart(response.data);
       } catch (err) {
         setError(err);
       }
