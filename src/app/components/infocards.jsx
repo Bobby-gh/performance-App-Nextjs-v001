@@ -4,12 +4,11 @@ import { useGoalCountRouteData } from "../api/databook/route-data";
 
 
 export function InformationalSummary() {
-  console.log(useGoalCountRouteData)
   const { goalCount, error } = useGoalCountRouteData();
+  const { achieved, notAchieved, partiallyAchieved } = goalCount;
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  const { achieved, notAchieved, partiallyAchieved } = goalCount;
 
   
   return (
