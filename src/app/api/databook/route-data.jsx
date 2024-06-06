@@ -186,7 +186,7 @@ export async function GetOrganizationalChartRouteData() {
   }
 }
 
-export function useGoalCountRouteData() {
+export const useGoalCountRouteData = () => {
   const { auth } = useContext(AuthContext);
   const [goalCount, setGoalCount] = useState(null);
   const [error, setError] = useState(null);
