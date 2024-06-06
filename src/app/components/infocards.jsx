@@ -8,7 +8,6 @@ export function InformationalSummary() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  alert(goalCount)
 
 console.log(data)
   
