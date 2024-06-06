@@ -195,6 +195,7 @@ export function useGoalCountRouteData(){
     const fetchData = async () => {
       if (!auth || !auth.token) {
         console.log('Auth token is missing');
+        console.log(auth)
         return;
       }
 
