@@ -17,11 +17,9 @@ import { useOrganizationalChartRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useOrganizationalChartRouteData();
-  const data = organizationalChart;
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  console.log(data)
 
   return (
     <div className=" p-7 mt-5 pt-5 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
@@ -34,7 +32,7 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={355}>
-        <BarChart data={data}>
+        <BarChart data={organizationalChart}>
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
           <YAxis />
