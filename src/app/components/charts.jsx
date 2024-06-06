@@ -17,7 +17,7 @@ import { useOrganizationalChartRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useOrganizationalChartRouteData();
-  const [data] = organizationalChart;
+  const {data} = organizationalChart
   if (error) {
     return <div>Error: {error.message}</div>;
   }
