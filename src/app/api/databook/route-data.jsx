@@ -140,7 +140,7 @@ export async function GetDepartmentGoalAccessmentRouteData() {
 
 export async function useGeneralPerformanceChartRouteData() {
   const { auth } = useContext(AuthContext);
-  const [generalPerformance, setGeneralPerformance] = useState([]);
+  const [generalPerformance, setGeneralPerformance] = useState();
   const [error, setError] = useState(null);
 
   useEffect(() => {
