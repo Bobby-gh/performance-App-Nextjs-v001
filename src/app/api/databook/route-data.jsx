@@ -210,8 +210,7 @@ export function usePerformanceMatrixChartRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response)
-        setPerformanceMatrixChart(response.data.departmentAverages);
+        setPerformanceMatrixChart(response.data.groupedAssessments);
       } catch (err) {
         setError(err);
       }
