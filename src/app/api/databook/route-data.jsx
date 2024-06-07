@@ -164,7 +164,7 @@ export async function GetGeneralPerformanceChartRouteData() {
 
 export function useOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
-  const [organizationalChart, setOrganizationalChart] = useState();
+  const [organizationalChart, setOrganizationalChart] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
