@@ -93,7 +93,7 @@ export function PerformanceMatrixDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={340}>
-        <ComposedChart data={performanceMatrixChart}>
+        <ComposedChart data={data}>
           <YAxis />
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
