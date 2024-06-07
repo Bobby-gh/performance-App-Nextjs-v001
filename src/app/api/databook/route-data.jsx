@@ -163,10 +163,38 @@ export async function useGeneralPerformanceChartRouteData() {
     fetchData();
   }, [auth]);
 
+  console.log(generalPerformance)
   return { generalPerformance, error };
 };
 
 export function useOrganizationalChartRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [organizationalChart, setOrganizationalChart] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log('Fetching goal count data...');
+        const response = await axios.get(ORGANIZATIONAL_CHART_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setOrganizationalChart(response.data.departmentAverages);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+  return { organizationalChart, error };
+};
+export function usePerformanceMatrixChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationalChart, setOrganizationalChart] = useState([]);
   const [error, setError] = useState(null);
