@@ -93,14 +93,14 @@ export function PerformanceMatrixDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={340}>
-        <ComposedChart data={data}>
+        <ComposedChart data={performanceMatrixChart}>
           <YAxis />
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
-          <XAxis datakey="departmentName" />
-          <Bar datakey="achieved" fill="rgb(22 163 74)" />
-          <Bar datakey="partiallyAchieved" fill="rgb(202 138 4)" />
-          <Line datakey="notAchieved" stroke="rgb(239 68 68)" fill="" />
+          <XAxis dataKey="departmentName" />
+          <Bar dataKey="achieved" fill="rgb(22 163 74)" />
+          <Bar dataKey="partiallyAchieved" fill="rgb(202 138 4)" />
+          <Line dataKey="notAchieved" stroke="rgb(239 68 68)" fill="red" />
         </ComposedChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
