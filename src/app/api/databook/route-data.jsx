@@ -154,6 +154,7 @@ export async function useGeneralPerformanceChartRouteData() {
           },
           withCredentials: true,
         });
+        console.log(response.data)
         setGeneralPerformance(response.data);
       } catch (err) {
         setError(err);
