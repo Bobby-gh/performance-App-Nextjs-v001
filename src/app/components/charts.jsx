@@ -54,7 +54,7 @@ export function PerformanceMatrixDashboard() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
+ console.log(performanceMatrixChart)
 
   const sampleData = [
     { departmentName: 'Accounting', average: 77.9 },
