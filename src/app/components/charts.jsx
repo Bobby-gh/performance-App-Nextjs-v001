@@ -22,7 +22,7 @@ export function OrganizationPerformanceDashboard() {
     return <div>Error: {error.message}</div>;
   }
   const sampleData = [
-    { departmentName: 'Accounting', average: 77.9 },
+    { departmentName: 'Accountings', average: 77.9 },
     { departmentName: 'Finance', average: 78.5 },
     { departmentName: 'Information Technology', average: 57.9 },
     { departmentName: 'Human Resource', average: 50.06 }
@@ -39,7 +39,7 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={355}>
-        <BarChart data={organizationalChart}>
+        <BarChart data={sampleData}>
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
           <YAxis />
