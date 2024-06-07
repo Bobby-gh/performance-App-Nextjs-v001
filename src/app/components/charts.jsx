@@ -82,6 +82,7 @@ export function PerformanceMatrixDashboard() {
 
 export function GeneralPerformanceDashboard() {
   const { generalPerformance, error } = useGeneralPerformanceChartRouteData();
+  console.log(generalPerformance)
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -94,7 +95,7 @@ export function GeneralPerformanceDashboard() {
         </div>
         <div className="flex items-center">
           <Gauge
-          value={generalPerformance}
+            value={generalPerformance}
             height={355}
             cx="50%"
             cy="50%"
