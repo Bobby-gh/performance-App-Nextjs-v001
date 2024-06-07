@@ -10,6 +10,7 @@ import {
   GENERAL_PERFORMANCE_CHART_URL,
   GOAL_COUNT_URL,
   ORGANIZATIONAL_CHART_URL,
+  PERFORMANCE_MATRIX_CHART_URL,
 } from "../routes";
 
 
@@ -140,7 +141,7 @@ export async function GetDepartmentGoalAccessmentRouteData() {
 
 export async function useGeneralPerformanceChartRouteData() {
   const { auth } = useContext(AuthContext);
-  const [generalPerformance, setGeneralPerformance] = useState();
+  const [generalPerformance, setGeneralPerformance] = useState("");
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -195,21 +196,22 @@ export function useOrganizationalChartRouteData() {
 };
 export function usePerformanceMatrixChartRouteData() {
   const { auth } = useContext(AuthContext);
-  const [organizationalChart, setOrganizationalChart] = useState([]);
+  const [performanceMatrixChart, setPerformanceMatrixChart] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         console.log('Fetching goal count data...');
-        const response = await axios.get(ORGANIZATIONAL_CHART_URL, {
+        const response = await axios.get(PERFORMANCE_MATRIX_CHART_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
           },
           withCredentials: true,
         });
-        setOrganizationalChart(response.data.departmentAverages);
+        console.log(response)
+        setPerformanceMatrixChart(response.data.departmentAverages);
       } catch (err) {
         setError(err);
       }
@@ -218,7 +220,7 @@ export function usePerformanceMatrixChartRouteData() {
     fetchData();
   }, [auth]);
 
-  return { organizationalChart, error };
+  return { performanceMatrixChart, error };
 };
 
 export function useGoalCountRouteData(){

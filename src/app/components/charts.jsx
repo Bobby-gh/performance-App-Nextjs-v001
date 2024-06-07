@@ -13,7 +13,7 @@ import {
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import { FcComboChart, FcBarChart } from "react-icons/fc";
-import { useGeneralPerformanceChartRouteData, useOrganizationalChartRouteData, } from "../api/databook/route-data";
+import { useGeneralPerformanceChartRouteData, useOrganizationalChartRouteData, usePerformanceMatrixChartRouteData, } from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useOrganizationalChartRouteData();
@@ -50,6 +50,11 @@ export function OrganizationPerformanceDashboard() {
 }
 
 export function PerformanceMatrixDashboard() {
+
+  const { performanceMatrixChart, error } = usePerformanceMatrixChartRouteData();
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
   return (
     <div className="p-7 mt-5  pt-5  bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
@@ -61,7 +66,7 @@ export function PerformanceMatrixDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={340}>
-        <ComposedChart>
+        <ComposedChart data={performanceMatrixChart}>
           <YAxis />
           <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
@@ -82,7 +87,7 @@ export function PerformanceMatrixDashboard() {
 
 export function GeneralPerformanceDashboard() {
   const { generalPerformance, error } = useGeneralPerformanceChartRouteData();
-  const data = generalPerformance;
+  
   console.log(generalPerformance)
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -96,7 +101,7 @@ export function GeneralPerformanceDashboard() {
         </div>
         <div className="flex items-center">
           <Gauge
-            value={data}
+            value={generalPerformance}
             height={355}
             cx="50%"
             cy="50%"
