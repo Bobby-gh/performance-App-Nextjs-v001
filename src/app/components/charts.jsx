@@ -55,7 +55,32 @@ export function PerformanceMatrixDashboard() {
     return <div>Error: {error.message}</div>;
   }
  console.log(performanceMatrixChart)
-
+ const data = [
+  {
+    departmentName: 'Page E',
+    achieved: 1520,
+    partiallyAchieved: 1108,
+    notAchieved: 1100,
+  },
+  {
+    departmentName: 'Page A',
+    achieved: 1520,
+    partiallyAchieved: 1108,
+    notAchieved: 1100,
+  },
+  {
+    departmentName: 'Page C',
+    achieved: 1520,
+    partiallyAchieved: 1108,
+    notAchieved: 1100,
+  },
+  {
+    departmentName: 'Page F',
+    achieved: 1520,
+    partiallyAchieved: 1108,
+    notAchieved: 1100,
+  },
+];
 
   return (
     <div className="p-7 mt-5  pt-5  bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
