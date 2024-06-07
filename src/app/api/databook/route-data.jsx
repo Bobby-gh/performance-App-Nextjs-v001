@@ -163,7 +163,6 @@ export async function useGeneralPerformanceChartRouteData() {
     fetchData();
   }, [auth]);
 
-  console.log(generalPerformance)
   return { generalPerformance, error };
 };
 
