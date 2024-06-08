@@ -129,7 +129,7 @@ export function DepartmentTable() {
           }}
           pageSizeOptions={[10, 15]}
           slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row._id}
+          getRowId={(row) => row.departmentId}
           sx={{
             border: 0,
             borderRadius: 2,
