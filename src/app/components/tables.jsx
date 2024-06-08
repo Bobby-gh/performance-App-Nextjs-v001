@@ -84,7 +84,7 @@ export function AccessGoalTable() {
   );
 }
 export function EmployeeTable() {
-  const { employeetable, error } = useEmployeesRouteData();
+  const { employeetable} = useEmployeesRouteData();
 
   return (
     <div>

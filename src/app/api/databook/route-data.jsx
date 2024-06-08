@@ -62,7 +62,7 @@ useEffect(() => {
       console.log(response)
       setEmployeetable(response.data.users);
     } catch (err) {
-      setError(err);
+      console.log(err);
     }
   };
 
