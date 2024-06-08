@@ -88,7 +88,6 @@ export function PerformanceMatrixDashboard() {
 export function GeneralPerformanceDashboard() {
   const { generalPerformance, error } = useGeneralPerformanceChartRouteData();
   
-  console.log(generalPerformance)
   if (error) {
     return <div>Error: {error.message}</div>;
   }

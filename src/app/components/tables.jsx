@@ -5,6 +5,7 @@ import {
   accessinggoalcolumn,
   goalsettingcolumn,
 } from "../api/databook/tabel-column-data";
+import { useEmployeesGoalRouteData } from "../api/databook/route-data";
 
 export function GoalTable() {
   return (
@@ -83,10 +84,17 @@ export function AccessGoalTable() {
   );
 }
 export function EmployeeTable() {
+  const { employeetable, error } = useEmployeesGoalRouteData();
+  
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div>
       <div style={{ height: 650 }}>
         <DataGrid
+          rows={employeetable}
           columns={accessinggoalcolumn}
           initialState={{
             pagination: {
