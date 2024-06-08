@@ -7,13 +7,15 @@ import {
   goalsettingcolumn,
   usercolumn,
 } from "../api/databook/tabel-column-data";
-import { useDepartmentRouteData, useEmployeesGoalRouteData, useEmployeesRouteData } from "../api/databook/route-data";
+import { useDepartmentGoalRouteData, useDepartmentRouteData, useEmployeesGoalRouteData, useEmployeesRouteData } from "../api/databook/route-data";
 
 export function GoalTable() {
+  const { departmentgoaltable} = useDepartmentGoalRouteData();
   return (
     <div>
       <div style={{ height: 800 }}>
         <DataGrid
+          rows={departmentgoaltable}
           columns={goalsettingcolumn}
           initialState={{
             pagination: {
