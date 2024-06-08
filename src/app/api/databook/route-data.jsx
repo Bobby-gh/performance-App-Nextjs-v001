@@ -119,7 +119,7 @@ useEffect(() => {
         withCredentials: true,
       });
       console.log(response)
-      setDepartmenttable(data.data.users);
+      setDepartmenttable(response.data.departments);
     } catch (err) {
       setError(err);
     }

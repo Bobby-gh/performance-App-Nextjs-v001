@@ -105,6 +105,7 @@ export function EmployeeTable() {
             borderRadius: 2,
             p: 2,
             minWidth: 300,
+            color: "black",
         }}
         />
       </div>
@@ -112,7 +113,7 @@ export function EmployeeTable() {
   );
 }
 export function DepartmentTable() {
-  const { departmenttable, error } = useDepartmentRouteData();
+  const { departmenttable} = useDepartmentRouteData();
   
   return (
     <div>
