@@ -115,7 +115,7 @@ export function EmployeeTable() {
 }
 export function DepartmentTable() {
   const { departmenttable} = useDepartmentRouteData();
-  
+  console.log(departmenttable)
   return (
     <div>
       <div style={{ height: 650 }}>
