@@ -61,7 +61,7 @@ export const accessinggoalcolumn = [
     },
   },
 ];
-export const usercolumns = [
+export const usercolumn = [
   { field: "fullName", headerName: "First Name", flex: 1 },
   { field: "email", headerName: "Email", flex: 1},
   {field: "department", headerName: "Department", flex: 1},
@@ -102,7 +102,7 @@ export const usercolumns = [
     },
   },
 ];
-export const deptcolumn = [
+export const departmentcolumn = [
   { field: "departmentName", headerName: "Department Name", flex: 1 },
   { field: "manager", headerName: "Department Manager", flex: 1},
   { field: "numberOfStaff", headerName: "Number of Staff", flex: 1},

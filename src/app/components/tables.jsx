@@ -3,7 +3,9 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import {
   accessinggoalcolumn,
+  departmentcolumn,
   goalsettingcolumn,
+  usercolumn,
 } from "../api/databook/tabel-column-data";
 import { useDepartmentRouteData, useEmployeesGoalRouteData, useEmployeesRouteData } from "../api/databook/route-data";
 
@@ -91,7 +93,7 @@ export function EmployeeTable() {
       <div style={{ height: 650 }}>
         <DataGrid
           rows={employeetable}
-          columns={accessinggoalcolumn}
+          columns={usercolumn}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 10 },
@@ -105,7 +107,6 @@ export function EmployeeTable() {
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-            color: "black",
         }}
         />
       </div>
@@ -120,7 +121,7 @@ export function DepartmentTable() {
       <div style={{ height: 650 }}>
         <DataGrid
           rows={departmenttable}
-          columns={accessinggoalcolumn}
+          columns={departmentcolumn}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 10 },
