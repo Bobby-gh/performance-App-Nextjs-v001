@@ -83,7 +83,8 @@ useEffect(() => {
         },
         withCredentials: true,
       });
-      setEmployeetable(data.data.users);
+
+      setEmployeetable(response.data.users);
     } catch (err) {
       setError(err);
     }
