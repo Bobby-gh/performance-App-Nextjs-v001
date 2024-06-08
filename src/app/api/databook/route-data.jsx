@@ -43,7 +43,7 @@ export function useDepartmentGoalRouteData() {
           withCredentials: true,
         });
         console.log(response)
-        setDepartmenttable(response.data.departments);
+        setDepartmenttable(response.data);
       } catch (err) {
         setError(err);
       }
