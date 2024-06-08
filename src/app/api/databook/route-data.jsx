@@ -43,29 +43,34 @@ export async function GetDepartmentGoalRouteData() {
   }
 }
 
-export async function GetEmployeesRouteData() {
+export function useEmployeesRouteData() {
+const { auth } = useContext(AuthContext);
+const [employeetable, setEmployeetable] = useState([]);
+const [error, setError] = useState(null);
+
+useEffect(() => {
   const fetchData = async () => {
     try {
+      console.log('Fetching goal count data...');
       const response = await axios.get(EMPLOYEES_URL, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
+          Authorization: `Bearer ${auth.token}`,
         },
         withCredentials: true,
       });
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
+      console.log(response)
+      setEmployeetable(response.data.users);
+    } catch (err) {
+      setError(err);
     }
   };
 
-  try {
-    const data = await fetchData();
-    return data;
-  } catch (error) {
-    console.error("Error in trying function:", error);
-  }
-}
+  fetchData();
+}, [auth]);
+
+return { employeetable, error };
+};
 
 export function useEmployeesGoalRouteData() {
 const { auth } = useContext(AuthContext);
@@ -96,7 +101,7 @@ useEffect(() => {
 return { employeetable, error };
 };
 
-export async function GetDepartmentRouteData() {
+export function useDepartmentRouteData() {
 const { auth } = useContext(AuthContext);
 const [departmenttable, setDepartmenttable] = useState([]);
 const [error, setError] = useState(null);
