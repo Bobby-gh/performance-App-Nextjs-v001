@@ -24,7 +24,7 @@ export function useDepartmentGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [departmentgoal, setDepartmenttable] = useState([]);
   const [error, setError] = useState(null);
-  const departmentgoaltable = records.map((record) => ({
+  const departmentgoaltable = departmentgoal.map((departmentgoal) => ({
     ...departmentgoal,
     taskAssignedTo: departmentgoal.taskAssignedTo.departmentName,
     dateAssigned: new Date(departmentgoal.dateAssigned).toLocaleDateString(),
