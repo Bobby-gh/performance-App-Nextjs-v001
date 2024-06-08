@@ -26,9 +26,9 @@ export function useDepartmentGoalRouteData() {
   const [error, setError] = useState(null);
   const departmentgoaltable = records.map((record) => ({
     ...departmentgoal,
-    taskAssignedTo: record.taskAssignedTo.departmentName,
-    dateAssigned: new Date(record.dateAssigned).toLocaleDateString(),
-    goalDeadline: new Date(record.goalDeadline).toLocaleDateString(),
+    taskAssignedTo: departmentgoal.taskAssignedTo.departmentName,
+    dateAssigned: new Date(departmentgoal.dateAssigned).toLocaleDateString(),
+    goalDeadline: new Date(departmentgoal.goalDeadline).toLocaleDateString(),
   }));
   
   useEffect(() => {
