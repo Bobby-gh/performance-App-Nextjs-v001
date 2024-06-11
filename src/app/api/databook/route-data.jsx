@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../contex/context-context";
 import axios from "../axios";
@@ -14,10 +14,6 @@ import {
   PERFORMANCE_MATRIX_CHART_URL,
 } from "../routes";
 
-
-
-
-
 /************************************************Get ROutes*************************************/
 
 export function useDepartmentGoalRouteData() {
@@ -30,11 +26,11 @@ export function useDepartmentGoalRouteData() {
     dateAssigned: new Date(departmentgoal.dateAssigned).toLocaleDateString(),
     goalDeadline: new Date(departmentgoal.goalDeadline).toLocaleDateString(),
   }));
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching goal count data...');
+        console.log("Fetching goal count data...");
         const response = await axios.get(DEPARTMENT_GOALS_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -47,121 +43,133 @@ export function useDepartmentGoalRouteData() {
         setError(err);
       }
     };
-  
+
     fetchData();
   }, [auth]);
-  
+
   return { departmentgoaltable, error };
-  }
-
-export function useEmployeesRouteData() {
-const { auth } = useContext(AuthContext);
-const [employeetable, setEmployeetable] = useState([]);
-const [error, setError] = useState(null);
-
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      console.log('Fetching goal count data...');
-      const response = await axios.get(EMPLOYEES_URL, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        withCredentials: true,
-      });
-      console.log(response)
-      setEmployeetable(response.data.users);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  fetchData();
-}, [auth]);
-
-return { employeetable, error };
-};
-
-export function useEmployeesGoalRouteData() {
-const { auth } = useContext(AuthContext);
-const [employeetable, setEmployeetable] = useState([]);
-const [error, setError] = useState(null);
-
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      console.log('Fetching goal count data...');
-      const response = await axios.get(EMPLOYEES_GOALS_URL, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        withCredentials: true,
-      });
-      setEmployeetable(response.data.users);
-    } catch (err) {
-      setError(err);
-    }
-  };
-
-  fetchData();
-}, [auth]);
-
-return { employeetable, error };
-};
-
-export function useDepartmentRouteData() {
-const { auth } = useContext(AuthContext);
-const [departmenttable, setDepartmenttable] = useState([]);
-const [error, setError] = useState(null);
-
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      console.log('Fetching goal count data...');
-      const response = await axios.get(DEPARTMENTS_URL, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        withCredentials: true,
-      });
-      console.log(response)
-      setDepartmenttable(response.data.departments);
-    } catch (err) {
-      setError(err);
-    }
-  };
-
-  fetchData();
-}, [auth]);
-
-return { departmenttable, error };
 }
 
-export async function GetDepartmentGoalAccessmentRouteData() {
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(DEPARTMENT_GOAL_ASSESSMENT_URL, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        withCredentials: true,
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+export function useEmployeesRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [employeetable, setEmployeetable] = useState([]);
+  const [error, setError] = useState(null);
 
-  try {
-    const data = await fetchData();
-    return data;
-  } catch (error) {
-    console.error("Error in trying function:", error);
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Fetching goal count data...");
+        const response = await axios.get(EMPLOYEES_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        console.log(response);
+        setEmployeetable(response.data.users);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+  return { employeetable, error };
+}
+
+export function useEmployeesGoalRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [employeetable, setEmployeetable] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Fetching goal count data...");
+        const response = await axios.get(EMPLOYEES_GOALS_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setEmployeetable(response.data.users);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+  return { employeetable, error };
+}
+
+export function useDepartmentRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [departmenttable, setDepartmenttable] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Fetching goal count data...");
+        const response = await axios.get(DEPARTMENTS_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        console.log(response);
+        setDepartmenttable(response.data.departments);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+  return { departmenttable, error };
+}
+
+export function useDepartmentGoalAccessmentRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [departassessment, setDepartAssessment] = useState([]);
+  const [error, setError] = useState(null);
+  const departassessmenttable = departassessment.map((departassessment) => ({
+    _id: data._id,
+    taskAssignedTo: departassessment.goalAssessed.taskAssignedTo.departmentName,
+    goalTitle: departassessment.goalAssessed.goalTitle,
+    goalDeadline: departassessment.goalAssessed.goalDeadline,
+    performancePercent: departassessment.averageRating.performancePercent,
+    rating: departassessment.rating.toUpperCase(),
+  }));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Fetching goal count data...");
+        const response = await axios.get(DEPARTMENT_GOAL_ASSESSMENT_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setDepartAssessment(response.data.assessments);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+  return { departassessmenttable, error };
 }
 
 export function useGeneralPerformanceChartRouteData() {
@@ -172,7 +180,7 @@ export function useGeneralPerformanceChartRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching goal count data...');
+        console.log("Fetching goal count data...");
         const response = await axios.get(GENERAL_PERFORMANCE_CHART_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -190,18 +198,21 @@ export function useGeneralPerformanceChartRouteData() {
   }, [auth]);
 
   return { generalPerformance, error };
-};
+}
 
 export function useOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
   const [error, setError] = useState(null);
-  const organizationalChart =[{ departmentName: '0', average: 0 }, ...organizationaldata]
+  const organizationalChart = [
+    { departmentName: "0", average: 0 },
+    ...organizationaldata,
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching goal count data...');
+        console.log("Fetching goal count data...");
         const response = await axios.get(ORGANIZATIONAL_CHART_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -219,7 +230,7 @@ export function useOrganizationalChartRouteData() {
   }, [auth]);
 
   return { organizationalChart, error };
-};
+}
 export function usePerformanceMatrixChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [performanceMatrixChart, setPerformanceMatrixChart] = useState([]);
@@ -228,7 +239,7 @@ export function usePerformanceMatrixChartRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching goal count data...');
+        console.log("Fetching goal count data...");
         const response = await axios.get(PERFORMANCE_MATRIX_CHART_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -246,9 +257,9 @@ export function usePerformanceMatrixChartRouteData() {
   }, [auth]);
 
   return { performanceMatrixChart, error };
-};
+}
 
-export function useGoalCountRouteData(){
+export function useGoalCountRouteData() {
   const { auth } = useContext(AuthContext);
   const [goalCount, setGoalCount] = useState([]);
   const [error, setError] = useState(null);
@@ -256,7 +267,7 @@ export function useGoalCountRouteData(){
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching goal count data...');
+        console.log("Fetching goal count data...");
         const response = await axios.get(GOAL_COUNT_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -274,7 +285,6 @@ export function useGoalCountRouteData(){
   }, [auth]);
 
   return { goalCount, error };
-};
-
+}
 
 /************************************************Post ROutes*************************************/

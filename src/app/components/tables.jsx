@@ -7,10 +7,16 @@ import {
   goalsettingcolumn,
   usercolumn,
 } from "../api/databook/tabel-column-data";
-import { useDepartmentGoalRouteData, useDepartmentRouteData, useEmployeesGoalRouteData, useEmployeesRouteData } from "../api/databook/route-data";
+import {
+  useDepartmentGoalAccessmentRouteData,
+  useDepartmentGoalRouteData,
+  useDepartmentRouteData,
+  useEmployeesGoalRouteData,
+  useEmployeesRouteData,
+} from "../api/databook/route-data";
 
 export function GoalTable() {
-  const { departmentgoaltable} = useDepartmentGoalRouteData();
+  const { departmentgoaltable } = useDepartmentGoalRouteData();
   return (
     <div>
       <div style={{ height: 800 }}>
@@ -26,11 +32,11 @@ export function GoalTable() {
           slots={{ toolbar: GridToolbar }}
           getRowId={(row) => row._id}
           sx={{
-            border: 0, 
+            border: 0,
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
         />
       </div>
     </div>
@@ -38,35 +44,12 @@ export function GoalTable() {
 }
 
 export function MonitorGoalTable() {
+  const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
   return (
     <div>
       <div style={{ height: 450 }}>
         <DataGrid
-          columns={accessinggoalcolumn}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[10, 15]}
-          slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row._id}
-          sx={{
-            border: 0, 
-            borderRadius: 2,
-            p: 2,
-            minWidth: 300,
-        }}
-        />
-      </div>
-    </div>
-  );
-}
-export function AccessGoalTable() {
-  return (
-    <div>
-      <div style={{ height: 650 }}>
-        <DataGrid
+          rows={departassessmenttable}
           columns={accessinggoalcolumn}
           initialState={{
             pagination: {
@@ -81,14 +64,41 @@ export function AccessGoalTable() {
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+export function AccessGoalTable() {
+  const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
+  return (
+    <div>
+      <div style={{ height: 650 }}>
+        <DataGrid
+          rows={departassessmenttable}
+          columns={accessinggoalcolumn}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[10, 15]}
+          slots={{ toolbar: GridToolbar }}
+          getRowId={(row) => row._id}
+          sx={{
+            border: 0,
+            borderRadius: 2,
+            p: 2,
+            minWidth: 300,
+          }}
         />
       </div>
     </div>
   );
 }
 export function EmployeeTable() {
-  const { employeetable} = useEmployeesRouteData();
+  const { employeetable } = useEmployeesRouteData();
 
   return (
     <div>
@@ -109,15 +119,15 @@ export function EmployeeTable() {
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
         />
       </div>
     </div>
   );
 }
 export function DepartmentTable() {
-  const { departmenttable} = useDepartmentRouteData();
-  console.log(departmenttable)
+  const { departmenttable } = useDepartmentRouteData();
+  console.log(departmenttable);
   return (
     <div>
       <div style={{ height: 650 }}>
@@ -137,7 +147,7 @@ export function DepartmentTable() {
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
         />
       </div>
     </div>
