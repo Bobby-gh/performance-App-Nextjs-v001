@@ -56,7 +56,6 @@ export function OrganizationPerformanceDashboard() {
           />
           <YAxis />
           <Tooltip />
-          <Legend iconType="circle" iconSize="6" align="left" />
           <Line
             type="monotone"
             dataKey="average"
@@ -95,7 +94,6 @@ export function PerformanceMatrixDashboard() {
       <ResponsiveContainer height={340}>
         <ComposedChart data={performanceMatrixChart}>
           <YAxis />
-          <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
           <XAxis dataKey="departmentName" />
           <Bar dataKey="achieved" fill="rgb(22 163 74)" />
@@ -181,7 +179,6 @@ export function ProgressLineChat() {
       <ResponsiveContainer height={200}>
         <BarChart data={performanceMatrixChart}>
           <YAxis />
-          <Legend iconType="circle" iconSize="6" align="left" />
           <Tooltip />
           <XAxis dataKey="departmentName" />
           <Bar dataKey="achieved" fill="rgb(22 163 74)" />
