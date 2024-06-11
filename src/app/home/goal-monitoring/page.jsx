@@ -18,7 +18,7 @@ export default function GoalMonitoring() {
             <InProgressVsCompleted />
           </div>
         </div>
-        <RiskMonitor />
+        <MonitorGoalTable />
       </div>
     </main>
   );
