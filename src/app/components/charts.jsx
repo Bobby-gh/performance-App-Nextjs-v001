@@ -159,7 +159,7 @@ export function GeneralPerformanceDashboard() {
   );
 }
 
-export function ProgressLineChat() {
+export function ProgressBarChat() {
   const { performanceMatrixChart, error } =
     usePerformanceMatrixChartRouteData();
   return (
