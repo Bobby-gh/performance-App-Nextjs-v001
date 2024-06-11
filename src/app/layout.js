@@ -11,13 +11,12 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const [isLoading] = useState(false);
   return (
     <AuthProvider>
       <html lang="en">
         <body className={inter.className}>{children}</body>
       </html>
-      <LoadingPopup isLoading={isLoading} />
+      <LoadingPopup/>
     </AuthProvider>
   );
 }
