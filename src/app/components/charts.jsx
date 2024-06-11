@@ -34,7 +34,7 @@ export function OrganizationPerformanceDashboard() {
     <div className=" p-7 mt-5 pt-5 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
         <h3 className="text-lg font-bold pb-4 text-black">
-          ORGANIZATIONAL PERFORMANCE
+          DEPARTMENTAL SCORE
         </h3>
         <span className="flex items-center">
           <FcBarChart />

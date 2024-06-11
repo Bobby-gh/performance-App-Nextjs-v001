@@ -177,6 +177,94 @@ export function UserPerformanceSummary() {
                 <div className="flex-shrink-0">
                   <img
                     className="w-8 h-8 rounded-full"
+                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                    alt="Michael image"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate ">
+                    Michael Gough
+                  </p>
+                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                    email@windster.com
+                  </p>
+                </div>
+                <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                  67
+                </div>
+              </div>
+            </li>
+            <li className="py-3 sm:py-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <img
+                    className="w-8 h-8 rounded-full"
+                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                    alt="Michael image"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate ">
+                    Michael Gough
+                  </p>
+                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                    email@windster.com
+                  </p>
+                </div>
+                <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                  67
+                </div>
+              </div>
+            </li>
+            <li className="py-3 sm:py-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <img
+                    className="w-8 h-8 rounded-full"
+                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                    alt="Michael image"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate ">
+                    Michael Gough
+                  </p>
+                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                    email@windster.com
+                  </p>
+                </div>
+                <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                  67
+                </div>
+              </div>
+            </li>
+            <li className="py-3 sm:py-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <img
+                    className="w-8 h-8 rounded-full"
+                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                    alt="Michael image"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate ">
+                    Michael Gough
+                  </p>
+                  <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                    email@windster.com
+                  </p>
+                </div>
+                <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                  67
+                </div>
+              </div>
+            </li>
+            <li className="py-3 sm:py-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <img
+                    className="w-8 h-8 rounded-full"
                     src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
                     alt="Lana image"
                   />
