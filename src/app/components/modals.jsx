@@ -1,15 +1,16 @@
 'use client'
 import { Box, CircularProgress, Modal, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 
 export function LogOut() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  
+
   const handleLogOut = async (e) => {
     e.preventDefault();
     setLoading(true);

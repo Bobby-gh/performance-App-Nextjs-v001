@@ -149,7 +149,7 @@ export function GeneralPerformanceDashboard() {
             text={({ value }) => `${value}%`}
           />
         </div>
-        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
+        <hr className="h-px my-4 border-0 dark:bg-gray-700" />
         <div className="mt-4 flex items-center">
           <IoIosTime />
           <span className="ml-2">last updated</span>
