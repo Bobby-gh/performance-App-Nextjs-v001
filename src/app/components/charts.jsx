@@ -5,6 +5,7 @@ import {
   ComposedChart,
   Legend,
   Line,
+  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -32,13 +33,13 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={355}>
-        <BarChart data={organizationalChart}>
-          <Legend iconType="circle" iconSize="6" align="left" />
-          <Tooltip />
-          <YAxis />
+        <LineChart data={organizationalChart}>
           <XAxis dataKey="departmentName" />
-          <Bar dataKey="average" fill="#2394cc" />
-        </BarChart>
+          <YAxis />
+          <Tooltip />
+          <Legend iconType="circle" iconSize="6" align="left"/>
+          <Line type="monotone" dataKey="average" stroke="#2394cc" activeDot={{ r: 8 }} />
+        </LineChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
       <div className="mt-4 flex items-center">
@@ -130,6 +131,56 @@ export function GeneralPerformanceDashboard() {
           <span className="ml-2">last updated</span>
         </div>
       </div>
+    </div>
+  );
+}
+
+export function ProgressLineChat() {
+
+ 
+  return (
+    <div className="p-3 card">
+      <div className="grid grid-cols-5 gap-4">
+        <div className="col-span-4" />
+        <div className="flex flex-row">
+          <section className="m-2">
+            <p>Years</p>
+          </section>
+          <select>
+            <option>2024</option>
+            <option>2025</option>
+          </select>
+        </div>
+      </div>
+      <ResponsiveContainer  height={250}>
+      <BarChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <Legend />
+        <YAxis />
+        <XAxis dataKey="name" />
+        <Bar dataKey="Opened" fill="#cc23b3" />
+        <Bar dataKey="Closed" fill="#2394cc" />
+        <Tooltip />
+      </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+export function InProgressVsCompleted() {
+ 
+  return (
+    <div className=" items-center flex flex-col px-4 pb-5">
+      <h3 className="pb-3">
+        <span style={{ color: "#cc23b3" }}>MONITORED </span>Vs{" "}
+        <span style={{ color: "#2394cc" }}>UNMONITORED</span>
+      </h3>
+      <ResponsiveContainer height={180}>
+      <PieChart >
+        <Pie dataKey="value" data={data} outerRadius={85} innerRadius={50} />
+        <Tooltip />
+      </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 }

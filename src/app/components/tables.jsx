@@ -40,7 +40,7 @@ export function GoalTable() {
 export function MonitorGoalTable() {
   return (
     <div>
-      <div style={{ height: 650 }}>
+      <div style={{ height: 350 }}>
         <DataGrid
           columns={accessinggoalcolumn}
           initialState={{
