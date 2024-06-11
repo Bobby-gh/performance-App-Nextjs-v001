@@ -7,6 +7,7 @@ import {
   Legend,
   Line,
   LineChart,
+  Pie,
   PieChart,
   ResponsiveContainer,
   Tooltip,
