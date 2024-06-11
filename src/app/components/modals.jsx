@@ -8,9 +8,9 @@ export function LogOut() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [isLoading, setLoading] = useState(false);
-
+  const router = useRouter();
+  
   const handleLogOut = async (e) => {
-    const router = useRouter();
     e.preventDefault();
     setLoading(true);
 
