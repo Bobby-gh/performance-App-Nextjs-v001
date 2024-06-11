@@ -44,12 +44,13 @@ export function GoalTable() {
 }
 
 export function MonitorGoalTable() {
-  const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
+  // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
+  const { departmentgoaltable } = useDepartmentGoalRouteData();
   return (
     <div>
       <div style={{ height: 450 }}>
         <DataGrid
-          rows={departassessmenttable}
+          rows={departmentgoaltable}
           columns={accessinggoalcolumn}
           initialState={{
             pagination: {
@@ -71,12 +72,13 @@ export function MonitorGoalTable() {
   );
 }
 export function AccessGoalTable() {
-  const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
+  // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
+  const { departmentgoaltable } = useDepartmentGoalRouteData();
   return (
     <div>
       <div style={{ height: 650 }}>
         <DataGrid
-          rows={departassessmenttable}
+          rows={departmentgoaltable}
           columns={accessinggoalcolumn}
           initialState={{
             pagination: {
