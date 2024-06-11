@@ -2,7 +2,7 @@
 import { Box, CircularProgress, Modal, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaSignOutAlt } from "react-icons/fa";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 
 export function LogOut() {
   const [open, setOpen] = useState(false);
@@ -39,10 +39,10 @@ export function LogOut() {
 
   return (
     <>
-      <button onClick={handleOpen} className="flex flex row items-center p-3">
-        <FaSignOutAlt className="icons" />
-        Logout
-      </button>
+      <button className="flex items-center">
+          <RiLogoutCircleRLine />
+          <span className="ml-2">sign out</span>
+        </button>
       <Modal
         open={open}
         onClose={handleClose}
