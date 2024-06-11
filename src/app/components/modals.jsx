@@ -39,7 +39,7 @@ export function LogOut() {
 
   return (
     <>
-      <button className="flex items-center">
+      <button onClick={handleOpen} className="flex items-center">
           <RiLogoutCircleRLine />
           <span className="ml-2">sign out</span>
         </button>
