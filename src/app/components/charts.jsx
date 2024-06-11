@@ -17,7 +17,11 @@ import {
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import { FcComboChart, FcBarChart } from "react-icons/fc";
-import { useGeneralPerformanceChartRouteData, useOrganizationalChartRouteData, usePerformanceMatrixChartRouteData, } from "../api/databook/route-data";
+import {
+  useGeneralPerformanceChartRouteData,
+  useOrganizationalChartRouteData,
+  usePerformanceMatrixChartRouteData,
+} from "../api/databook/route-data";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useOrganizationalChartRouteData();
@@ -36,12 +40,21 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={355}>
-        <LineChart data={organizationalChart} interval={0} angle={-45} textAnchor="end">
+        <LineChart
+          data={organizationalChart}
+          interval={0}
+          angle={-45}
+          textAnchor="end">
           <XAxis dataKey="departmentName" />
           <YAxis />
           <Tooltip />
-          <Legend iconType="circle" iconSize="6" align="left"/>
-          <Line type="monotone" dataKey="average" stroke="#8884d8" strokeWidth={2} />
+          <Legend iconType="circle" iconSize="6" align="left" />
+          <Line
+            type="monotone"
+            dataKey="average"
+            stroke="#8884d8"
+            strokeWidth={2}
+          />
         </LineChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -54,11 +67,12 @@ export function OrganizationPerformanceDashboard() {
 }
 
 export function PerformanceMatrixDashboard() {
-  const { performanceMatrixChart, error } = usePerformanceMatrixChartRouteData();
+  const { performanceMatrixChart, error } =
+    usePerformanceMatrixChartRouteData();
   if (error) {
     return <div>Error: {error.message}</div>;
   }
- 
+
   return (
     <div className="p-7 mt-5  pt-5  bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
@@ -91,7 +105,7 @@ export function PerformanceMatrixDashboard() {
 
 export function GeneralPerformanceDashboard() {
   const { generalPerformance, error } = useGeneralPerformanceChartRouteData();
-  
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -139,8 +153,8 @@ export function GeneralPerformanceDashboard() {
 }
 
 export function ProgressLineChat() {
-
- 
+  const { performanceMatrixChart, error } =
+    usePerformanceMatrixChartRouteData();
   return (
     <div className="p-3 card">
       <div className="grid grid-cols-5 gap-4">
@@ -155,22 +169,24 @@ export function ProgressLineChat() {
           </select>
         </div>
       </div>
-      <ResponsiveContainer  height={200}>
-      <BarChart>
-        <Legend />
-        <YAxis />
-        <XAxis dataKey="name" />
-        <Bar dataKey="Opened" fill="#cc23b3" />
-        <Bar dataKey="Closed" fill="#2394cc" />
-        <Tooltip />
-      </BarChart>
+      <ResponsiveContainer height={200}>
+        <BarChart data={performanceMatrixChart}>
+          <YAxis />
+          <Legend iconType="circle" iconSize="6" align="left" />
+          <Tooltip />
+          <XAxis dataKey="departmentName" />
+          <Bar dataKey="achieved" fill="rgb(22 163 74)" />
+          <Bar dataKey="notAchieved" fill="rgb(239 68 68)" />
+          <Bar dataKey="partiallyAchieved" fill="rgb(202 138 4)" />
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
 }
 
 export function InProgressVsCompleted() {
- 
+  const { performanceMatrixChart, error } =
+    usePerformanceMatrixChartRouteData();
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
       <h3 className="pb-3">
@@ -178,10 +194,10 @@ export function InProgressVsCompleted() {
         <span style={{ color: "#2394cc" }}>Uncompleted</span>
       </h3>
       <ResponsiveContainer height={180}>
-      <PieChart>
-        <Pie dataKey="value"  outerRadius={85} innerRadius={50} />
-        <Tooltip />
-      </PieChart>
+        <PieChart>
+          <Pie data={performanceMatrixChart} dataKey="departmentName" outerRadius={85} innerRadius={50} />
+          <Tooltip />
+        </PieChart>
       </ResponsiveContainer>
     </div>
   );
