@@ -198,8 +198,8 @@ export function useOrganizationalChartRouteData() {
   const [error, setError] = useState(null);
   const x = 0;
   const organizationalChart = organizationaldata.map((organizationaldata) => ({
-    ...organizationaldata,
     departmentName: x,
+    ...organizationaldata,
   }));
 
   useEffect(() => {
