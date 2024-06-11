@@ -36,7 +36,7 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={355}>
-        <LineChart data={organizationalChart}>
+        <LineChart data={organizationalChart} interval={0} angle={-45} textAnchor="end">
           <XAxis dataKey="departmentName" />
           <YAxis />
           <Tooltip />

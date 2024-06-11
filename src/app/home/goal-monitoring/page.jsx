@@ -1,4 +1,7 @@
-import { InProgressVsCompleted, ProgressLineChat } from "@/app/components/charts";
+import {
+  InProgressVsCompleted,
+  ProgressLineChat,
+} from "@/app/components/charts";
 import { MonitorGoalTable } from "@/app/components/tables";
 import React from "react";
 
@@ -18,7 +21,9 @@ export default function GoalMonitoring() {
             <InProgressVsCompleted />
           </div>
         </div>
-        <MonitorGoalTable />
+        <div className="mt-16 bg-blue-100 shadow-lg shadow-blue-200 rounded-lg">
+          <MonitorGoalTable />
+        </div>
       </div>
     </main>
   );
