@@ -160,6 +160,7 @@ export function useDepartmentGoalAccessmentRouteData() {
           },
           withCredentials: true,
         });
+        console.log(response);
         setDepartAssessment(response.data.assessments);
       } catch (err) {
         setError(err);
