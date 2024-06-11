@@ -22,6 +22,7 @@ import {
   useOrganizationalChartRouteData,
   usePerformanceMatrixChartRouteData,
 } from "../api/databook/route-data";
+import { DataDateAccess } from "./infocards";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useOrganizationalChartRouteData();
@@ -39,13 +40,20 @@ export function OrganizationPerformanceDashboard() {
           <FcBarChart />
         </span>
       </div>
+      <DataDateAccess />
       <ResponsiveContainer height={355}>
         <LineChart
           data={organizationalChart}
           interval={0}
           angle={-45}
           textAnchor="end">
-          <XAxis dataKey="departmentName" />
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis
+            dataKey="departmentName"
+            interval={0}
+            angle={-45}
+            textAnchor="end"
+          />
           <YAxis />
           <Tooltip />
           <Legend iconType="circle" iconSize="6" align="left" />
@@ -83,6 +91,7 @@ export function PerformanceMatrixDashboard() {
           <FcComboChart />
         </span>
       </div>
+      <DataDateAccess />
       <ResponsiveContainer height={340}>
         <ComposedChart data={performanceMatrixChart}>
           <YAxis />
@@ -195,7 +204,12 @@ export function InProgressVsCompleted() {
       </h3>
       <ResponsiveContainer height={180}>
         <PieChart>
-          <Pie data={performanceMatrixChart} dataKey="departmentName" outerRadius={85} innerRadius={50} />
+          <Pie
+            data={performanceMatrixChart}
+            dataKey="achieved"
+            outerRadius={85}
+            innerRadius={50}
+          />
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
