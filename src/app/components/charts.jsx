@@ -2,10 +2,12 @@
 import {
   Bar,
   BarChart,
+  CartesianGrid,
   ComposedChart,
   Legend,
   Line,
   LineChart,
+  PieChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -153,7 +155,7 @@ export function ProgressLineChat() {
         </div>
       </div>
       <ResponsiveContainer  height={250}>
-      <BarChart data={data}>
+      <BarChart>
         <CartesianGrid strokeDasharray="3 3" />
         <Legend />
         <YAxis />
@@ -176,7 +178,7 @@ export function InProgressVsCompleted() {
         <span style={{ color: "#2394cc" }}>UNMONITORED</span>
       </h3>
       <ResponsiveContainer height={180}>
-      <PieChart >
+      <PieChart>
         <Pie dataKey="value" data={data} outerRadius={85} innerRadius={50} />
         <Tooltip />
       </PieChart>
