@@ -196,7 +196,7 @@ export function useOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
   const [error, setError] = useState(null);
-  const organizationalChart =[{ departmentName: 'x', average: 0 }, ...organizationaldata]
+  const organizationalChart =[{ departmentName: '0', average: 0 }, ...organizationaldata]
 
   useEffect(() => {
     const fetchData = async () => {
