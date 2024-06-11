@@ -41,7 +41,7 @@ export function OrganizationPerformanceDashboard() {
           <YAxis />
           <Tooltip />
           <Legend iconType="circle" iconSize="6" align="left"/>
-          <Line type="monotone" dataKey="average" stroke="#2394cc" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="average" stroke="#2394cc" />
         </LineChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />

@@ -194,8 +194,13 @@ export function useGeneralPerformanceChartRouteData() {
 
 export function useOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
-  const [organizationalChart, setOrganizationalChart] = useState([]);
+  const [organizationaldata, setOrganizationalChart] = useState([]);
   const [error, setError] = useState(null);
+  const x = 0;
+  const organizationalChart = organizationaldata.map((organizationaldata) => ({
+    ...organizationaldata,
+    departmentName: x,
+  }));
 
   useEffect(() => {
     const fetchData = async () => {
