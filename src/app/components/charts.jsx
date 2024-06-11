@@ -41,7 +41,7 @@ export function OrganizationPerformanceDashboard() {
           <YAxis />
           <Tooltip />
           <Legend iconType="circle" iconSize="6" align="left"/>
-          <Line type="monotone" dataKey="average" stroke="#2394cc" />
+          <Line type="monotone" dataKey="average" stroke="#8884d8" strokeWidth={2} />
         </LineChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -155,9 +155,8 @@ export function ProgressLineChat() {
           </select>
         </div>
       </div>
-      <ResponsiveContainer  height={250}>
+      <ResponsiveContainer  height={200}>
       <BarChart>
-        <CartesianGrid strokeDasharray="3 3" />
         <Legend />
         <YAxis />
         <XAxis dataKey="name" />
@@ -175,8 +174,8 @@ export function InProgressVsCompleted() {
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
       <h3 className="pb-3">
-        <span style={{ color: "#cc23b3" }}>MONITORED </span>Vs{" "}
-        <span style={{ color: "#2394cc" }}>UNMONITORED</span>
+        <span style={{ color: "#cc23b3" }}>Completed </span>Vs{" "}
+        <span style={{ color: "#2394cc" }}>Uncompleted</span>
       </h3>
       <ResponsiveContainer height={180}>
       <PieChart>
