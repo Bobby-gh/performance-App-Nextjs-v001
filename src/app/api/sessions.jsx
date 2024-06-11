@@ -8,12 +8,12 @@ export const LoadingPopup = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    },3000);
   }, []);
 
   return (
     <Backdrop open={isLoading} style={{ zIndex: 9999, color: "#fff" }}>
-      <CircularProgress color="inherit" />
+      <CircularProgress/>
     </Backdrop>
   );
 };
