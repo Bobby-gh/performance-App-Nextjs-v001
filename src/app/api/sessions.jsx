@@ -14,6 +14,7 @@ export const LoadingPopup = () => {
   }catch(err){
     console.log(err);
   }
+  
  
 
   return (

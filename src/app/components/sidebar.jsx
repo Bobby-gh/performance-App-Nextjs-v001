@@ -4,11 +4,14 @@ import { MenuItems } from "./menuitems";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
+import { LoadingPopup } from "../api/sessions";
 
 export function Sidebar() {
   const currentPathname = usePathname()
   return (
-    <main className="w-32 sm:w-72 c">
+   
+    <main className="w-32 sm:w-72 ">
+       <LoadingPopup/>
       <div className="hidden sm:block lg:flex sm:justify-center sm:p-8">
         <img
           src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
