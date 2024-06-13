@@ -14,8 +14,6 @@ export const LoadingPopup = () => {
   }catch(err){
     console.log(err);
   }
-  
- 
 
   return (
     <Backdrop open={isLoading} style={{ zIndex: 9999, color: "#fff" }}>

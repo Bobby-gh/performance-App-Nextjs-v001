@@ -209,6 +209,7 @@ export function useOrganizationalChartRouteData() {
     { departmentName: "0", average: 0 },
     ...organizationaldata,
   ];
+  console.log(organizationaldata)
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,6 +1,12 @@
 "use client";
-import { FaThumbsDown, FaTrophy, FaThumbsUp } from "react-icons/fa";
+import {
+  FaThumbsDown,
+  FaTrophy,
+  FaThumbsUp,
+  FaRegSmileWink,
+} from "react-icons/fa";
 import { useGoalCountRouteData } from "../api/databook/route-data";
+import { MdOutlineAddToPhotos } from "react-icons/md";
 
 export function InformationalSummary() {
   const { goalCount, error } = useGoalCountRouteData();
@@ -356,5 +362,37 @@ export function DataDateAccess() {
         </div>
       </div>
     </div>
+  );
+}
+
+export function AddDepartment() {
+  return (
+    <main>
+      <div className="mb-4 card border border-2 shadow-lg rounded-lg p-4 border-slate-400 h-44">
+        <div className="flex justify-between flex-row">
+          <div>
+            <div className="flex flex-row items-center">
+              Wishing to add new Department ?{" "}
+              <FaRegSmileWink className="ml-2" color="red"/>
+            </div>
+            <p>Enter the name of the Department in the field below</p>
+          </div>
+          <div>
+            <button className="flex flex-row items-center text-blue-500 bg-blue-100 p-3 rounded-lg">
+              <div className="px-6 text-sm">Department</div>
+              <MdOutlineAddToPhotos size={25} />
+            </button>
+          </div>
+        </div>
+        <div className="pt-4">
+          <input
+            placeholder="Name of Department"
+            autoComplete="off"
+            type="text"
+            className="border rounded-lg p-4 my-2 w-[1000px] border-slate-400"
+          />
+        </div>
+      </div>
+    </main>
   );
 }
