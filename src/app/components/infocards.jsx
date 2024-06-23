@@ -373,7 +373,7 @@ export function AddDepartment() {
           <div>
             <div className="flex flex-row items-center">
               Wishing to add new Department ?{" "}
-              <FaRegSmileWink className="ml-2" color="red"/>
+              <FaRegSmileWink className="ml-2" color="red" />
             </div>
             <p>Enter the name of the Department in the field below</p>
           </div>
@@ -389,8 +389,80 @@ export function AddDepartment() {
             placeholder="Name of Department"
             autoComplete="off"
             type="text"
-            className="border rounded-lg p-4 my-2 w-[1000px] border-slate-400"
+            className="border rounded-lg p-4 my-2 w-full border-slate-400"
           />
+        </div>
+      </div>
+    </main>
+  );
+}
+
+export function AddUser() {
+  return (
+    <main>
+      <div className="mb-4 card border border-2 shadow-lg rounded-lg p-4 border-slate-400">
+        <div className="flex flex-row justify-between">
+          <p className="text-blue-500">
+            fill in the details to create a new user
+          </p>
+          <div>
+            <button className="flex flex-row items-center text-blue-500 bg-blue-100 p-3 rounded-lg">
+              <div className="px-6 text-sm">Employee</div>
+              <MdOutlineAddToPhotos size={25} />
+            </button>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 divide-x divide-gray-200">
+          <div className="col-span-2">
+            <div className="pt-2 flex flex-row">
+              <input
+                placeholder="User Name"
+                autoComplete="off"
+                type="text"
+                className="border rounded-lg p-4 w-full border-slate-400 m-2"
+              />
+              <input
+                placeholder="User Password"
+                autoComplete="off"
+                type="text"
+                className="border rounded-lg p-4 w-full border-slate-400 m-2"
+              />
+            </div>
+            <div className=" m-2">
+              <input
+                placeholder="User Email"
+                autoComplete="off"
+                type="text"
+                className="border rounded-lg p-4 w-full border-slate-400 "
+              />
+            </div>
+          </div>
+          <div>
+            <div className="pt-2 m-2">
+              <select
+                autoComplete="off"
+                type="text"
+                className="border rounded-lg p-4 w-full border-slate-400 mb-2 pr-16"
+              >
+                <option>choose role</option>
+                <option>Junior staff</option>
+                <option>Manager</option>
+                <option>General Manager</option>
+                <option>Administrator</option>
+              </select>
+              <select
+                autoComplete="off"
+                type="text"
+                className="border rounded-lg p-4 w-full border-slate-400 mt-2"
+              >
+                <option>choose a department</option>
+                <option>Junior staff</option>
+                <option>Manager</option>
+                <option>General Manager</option>
+                <option>Administrator</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </main>
