@@ -26,7 +26,7 @@ import { DataDateAccess } from "./infocards";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useOrganizationalChartRouteData();
-  console.log(organizationalChart)
+  console.log(organizationalChart);
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -34,21 +34,15 @@ export function OrganizationPerformanceDashboard() {
   return (
     <div className=" p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">
-          DEPARTMENTAL AVERAGE
-        </h3>
+        <h3 className="text-lg font-bold text-black">DEPARTMENTAL AVERAGE</h3>
         <span className="flex items-center">
-          <FcBarChart />
+          <DataDateAccess />
         </span>
       </div>
-      <DataDateAccess />
-      <ResponsiveContainer height={320}>
-        <BarChart
-          data={organizationalChart}>
+      <ResponsiveContainer height={250}>
+        <BarChart data={organizationalChart}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="departmentName"
-          />
+          <XAxis dataKey="departmentName" />
           <YAxis />
           <Tooltip />
           <Bar dataKey="average" fill="rgb(20 83 45)" />
@@ -73,15 +67,12 @@ export function PerformanceMatrixDashboard() {
   return (
     <div className="p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">
-          PERFORMANCE MATRIX
-        </h3>
+        <h3 className="text-lg font-bold text-black">PERFORMANCE MATRIX</h3>
         <span className="flex items-center">
-          <FcComboChart />
+          <DataDateAccess />
         </span>
       </div>
-      <DataDateAccess />
-      <ResponsiveContainer height={320}>
+      <ResponsiveContainer height={250}>
         <ComposedChart data={performanceMatrixChart}>
           <YAxis />
           <Tooltip />
@@ -109,7 +100,7 @@ export function GeneralPerformanceDashboard() {
 
   return (
     <div>
-      <div className="p-7 mt-5  pt-5  bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
+      <div className="p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
         <div className="text-lg font-bold pb-4 text-black">
           General Performance
         </div>

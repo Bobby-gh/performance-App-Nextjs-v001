@@ -317,7 +317,7 @@ export function UserPerformanceSummary() {
 
 export function DataDateAccess() {
   return (
-    <div className=" mt-4">
+    <div>
       <div className="flex flex-row-reverse">
         <div className="p-3 mr -2">
           <div className="relative mb-2" data-te-input-wrapper-init>
