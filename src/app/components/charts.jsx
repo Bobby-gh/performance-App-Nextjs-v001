@@ -48,10 +48,11 @@ export function OrganizationPerformanceDashboard() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="departmentName"
+            tickFormatter={(tick) => (tick === '0' ? '' : tick)}
           />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="average" fill="rgb(22 163 74)" />
+          <Bar dataKey="average" fill="rgb(20 83 45)" />
         </BarChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -86,9 +87,9 @@ export function PerformanceMatrixDashboard() {
           <YAxis />
           <Tooltip />
           <XAxis dataKey="departmentName" />
-          <Bar dataKey="achieved" fill="rgb(22 163 74)" />
-          <Bar dataKey="partiallyAchieved" fill="rgb(202 138 4)" />
-          <Line dataKey="notAchieved" stroke="rgb(239 68 68)" fill="red" />
+          <Bar dataKey="achieved" fill="rgb(20 83 45)" />
+          <Bar dataKey="partiallyAchieved" fill="rgb(234 179 8)" />
+          <Bar dataKey="notAchieved" stroke="rgb(127 29 29)" fill="red" />
         </ComposedChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -123,7 +124,7 @@ export function GeneralPerformanceDashboard() {
             endAngle={110}
             innerRadius={90}
             outerRadius={120}
-            fill="#8884d8"
+            fill="rgb(20 83 45)"
             datakey="overallAverage"
             sx={(theme) => ({
               [`& .${gaugeClasses.valueText}`]: {
