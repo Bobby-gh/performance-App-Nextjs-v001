@@ -42,27 +42,15 @@ export function OrganizationPerformanceDashboard() {
       </div>
       <DataDateAccess />
       <ResponsiveContainer height={355}>
-        <LineChart
-          data={organizationalChart}
-          interval={0}
-          angle={-45}
-          textAnchor="end">
+        <BarChart
+          data={organizationalChart}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="departmentName"
-            interval={0}
-            angle={-45}
-            textAnchor="end"
           />
-          <YAxis />
           <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="average"
-            stroke="#8884d8"
-            strokeWidth={2}
-          />
-        </LineChart>
+          <Bar dataKey="average" fill="rgb(22 163 74)" />
+        </BarChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
       <div className="mt-4 flex items-center">
