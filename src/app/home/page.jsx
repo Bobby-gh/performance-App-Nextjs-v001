@@ -22,7 +22,7 @@ export default function dashboard() {
         <div className="flex-2 w-full lg:w-2/3">
           <OrganizationPerformanceDashboard />
         </div>
-        <div className="flex-1 w-full lg:w-1/3">
+        <div className="flex-1 w-full h-full lg:w-1/3">
           <GeneralPerformanceDashboard />
         </div>
       </section>
