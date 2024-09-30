@@ -32,9 +32,9 @@ export function OrganizationPerformanceDashboard() {
   }
 
   return (
-    <div className=" p-7 mt-5 pt-5 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
+    <div className=" p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold pb-4 text-black">
+        <h3 className="text-lg font-bold text-black">
           DEPARTMENTAL AVERAGE
         </h3>
         <span className="flex items-center">
@@ -48,7 +48,6 @@ export function OrganizationPerformanceDashboard() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="departmentName"
-            tickFormatter={(tick) => (tick === '0' ? '' : tick)}
           />
           <YAxis />
           <Tooltip />
@@ -72,9 +71,9 @@ export function PerformanceMatrixDashboard() {
   }
 
   return (
-    <div className="p-7 mt-5  pt-5  bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
+    <div className="p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold pb-4 text-black">
+        <h3 className="text-lg font-bold text-black">
           PERFORMANCE MATRIX
         </h3>
         <span className="flex items-center">
