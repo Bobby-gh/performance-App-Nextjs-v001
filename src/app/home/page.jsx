@@ -9,8 +9,8 @@ export default function dashboard() {
       <LoadingPopup/>
       <div className="mb-4">Dashboard</div>
       <InformationalSummary />
-      <div className="grid xl:grid-cols-3 gap-4">
-        <div className="xl:col-span-2  space-y-6">
+      <div className="grid xl:grid-cols-3 gap-4 mt-6">
+        <div className="xl:col-span-2 space-y-6">
           <OrganizationPerformanceDashboard />
           <PerformanceMatrixDashboard/>
         </div>
