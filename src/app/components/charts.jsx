@@ -42,7 +42,7 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <DataDateAccess />
-      <ResponsiveContainer height={355}>
+      <ResponsiveContainer height={220}>
         <BarChart
           data={organizationalChart}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -82,7 +82,7 @@ export function PerformanceMatrixDashboard() {
         </span>
       </div>
       <DataDateAccess />
-      <ResponsiveContainer height={340}>
+      <ResponsiveContainer height={220}>
         <ComposedChart data={performanceMatrixChart}>
           <YAxis />
           <Tooltip />
