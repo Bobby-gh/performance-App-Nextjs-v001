@@ -26,6 +26,7 @@ import { DataDateAccess } from "./infocards";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart, error } = useOrganizationalChartRouteData();
+  console.log(organizationalChart)
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -48,6 +49,7 @@ export function OrganizationPerformanceDashboard() {
           <XAxis
             dataKey="departmentName"
           />
+          <YAxis />
           <Tooltip />
           <Bar dataKey="average" fill="rgb(22 163 74)" />
         </BarChart>
