@@ -1,24 +1,34 @@
 import React from "react";
-import {InformationalSummary, UserPerformanceSummary } from "../components/infocards";
-import { GeneralPerformanceDashboard, OrganizationPerformanceDashboard, PerformanceMatrixDashboard } from "../components/charts";
+import {
+  InformationalSummary,
+  UserPerformanceSummary,
+} from "../components/infocards";
+import {
+  GeneralPerformanceDashboard,
+  OrganizationPerformanceDashboard,
+  PerformanceMatrixDashboard,
+} from "../components/charts";
 import { LoadingPopup } from "../api/sessions";
 
 export default function dashboard() {
   return (
-    <main className="m-4">
-      <LoadingPopup/>
-      <div className="mb-4">Dashboard</div>
-      <InformationalSummary />
-      <div className="grid xl:grid-cols-3 gap-4 mt-6">
-        <div className="xl:col-span-2 space-y-6">
+    <main className="p-4">
+      <LoadingPopup />
+      <header className="mb-4 text-xl font-semibold">Dashboard</header>
+      <section className="mb-6">
+        <InformationalSummary />
+      </section>
+      <section className="flex gap-4">
+        <div className="flex-2 w-full lg:w-2/3">
           <OrganizationPerformanceDashboard />
-          <PerformanceMatrixDashboard/>
         </div>
-        <div>
-          <GeneralPerformanceDashboard/>
-          <UserPerformanceSummary/>
+        <div className="flex-1 w-full lg:w-1/3">
+          <GeneralPerformanceDashboard />
         </div>
-      </div>
+      </section>
+      <section className="mt-6">
+        <PerformanceMatrixDashboard />
+      </section>
     </main>
   );
 }
