@@ -32,7 +32,7 @@ export function OrganizationPerformanceDashboard() {
   }
 
   return (
-    <div className=" p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
+    <div className=" p-7 bg-white shadow-lg shadow-blue-200 rounded-lg">
       <div className="flex justify-between">
         <h3 className="text-lg font-bold text-black">DEPARTMENTAL AVERAGE</h3>
         <span className="flex items-center">
@@ -100,7 +100,7 @@ export function GeneralPerformanceDashboard() {
 
   return (
     <div>
-      <div className="p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
+      <div className="p-7 bg-white shadow-lg shadow-blue-200 rounded-lg">
         <div className="text-lg font-bold pb-8 text-black">
           General Performance
         </div>
