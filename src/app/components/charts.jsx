@@ -107,7 +107,7 @@ export function GeneralPerformanceDashboard() {
         <div className="flex items-center">
           <Gauge
             value={generalPerformance}
-            height="100%"
+            height={250}
             cx="50%"
             cy="50%"
             startAngle={-110}
