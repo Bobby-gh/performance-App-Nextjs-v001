@@ -205,6 +205,7 @@ export function useOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
   const [error, setError] = useState(null);
+  console.log(organizationaldata)
   const organizationalChart = [
     { month: "0", average_performance: 0 },
     ...organizationaldata,
