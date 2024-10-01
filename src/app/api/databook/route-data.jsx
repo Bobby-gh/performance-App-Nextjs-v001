@@ -53,7 +53,6 @@ export function useDepartmentGoalRouteData() {
 export function useEmployeesRouteData() {
   const { auth } = useContext(AuthContext);
   const [employeetable, setEmployeetable] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +86,6 @@ export function useEmployeesGoalRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching goal count data...");
         const response = await axios.get(EMPLOYEES_GOALS_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -115,7 +113,6 @@ export function useDepartmentRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching goal count data...");
         const response = await axios.get(DEPARTMENTS_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -152,7 +149,6 @@ export function useDepartmentGoalAccessmentRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching goal count data...");
         const response = await axios.get(DEPARTMENT_GOAL_ASSESSMENT_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -163,7 +159,7 @@ export function useDepartmentGoalAccessmentRouteData() {
         console.log(response);
         setDepartAssessment(response.data.assessments);
       } catch (err) {
-        setError(err);
+        console.log(err);
       }
     };
 
@@ -176,12 +172,10 @@ export function useDepartmentGoalAccessmentRouteData() {
 export function useGeneralPerformanceChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [generalPerformance, setGeneralPerformance] = useState("");
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching goal count data...");
         const response = await axios.get(GENERAL_PERFORMANCE_CHART_URL, {
           headers: {
             "Content-Type": "application/json",
@@ -191,7 +185,7 @@ export function useGeneralPerformanceChartRouteData() {
         });
         setGeneralPerformance(response.data.overallAverage);
       } catch (err) {
-        setError(err);
+        console.log(err);
       }
     };
 
@@ -204,7 +198,6 @@ export function useGeneralPerformanceChartRouteData() {
 export function useOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
-  const [error, setError] = useState(null);
   console.log(organizationaldata)
   const organizationalChart = [
     { month: "0", average_performance: 0 },
@@ -225,7 +218,7 @@ export function useOrganizationalChartRouteData() {
         console.log(response.data)
         setOrganizationalChart(response.data);
       } catch (err) {
-        setError(err);
+        console.log(err);
       }
     };
 
@@ -242,7 +235,6 @@ export function usePerformanceMatrixChartRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching goal count data...");
         const response = await axios.get(PERFORMANCE_MATRIX_CHART_URL, {
           headers: {
             "Content-Type": "application/json",
