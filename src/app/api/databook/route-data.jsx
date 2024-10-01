@@ -205,18 +205,16 @@ export function useOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
   const [error, setError] = useState(null);
-  console.log(organizationaldata)
   const organizationalChart = [
     { month: "0", average_performance: 0 },
-    // ...organizationaldata,
+    ...organizationaldata,
   ];
   console.log(organizationaldata)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching goal count data...");
-        const response = await axios.get(ORGANIZATIONAL_CHART_URL, {
+        const response = await axios.get("https://performanceappbackendv001-production.up.railway.app/api/v1/department-performance/get-monthly-average-performance", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
