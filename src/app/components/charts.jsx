@@ -25,11 +25,9 @@ import {
 import { DataDateAccess } from "./infocards";
 
 export function OrganizationPerformanceDashboard() {
-  const { organizationalChart, error } = useOrganizationalChartRouteData();
+  const { organizationalChart} = useOrganizationalChartRouteData();
   console.log(organizationalChart);
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  
 
   return (
     <div className=" p-7 bg-white rounded-lg">
@@ -58,11 +56,8 @@ export function OrganizationPerformanceDashboard() {
 }
 
 export function PerformanceMatrixDashboard() {
-  const { performanceMatrixChart, error } =
+  const { performanceMatrixChart} =
     usePerformanceMatrixChartRouteData();
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
 
   return (
     <div className="p-7 bg-gray-200 rounded-lg">
@@ -92,11 +87,7 @@ export function PerformanceMatrixDashboard() {
 }
 
 export function GeneralPerformanceDashboard() {
-  const { generalPerformance, error } = useGeneralPerformanceChartRouteData();
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  const { generalPerformance} = useGeneralPerformanceChartRouteData();
 
   return (
     <div>

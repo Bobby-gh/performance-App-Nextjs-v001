@@ -262,7 +262,6 @@ export function useGoalCountRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching goal count data...");
         const response = await axios.get(GOAL_COUNT_URL, {
           headers: {
             "Content-Type": "application/json",
