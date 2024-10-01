@@ -72,7 +72,7 @@ export function PerformanceMatrixDashboard() {
           <DataDateAccess />
         </span>
       </div>
-      <ResponsiveContainer height={250}>
+      <ResponsiveContainer>
         <ComposedChart data={performanceMatrixChart}>
           <YAxis />
           <Tooltip />
@@ -101,13 +101,12 @@ export function GeneralPerformanceDashboard() {
   return (
     <div>
       <div className="p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
-        <div className="text-lg font-bold pb-4 text-black">
+        <div className="text-lg font-bold pb-8 text-black">
           General Performance
         </div>
         <div className="flex items-center">
           <Gauge
             value={generalPerformance}
-            height={250}
             cx="50%"
             cy="50%"
             startAngle={-110}

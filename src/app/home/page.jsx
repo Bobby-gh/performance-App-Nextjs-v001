@@ -9,6 +9,7 @@ import {
   PerformanceMatrixDashboard,
 } from "../components/charts";
 import { LoadingPopup } from "../api/sessions";
+import { AccessGoalTable } from "../components/tables";
 
 export default function dashboard() {
   return (
@@ -27,7 +28,7 @@ export default function dashboard() {
         </div>
       </section>
       <section className="mt-6">
-        <PerformanceMatrixDashboard />
+        <AccessGoalTable/>
       </section>
     </main>
   );
