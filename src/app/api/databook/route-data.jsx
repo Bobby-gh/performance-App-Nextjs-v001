@@ -206,7 +206,7 @@ export function useOrganizationalChartRouteData() {
   const [organizationaldata, setOrganizationalChart] = useState([]);
   const [error, setError] = useState(null);
   const organizationalChart = [
-    { departmentName: "0", average: 0 },
+    { month: "0", average_performance: 0 },
     ...organizationaldata,
   ];
   console.log(organizationaldata)
