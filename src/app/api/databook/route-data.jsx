@@ -19,7 +19,6 @@ import {
 export function useDepartmentGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [departmentgoal, setDepartmenttable] = useState([]);
-  const [error, setError] = useState(null);
   const departmentgoaltable = departmentgoal.map((departmentgoal) => ({
     ...departmentgoal,
     taskAssignedTo: departmentgoal.taskAssignedTo.departmentName,
@@ -40,14 +39,14 @@ export function useDepartmentGoalRouteData() {
         });
         setDepartmenttable(response.data);
       } catch (err) {
-        setError(err);
+        console.log(err);
       }
     };
 
     fetchData();
   }, [auth]);
 
-  return { departmentgoaltable, error };
+  return { departmentgoaltable};
 }
 
 export function useEmployeesRouteData() {
@@ -75,13 +74,12 @@ export function useEmployeesRouteData() {
     fetchData();
   }, [auth]);
 
-  return { employeetable, error };
+  return { employeetable };
 }
 
 export function useEmployeesGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [employeetable, setEmployeetable] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,20 +93,19 @@ export function useEmployeesGoalRouteData() {
         });
         setEmployeetable(response.data.users);
       } catch (err) {
-        setError(err);
+        console.log(err);
       }
     };
 
     fetchData();
   }, [auth]);
 
-  return { employeetable, error };
+  return { employeetable};
 }
 
 export function useDepartmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [departmenttable, setDepartmenttable] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -123,20 +120,19 @@ export function useDepartmentRouteData() {
         console.log(response);
         setDepartmenttable(response.data.departments);
       } catch (err) {
-        setError(err);
+        console.log(err);
       }
     };
 
     fetchData();
   }, [auth]);
 
-  return { departmenttable, error };
+  return { departmenttable};
 }
 
 export function useDepartmentGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [departassessment, setDepartAssessment] = useState([]);
-  const [error, setError] = useState(null);
   const departassessmenttable = departassessment.map((departassessment) => ({
     _id: data._id,
     taskAssignedTo: departassessment.goalAssessed.taskAssignedTo.departmentName,
@@ -166,7 +162,7 @@ export function useDepartmentGoalAccessmentRouteData() {
     fetchData();
   }, [auth]);
 
-  return { departassessmenttable, error };
+  return { departassessmenttable};
 }
 
 export function useGeneralPerformanceChartRouteData() {
@@ -192,7 +188,7 @@ export function useGeneralPerformanceChartRouteData() {
     fetchData();
   }, [auth]);
 
-  return { generalPerformance, error };
+  return { generalPerformance };
 }
 
 export function useOrganizationalChartRouteData() {
@@ -225,12 +221,11 @@ export function useOrganizationalChartRouteData() {
     fetchData();
   }, [auth]);
 
-  return { organizationalChart, error };
+  return { organizationalChart };
 }
 export function usePerformanceMatrixChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [performanceMatrixChart, setPerformanceMatrixChart] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -244,20 +239,19 @@ export function usePerformanceMatrixChartRouteData() {
         });
         setPerformanceMatrixChart(response.data.groupedAssessments);
       } catch (err) {
-        setError(err);
+        console.log(err);
       }
     };
 
     fetchData();
   }, [auth]);
 
-  return { performanceMatrixChart, error };
+  return { performanceMatrixChart };
 }
 
 export function useGoalCountRouteData() {
   const { auth } = useContext(AuthContext);
   const [goalCount, setGoalCount] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -271,14 +265,14 @@ export function useGoalCountRouteData() {
         });
         setGoalCount(response.data.goalRatings);
       } catch (err) {
-        setError(err);
+        console.log(err);
       }
     };
 
     fetchData();
   }, [auth]);
 
-  return { goalCount, error };
+  return { goalCount};
 }
 
 /************************************************Post ROutes*************************************/

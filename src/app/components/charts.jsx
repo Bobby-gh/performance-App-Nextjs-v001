@@ -132,7 +132,7 @@ export function GeneralPerformanceDashboard() {
 }
 
 export function ProgressBarChat() {
-  const { performanceMatrixChart, error } =
+  const { performanceMatrixChart } =
     usePerformanceMatrixChartRouteData();
   return (
     <div className="p-3 card">
@@ -163,7 +163,7 @@ export function ProgressBarChat() {
 }
 
 export function InProgressVsCompleted() {
-  const { performanceMatrixChart, error } =
+  const { performanceMatrixChart } =
     usePerformanceMatrixChartRouteData();
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
