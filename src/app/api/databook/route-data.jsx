@@ -222,6 +222,7 @@ export function useOrganizationalChartRouteData() {
           },
           withCredentials: true,
         });
+        console.log(response.data)
         setOrganizationalChart(response.data);
       } catch (err) {
         setError(err);
