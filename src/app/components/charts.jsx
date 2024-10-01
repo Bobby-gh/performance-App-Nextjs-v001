@@ -65,7 +65,7 @@ export function PerformanceMatrixDashboard() {
   }
 
   return (
-    <div className="p-7 bg-gray-200 shadow-lg shadow-blue-200 rounded-lg">
+    <div className="p-7 bg-gray-200 rounded-lg">
       <div className="flex justify-between">
         <h3 className="text-lg font-bold text-black">PERFORMANCE MATRIX</h3>
         <span className="flex items-center">
@@ -100,14 +100,14 @@ export function GeneralPerformanceDashboard() {
 
   return (
     <div>
-      <div className="p-7 bg-white shadow-lg shadow-blue-200 rounded-lg">
+      <div className="p-7 bg-white rounded-lg">
         <div className="text-lg font-bold pb-8 text-black">
           General Performance
         </div>
         <div className="flex items-center justify-center">
           <Gauge
             value={generalPerformance}
-            height={290}
+            height={320}
             cx="50%"
             cy="50%"
             startAngle={-110}
