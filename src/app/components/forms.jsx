@@ -32,6 +32,7 @@ export function LoginForm() {
         }
       );
       if (response.request.status === 200) {
+        console.log(response.data.response.token)
         setAuth({
           token: response.data.response.token,
           role: response.data.response.userRole,
@@ -43,6 +44,7 @@ export function LoginForm() {
       setLoading(false);
     }
   };
+  
 
   return (
     <main className="w-96">
