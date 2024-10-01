@@ -40,13 +40,13 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={250}>
-        <BarChart data={organizationalChart}>
+        <LineChart data={organizationalChart}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="departmentName" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="average" fill="rgb(20 83 45)" />
-        </BarChart>
+          <Line dataKey="average" fill="rgb(20 83 45)" />
+        </LineChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
       <div className="mt-4 flex items-center">
@@ -107,7 +107,7 @@ export function GeneralPerformanceDashboard() {
         <div className="flex items-center">
           <Gauge
             value={generalPerformance}
-            height={250}
+            height={270}
             cx="50%"
             cy="50%"
             startAngle={-110}
