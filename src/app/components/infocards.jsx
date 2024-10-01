@@ -17,7 +17,7 @@ export function InformationalSummary() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
-      <div className="card shadow-lg bg-white rounded-lg p-4 border border-2 border-slate-400">
+      <div className="card  bg-white rounded-lg p-4 border border-2 border-slate-400">
         <div className="flex justify-between">
           <span className="p-4 bg-green-900 rounded-lg">
             <FaTrophy />
@@ -33,7 +33,7 @@ export function InformationalSummary() {
           <span className="ml-2">than last Month</span>
         </div>
       </div>
-      <div className="card shadow-lg bg-white rounded-lg p-4 border border-2 border-slate-400">
+      <div className="card  bg-white rounded-lg p-4 border border-2 border-slate-400">
         <div className="flex justify-between">
           <span className="p-4 bg-yellow-500 rounded-lg">
             <FaThumbsUp />
@@ -49,7 +49,7 @@ export function InformationalSummary() {
           <span className="ml-2">than last Month</span>
         </div>
       </div>
-      <div className="card shadow-lg  bg-white rounded-lg p-4 border border-2 border-slate-400">
+      <div className="card  bg-white rounded-lg p-4 border border-2 border-slate-400">
         <div className="flex justify-between">
           <span className="p-4 bg-red-900 rounded-lg">
             <FaThumbsDown />
