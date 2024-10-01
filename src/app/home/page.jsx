@@ -27,7 +27,7 @@ export default function dashboard() {
           <GeneralPerformanceDashboard />
         </div>
       </section>
-      <section className="mt-6 card bg-white">
+      <section className="mt-6 card bg-white rounded-lg">
         <AccessGoalTable/>
       </section>
     </main>
