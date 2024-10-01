@@ -45,7 +45,7 @@ export function OrganizationPerformanceDashboard() {
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Line dataKey="average_performance" fill="rgb(20 83 45)" />
+          <Line dataKey="average_performance" type="monotone" stroke="#8884d8"/>
         </LineChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
