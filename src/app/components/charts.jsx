@@ -104,7 +104,7 @@ export function GeneralPerformanceDashboard() {
         <div className="text-lg font-bold pb-8 text-black">
           General Performance
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center justify-center">
           <Gauge
             value={generalPerformance}
             height={270}
