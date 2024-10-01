@@ -217,6 +217,7 @@ export function useOrganizationalChartRouteData() {
           },
           withCredentials: true,
         });
+        console.log(response)
         setOrganizationalChart(response.data.departmentAverages);
       } catch (err) {
         setError(err);
