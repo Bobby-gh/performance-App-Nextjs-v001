@@ -42,10 +42,10 @@ export function OrganizationPerformanceDashboard() {
       <ResponsiveContainer height={250}>
         <LineChart data={organizationalChart}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="departmentName" />
+          <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Line dataKey="average" fill="rgb(20 83 45)" />
+          <Line dataKey="average_performance" fill="rgb(20 83 45)" />
         </LineChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
