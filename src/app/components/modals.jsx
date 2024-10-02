@@ -1,10 +1,12 @@
 'use client'
 import { Box, CircularProgress, Modal, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { AuthContext } from "../contex/context-context";
 
 export function LogOut() {
+  const {clearAuth} = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -17,6 +19,7 @@ export function LogOut() {
 
     try {
       router.push("/", { scroll: false });
+      clearAuth()
     } catch (error) {
       console.log(error);
     } finally {
