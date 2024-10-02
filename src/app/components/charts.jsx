@@ -38,13 +38,13 @@ export function OrganizationPerformanceDashboard() {
         </span>
       </div>
       <ResponsiveContainer height={250}>
-        <LineChart data={organizationalChart}>
+        <BarChart data={organizationalChart}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Line dataKey="average_performance" type="monotone" stroke="#8884d8"/>
-        </LineChart>
+          <Bar dataKey="average_performance" fill="rgb(148 163 184)"/>
+        </BarChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
       <div className="mt-4 flex items-center">
