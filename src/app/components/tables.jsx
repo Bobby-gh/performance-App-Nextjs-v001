@@ -48,7 +48,7 @@ export function MonitorGoalTable() {
   const { departmentgoaltable } = useDepartmentGoalRouteData();
   return (
     <div>
-      <div style={{ height: 450 }}>
+      <div>
         <DataGrid
           rows={departmentgoaltable}
           columns={accessinggoalcolumn}
