@@ -19,7 +19,7 @@ export function InformationalSummary() {
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
       <div className="card  bg-white rounded-lg p-4">
         <div className="flex justify-between mb-16">
-          <span className="p-4 bg-green-900 rounded-lg">
+          <span className="p-4 bg-slate-400 rounded-lg">
             <FaTrophy size={20} />
           </span>
           <span className="flex flex-col items-end">
@@ -35,7 +35,7 @@ export function InformationalSummary() {
       </div>
       <div className="card  bg-white rounded-lg p-4">
         <div className="flex justify-between mb-16">
-          <span className="p-4 bg-yellow-500 rounded-lg">
+          <span className="p-4 bg-slate-400 rounded-lg">
             <FaThumbsUp size={20} />
           </span>
           <span className="flex flex-col items-end">
@@ -51,7 +51,7 @@ export function InformationalSummary() {
       </div>
       <div className="card  bg-white rounded-lg p-4">
         <div className="flex justify-between mb-16">
-          <span className="p-4 bg-red-900 rounded-lg">
+          <span className="p-4 bg-slate-400 rounded-lg">
             <FaThumbsDown size={20} />
           </span>
           <span className="flex flex-col items-end">

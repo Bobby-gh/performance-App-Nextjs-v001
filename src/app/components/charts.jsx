@@ -105,7 +105,7 @@ export function GeneralPerformanceDashboard() {
             endAngle={110}
             innerRadius={90}
             outerRadius={120}
-            fill="rgb(20 83 45)"
+            fill="rgb(148 163 184)"
             datakey="overallAverage"
             sx={(theme) => ({
               [`& .${gaugeClasses.valueText}`]: {
