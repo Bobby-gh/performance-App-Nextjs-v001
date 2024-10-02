@@ -18,9 +18,9 @@ export function InformationalSummary() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
       <div className="card  bg-white rounded-lg p-4 border border-2 border-slate-400">
-        <div className="flex justify-between mb-12">
+        <div className="flex justify-between mb-16">
           <span className="p-4 bg-green-900 rounded-lg">
-            <FaTrophy />
+            <FaTrophy size={24} />
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-green-900">Achieved Goals</h3>
