@@ -99,6 +99,28 @@ export function AccessGoalTable() {
     </div>
   );
 }
+
+export function TopDepartmentTable() {
+  // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
+  const { departmentgoaltable } = useDepartmentGoalRouteData();
+  return (
+    <div>
+      <div>
+        <DataGrid
+          rows={departmentgoaltable}
+          columns={accessinggoalcolumn}
+          getRowId={(row) => row._id}
+          sx={{
+            border: 0,
+            borderRadius: 2,
+            p: 2,
+            minWidth: 300,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
 export function EmployeeTable() {
   const { employeetable } = useEmployeesRouteData();
 
