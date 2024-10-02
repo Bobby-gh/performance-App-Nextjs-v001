@@ -12,7 +12,7 @@ export default function Employees() {
         <div className="text-xl font-bold text-blue-500">Organizational Employees</div>
       </div>
       <AddUser/>
-      <div className="mt-16 bg-blue-100 shadow-lg shadow-blue-200 rounded-lg">
+      <div className="mt-16 bg-white rounded-lg">
         <EmployeeTable /> 
       </div>
     </main>

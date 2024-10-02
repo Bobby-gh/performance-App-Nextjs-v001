@@ -23,7 +23,7 @@ export default function GoalMonitoring() {
             <InProgressVsCompleted />
           </div>
         </div>
-        <div className="mt-16 bg-blue-100 shadow-lg shadow-blue-200 rounded-lg">
+        <div className="mt-16 bg-white rounded-lg">
           <MonitorGoalTable />
         </div>
       </div>
