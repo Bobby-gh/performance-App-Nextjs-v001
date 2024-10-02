@@ -20,7 +20,7 @@ export function InformationalSummary() {
       <div className="card  bg-white rounded-lg p-4 border border-2 border-slate-400">
         <div className="flex justify-between mb-16">
           <span className="p-4 bg-green-900 rounded-lg">
-            <FaTrophy size={24} />
+            <FaTrophy size={12} />
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-green-900">Achieved Goals</h3>
