@@ -112,7 +112,7 @@ export function GeneralPerformanceDashboard() {
                 fontSize: 40,
               },
               [`& .${gaugeClasses.valueArc}`]: {
-                fill: "#52b202",
+                fill: "rgb(148 163 184)",
               },
               [`& .${gaugeClasses.referenceArc}`]: {
                 fill: theme.palette.text.disabled,
