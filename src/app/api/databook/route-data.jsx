@@ -204,7 +204,7 @@ export function useOrganizationalChartRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("ORGANIZATIONAL_CHART_URL", {
+        const response = await axios.get(ORGANIZATIONAL_CHART_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
