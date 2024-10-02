@@ -23,8 +23,8 @@ export function InformationalSummary() {
             <FaTrophy />
           </span>
           <span className="flex flex-col items-end">
-            <h3 className="text-green-900 mb-6">Achieved Goals</h3>
-            <h3 className="font-bold text-3xl">{achieved}</h3>
+            <h3 className="text-green-900">Achieved Goals</h3>
+            <h3 className="font-bold text-6xl">{achieved}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
