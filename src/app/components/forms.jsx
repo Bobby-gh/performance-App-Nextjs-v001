@@ -84,8 +84,8 @@ export function LoginForm() {
               }))}
               className="border border-blue-500 rounded-lg p-4 my-2"></input>
           </div>
-          <div className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-950">
-            <button type="submit" onClick={handleSubmit} disabled={isLoading} className="px-16">
+          <div className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-950" onClick={handleSubmit}>
+            <button type="submit"  disabled={isLoading} className="px-16">
               {isLoading ? (
                 <div className="flex flex-row justify-center">
                   <p className="text-sm pr-2">Loading</p>
