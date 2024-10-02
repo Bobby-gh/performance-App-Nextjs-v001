@@ -34,13 +34,13 @@ export function InformationalSummary() {
         </div>
       </div>
       <div className="card  bg-white rounded-lg p-4 border border-2 border-slate-400">
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-16">
           <span className="p-4 bg-yellow-500 rounded-lg">
-            <FaThumbsUp />
+            <FaThumbsUp size={20} />
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-yellow-500">Partially Achieved Goals</h3>
-            <h3 className="font-bold text-xl">{partiallyAchieved}</h3>
+            <h3 className="font-bold text-3xl">{partiallyAchieved}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -50,13 +50,13 @@ export function InformationalSummary() {
         </div>
       </div>
       <div className="card  bg-white rounded-lg p-4 border border-2 border-slate-400">
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-16">
           <span className="p-4 bg-red-900 rounded-lg">
-            <FaThumbsDown />
+            <FaThumbsDown size={20} />
           </span>
           <span className="flex flex-col items-end">
             <h3 className="text-red-900">Unachieved Goals</h3>
-            <h3 className="font-bold text-xl">{notAchieved}</h3>
+            <h3 className="font-bold text-3xl">{notAchieved}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
