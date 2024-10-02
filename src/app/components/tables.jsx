@@ -19,7 +19,7 @@ export function GoalTable() {
   const { departmentgoaltable } = useDepartmentGoalRouteData();
   return (
     <div>
-      <div style={{ height: 800 }}>
+      <div>
         <DataGrid
           rows={departmentgoaltable}
           columns={goalsettingcolumn}
@@ -76,7 +76,7 @@ export function AccessGoalTable() {
   const { departmentgoaltable } = useDepartmentGoalRouteData();
   return (
     <div>
-      <div style={{ height: 650 }}>
+      <div>
         <DataGrid
           rows={departmentgoaltable}
           columns={accessinggoalcolumn}
@@ -126,7 +126,7 @@ export function EmployeeTable() {
 
   return (
     <div>
-      <div style={{ height: 650 }}>
+      <div>
         <DataGrid
           rows={employeetable}
           columns={usercolumn}
@@ -154,7 +154,7 @@ export function DepartmentTable() {
   console.log(departmenttable);
   return (
     <div>
-      <div style={{ height: 650 }}>
+      <div>
         <DataGrid
           rows={departmenttable}
           columns={departmentcolumn}
