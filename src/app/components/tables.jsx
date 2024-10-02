@@ -110,6 +110,12 @@ export function TopDepartmentTable() {
           rows={departmentgoaltable}
           columns={accessinggoalcolumn}
           getRowId={(row) => row._id}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[10, 15]}
           sx={{
             border: 0,
             borderRadius: 2,
@@ -151,7 +157,6 @@ export function EmployeeTable() {
 }
 export function DepartmentTable() {
   const { departmenttable } = useDepartmentRouteData();
-  console.log(departmenttable);
   return (
     <div>
       <div>
