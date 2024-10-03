@@ -11,3 +11,7 @@ body {
   background-color: rgb(243, 243, 243);
 }
 
+.header-department {
+  background-color: #929da9 !important;
+  color: white !important;
+}

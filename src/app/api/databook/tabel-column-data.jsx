@@ -35,7 +35,7 @@ export const goalsettingcolumn = [
 ];
 
 export const accessinggoalcolumn = [
-  { field: "taskAssignedTo", headerName: "Department", flex: 1 },
+  { field: "taskAssignedTo", headerName: "Department", flex: 1, headerClassName: "header-department" },
   { field: "goalTitle", headerName: "Goal Name", flex: 1 },
   { field: "goalDeadline", headerName: "End Date", flex: 1 },
 
