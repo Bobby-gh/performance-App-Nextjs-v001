@@ -122,7 +122,7 @@ export function TopDepartmentTable() {
             minWidth: 300,
             "& .MuiDataGrid-columnHeaders": {
               backgroundColor: "#929da9 !important", 
-              color: "black", 
+              color: "white", 
             },
           }}
         />
