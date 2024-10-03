@@ -101,7 +101,6 @@ export function AccessGoalTable() {
 }
 
 export function TopDepartmentTable() {
-  // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
   const { departmentgoaltable } = useDepartmentGoalRouteData();
   return (
     <div>
@@ -122,8 +121,8 @@ export function TopDepartmentTable() {
             p: 2,
             minWidth: 300,
             "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: "#929da9 !important", // Use camelCase for background-color
-              color: "black", // color property is fine as it is
+              backgroundColor: "#929da9 !important", 
+              color: "black", 
             },
           }}
         />
