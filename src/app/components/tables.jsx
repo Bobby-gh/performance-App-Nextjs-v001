@@ -120,10 +120,6 @@ export function TopDepartmentTable() {
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: "#929da9 !important", 
-              color: "white", 
-            },
           }}
         />
       </div>
