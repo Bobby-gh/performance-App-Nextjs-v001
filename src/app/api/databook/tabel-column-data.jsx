@@ -35,15 +35,16 @@ export const goalsettingcolumn = [
 ];
 
 export const accessinggoalcolumn = [
-  { field: "taskAssignedTo", headerName: "Department", flex: 1, headerClassName: "header-department" },
-  { field: "goalTitle", headerName: "Goal Name", flex: 1 },
-  { field: "goalDeadline", headerName: "End Date", flex: 1 },
+  { field: "taskAssignedTo", headerName: "Department", flex: 1, headerClassName: "header-table" },
+  { field: "goalTitle", headerName: "Goal Name", flex: 1, headerClassName: "header-table" },
+  { field: "goalDeadline", headerName: "End Date", flex: 1, headerClassName: "header-table" },
 
-  { field: "performancePercent", headerName: "Score(%)", flex: 0.5 },
-  { field: "rating", headerName: "Remark", flex: 0.5 },
+  { field: "performancePercent", headerName: "Score(%)", flex: 0.5, headerClassName: "header-table" },
+  { field: "rating", headerName: "Remark", flex: 0.5, headerClassName: "header-table" },
   {
     field: "detail",
     headerName: "Detail",
+    headerClassName: "header-table",
     flex: 0.5,
     renderCell: (params) => {
       const handleEditClick = () => {

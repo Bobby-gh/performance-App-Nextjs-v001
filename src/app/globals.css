@@ -7,11 +7,11 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
-.MuiDataGrid-row:nth-child(odd) {
+.MuiDataGrid-row:nth-child(even) {
   background-color: rgb(243, 243, 243);
 }
 
-.header-department {
+.header-table {
   background-color: #929da9 !important;
   color: white !important;
 }
