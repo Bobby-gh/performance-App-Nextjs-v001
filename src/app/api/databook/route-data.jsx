@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../contex/context-context";
 import axios from "../axios";
 import {
+  CREATE_DEPRATMENT,
   DEPARTMENTS_URL,
   DEPARTMENT_GOALS_URL,
   DEPARTMENT_GOAL_ASSESSMENT_URL,
@@ -276,3 +277,30 @@ export function useGoalCountRouteData() {
 }
 
 /************************************************Post ROutes*************************************/
+
+export function useCreateDepartment() {
+  const { auth } = useContext(AuthContext);
+
+    const createDepartment = async (departmentName) => {
+      try {
+        const response = await axios.post(
+          CREATE_DEPRATMENT,
+          JSON.stringify({
+            departmentName
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + auth.token,
+            },
+            withCredentials: true,
+          }
+        );
+        return response
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+  return { createDepartment};
+}

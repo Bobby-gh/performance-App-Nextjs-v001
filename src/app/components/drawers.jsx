@@ -6,6 +6,7 @@ import axios from "../api/axios";
 import { useState } from "react";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useCreateDepartment } from "../api/databook/route-data";
 
 export function CreateGoal() {
   const [departments, setDepartments] = useState([]);
@@ -620,35 +621,19 @@ export function Userforms(props) {
 export function Departmentforms() {
   const [name, setName] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const {createDepartment} = useCreateDepartment()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      await axios.post(
-        DEPARTMENTS_URL,
-        {
-          departmentName: name,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-          withCredentials: true,
-        }
-      );
-      alert("New Department created successfully");
-      handleClose();
-      reload();
-    } catch (error) {
-      alert(error);
-      handleClose();
-      reload();
-    } finally {
-      setLoading(false);
-    }
+    const response = await createDepartment({
+      departmentName : name,
+    })
+    console.log(response)
+
+    setLoading(false);
+    
   };
 
   const reload = () => {
