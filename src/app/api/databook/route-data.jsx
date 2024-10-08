@@ -282,6 +282,7 @@ export function useCreateDepartment() {
   const { auth } = useContext(AuthContext);
 
     const createDepartment = async (departmentName) => {
+      console.log(departmentName)
       try {
         const response = await axios.post(
           CREATE_DEPRATMENT,
