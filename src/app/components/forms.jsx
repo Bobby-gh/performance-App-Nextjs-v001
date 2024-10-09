@@ -32,7 +32,6 @@ export function LoginForm() {
         }
       );
       if (response.request.status === 200) {
-        console.log(response)
         setAuth({
           token: response.data.token,
         });
