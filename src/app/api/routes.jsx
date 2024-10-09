@@ -1,5 +1,5 @@
 
-export const DEPARTMENT_GOALS_URL ="/department-goals"
+export const GOALS_URL ="/goals"
 export const DEPARTMENTS_URL = "/departments/more-details"
 export const EMPLOYEES_GOALS_URL = "/employee-goals"
 export const EMPLOYEES_URL = "/users"

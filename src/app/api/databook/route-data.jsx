@@ -17,7 +17,7 @@ import {
 
 /************************************************Get ROutes*************************************/
 
-export function useDepartmentGoalRouteData() {
+export function useGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [departmentgoal, setDepartmenttable] = useState([]);
   const departmentgoaltable = departmentgoal.map((departmentgoal) => ({
@@ -30,8 +30,7 @@ export function useDepartmentGoalRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching goal count data...");
-        const response = await axios.get(DEPARTMENT_GOALS_URL, {
+        const response = await axios.get(GOALS_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
