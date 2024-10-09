@@ -34,8 +34,7 @@ export function LoginForm() {
       if (response.request.status === 200) {
         console.log(response)
         setAuth({
-          token: response.data.response.token,
-          role: response.data.response.userRole,
+          token: response.data.token,
         });
       }
     } catch (err) {
