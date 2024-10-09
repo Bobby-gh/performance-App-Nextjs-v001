@@ -96,7 +96,7 @@ export function LoginForm() {
             </button>
           </div>
         </form>
-        {auth.token && auth.role && router.push('/home', { scroll: false })}
+        {auth.token && router.push('/home', { scroll: false })}
       </div>
     </main>
   );
