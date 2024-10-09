@@ -13,10 +13,11 @@ import {
   useDepartmentRouteData,
   useEmployeesGoalRouteData,
   useEmployeesRouteData,
+  useGoalRouteData,
 } from "../api/databook/route-data";
 
 export function GoalTable() {
-  const { departmentgoaltable } = useDepartmentGoalRouteData();
+  const { departmentgoaltable } = useGoalRouteData();
   return (
     <div>
       <div>
@@ -45,7 +46,7 @@ export function GoalTable() {
 
 export function MonitorGoalTable() {
   // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
-  const { departmentgoaltable } = useDepartmentGoalRouteData();
+  const { departmentgoaltable } = useGoalRouteData();
   return (
     <div>
       <div>
@@ -73,7 +74,7 @@ export function MonitorGoalTable() {
 }
 export function AccessGoalTable() {
   // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
-  const { departmentgoaltable } = useDepartmentGoalRouteData();
+  const { departmentgoaltable } = useGoalRouteData();
   return (
     <div>
       <div>
@@ -101,7 +102,7 @@ export function AccessGoalTable() {
 }
 
 export function TopDepartmentTable() {
-  const { departmentgoaltable } = useDepartmentGoalRouteData();
+  const { departmentgoaltable } = useGoalRouteData();
   return (
     <div>
       <div>
