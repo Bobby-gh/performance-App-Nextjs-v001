@@ -200,7 +200,6 @@ export function useOrganizationalChartRouteData() {
     { month: "0", average_performance: 0 },
     ...organizationaldata,
   ];
-  console.log(organizationaldata)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -212,7 +211,6 @@ export function useOrganizationalChartRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response.data)
         setOrganizationalChart(response.data);
       } catch (err) {
         console.log(err);
