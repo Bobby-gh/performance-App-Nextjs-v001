@@ -10,7 +10,7 @@ import { useCreateDepartment, useDepartmentRouteData } from "../api/databook/rou
 import { GOALS_URL } from "../api/routes";
 
 export function CreateGoal() {
-  // const [allDepartments] = useDepartmentRouteData();
+  const {allDepartments} = useDepartmentRouteData();
   const [departments, setDepartments] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -21,6 +21,7 @@ export function CreateGoal() {
     endDate: "",
     department: "",
   });
+  console.log(allDepartments)
 
 
   const handleSubmit = async (e) => {

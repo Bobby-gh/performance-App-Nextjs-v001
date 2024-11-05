@@ -26,7 +26,6 @@ import { DataDateAccess } from "./infocards";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart} = useOrganizationalChartRouteData();
-  console.log(organizationalChart);
   
 
   return (
