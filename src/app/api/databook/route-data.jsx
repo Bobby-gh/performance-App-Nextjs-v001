@@ -91,6 +91,7 @@ export function useDepartmentRouteData() {
           },
           withCredentials: true,
         });
+        console.log(response.data.departments)
         setDepartmenttable(response);
       } catch (err) {
         console.log(err);
