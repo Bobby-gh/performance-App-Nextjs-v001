@@ -1,15 +1,15 @@
 "use client";
 import * as React from "react";
-import { useState} from "react";
+import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
 import { LOGIN_URL } from "../api/routes";
 import axios from "../api/axios";
 import { useRouter } from "next/navigation";
-import Link from 'next/link'
+import Link from "next/link";
 
 export function LoginForm() {
-  const router = useRouter()
+  const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const { auth, setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
@@ -38,12 +38,11 @@ export function LoginForm() {
         });
       }
     } catch (err) {
-      alert(err)
+      alert(err);
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <main className="w-96">
@@ -63,10 +62,12 @@ export function LoginForm() {
               autoComplete="off"
               type="email"
               value={userDetails.email}
-              onChange={(e) => setUserDetails(prevDetails => ({
-                ...prevDetails,
-                email: e.target.value
-              }))}
+              onChange={(e) =>
+                setUserDetails((prevDetails) => ({
+                  ...prevDetails,
+                  email: e.target.value,
+                }))
+              }
               className="border border-blue-500 rounded-lg p-4 my-2"
             />
           </div>
@@ -77,14 +78,18 @@ export function LoginForm() {
               autoComplete="off"
               type="password"
               value={userDetails.password}
-              onChange={(e) => setUserDetails(prevDetails => ({
-                ...prevDetails,
-                password: e.target.value
-              }))}
+              onChange={(e) =>
+                setUserDetails((prevDetails) => ({
+                  ...prevDetails,
+                  password: e.target.value,
+                }))
+              }
               className="border border-blue-500 rounded-lg p-4 my-2"></input>
           </div>
-          <div className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500" onClick={handleSubmit}>
-            <button type="submit"  disabled={isLoading} className="px-16">
+          <div
+            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
+            onClick={handleSubmit}>
+            <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
                 <div className="flex flex-row justify-center">
                   <p className="text-sm pr-2">Loading</p>
@@ -97,23 +102,22 @@ export function LoginForm() {
           </div>
           {/* or line */}
           <div className="flex items-center justify-center my-6">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="px-2 text-sm text-gray-500">or</span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
+            <div className="flex-grow border-t border-slate-500"></div>
+            <span className="px-2 text-sm text-gray-500">or</span>
+            <div className="flex-grow border-t border-slate-500"></div>
+          </div>
 
-
-            {/* sign up */}
-            <div className="flex justify-center items-center space-x-1">
-              <span className="text-sm text-black">Dont have an account?</span>
-              <span className="text-[#04B1C4] text-sm">
-                <Link href="/signup" prefetch={false}>
-                  Sign Up
-                </Link>
-              </span>
-            </div>
+          {/* sign up */}
+          <div className="flex justify-center items-center space-x-1">
+            <span className="text-sm text-black">Dont have an account?</span>
+            <span className="text-[#04B1C4] text-sm">
+              <Link href="/signup" prefetch={false}>
+                Sign Up
+              </Link>
+            </span>
+          </div>
         </form>
-        {auth.token && router.push('/home', { scroll: false })}
+        {auth.token && router.push("/home", { scroll: false })}
       </div>
     </main>
   );
