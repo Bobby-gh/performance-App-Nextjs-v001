@@ -3,7 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
-import { LOGIN_URL } from "../api/routes";
+import { LOGIN_URL, SIGNUP_URL } from "../api/routes";
 import axios from "../api/axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -142,7 +142,7 @@ export function SignUpForm() {
     setLoading(true);
     try {
       const response = await axios.post(
-        LOGIN_URL,
+        SIGNUP_URL,
         JSON.stringify({
           organizationEmail: userDetails.email,
           password: userDetails.password,

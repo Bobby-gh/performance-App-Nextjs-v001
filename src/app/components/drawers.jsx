@@ -23,7 +23,6 @@ export function CreateGoal() {
   });
   console.log(allDepartments)
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
