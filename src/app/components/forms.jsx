@@ -110,7 +110,7 @@ export function LoginForm() {
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
             <span className="text-sm text-black">Dont have an account?</span>
-            <span className="text-[#04B1C4] text-sm">
+            <span className="text-slate-500 text-sm">
               <Link href="/signup" prefetch={false}>
                 Sign Up
               </Link>
@@ -312,9 +312,109 @@ export function SignUpForm() {
             <span className="text-sm text-black">
               Already having an Account?
             </span>
-            <span className="text-[#04B1C4] text-sm">
+            <span className="text-slate-500 text-sm">
               <Link href="/" prefetch={false}>
                 Login In
+              </Link>
+            </span>
+          </div>
+        </form>
+        {auth.token && router.push("/home", { scroll: false })}
+      </div>
+    </main>
+  );
+}
+
+export function VerifyEmailForm() {
+  const router = useRouter();
+  const [isLoading, setLoading] = useState(false);
+  const { auth, setAuth } = React.useContext(AuthContext);
+  const [userDetails, setUserDetails] = useState({
+    token: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({
+          organizationEmail: userDetails.email,
+          password: userDetails.password,
+          companyName: userDetails.companyName,
+          country: userDetails.country,
+          addressLine: userDetails.addressLine,
+          organizationContact: userDetails.organizationContact,
+          subscriptionType: userDetails.subscriptionType,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      if (response.request.status === 200) {
+        setAuth({
+          token: response.data.token,
+        });
+      }
+    } catch (err) {
+      alert(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="w-96">
+      <div>
+        <div className="mb-4 text-xl">Activate your Account</div>
+        <div className="mb-[30%] text-sm">Enter the verification token from your email</div>
+        <form autoComplete="off ">
+          <div className="flex flex-col">
+            <label className="italic text-xs">token</label>
+            <input
+              autoComplete="off"
+              type="text"
+              value={userDetails.token}
+              onChange={(e) =>
+                setUserDetails((prevDetails) => ({
+                  ...prevDetails,
+                  token: e.target.value,
+                }))
+              }
+              className="border border-blue-500 rounded-lg p-3 my-2"
+            />
+          </div>
+          <div
+            className="flex justify-center p-3 text-white rounded-lg mt-4 bg-slate-500"
+            onClick={handleSubmit}>
+            <button type="submit" disabled={isLoading} className="px-16">
+              {isLoading ? (
+                <div className="flex flex-row justify-center">
+                  <p className="text-sm pr-2">Loading</p>
+                  <CircularProgress size={27} thickness={6} color="primary" />
+                </div>
+              ) : (
+                "Submit"
+              )}
+            </button>
+          </div>
+          {/* or line */}
+          <div className="flex items-center justify-center my-6">
+            <div className="flex-grow border-t border-slate-500"></div>
+            <span className="px-2 text-sm text-gray-500">or</span>
+            <div className="flex-grow border-t border-slate-500"></div>
+          </div>
+
+          {/* sign up */}
+          <div className="flex justify-center items-center space-x-1">
+            <span className="text-sm text-black">
+              Do you want to return
+            </span>
+            <span className="text-slate-500 text-sm">
+              <Link href="/" prefetch={false}>
+                Home?
               </Link>
             </span>
           </div>
