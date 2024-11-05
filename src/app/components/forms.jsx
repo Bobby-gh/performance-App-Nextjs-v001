@@ -130,6 +130,11 @@ export function SignUpForm() {
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
+    country: "",
+    companyName: "",
+    addressLine: "",
+    organizationContact: "",
+    subscriptionType: "",
   });
 
   const handleSubmit = async (e) => {
@@ -139,8 +144,13 @@ export function SignUpForm() {
       const response = await axios.post(
         LOGIN_URL,
         JSON.stringify({
-          email: userDetails.email,
+          organizationEmail: userDetails.email,
           password: userDetails.password,
+          companyName: userDetails.companyName,
+          country: userDetails.country,
+          addressLine: userDetails.addressLine,
+          organizationContact: userDetails.organizationContact,
+          subscriptionType: userDetails.subscriptionType,
         }),
         {
           headers: { "Content-Type": "application/json" },
@@ -162,20 +172,18 @@ export function SignUpForm() {
   return (
     <main className="w-96">
       <div>
-        <div className="flex mb-4 text-2xl">
-          Get Started
-        </div>
+        <div className="flex mb-4 text-2xl">Get Started</div>
         <form autoComplete="off">
           <div className="flex flex-col">
             <label className="italic text-xs">company name</label>
             <input
               autoComplete="off"
               type="text"
-              value={userDetails.email}
+              value={userDetails.companyName}
               onChange={(e) =>
                 setUserDetails((prevDetails) => ({
                   ...prevDetails,
-                  email: e.target.value,
+                  companyName: e.target.value,
                 }))
               }
               className="border border-blue-500 rounded-lg p-3 my-2"
@@ -186,12 +194,12 @@ export function SignUpForm() {
               <label className="italic text-xs">country</label>
               <input
                 autoComplete="off"
-                type="email"
-                value={userDetails.email}
+                type="text"
+                value={userDetails.country}
                 onChange={(e) =>
                   setUserDetails((prevDetails) => ({
                     ...prevDetails,
-                    email: e.target.value,
+                    country: e.target.value,
                   }))
                 }
                 className="border border-blue-500 rounded-lg p-3 my-2"
@@ -199,18 +207,21 @@ export function SignUpForm() {
             </div>
             <div className="flex flex-col">
               <label className="italic text-xs">subscription</label>
-              <input
-                autoComplete="off"
-                type="text"
-                value={userDetails.email}
+              <select
+                className="border border-blue-500 rounded-lg p-3 my-2"
+                value={userDetails.subscriptionType}
                 onChange={(e) =>
                   setUserDetails((prevDetails) => ({
                     ...prevDetails,
-                    email: e.target.value,
+                    subscriptionType: e.target.value,
                   }))
-                }
-                className="border border-blue-500 rounded-lg p-3 my-2"
-              />
+                }>
+                <option value="">Select ..</option>
+                <option value="Free">Free</option>
+                <option value="Basic">Basic</option>
+                <option value="Standard">Standard</option>
+                <option value="Custom">Custom</option>
+              </select>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -218,12 +229,12 @@ export function SignUpForm() {
               <label className="italic text-xs">address</label>
               <input
                 autoComplete="off"
-                type="email"
-                value={userDetails.email}
+                type="text"
+                value={userDetails.addressLine}
                 onChange={(e) =>
                   setUserDetails((prevDetails) => ({
                     ...prevDetails,
-                    email: e.target.value,
+                    addressLine: e.target.value,
                   }))
                 }
                 className="border border-blue-500 rounded-lg p-3 my-2"
@@ -234,11 +245,11 @@ export function SignUpForm() {
               <input
                 autoComplete="off"
                 type="phone"
-                value={userDetails.email}
+                value={userDetails.organizationContact}
                 onChange={(e) =>
                   setUserDetails((prevDetails) => ({
                     ...prevDetails,
-                    email: e.target.value,
+                    organizationContact: e.target.value,
                   }))
                 }
                 className="border border-blue-500 rounded-lg p-3 my-2"
@@ -298,7 +309,9 @@ export function SignUpForm() {
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
-            <span className="text-sm text-black">Already having an Account?</span>
+            <span className="text-sm text-black">
+              Already having an Account?
+            </span>
             <span className="text-[#04B1C4] text-sm">
               <Link href="/" prefetch={false}>
                 Login In
