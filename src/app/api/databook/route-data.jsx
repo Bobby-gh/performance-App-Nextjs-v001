@@ -37,7 +37,6 @@ export function useGoalRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response)
         setDepartmenttable(response.data);
       } catch (err) {
         console.log(err);
@@ -65,7 +64,6 @@ export function useEmployeesRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response);
         setEmployeetable(response.data.users);
       } catch (err) {
         console.log(err);
@@ -93,7 +91,7 @@ export function useDepartmentRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response);
+        console.log(response)
         setDepartmenttable(response.data.departments);
       } catch (err) {
         console.log(err);
@@ -128,7 +126,6 @@ export function useDepartmentGoalAccessmentRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response);
         setDepartAssessment(response.data.assessments);
       } catch (err) {
         console.log(err);

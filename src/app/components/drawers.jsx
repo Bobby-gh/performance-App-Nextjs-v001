@@ -10,7 +10,7 @@ import { useCreateDepartment, useDepartmentRouteData } from "../api/databook/rou
 import { GOALS_URL } from "../api/routes";
 
 export function CreateGoal() {
-  const [allDepartments] = useDepartmentRouteData();
+  // const [allDepartments] = useDepartmentRouteData();
   const [departments, setDepartments] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export function CreateGoal() {
     endDate: "",
     department: "",
   });
-  console.log(allDepartments)
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,9 +95,9 @@ export function CreateGoal() {
                 <option value="" disabled>
                   Select a department
                 </option>
-                {departments.map((departments) => (
-                  <option key={departments.departmentId} value={departments.departmentId}>
-                    {departments.departmentName}
+                {departments.map((department) => (
+                  <option key={department._id} value={department._id}>
+                    {department.departmentName}
                   </option>
                 ))}
               </select>
