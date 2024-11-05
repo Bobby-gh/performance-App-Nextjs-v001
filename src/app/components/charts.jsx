@@ -4,9 +4,6 @@ import {
   BarChart,
   CartesianGrid,
   ComposedChart,
-  Legend,
-  Line,
-  LineChart,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -16,7 +13,6 @@ import {
 } from "recharts";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
-import { FcComboChart, FcBarChart } from "react-icons/fc";
 import {
   useGeneralPerformanceChartRouteData,
   useOrganizationalChartRouteData,

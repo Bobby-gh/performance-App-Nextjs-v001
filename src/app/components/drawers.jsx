@@ -11,7 +11,7 @@ import { GOALS_URL } from "../api/routes";
 
 export function CreateGoal() {
   const {allDepartments} = useDepartmentRouteData();
-  const [departments, setDepartments] = useState([]);
+  const [department, setDepartments] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,7 +21,6 @@ export function CreateGoal() {
     endDate: "",
     department: "",
   });
-  console.log(allDepartments)
 
 
   const handleSubmit = async (e) => {
@@ -89,16 +88,16 @@ export function CreateGoal() {
             <div className="relative mb-6" data-te-input-wrapper-init>
               <select
                 id="department"
-                value={formData.department}
+                value={department}
                 onChange={(e) => setDepartments(e.target.value)}
                 className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 required>
                 <option value="" disabled>
                   Select a department
                 </option>
-                {departments.map((department) => (
-                  <option key={department._id} value={department._id}>
-                    {department.departmentName}
+                {allDepartments.map((departments) => (
+                  <option key={departments.departmentId} value={departments.departmentId}>
+                    {departments.departmentName}
                   </option>
                 ))}
               </select>
