@@ -4,6 +4,7 @@ import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
 import { LOGIN_URL, SIGNUP_URL } from "../api/routes";
+import Cookies from 'js-cookie';
 import axios from "../api/axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -35,6 +36,11 @@ export function LoginForm() {
       if (response.request.status === 200) {
         setAuth({
           token: response.data.token,
+        });
+
+        Cookies.set('token', JSON.stringify(response.data.token), {
+          secure: process.env.NODE_ENV === 'production', 
+          sameSite: 'Strict', 
         });
       }
     } catch (err) {
