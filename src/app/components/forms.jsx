@@ -162,19 +162,29 @@ export function SignUpForm() {
   return (
     <main className="w-96">
       <div>
-        <div className="flex justify-center p-8">
-          <img
-            src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
-            alt="Paris"
-            className="w-55 h-20"
-          />
+        <div className="flex mb-4 text-2xl">
+          Get Started
         </div>
         <form autoComplete="off">
+          <div className="flex flex-col">
+            <label className="italic text-xs">company name</label>
+            <input
+              autoComplete="off"
+              type="text"
+              value={userDetails.email}
+              onChange={(e) =>
+                setUserDetails((prevDetails) => ({
+                  ...prevDetails,
+                  email: e.target.value,
+                }))
+              }
+              className="border border-blue-500 rounded-lg p-3 my-2"
+            />
+          </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col">
-              <label>Email</label>
+              <label className="italic text-xs">country</label>
               <input
-                placeholder="Type email here"
                 autoComplete="off"
                 type="email"
                 value={userDetails.email}
@@ -184,13 +194,29 @@ export function SignUpForm() {
                     email: e.target.value,
                   }))
                 }
-                className="border border-blue-500 rounded-lg p-4 my-2"
+                className="border border-blue-500 rounded-lg p-3 my-2"
               />
             </div>
             <div className="flex flex-col">
-              <label>Email</label>
+              <label className="italic text-xs">subscription</label>
               <input
-                placeholder="Type email here"
+                autoComplete="off"
+                type="text"
+                value={userDetails.email}
+                onChange={(e) =>
+                  setUserDetails((prevDetails) => ({
+                    ...prevDetails,
+                    email: e.target.value,
+                  }))
+                }
+                className="border border-blue-500 rounded-lg p-3 my-2"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col">
+              <label className="italic text-xs">address</label>
+              <input
                 autoComplete="off"
                 type="email"
                 value={userDetails.email}
@@ -200,14 +226,28 @@ export function SignUpForm() {
                     email: e.target.value,
                   }))
                 }
-                className="border border-blue-500 rounded-lg p-4 my-2"
+                className="border border-blue-500 rounded-lg p-3 my-2"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="italic text-xs">contact</label>
+              <input
+                autoComplete="off"
+                type="phone"
+                value={userDetails.email}
+                onChange={(e) =>
+                  setUserDetails((prevDetails) => ({
+                    ...prevDetails,
+                    email: e.target.value,
+                  }))
+                }
+                className="border border-blue-500 rounded-lg p-3 my-2"
               />
             </div>
           </div>
           <div className="flex flex-col">
-            <label>Email</label>
+            <label className="italic text-xs">email</label>
             <input
-              placeholder="Type email here"
               autoComplete="off"
               type="email"
               value={userDetails.email}
@@ -217,11 +257,11 @@ export function SignUpForm() {
                   email: e.target.value,
                 }))
               }
-              className="border border-blue-500 rounded-lg p-4 my-2"
+              className="border border-blue-500 rounded-lg p-3 my-2"
             />
           </div>
           <div className="flex flex-col">
-            <label>Password</label>
+            <label className="italic text-xs">Password</label>
             <input
               placeholder="Enter password"
               autoComplete="off"
@@ -233,10 +273,10 @@ export function SignUpForm() {
                   password: e.target.value,
                 }))
               }
-              className="border border-blue-500 rounded-lg p-4 my-2"></input>
+              className="border border-blue-500 rounded-lg p-3 my-2"></input>
           </div>
           <div
-            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
+            className="flex justify-center p-3 text-white rounded-lg mt-4 bg-slate-500"
             onClick={handleSubmit}>
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
@@ -258,10 +298,10 @@ export function SignUpForm() {
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
-            <span className="text-sm text-black">Dont have an account?</span>
+            <span className="text-sm text-black">Already having an Account?</span>
             <span className="text-[#04B1C4] text-sm">
-              <Link href="/signup" prefetch={false}>
-                Sign Up
+              <Link href="/" prefetch={false}>
+                Login In
               </Link>
             </span>
           </div>
