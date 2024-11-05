@@ -78,31 +78,6 @@ export function useEmployeesRouteData() {
   return { employeetable };
 }
 
-export function useEmployeesGoalRouteData() {
-  const { auth } = useContext(AuthContext);
-  const [employeetable, setEmployeetable] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(EMPLOYEES_GOALS_URL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-        setEmployeetable(response.data.users);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchData();
-  }, [auth]);
-
-  return { employeetable};
-}
 
 export function useDepartmentRouteData() {
   const { auth } = useContext(AuthContext);
@@ -195,7 +170,6 @@ export function useGeneralPerformanceChartRouteData() {
 export function useOrganizationalChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
-  console.log(organizationaldata)
   const organizationalChart = [
     { month: "0", average_performance: 0 },
     ...organizationaldata,

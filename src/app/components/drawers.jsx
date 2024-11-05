@@ -7,6 +7,7 @@ import { useState } from "react";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useCreateDepartment } from "../api/databook/route-data";
+import { GOALS_URL } from "../api/routes";
 
 export function CreateGoal() {
   const [departments, setDepartments] = useState([]);
@@ -25,7 +26,7 @@ export function CreateGoal() {
     setLoading(true);
     try {
       await axios.post(
-        DEPARTMENT_GOALS_URL,
+        GOALS_URL,
         {
           goalTitle: formData.title,
           goalDescription: formData.description,

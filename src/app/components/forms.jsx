@@ -94,6 +94,23 @@ export function LoginForm() {
               )}
             </button>
           </div>
+          {/* or line */}
+          <div className="flex items-center justify-center my-6">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="px-2 text-sm text-gray-500">or</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+
+            {/* sign up */}
+            <div className="flex justify-center items-center space-x-1">
+              <span className="text-sm text-black">Dont have an account?</span>
+              <span className="text-[#04B1C4] text-sm">
+                <Link href="/signup" prefetch={false}>
+                  Sign Up
+                </Link>
+              </span>
+            </div>
         </form>
         {auth.token && router.push('/home', { scroll: false })}
       </div>
