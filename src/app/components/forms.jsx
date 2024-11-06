@@ -8,7 +8,6 @@ import Cookies from 'js-cookie';
 import axios from "../api/axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { cookies } from "next/headers";
 
 export function LoginForm() {
   const router = useRouter();
