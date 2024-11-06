@@ -10,7 +10,7 @@ import { useCreateDepartment, useDepartmentRouteData } from "../api/databook/rou
 import { GOALS_URL } from "../api/routes";
 
 export function CreateGoal() {
-  const {allDepartments} = useDepartmentRouteData();
+  const {departmenttable} = useDepartmentRouteData();
   const [departments, setDepartments] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [isLoading, setLoading] = useState(false);

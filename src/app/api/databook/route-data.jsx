@@ -99,7 +99,7 @@ export function useDepartmentRouteData() {
 
     fetchData();
   }, [auth]);
-  console.log(departmenttable)
+  
   return { departmenttable};
 }
 
