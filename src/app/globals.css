@@ -6,3 +6,12 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+.MuiDataGrid-row:nth-child(even) {
+  background-color: rgb(243, 243, 243);
+}
+
+.header-table {
+  background-color: #94A3B8 !important;
+  color: white !important;
+}

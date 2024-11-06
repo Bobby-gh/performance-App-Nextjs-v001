@@ -8,7 +8,8 @@ import classNames from "classnames";
 export function Sidebar() {
   const currentPathname = usePathname()
   return (
-    <main className="w-32 sm:w-72 c">
+   
+    <main className="w-32 sm:w-72 ">
       <div className="hidden sm:block lg:flex sm:justify-center sm:p-8">
         <img
           src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"

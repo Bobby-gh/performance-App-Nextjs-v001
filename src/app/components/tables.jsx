@@ -3,14 +3,26 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import {
   accessinggoalcolumn,
+  departmentcolumn,
   goalsettingcolumn,
+  usercolumn,
 } from "../api/databook/tabel-column-data";
+import {
+  useDepartmentGoalAccessmentRouteData,
+  useDepartmentGoalRouteData,
+  useDepartmentRouteData,
+  useEmployeesGoalRouteData,
+  useEmployeesRouteData,
+  useGoalRouteData,
+} from "../api/databook/route-data";
 
 export function GoalTable() {
+  const { departmentgoaltable } = useGoalRouteData();
   return (
     <div>
-      <div style={{ height: 800 }}>
+      <div>
         <DataGrid
+          rows={departmentgoaltable}
           columns={goalsettingcolumn}
           initialState={{
             pagination: {
@@ -21,11 +33,11 @@ export function GoalTable() {
           slots={{ toolbar: GridToolbar }}
           getRowId={(row) => row._id}
           sx={{
-            border: 0, 
+            border: 0,
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
         />
       </div>
     </div>
@@ -33,10 +45,13 @@ export function GoalTable() {
 }
 
 export function MonitorGoalTable() {
+  // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
+  const { departmentgoaltable } = useGoalRouteData();
   return (
     <div>
-      <div style={{ height: 650 }}>
+      <div>
         <DataGrid
+          rows={departmentgoaltable}
           columns={accessinggoalcolumn}
           initialState={{
             pagination: {
@@ -47,21 +62,24 @@ export function MonitorGoalTable() {
           slots={{ toolbar: GridToolbar }}
           getRowId={(row) => row._id}
           sx={{
-            border: 0, 
+            border: 0,
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
         />
       </div>
     </div>
   );
 }
 export function AccessGoalTable() {
+  // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
+  const { departmentgoaltable } = useGoalRouteData();
   return (
     <div>
-      <div style={{ height: 650 }}>
+      <div>
         <DataGrid
+          rows={departmentgoaltable}
           columns={accessinggoalcolumn}
           initialState={{
             pagination: {
@@ -76,18 +94,48 @@ export function AccessGoalTable() {
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export function TopDepartmentTable() {
+  const { departmentgoaltable } = useGoalRouteData();
+  return (
+    <div>
+      <div>
+        <DataGrid
+          rows={departmentgoaltable}
+          columns={accessinggoalcolumn}
+          getRowId={(row) => row._id}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[10, 15]}
+          sx={{
+            border: 0,
+            borderRadius: 2,
+            p: 2,
+            minWidth: 300,
+          }}
         />
       </div>
     </div>
   );
 }
 export function EmployeeTable() {
+  const { employeetable } = useEmployeesRouteData();
+
   return (
     <div>
-      <div style={{ height: 650 }}>
+      <div>
         <DataGrid
-          columns={accessinggoalcolumn}
+          rows={employeetable}
+          columns={usercolumn}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 10 },
@@ -101,18 +149,20 @@ export function EmployeeTable() {
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
         />
       </div>
     </div>
   );
 }
 export function DepartmentTable() {
+  const { departmenttable } = useDepartmentRouteData();
   return (
     <div>
-      <div style={{ height: 650 }}>
+      <div>
         <DataGrid
-          columns={accessinggoalcolumn}
+          rows={departmenttable}
+          columns={departmentcolumn}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 10 },
@@ -120,13 +170,13 @@ export function DepartmentTable() {
           }}
           pageSizeOptions={[10, 15]}
           slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row._id}
+          getRowId={(row) => row.departmentId}
           sx={{
             border: 0,
             borderRadius: 2,
             p: 2,
             minWidth: 300,
-        }}
+          }}
         />
       </div>
     </div>
