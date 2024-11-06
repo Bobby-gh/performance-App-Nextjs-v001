@@ -346,13 +346,7 @@ export function VerifyEmailForm() {
       const response = await axios.post(
         LOGIN_URL,
         JSON.stringify({
-          organizationEmail: userDetails.email,
-          password: userDetails.password,
-          companyName: userDetails.companyName,
-          country: userDetails.country,
-          addressLine: userDetails.addressLine,
-          organizationContact: userDetails.organizationContact,
-          subscriptionType: userDetails.subscriptionType,
+         token: userDetails.token
         }),
         {
           headers: { "Content-Type": "application/json" },
