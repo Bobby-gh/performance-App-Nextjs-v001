@@ -3,13 +3,15 @@ import * as React from "react";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import axios from "../api/axios";
-import { useState } from "react";
+import { useState , useContext} from "react";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useCreateDepartment, useDepartmentRouteData } from "../api/databook/route-data";
 import { GOALS_URL } from "../api/routes";
+import { AuthContext } from "../contex/context-context";
 
 export function CreateGoal() {
+  const {auth} = useContext(AuthContext)
   const {departmenttable} = useDepartmentRouteData();
   const [departments, setDepartments] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -22,6 +24,12 @@ export function CreateGoal() {
     department: "",
   });
 
+  console.log({
+    goalTitle: formData.title,
+          goalDescription: formData.description,
+          goalDeadline: formData.endDate,
+          taskAssignedTo: departments,
+  })
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -37,7 +45,7 @@ export function CreateGoal() {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: `Bearer ${auth.token}`,
           },
         }
       );
