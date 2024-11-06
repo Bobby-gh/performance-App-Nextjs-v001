@@ -143,15 +143,7 @@ export function SignUpForm() {
     subscriptionType: "",
   });
 
-  console.log({
-    organizationEmail: userDetails.email,
-          password: userDetails.password,
-          companyName: userDetails.companyName,
-          country: userDetails.country,
-          addressLine: userDetails.addressLine,
-          organizationContact: userDetails.organizationContact,
-          subscriptionType: userDetails.subscriptionType,
-  })
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -173,9 +165,7 @@ export function SignUpForm() {
         }
       );
       if (response.request.status === 200) {
-        setAuth({
-          token: response.data.token,
-        });
+        console.log("successful")
       }
     } catch (err) {
       alert(err);
@@ -231,6 +221,7 @@ export function SignUpForm() {
                     subscriptionType: e.target.value,
                   }))
                 }>
+                <option >Select ...</option>
                 <option value="free">Free</option>
                 <option value="basic">Basic</option>
                 <option value="standard">Standard</option>
