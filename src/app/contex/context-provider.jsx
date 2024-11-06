@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
       const savedEmail = Cookies.get('email');
       const savedToken = Cookies.get('token');
-      console.log(savedToken)
       if (savedEmail || savedToken) {
         setAuth({
           email: savedEmail ? JSON.stringify(savedEmail) : null,
@@ -25,7 +24,7 @@ export const AuthProvider = ({ children }) => {
         });
       }
     }, []);
-
+    console.log(token)
     const clearAuth = () => {
       setAuth({
         token: "",
