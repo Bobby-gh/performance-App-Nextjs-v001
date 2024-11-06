@@ -222,11 +222,10 @@ export function SignUpForm() {
                     subscriptionType: e.target.value,
                   }))
                 }>
-                <option value="">Select ..</option>
-                <option value="Free">Free</option>
-                <option value="Basic">Basic</option>
-                <option value="Standard">Standard</option>
-                <option value="Custom">Custom</option>
+                <option value="free">Free</option>
+                <option value="basic">Basic</option>
+                <option value="standard">Standard</option>
+                <option value="premium">Custom</option>
               </select>
             </div>
           </div>
