@@ -132,7 +132,7 @@ export function LoginForm() {
 export function SignUpForm() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
-  const { auth, setAuth } = React.useContext(AuthContext);
+  const [activateAccount, setActivateAccount] = useState(false)
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -164,8 +164,8 @@ export function SignUpForm() {
           withCredentials: true,
         }
       );
-      if (response.request.status === 200) {
-        console.log("successful")
+      if (response.request.status === 201) {
+        setActivateAccount(true)
       }
     } catch (err) {
       alert(err);
@@ -324,7 +324,7 @@ export function SignUpForm() {
             </span>
           </div>
         </form>
-        {auth.token && router.push("/home", { scroll: false })}
+        {activateAccount && router.push("/verifyemail", { scroll: false })}
       </div>
     </main>
   );
