@@ -364,9 +364,9 @@ export function VerifyEmailForm() {
       if (response.request.status === 200) {
         setLogin(true)
       }
-      console.log(response)
     } catch (err) {
       alert(err);
+      console.log(err)
     } finally {
       setLoading(false);
     }
