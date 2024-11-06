@@ -26,7 +26,7 @@ export function useGoalRouteData() {
     dateAssigned: new Date(departmentgoal.dateAssigned).toLocaleDateString(),
     goalDeadline: new Date(departmentgoal.goalDeadline).toLocaleDateString(),
   }));
-  console.log(auth)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
