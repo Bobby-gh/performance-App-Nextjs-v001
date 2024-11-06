@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import axios from "../api/axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { cookies } from "next/headers";
 
 export function LoginForm() {
   const router = useRouter();
@@ -164,6 +165,10 @@ export function SignUpForm() {
           withCredentials: true,
         }
       );
+      Cookies.set('email', JSON.stringify(userDetails.email), {
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: 'Strict', 
+      });
       if (response.request.status === 201) {
         setActivateAccount(true)
       }
@@ -346,7 +351,8 @@ export function VerifyEmailForm() {
       const response = await axios.post(
         VERIFYEMAIL_URL,
         JSON.stringify({
-         token: userDetails.token
+         code: userDetails.token,
+         email: Cookies.get('email')
         }),
         {
           headers: { "Content-Type": "application/json" },
