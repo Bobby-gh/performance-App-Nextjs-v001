@@ -21,7 +21,7 @@ export function CreateGoal() {
     endDate: "",
     department: "",
   });
-  console.log(allDepartments)
+  console.log(departmenttable)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
