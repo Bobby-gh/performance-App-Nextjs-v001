@@ -3,7 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
-import { LOGIN_URL, SIGNUP_URL } from "../api/routes";
+import { LOGIN_URL, SIGNUP_URL, VERIFYEMAIL_URL } from "../api/routes";
 import Cookies from 'js-cookie';
 import axios from "../api/axios";
 import { useRouter } from "next/navigation";
@@ -332,8 +332,8 @@ export function SignUpForm() {
 
 export function VerifyEmailForm() {
   const router = useRouter();
+  const [login, setLogin] = useState(false)
   const [isLoading, setLoading] = useState(false);
-  const { auth, setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     token: "",
   });
@@ -344,7 +344,7 @@ export function VerifyEmailForm() {
     setLoading(true);
     try {
       const response = await axios.post(
-        LOGIN_URL,
+        VERIFYEMAIL_URL,
         JSON.stringify({
          token: userDetails.token
         }),
@@ -354,9 +354,7 @@ export function VerifyEmailForm() {
         }
       );
       if (response.request.status === 200) {
-        setAuth({
-          token: response.data.token,
-        });
+        setLogin(true)
       }
     } catch (err) {
       alert(err);
@@ -419,7 +417,7 @@ export function VerifyEmailForm() {
             </span>
           </div>
         </form>
-        {auth.token && router.push("/home", { scroll: false })}
+        {login && router.push("/", { scroll: false })}
       </div>
     </main>
   );
