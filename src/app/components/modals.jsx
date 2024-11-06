@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { AuthContext } from "../contex/context-context";
+import Cookies from "js-cookie";
 
 export function LogOut() {
   const {clearAuth} = useContext(AuthContext);
@@ -20,6 +21,7 @@ export function LogOut() {
     try {
       router.push("/", { scroll: false });
       clearAuth()
+      Cookies.remove('token')
     } catch (error) {
       console.log(error);
     } finally {

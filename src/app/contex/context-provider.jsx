@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
         });
       }
     }, []);
-    console.log(token)
     const clearAuth = () => {
       setAuth({
         token: "",
