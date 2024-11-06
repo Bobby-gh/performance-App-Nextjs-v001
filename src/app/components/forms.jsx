@@ -343,7 +343,10 @@ export function VerifyEmailForm() {
     token: "",
   });
 
-
+ console.log({
+  code: userDetails.token,
+  email: Cookies.get('email')
+ })
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
