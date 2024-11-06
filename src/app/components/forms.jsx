@@ -354,7 +354,7 @@ export function VerifyEmailForm() {
         VERIFYEMAIL_URL,
         JSON.stringify({
          code: userDetails.token,
-         email: Cookies.get('email')
+         email: JSON.parse(Cookies.get('email'))
         }),
         {
           headers: { "Content-Type": "application/json" },
