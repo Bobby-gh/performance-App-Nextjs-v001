@@ -338,6 +338,16 @@ export function VerifyEmailForm() {
     token: "",
   });
 
+  console.log({
+    organizationEmail: userDetails.email,
+          password: userDetails.password,
+          companyName: userDetails.companyName,
+          country: userDetails.country,
+          addressLine: userDetails.addressLine,
+          organizationContact: userDetails.organizationContact,
+          subscriptionType: userDetails.subscriptionType,
+  })
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
