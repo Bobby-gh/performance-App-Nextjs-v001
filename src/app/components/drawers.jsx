@@ -21,7 +21,6 @@ export function CreateGoal() {
     endDate: "",
     department: "",
   });
-  console.log(departmenttable)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,8 +94,8 @@ export function CreateGoal() {
                 <option value="" disabled>
                   Select a department
                 </option>
-                {departments.map((department) => (
-                  <option key={department._id} value={department._id}>
+                {departmenttable.map((department) => (
+                  <option key={department.departmentId} value={department.departmentId}>
                     {department.departmentName}
                   </option>
                 ))}

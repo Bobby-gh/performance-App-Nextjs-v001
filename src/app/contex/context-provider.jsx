@@ -13,10 +13,11 @@ export const AuthProvider = ({ children }) => {
         password: "",
     });
 
+    console.log(auth)
     useEffect(() => {
       const savedEmail = Cookies.get('email');
       const savedToken = Cookies.get('token');
-      
+      console.log(savedToken)
       if (savedEmail || savedToken) {
         setAuth({
           email: savedEmail ? JSON.stringify(savedEmail) : null,
