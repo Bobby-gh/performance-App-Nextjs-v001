@@ -73,7 +73,7 @@ export function CreateGoal() {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
-    setError((prevError) => ({ ...prevError, [id]: "" }));
+    // setError((prevError) => ({ ...prevError, [id]: "" }));
   };
   return (
     <>
