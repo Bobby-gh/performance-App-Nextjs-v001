@@ -27,9 +27,9 @@ export default function dashboard() {
           <GeneralPerformanceDashboard />
         </div>
       </section>
-      {/* <section className="mt-6 card bg-white rounded-lg">
+      <section className="mt-6 card bg-white rounded-lg">
         <TopDepartmentTable/>
-      </section> */}
+      </section>
     </main>
   );
 }
