@@ -19,8 +19,8 @@ export const AuthProvider = ({ children }) => {
       const savedToken = Cookies.get('token');
       if (savedEmail || savedToken) {
         setAuth({
-          email: savedEmail ? JSON.stringify(savedEmail) : null,
-          token: savedToken ? JSON.stringify(savedToken) : null,
+          email: savedEmail ? savedEmail : null,
+          token: savedToken ? savedToken : null,
         });
       }
     }, []);
