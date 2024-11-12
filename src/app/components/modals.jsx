@@ -20,8 +20,8 @@ export function LogOut() {
 
     try {
       router.push("/", { scroll: false });
-      clearAuth()
       Cookies.remove('token')
+      clearAuth()
     } catch (error) {
       console.log(error);
     } finally {
