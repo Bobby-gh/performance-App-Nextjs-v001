@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       if (savedEmail || savedToken) {
         setAuth({
           email: savedEmail ? savedEmail : null,
-          token: savedToken ? savedToken : null,
+          token: savedToken ? JSON.parse(savedToken) : null,
         });
       }
     }, []);
