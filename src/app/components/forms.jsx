@@ -1,10 +1,11 @@
 "use client";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
 import { LOGIN_URL, SIGNUP_URL, VERIFYEMAIL_URL } from "../api/routes";
-import Cookies from 'js-cookie';
+import { TfiEmail } from "react-icons/tfi";
+import Cookies from "js-cookie";
 import axios from "../api/axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -36,16 +37,16 @@ export function LoginForm() {
       if (response.request.status === 200) {
         setAuth({
           token: response.data.token,
-          name:  response.data.fullName,
+          name: response.data.fullName,
         });
 
-        Cookies.set('token', JSON.stringify(response.data.token), {
-          secure: process.env.NODE_ENV === 'production', 
-          sameSite: 'Strict', 
+        Cookies.set("token", JSON.stringify(response.data.token), {
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "Strict",
         });
-        Cookies.set('name', JSON.stringify(response.data.fullName), {
-          secure: process.env.NODE_ENV === 'production', 
-          sameSite: 'Strict', 
+        Cookies.set("name", JSON.stringify(response.data.fullName), {
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "Strict",
         });
       }
     } catch (err) {
@@ -95,7 +96,16 @@ export function LoginForm() {
                   password: e.target.value,
                 }))
               }
-              className="border border-blue-500 rounded-lg p-4 my-2"></input>
+              className="border border-blue-500 rounded-lg p-4 my-2"
+            />
+          </div>
+
+          <div className="flex justify-end">
+            <Link href="/forget-password" prefetch={false}>
+              <h4 className="text-blue italic text-sm text-[#08376B]">
+                forgot password?
+              </h4>
+            </Link>
           </div>
           <div
             className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
@@ -134,10 +144,219 @@ export function LoginForm() {
   );
 }
 
+export function ForgetPassword() {
+  const router = useRouter();
+  const [isLoading, setLoading] = useState(false);
+  const { auth, setAuth } = React.useContext(AuthContext);
+  const [userDetails, setUserDetails] = useState({
+    email: "",
+    password: "",
+  });
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    Cookies.set("email", JSON.stringify(userDetails.email), {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    });
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({
+          email: userDetails.email,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      if (response.request.status === 200) {
+      }
+    } catch (err) {
+      alert(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="w-96">
+      <div>
+        <div className="flex  mt-[17%] mb-[30%] text-xl font-bold">
+          Enter email for Verification
+        </div>
+        <form autoComplete="off">
+          <div className="flex flex-col">
+            <label>Email</label>
+            <input
+              placeholder="Type email here"
+              autoComplete="off"
+              type="email"
+              value={userDetails.email}
+              onChange={(e) =>
+                setUserDetails((prevDetails) => ({
+                  ...prevDetails,
+                  email: e.target.value,
+                }))
+              }
+              className="border border-blue-500 rounded-lg p-4 my-2"
+            />
+          </div>
+          <div
+            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
+            onClick={handleSubmit}>
+            <button type="submit" disabled={isLoading} className="px-16">
+              {isLoading ? (
+                <div className="flex flex-row justify-center">
+                  <p className="text-sm pr-2">Loading</p>
+                  <CircularProgress size={27} thickness={6} color="primary" />
+                </div>
+              ) : (
+                "Submit"
+              )}
+            </button>
+          </div>
+          {/* or line */}
+          <div className="flex items-center justify-center my-6">
+            <div className="flex-grow border-t border-slate-500"></div>
+            <span className="px-2 text-sm text-gray-500">or</span>
+            <div className="flex-grow border-t border-slate-500"></div>
+          </div>
+
+          {/* sign up */}
+          <div className="flex justify-center items-center space-x-1">
+            <span className="text-sm text-black">Return?</span>
+            <span className="text-slate-500 text-sm">
+              <Link href="/" prefetch={false}>
+                Home
+              </Link>
+            </span>
+          </div>
+        </form>
+        {auth.token && router.push("/home", { scroll: false })}
+      </div>
+    </main>
+  );
+}
+
+export function ResetPassword() {
+  const router = useRouter();
+  const [email, setEmail]= useState("")
+  const [isLoading, setLoading] = useState(false);
+  const { auth, setAuth } = React.useContext(AuthContext);
+  const [token, setToken] = useState("");
+  const [userDetails, setUserDetails] = useState({
+    password: "",
+  });
+  useEffect(() => {
+    const emailFromCookie = Cookies.get("email");
+    setEmail(emailFromCookie);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const searchParams = new URLSearchParams(window.location.search);
+      const ref = searchParams.get("ref");
+      setToken(ref);
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({
+          email: userDetails.email,
+          token: token,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      if (response.request.status === 200) {
+      }
+    } catch (err) {
+      alert(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="w-96">
+      <div>
+        <div className="flex  mt-[17%] mb-[25%] text-xl font-bold">
+          Set your New Password
+        </div>
+        <div className="flex space-x-2 mb-8 items-center">
+          <span>
+            <TfiEmail size={20} color="#04B1C4" />
+          </span>
+          <span className=" text-lg">{email}</span>
+        </div>
+        <form autoComplete="off">
+          <div className="flex flex-col">
+            <label>Password</label>
+            <input
+              placeholder="Type email here"
+              autoComplete="off"
+              type="email"
+              value={userDetails.email}
+              onChange={(e) =>
+                setUserDetails((prevDetails) => ({
+                  ...prevDetails,
+                  email: e.target.value,
+                }))
+              }
+              className="border border-blue-500 rounded-lg p-4 my-2"
+            />
+          </div>
+          <div
+            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
+            onClick={handleSubmit}>
+            <button type="submit" disabled={isLoading} className="px-16">
+              {isLoading ? (
+                <div className="flex flex-row justify-center">
+                  <p className="text-sm pr-2">Loading</p>
+                  <CircularProgress size={27} thickness={6} color="primary" />
+                </div>
+              ) : (
+                "Submit"
+              )}
+            </button>
+          </div>
+          {/* or line */}
+          <div className="flex items-center justify-center my-6">
+            <div className="flex-grow border-t border-slate-500"></div>
+            <span className="px-2 text-sm text-gray-500">or</span>
+            <div className="flex-grow border-t border-slate-500"></div>
+          </div>
+
+          {/* sign up */}
+          <div className="flex justify-center items-center space-x-1">
+            <span className="text-sm text-black">Return?</span>
+            <span className="text-slate-500 text-sm">
+              <Link href="/" prefetch={false}>
+                Home
+              </Link>
+            </span>
+          </div>
+        </form>
+        {auth.token && router.push("/home", { scroll: false })}
+      </div>
+    </main>
+  );
+}
+
 export function SignUpForm() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
-  const [activateAccount, setActivateAccount] = useState(false)
+  const [activateAccount, setActivateAccount] = useState(false);
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -148,7 +367,6 @@ export function SignUpForm() {
     subscriptionType: "",
   });
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -169,12 +387,12 @@ export function SignUpForm() {
           withCredentials: true,
         }
       );
-      Cookies.set('email', JSON.stringify(userDetails.email), {
-        secure: process.env.NODE_ENV === 'production', 
-        sameSite: 'Strict', 
+      Cookies.set("email", JSON.stringify(userDetails.email), {
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
       });
       if (response.request.status === 201) {
-        setActivateAccount(true)
+        setActivateAccount(true);
       }
     } catch (err) {
       alert(err);
@@ -230,7 +448,7 @@ export function SignUpForm() {
                     subscriptionType: e.target.value,
                   }))
                 }>
-                <option >Select ...</option>
+                <option>Select ...</option>
                 <option value="free">Free</option>
                 <option value="basic">Basic</option>
                 <option value="standard">Standard</option>
@@ -341,16 +559,16 @@ export function SignUpForm() {
 
 export function VerifyEmailForm() {
   const router = useRouter();
-  const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
     token: "",
   });
 
- console.log({
-  code: userDetails.token,
-  email: Cookies.get('email')
- })
+  console.log({
+    code: userDetails.token,
+    email: Cookies.get("email"),
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -358,8 +576,8 @@ export function VerifyEmailForm() {
       const response = await axios.post(
         VERIFYEMAIL_URL,
         JSON.stringify({
-         code: userDetails.token,
-         email: JSON.parse(Cookies.get('email'))
+          code: userDetails.token,
+          email: JSON.parse(Cookies.get("email")),
         }),
         {
           headers: { "Content-Type": "application/json" },
@@ -367,11 +585,11 @@ export function VerifyEmailForm() {
         }
       );
       if (response.request.status === 200) {
-        setLogin(true)
+        setLogin(true);
       }
     } catch (err) {
       alert(err);
-      console.log(err)
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -381,7 +599,9 @@ export function VerifyEmailForm() {
     <main className="w-96">
       <div>
         <div className="mb-4 text-xl">Activate your Account</div>
-        <div className="mb-[30%] text-sm">Enter the verification token from your email</div>
+        <div className="mb-[30%] text-sm">
+          Enter the verification token from your email
+        </div>
         <form autoComplete="off ">
           <div className="flex flex-col">
             <label className="italic text-xs">token</label>
@@ -421,9 +641,7 @@ export function VerifyEmailForm() {
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
-            <span className="text-sm text-black">
-              Do you want to return
-            </span>
+            <span className="text-sm text-black">Do you want to return</span>
             <span className="text-slate-500 text-sm">
               <Link href="/" prefetch={false}>
                 Home?

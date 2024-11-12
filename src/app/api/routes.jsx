@@ -12,4 +12,5 @@ export const GENERAL_PERFORMANCE_CHART_URL = "/department-performance/overall-av
 export const ORGANIZATIONAL_CHART_URL = "/department-performance/get-monthly-average-performance"
 export const GOAL_COUNT_URL = "/goals/goal-status-count"
 export const CREATE_DEPRATMENT ="/departments"
+export const RESET_PASSWORD ="/reset-password"
 
