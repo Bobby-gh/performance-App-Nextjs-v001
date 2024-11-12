@@ -37,7 +37,7 @@ export function useGoalRouteData() {
           },
           withCredentials: true,
         });
-        console.log({'number of goals resposne': response})
+        
         setDepartmenttable(response.data);
       } catch (err) {
         console.log(err);
@@ -46,6 +46,7 @@ export function useGoalRouteData() {
 
     fetchData();
   }, [auth]);
+  console.log({'number of goals resposne': departmentgoal})
   console.log({"number of goal": departmentgoaltable})
   return { departmentgoaltable};
 }
