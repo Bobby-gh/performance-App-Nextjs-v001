@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
       const savedEmail = Cookies.get('email');
       const savedToken = Cookies.get('token');
-      const savedRole = Cookies.get('role');
+      const savedName = Cookies.get('name');
       if (savedEmail || savedToken) {
         setAuth({
           email: savedEmail ? JSON.parse(savedEmail) : null,
@@ -28,9 +28,10 @@ export const AuthProvider = ({ children }) => {
     }, []);
     const clearAuth = () => {
       setAuth({
+        name: "",
         token: "",
-        role: "",
-        departmentID: "",
+        email: "",
+        password: "",
       });
     };
   

@@ -42,7 +42,7 @@ export function LoginForm() {
           secure: process.env.NODE_ENV === 'production', 
           sameSite: 'Strict', 
         });
-        Cookies.set('role', JSON.stringify(response.data.role), {
+        Cookies.set('name', JSON.stringify(response.data.fullName), {
           secure: process.env.NODE_ENV === 'production', 
           sameSite: 'Strict', 
         });
