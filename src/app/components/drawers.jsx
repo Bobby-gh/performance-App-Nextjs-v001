@@ -474,6 +474,7 @@ export function AccessGoal() {
   );
 }
 export function Userforms(props) {
+  const { auth } = useContext(AuthContext);
   const [departments, setDepartments] = useState([]);
   const {departmenttable } = useDepartmentRouteData();
   const [role, setRole] = useState("")
@@ -494,14 +495,13 @@ export function Userforms(props) {
           department: departments,
           email: userFormData.email,
           role: role,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
         }
-        // {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     Authorization: "Bearer " + localStorage.getItem("token"),
-        //   },
-        //   withCredentials: true,
-        // }
       );
       alert("Employee details saved successfully");
       props.reloadTableHandler();
