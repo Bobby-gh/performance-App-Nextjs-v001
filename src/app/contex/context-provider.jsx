@@ -17,10 +17,12 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
       const savedEmail = Cookies.get('email');
       const savedToken = Cookies.get('token');
+      const savedRole = Cookies.get('role');
       if (savedEmail || savedToken) {
         setAuth({
-          email: savedEmail ? savedEmail : null,
+          email: savedEmail ? JSON.parse(savedEmail) : null,
           token: savedToken ? JSON.parse(savedToken) : null,
+          role: savedRole ? JSON.parse(savedRole) : null,
         });
       }
     }, []);

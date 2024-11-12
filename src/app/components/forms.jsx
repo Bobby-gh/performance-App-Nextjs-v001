@@ -42,6 +42,10 @@ export function LoginForm() {
           secure: process.env.NODE_ENV === 'production', 
           sameSite: 'Strict', 
         });
+        Cookies.set('role', JSON.stringify(response.data.role), {
+          secure: process.env.NODE_ENV === 'production', 
+          sameSite: 'Strict', 
+        });
       }
     } catch (err) {
       alert(err);
