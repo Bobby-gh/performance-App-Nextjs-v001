@@ -45,7 +45,7 @@ export function useGoalRouteData() {
 
     fetchData();
   }, [auth]);
-  console.log(departmentgoaltable)
+  console.log({"number of goal": departmentgoaltable})
   return { departmentgoaltable};
 }
 
