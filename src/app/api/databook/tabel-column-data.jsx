@@ -5,7 +5,7 @@ export const goalsettingcolumn = [
   { field: "goalTitle", headerName: "Goal Title", flex: 1, headerClassName: "header-table"},
   { field: "goalDeadline", headerName: "End Date", flex: 0.5, headerClassName: "header-table"},
   {
-    field: "reviewed",
+    field: "status",
     headerName: "Goal Status",flex: 0.5,
     headerClassName: "header-table",    
     renderCell: (params) => {

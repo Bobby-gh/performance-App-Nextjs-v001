@@ -22,7 +22,7 @@ export function useGoalRouteData() {
   const [departmentgoal, setDepartmenttable] = useState([]);
   const departmentgoaltable = departmentgoal.map((departmentgoal) => ({
     ...departmentgoal,
-    taskAssignedTo: departmentgoal.taskAssignedTo.departmentName,
+    taskAssignedTo: departmentgoal.taskAssignedTo,
     dateAssigned: new Date(departmentgoal.dateAssigned).toLocaleDateString(),
     goalDeadline: new Date(departmentgoal.goalDeadline).toLocaleDateString(),
   }));
