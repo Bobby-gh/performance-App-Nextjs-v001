@@ -36,6 +36,7 @@ export function LoginForm() {
       if (response.request.status === 200) {
         setAuth({
           token: response.data.token,
+          name:  response.data.fullName,
         });
 
         Cookies.set('token', JSON.stringify(response.data.token), {

@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({
-        role: "",
+        name: "",
         token: "",
         email: "",
         password: "",
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         setAuth({
           email: savedEmail ? JSON.parse(savedEmail) : null,
           token: savedToken ? JSON.parse(savedToken) : null,
-          role: savedRole ? JSON.parse(savedRole) : null,
+          name: savedName ? JSON.parse(savedName) : null,
         });
       }
     }, []);
