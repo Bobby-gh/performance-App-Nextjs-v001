@@ -1,8 +1,8 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 export const goalsettingcolumn = [
-  { field: "taskAssignedTo", headerName: "Department ", flex: 1, headerClassName: "header-table"},
   { field: "goalTitle", headerName: "Goal Title", flex: 1, headerClassName: "header-table"},
+  { field: "taskAssignedTo", headerName: "Department ", flex: 1, headerClassName: "header-table"},
   { field: "goalDeadline", headerName: "End Date", flex: 0.5, headerClassName: "header-table"},
   {
     field: "status",
