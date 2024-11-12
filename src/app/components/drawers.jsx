@@ -3,16 +3,19 @@ import * as React from "react";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import axios from "../api/axios";
-import { useState , useContext} from "react";
+import { useState, useContext } from "react";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useCreateDepartment, useDepartmentRouteData } from "../api/databook/route-data";
+import {
+  useCreateDepartment,
+  useDepartmentRouteData,
+} from "../api/databook/route-data";
 import { GOALS_URL } from "../api/routes";
 import { AuthContext } from "../contex/context-context";
 
 export function CreateGoal() {
-  const {auth} = useContext(AuthContext)
-  const {departmenttable} = useDepartmentRouteData();
+  const { auth } = useContext(AuthContext);
+  const {departmenttable } = useDepartmentRouteData();
   const [departments, setDepartments] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -24,13 +27,7 @@ export function CreateGoal() {
     department: "",
   });
 
-  console.log({
-          goalTitle: formData.title,
-          goalDescription: formData.description,
-          goalDeadline: formData.endDate,
-          taskAssignedTo: departments,
-          target: formData.target
-  })
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -42,7 +39,7 @@ export function CreateGoal() {
           goalDescription: formData.description,
           goalDeadline: formData.endDate,
           taskAssignedTo: departments,
-          target: formData.target
+          target: formData.target,
         },
         {
           headers: {
@@ -105,7 +102,9 @@ export function CreateGoal() {
                   Select a department
                 </option>
                 {departmenttable.map((department) => (
-                  <option key={department.departmentId} value={department.departmentId}>
+                  <option
+                    key={department.departmentId}
+                    value={department.departmentId}>
                     {department.departmentName}
                   </option>
                 ))}
@@ -356,7 +355,7 @@ export function AccessGoal() {
                   <option value="4">Very Good</option>
                 </select>
                 <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  Proceedure 
+                  Proceedure
                 </label>
               </div>
             </div>
@@ -476,13 +475,12 @@ export function AccessGoal() {
 }
 export function Userforms(props) {
   const [departments, setDepartments] = useState([]);
+  const {departmenttable } = useDepartmentRouteData();
+  const [role, setRole] = useState("")
   const [isLoading, setLoading] = useState(false);
   const [userFormData, setUserFormData] = useState({
     fullName: "",
     email: "",
-    password: "",
-    department: "",
-    role: "",
   });
 
   const handleSubmit = async (e) => {
@@ -493,9 +491,9 @@ export function Userforms(props) {
         EMPLOYEES_URL,
         {
           fullName: userFormData.fullName,
-          department: userFormData.department,
+          department: departments,
           email: userFormData.email,
-          password: userFormData.password,
+          role: role,
         }
         // {
         //   headers: {
@@ -592,15 +590,17 @@ export function Userforms(props) {
               </label>
             </div>
             <div className="relative mb-6" data-te-input-wrapper-init>
-              <input
-                type="password"
+              <select
+                type="text"
                 className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                name="password"
-                value={userFormData.password}
-                autoComplete="off"
-                onChange={handleUserFormDataChange}
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
                 required
               />
+              <option>Select ...</option>
+              <option value="generalManager">General Manager </option>
+              <option value="manager">Manager </option>
+              <option value="staff">Staff </option>
               <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                 Password
               </label>
@@ -608,14 +608,14 @@ export function Userforms(props) {
             <div className="relative mb-6" data-te-input-wrapper-init>
               <select
                 name="department"
-                value={userFormData.department}
-                onChange={handleUserFormDataChange}
+                value={departments}
+                onChange={(e) => setDepartments(e.target.value)}
                 className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 required>
                 <option value="" disabled>
                   Select a department
                 </option>
-                {departments.map((department) => (
+                {departmenttable.map((department) => (
                   <option key={department._id} value={department._id}>
                     {department.departmentName}
                   </option>
@@ -652,19 +652,18 @@ export function Userforms(props) {
 export function Departmentforms() {
   const [name, setName] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const {createDepartment} = useCreateDepartment()
+  const { createDepartment } = useCreateDepartment();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const response = await createDepartment({
-      departmentName : name,
-    })
-    console.log(response)
+      departmentName: name,
+    });
+    console.log(response);
 
     setLoading(false);
-    
   };
 
   const reload = () => {
