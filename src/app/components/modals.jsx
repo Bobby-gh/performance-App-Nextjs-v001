@@ -21,6 +21,7 @@ export function LogOut() {
     try {
       router.push("/", { scroll: false });
       Cookies.remove('token')
+      Cookies.remove('name')
       clearAuth()
     } catch (error) {
       console.log(error);
