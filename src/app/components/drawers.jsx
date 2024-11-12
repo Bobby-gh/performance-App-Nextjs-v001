@@ -25,10 +25,11 @@ export function CreateGoal() {
   });
 
   console.log({
-    goalTitle: formData.title,
+          goalTitle: formData.title,
           goalDescription: formData.description,
           goalDeadline: formData.endDate,
           taskAssignedTo: departments,
+          target: formData.target
   })
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +42,7 @@ export function CreateGoal() {
           goalDescription: formData.description,
           goalDeadline: formData.endDate,
           taskAssignedTo: departments,
+          target: formData.target
         },
         {
           headers: {
