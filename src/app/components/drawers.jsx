@@ -10,7 +10,7 @@ import {
   useCreateDepartment,
   useDepartmentRouteData,
 } from "../api/databook/route-data";
-import { GOALS_URL } from "../api/routes";
+import { CREATE_DEPRATMENT, GOALS_URL } from "../api/routes";
 import { AuthContext } from "../contex/context-context";
 
 export function CreateGoal() {
@@ -649,20 +649,36 @@ export function Userforms(props) {
 }
 
 export function Departmentforms() {
+  const { auth } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const { createDepartment } = useCreateDepartment();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const response = await createDepartment({
-      departmentName: name,
-    });
-    console.log(response);
-
-    setLoading(false);
+    try {
+      await axios.post(
+        CREATE_DEPRATMENT,
+        {
+          departmentName: name
+        },
+        {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+      alert("Department Saved Successfully");
+      handleClose();
+      reload();
+    } catch (error) {
+      alert(error);
+      handleClose();
+      reload();
+    } finally {
+      setLoading(false);
+    }
   };
 
   const reload = () => {
