@@ -15,6 +15,7 @@ import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import {
   useGeneralPerformanceChartRouteData,
+  useGoalStatus,
   useOrganizationalChartRouteData,
   usePerformanceMatrixChartRouteData,
 } from "../api/databook/route-data";
@@ -158,19 +159,20 @@ export function ProgressBarChat() {
 }
 
 export function InProgressVsCompleted() {
-  const { performanceMatrixChart } =
-    usePerformanceMatrixChartRouteData();
+  const { goalStatus } = useGoalStatus();
+  console.log({"completedvrsuncompleted": goalStatus})
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
       <h3 className="pb-3">
         <span style={{ color: "#cc23b3" }}>Completed </span>Vs{" "}
         <span style={{ color: "#2394cc" }}>Uncompleted</span>
+        <span style={{ color: "#2394cc" }}>Inprogress</span>
       </h3>
       <ResponsiveContainer height={180}>
         <PieChart>
           <Pie
-            data={performanceMatrixChart}
-            dataKey="achieved"
+            data={goalStatus}
+            dataKey="value"
             outerRadius={85}
             innerRadius={50}
           />

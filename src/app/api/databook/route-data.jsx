@@ -11,6 +11,7 @@ import {
   GENERAL_PERFORMANCE_CHART_URL,
   GOALS_URL,
   GOAL_COUNT_URL,
+  GOAL_STATUS_COUNT,
   ORGANIZATIONAL_CHART_URL,
   PERFORMANCE_MATRIX_CHART_URL,
 } from "../routes";
@@ -218,6 +219,32 @@ export function usePerformanceMatrixChartRouteData() {
   }, [auth]);
 
   return { performanceMatrixChart };
+}
+
+export function useGoalStatus() {
+  const { auth } = useContext(AuthContext);
+  const [goalStatus, setGoalStatus] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(GOAL_STATUS_COUNT, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setGoalStatus(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+  return { goalStatus };
 }
 
 export function useGoalCountRouteData() {
