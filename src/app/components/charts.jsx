@@ -173,7 +173,7 @@ export function InProgressVsCompleted() {
           <Pie
             data={goalStatus}
             dataKey="value"
-            fill ="color"
+            fill={({ payload }) => payload.color}
             outerRadius={85}
             innerRadius={50}
           />
