@@ -3,7 +3,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
-import { LOGIN_URL, SIGNUP_URL, VERIFYEMAIL_URL } from "../api/routes";
+import { LOGIN_URL, REQUEST_RESET_PASSWORD, SIGNUP_URL, VERIFYEMAIL_URL } from "../api/routes";
 import { TfiEmail } from "react-icons/tfi";
 import Cookies from "js-cookie";
 import axios from "../api/axios";
@@ -150,7 +150,6 @@ export function ForgetPassword() {
   const { auth, setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     email: "",
-    password: "",
   });
 
   
@@ -163,7 +162,7 @@ export function ForgetPassword() {
     });
     try {
       const response = await axios.post(
-        LOGIN_URL,
+        REQUEST_RESET_PASSWORD,
         JSON.stringify({
           email: userDetails.email,
         }),

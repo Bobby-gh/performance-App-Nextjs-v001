@@ -13,4 +13,5 @@ export const ORGANIZATIONAL_CHART_URL = "/department-performance/get-monthly-ave
 export const GOAL_COUNT_URL = "/goals/goal-status-count"
 export const CREATE_DEPRATMENT ="/departments"
 export const RESET_PASSWORD ="/reset-password"
+export const REQUEST_RESET_PASSWORD ="/request-password-reset"
 

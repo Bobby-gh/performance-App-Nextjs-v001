@@ -10,7 +10,7 @@ import { MdOutlineAddToPhotos } from "react-icons/md";
 
 export function InformationalSummary() {
   const { goalCount, error } = useGoalCountRouteData();
-  const { achieved, notAchieved, partiallyAchieved } = goalCount;
+  const { completed, notStarted, inProgress } = goalCount;
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -24,7 +24,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3 >Achieved Goals</h3>
-            <h3 className="font-bold text-3xl">{achieved}</h3>
+            <h3 className="font-bold text-3xl">{completed}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -40,7 +40,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3>Partially Achieved Goals</h3>
-            <h3 className="font-bold text-3xl">{partiallyAchieved}</h3>
+            <h3 className="font-bold text-3xl">{inProgress}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -56,7 +56,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3>Unachieved Goals</h3>
-            <h3 className="font-bold text-3xl">{notAchieved}</h3>
+            <h3 className="font-bold text-3xl">{notStarted}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
