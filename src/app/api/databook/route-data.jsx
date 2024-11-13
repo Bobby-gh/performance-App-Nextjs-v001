@@ -234,7 +234,7 @@ export function useGoalCountRouteData() {
           },
           withCredentials: true,
         });
-        console.log({"goal count": response})
+        console.log(response)
         setGoalCount(response.data.goalRatings);
       } catch (err) {
         console.log(err);
