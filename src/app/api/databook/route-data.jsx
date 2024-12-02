@@ -5,7 +5,7 @@ import axios from "../axios";
 import {
   CREATE_DEPRATMENT,
   DEPARTMENTS_URL,
-  DEPARTMENT_GOAL_ASSESSMENT_URL,
+  GOAL_ASSESSMENT_URL,
   EMPLOYEES_GOALS_URL,
   EMPLOYEES_URL,
   GENERAL_PERFORMANCE_CHART_URL,
@@ -108,27 +108,27 @@ export function useDepartmentRouteData() {
 
 export function useDepartmentGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
-  const [departassessment, setDepartAssessment] = useState([]);
-  const departassessmenttable = departassessment.map((departassessment) => ({
+  const [goalAssessment, setGoalAssessment] = useState([]);
+  const goalAssessmentData = goalAssessment.map((goalAssessment) => ({
     _id: data._id,
-    taskAssignedTo: departassessment.goalAssessed.taskAssignedTo.departmentName,
-    goalTitle: departassessment.goalAssessed.goalTitle,
-    goalDeadline: departassessment.goalAssessed.goalDeadline,
-    performancePercent: departassessment.averageRating.performancePercent,
-    rating: departassessment.rating.toUpperCase(),
+    taskAssignedTo: goalAssessment.goalAssessed.taskAssignedTo.departmentName,
+    goalTitle: goalAssessment.goalAssessed.goalTitle,
+    goalDeadline: goalAssessment.goalAssessed.goalDeadline,
+    performancePercent: goalAssessment.averageRating.performancePercent,
+    rating: goalAssessment.rating.toUpperCase(),
   }));
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(DEPARTMENT_GOAL_ASSESSMENT_URL, {
+        const response = await axios.get(GOAL_ASSESSMENT_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
           },
           withCredentials: true,
         });
-        setDepartAssessment(response.data.assessments);
+        setGoalAssessment(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -136,8 +136,8 @@ export function useDepartmentGoalAccessmentRouteData() {
 
     fetchData();
   }, [auth]);
-
-  return { departassessmenttable};
+  console.log({"goal accessed": goalAssessmentData})
+  return { goalAssessmentData};
 }
 
 export function useGeneralPerformanceChartRouteData() {
