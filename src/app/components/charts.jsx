@@ -16,13 +16,13 @@ import { IoIosTime } from "react-icons/io";
 import {
   useGeneralPerformanceChartRouteData,
   useGoalStatus,
-  useOrganizationalChartRouteData,
+  useOrganizationalAveragePerMonthChartRouteData,
   usePerformanceMatrixChartRouteData,
 } from "../api/databook/route-data";
 import { DataDateAccess } from "./infocards";
 
 export function OrganizationPerformanceDashboard() {
-  const { organizationalChart} = useOrganizationalChartRouteData();
+  const { organizationalChart} = useOrganizationalAveragePerMonthChartRouteData();
   
 
   return (

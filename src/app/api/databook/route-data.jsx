@@ -166,7 +166,7 @@ export function useGeneralPerformanceChartRouteData() {
   return { generalPerformance };
 }
 
-export function useOrganizationalChartRouteData() {
+export function useOrganizationalAveragePerMonthChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
   const organizationalChart = [
