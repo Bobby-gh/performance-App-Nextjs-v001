@@ -261,7 +261,6 @@ export function useGoalCountRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response)
         setGoalCount(response.data);
       } catch (err) {
         console.log(err);

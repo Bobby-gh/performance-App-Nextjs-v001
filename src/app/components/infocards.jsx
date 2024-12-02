@@ -9,7 +9,7 @@ import { useGoalCountRouteData } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 
 export function InformationalSummary() {
-  const { goalCount, error } = useGoalCountRouteData();
+  const { goalCount} = useGoalCountRouteData();
   console.log({"goal count desctruction": goalCount})
   const { completed, notStarted, inProgress } = goalCount;
   if (error) {
