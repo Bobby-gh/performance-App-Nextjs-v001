@@ -12,7 +12,7 @@ import {
   GOALS_URL,
   GOAL_COUNT_URL,
   GOAL_STATUS_COUNT,
-  ORGANIZATIONAL_AVERAGE_CHART_URL ,
+  ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL ,
   PERFORMANCE_MATRIX_CHART_URL,
 } from "../routes";
 
@@ -177,7 +177,7 @@ export function useOrganizationalChartRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(ORGANIZATIONAL_AVERAGE_CHART_URL , {
+        const response = await axios.get(ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL  , {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
