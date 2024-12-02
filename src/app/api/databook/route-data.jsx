@@ -136,7 +136,7 @@ export function useDepartmentGoalAccessmentRouteData() {
 
     fetchData();
   }, [auth]);
-  console.log({"goal accessed": goalAssessmentData})
+  console.log({"goal accessed": goalAssessment})
   return { goalAssessmentData};
 }
 

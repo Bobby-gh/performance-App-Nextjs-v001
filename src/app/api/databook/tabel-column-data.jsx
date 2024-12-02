@@ -43,7 +43,7 @@ export const accessinggoalcolumn = [
   { field: "goalDeadline", headerName: "End Date", flex: 1, headerClassName: "header-table" },
 
   { field: "performancePercent", headerName: "Score(%)", flex: 0.5, headerClassName: "header-table" },
-  { field: "rating", headerName: "Remark", flex: 0.5, headerClassName: "header-table" },
+  { field: "comment", headerName: "Remark", flex: 0.5, headerClassName: "header-table" },
   {
     field: "detail",
     headerName: "Detail",
