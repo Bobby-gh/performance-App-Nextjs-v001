@@ -162,7 +162,7 @@ export function useGeneralPerformanceChartRouteData() {
 
     fetchData();
   }, [auth]);
-
+  console.log({'General performance': generalPerformance})
   return { generalPerformance };
 }
 
