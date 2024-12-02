@@ -11,10 +11,8 @@ import { MdOutlineAddToPhotos } from "react-icons/md";
 export function InformationalSummary() {
   const { goalCount} = useGoalCountRouteData();
   console.log({"goal count desctruction": goalCount})
-  const { completed, notStarted, inProgress } = goalCount;
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  const { achieved, notAchieved, partiallyAchieved } = goalCount;
+  
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
