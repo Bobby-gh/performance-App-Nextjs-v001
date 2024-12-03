@@ -125,10 +125,10 @@ export function useTopGoalsRouteData() {
         console.log(err);
       }
     };
-    console.log({"topgoals": topGoal})
+    
     fetchData();
   }, [auth]);
-
+  console.log({"topgoals": topGoal})
   return { topGoal };
 }
 
