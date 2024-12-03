@@ -40,11 +40,11 @@ export function LoginForm() {
           name: response.data.fullName,
         });
 
-        Cookies.set("token", JSON.stringify(response.data.token), {
+        Cookies.set("token", response.data.token, {
           secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
         });
-        Cookies.set("name", JSON.stringify(response.data.fullName), {
+        Cookies.set("name", response.data.fullName, {
           secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
         });
@@ -386,7 +386,7 @@ export function SignUpForm() {
           withCredentials: true,
         }
       );
-      Cookies.set("email", JSON.stringify(userDetails.email), {
+      Cookies.set("email", userDetails.email, {
         secure: process.env.NODE_ENV === "production",
         sameSite: "Strict",
       });
@@ -576,7 +576,7 @@ export function VerifyEmailForm() {
         VERIFYEMAIL_URL,
         JSON.stringify({
           code: userDetails.token,
-          email: JSON.parse(Cookies.get("email")),
+          email: Cookies.get("email"),
         }),
         {
           headers: { "Content-Type": "application/json" },
