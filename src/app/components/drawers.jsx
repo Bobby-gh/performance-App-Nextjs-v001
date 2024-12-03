@@ -248,6 +248,7 @@ export function AccessGoal() {
       reload();
     } catch (error) {
       alert(error);
+      console.log(error)
       handleClose();
       reload();
     } finally {
