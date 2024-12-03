@@ -128,7 +128,7 @@ export function useGoalAccessmentRouteData() {
           },
           withCredentials: true,
         });
-        console.log("API Response:", response.data);
+        console.log("API Response:", response);
         setGoalAssessment(response.data);
       } catch (err) {
         console.log(err);
