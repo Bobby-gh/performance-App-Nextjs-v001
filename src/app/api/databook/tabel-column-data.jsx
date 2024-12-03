@@ -72,7 +72,7 @@ export const topgoalcolumn = [
   },
   {
     field: "performancePercent",
-    headerName: "Goal Score",
+    headerName: "Goal Score (%)",
     flex: 0.5,
     headerClassName: "header-table",
   },
