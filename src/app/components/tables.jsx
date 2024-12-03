@@ -15,6 +15,7 @@ import {
   useEmployeesRouteData,
   useGoalAccessmentRouteData,
   useGoalRouteData,
+  useTopGoalsRouteData,
 } from "../api/databook/route-data";
 
 export function GoalTable() {
@@ -163,6 +164,34 @@ export function DepartmentTable() {
       <div>
         <DataGrid
           rows={departmenttable}
+          columns={departmentcolumn}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[10, 15]}
+          slots={{ toolbar: GridToolbar }}
+          getRowId={(row) => row.departmentId}
+          sx={{
+            border: 0,
+            borderRadius: 2,
+            p: 2,
+            minWidth: 300,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export function TopGoalTable() {
+  const { topGoal } = useTopGoalsRouteData();
+  return (
+    <div>
+      <div>
+        <DataGrid
+          rows={topGoal}
           columns={departmentcolumn}
           initialState={{
             pagination: {

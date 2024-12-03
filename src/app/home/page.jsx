@@ -9,7 +9,7 @@ import {
   PerformanceMatrixDashboard,
 } from "../components/charts";
 import { LoadingPopup } from "../api/sessions";
-import { TopDepartmentTable } from "../components/tables";
+import { TopGoalTable } from "../components/tables";
 
 export default function dashboard() {
   return (
@@ -28,7 +28,7 @@ export default function dashboard() {
         </div>
       </section>
       <section className="mt-6 card bg-white rounded-lg">
-        <TopDepartmentTable/>
+        <TopGoalTable/>
       </section>
     </main>
   );
