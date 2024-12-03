@@ -12,7 +12,7 @@ import {
   GOALS_URL,
   GOAL_COUNT_URL,
   GOAL_STATUS_COUNT,
-  ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL ,
+  ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL,
   PERFORMANCE_MATRIX_CHART_URL,
 } from "../routes";
 
@@ -38,7 +38,7 @@ export function useGoalRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response.data)
+        console.log(response.data);
         setDepartmenttable(response.data);
       } catch (err) {
         console.log(err);
@@ -47,9 +47,9 @@ export function useGoalRouteData() {
 
     fetchData();
   }, [auth]);
-  console.log({'number of goals resposne': departmentgoal})
-  console.log({"number of goal": departmentgoaltable})
-  return { departmentgoaltable};
+  console.log({ "number of goals resposne": departmentgoal });
+  console.log({ "number of goal": departmentgoaltable });
+  return { departmentgoaltable };
 }
 
 export function useEmployeesRouteData() {
@@ -79,7 +79,6 @@ export function useEmployeesRouteData() {
   return { employeetable };
 }
 
-
 export function useDepartmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [departmenttable, setDepartmenttable] = useState([]);
@@ -102,24 +101,29 @@ export function useDepartmentRouteData() {
 
     fetchData();
   }, [auth]);
-  
-  return { departmenttable};
+
+  return { departmenttable };
 }
 
 export function useGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [goalAssessment, setGoalAssessment] = useState([]);
-  const goalAssessmentData = goalAssessment.map((goalAssessment) => ({
-    _id: data._id,
-    taskAssignedTo: goalAssessment.goalAssessed.taskAssignedTo.departmentName,
-    goalTitle: goalAssessment.goalAssessed.goalTitle,
-    goalDeadline: goalAssessment.goalAssessed.goalDeadline,
-    performancePercent: goalAssessment.averageRating.performancePercent,
-    rating: goalAssessment.rating.toUpperCase(),
+
+  const goalAssessmentData = goalAssessment.map((goal) => ({
+    _id: goal._id,
+    taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
+    goalTitle: goal.goalAssessed?.goalTitle || "",
+    goalDeadline: goal.goalAssessed?.goalDeadline || "",
+    performancePercent: goal.averageRating?.performancePercent || 0,
+    rating: goal.rating?.toUpperCase() || "",
   }));
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!auth?.token) {
+        console.warn("Authorization token is missing.");
+        return;
+      }
       try {
         const response = await axios.get(GOAL_ASSESSMENT_URL, {
           headers: {
@@ -128,17 +132,24 @@ export function useGoalAccessmentRouteData() {
           },
           withCredentials: true,
         });
-        console.log("API Response:", response);
+        console.log("API Response Data:", response.data);
         setGoalAssessment(response.data);
       } catch (err) {
-        console.log(err);
+        console.error(
+          "Error fetching goal assessments:",
+          err.response || err.message || err
+        );
       }
     };
 
     fetchData();
   }, [auth]);
-  console.log({"goal accessed": goalAssessment})
-  return { goalAssessmentData};
+
+  useEffect(() => {
+    console.log("Updated goalAssessment:", goalAssessment);
+  }, [goalAssessment]);
+
+  return { goalAssessmentData };
 }
 
 export function useGeneralPerformanceChartRouteData() {
@@ -163,7 +174,7 @@ export function useGeneralPerformanceChartRouteData() {
 
     fetchData();
   }, [auth]);
-  console.log({'General performance': generalPerformance})
+  console.log({ "General performance": generalPerformance });
   return { generalPerformance };
 }
 
@@ -178,13 +189,16 @@ export function useOrganizationalAveragePerMonthChartRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL  , {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.token}`,
+            },
+            withCredentials: true,
+          }
+        );
         setOrganizationalChart(response.data);
       } catch (err) {
         console.log(err);
@@ -193,8 +207,8 @@ export function useOrganizationalAveragePerMonthChartRouteData() {
 
     fetchData();
   }, [auth]);
-  
-  console.log({'Average performance': organizationalChart})
+
+  console.log({ "Average performance": organizationalChart });
   return { organizationalChart };
 }
 export function usePerformanceMatrixChartRouteData() {
@@ -271,7 +285,7 @@ export function useGoalCountRouteData() {
 
     fetchData();
   }, [auth]);
-  return { goalCount};
+  return { goalCount };
 }
 
 /************************************************Post ROutes*************************************/
@@ -279,27 +293,27 @@ export function useGoalCountRouteData() {
 export function useCreateDepartment() {
   const { auth } = useContext(AuthContext);
 
-    const createDepartment = async (departmentName) => {
-      console.log(departmentName)
-      try {
-        const response = await axios.post(
-          CREATE_DEPRATMENT,
-          JSON.stringify({
-            departmentName
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + auth.token,
-            },
-            withCredentials: true,
-          }
-        );
-        return response
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const createDepartment = async (departmentName) => {
+    console.log(departmentName);
+    try {
+      const response = await axios.post(
+        CREATE_DEPRATMENT,
+        JSON.stringify({
+          departmentName,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          },
+          withCredentials: true,
+        }
+      );
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  return { createDepartment};
+  return { createDepartment };
 }
