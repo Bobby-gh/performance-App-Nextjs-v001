@@ -5,13 +5,11 @@ import {
   accessinggoalcolumn,
   departmentcolumn,
   goalsettingcolumn,
+  topgoalcolumn,
   usercolumn,
 } from "../api/databook/tabel-column-data";
 import {
-  useDepartmentGoalAccessmentRouteData,
-  useDepartmentGoalRouteData,
   useDepartmentRouteData,
-  useEmployeesGoalRouteData,
   useEmployeesRouteData,
   useGoalAccessmentRouteData,
   useGoalRouteData,
@@ -192,7 +190,7 @@ export function TopGoalTable() {
       <div>
         <DataGrid
           rows={topGoal}
-          columns={departmentcolumn}
+          columns={topgoalcolumn}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 10 },

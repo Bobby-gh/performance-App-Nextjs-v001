@@ -35,6 +35,43 @@ export const goalsettingcolumn = [
   },
 ];
 
+export const topgoalcolumn = [
+  { field: "goalTitle", headerName: "Goal Title", flex: 1, headerClassName: "header-table"},
+  { field: "departmentName", headerName: "Department ", flex: 1, headerClassName: "header-table"},
+  { field: "dateAssigned", headerName: "End Date", flex: 0.5, headerClassName: "header-table"},
+  {
+    field: "performancePercent",
+    headerName: "Goal Score",flex: 0.5,
+    headerClassName: "header-table",    
+    renderCell: (params) => {
+      const statusText = params.value ? 'Reviewed' : 'Not Reviewed';
+      return <span>{statusText}</span>;
+    }
+  },
+  { field: "goalDeadline", headerName: "End Date", flex: 0.5, headerClassName: "header-table"},
+  {
+    field: "detail",
+    headerName: "Detail",
+    headerClassName: "header-table",
+    flex: 0.5,
+    renderCell: (params) => {
+      const handleEditClick = () => {
+        // Implement the edit logic here
+        console.log(`Editing row with ID: ${params.row._id}`);
+      };
+
+      return (
+        <>
+          <button onClick={handleEditClick} className="px-2">
+            <FaEdit className="icons" />
+          </button>
+        </>
+      );
+    },
+  },
+];
+
+
 
 
 export const accessinggoalcolumn = [
