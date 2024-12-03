@@ -116,6 +116,7 @@ export function useGoalAccessmentRouteData() {
     goalDeadline: goal.goalAssessed?.goalDeadline || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
     rating: goal.rating?.toUpperCase() || "",
+    comment: goal.comment || "",
   }));
 
   useEffect(() => {
@@ -132,7 +133,6 @@ export function useGoalAccessmentRouteData() {
           },
           withCredentials: true,
         });
-        console.log("API Response Data:", response.data);
         setGoalAssessment(response.data);
       } catch (err) {
         console.error(
@@ -145,9 +145,6 @@ export function useGoalAccessmentRouteData() {
     fetchData();
   }, [auth]);
 
-  useEffect(() => {
-    console.log("Updated goalAssessment:", goalAssessment);
-  }, [goalAssessment]);
 
   return { goalAssessmentData };
 }
