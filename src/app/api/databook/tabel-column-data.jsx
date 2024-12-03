@@ -1,17 +1,33 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 export const goalsettingcolumn = [
-  { field: "goalTitle", headerName: "Goal Title", flex: 1, headerClassName: "header-table"},
-  { field: "taskAssignedTo", headerName: "Department ", flex: 1, headerClassName: "header-table"},
-  { field: "goalDeadline", headerName: "End Date", flex: 0.5, headerClassName: "header-table"},
+  {
+    field: "goalTitle",
+    headerName: "Goal Title",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "taskAssignedTo",
+    headerName: "Department ",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "goalDeadline",
+    headerName: "End Date",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
   {
     field: "status",
-    headerName: "Goal Status",flex: 0.5,
-    headerClassName: "header-table",    
+    headerName: "Goal Status",
+    flex: 0.5,
+    headerClassName: "header-table",
     renderCell: (params) => {
-      const statusText = params.value ? 'Reviewed' : 'Not Reviewed';
+      const statusText = params.value ? "Reviewed" : "Not Reviewed";
       return <span>{statusText}</span>;
-    }
+    },
   },
   {
     field: "detail",
@@ -36,19 +52,36 @@ export const goalsettingcolumn = [
 ];
 
 export const topgoalcolumn = [
-  { field: "goalTitle", headerName: "Goal Title", flex: 1, headerClassName: "header-table"},
-  { field: "departmentName", headerName: "Department ", flex: 1, headerClassName: "header-table"},
-  { field: "dateAssigned", headerName: "End Date", flex: 0.5, headerClassName: "header-table"},
+  {
+    field: "goalTitle",
+    headerName: "Goal Title",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "departmentName",
+    headerName: "Department ",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "dateAssigned",
+    headerName: "Assigned Date",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
   {
     field: "performancePercent",
-    headerName: "Goal Score",flex: 0.5,
-    headerClassName: "header-table",    
-    renderCell: (params) => {
-      const statusText = params.value ? 'Reviewed' : 'Not Reviewed';
-      return <span>{statusText}</span>;
-    }
+    headerName: "Goal Score",
+    flex: 0.5,
+    headerClassName: "header-table",
   },
-  { field: "goalDeadline", headerName: "End Date", flex: 0.5, headerClassName: "header-table"},
+  {
+    field: "goalDeadline",
+    headerName: "End Date",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
   {
     field: "detail",
     headerName: "Detail",
@@ -71,16 +104,38 @@ export const topgoalcolumn = [
   },
 ];
 
-
-
-
 export const accessinggoalcolumn = [
-  { field: "taskAssignedTo", headerName: "Department", flex: 1, headerClassName: "header-table" },
-  { field: "goalTitle", headerName: "Goal Name", flex: 1, headerClassName: "header-table" },
-  { field: "goalDeadline", headerName: "End Date", flex: 1, headerClassName: "header-table" },
+  {
+    field: "taskAssignedTo",
+    headerName: "Department",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "goalTitle",
+    headerName: "Goal Name",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "goalDeadline",
+    headerName: "End Date",
+    flex: 1,
+    headerClassName: "header-table",
+  },
 
-  { field: "performancePercent", headerName: "Score(%)", flex: 0.5, headerClassName: "header-table" },
-  { field: "comment", headerName: "Remark", flex: 0.5, headerClassName: "header-table" },
+  {
+    field: "performancePercent",
+    headerName: "Score(%)",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
+  {
+    field: "comment",
+    headerName: "Remark",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
   {
     field: "detail",
     headerName: "Detail",
@@ -103,10 +158,30 @@ export const accessinggoalcolumn = [
   },
 ];
 export const usercolumn = [
-  { field: "fullName", headerName: "First Name", flex: 1, headerClassName: "header-table" },
-  { field: "email", headerName: "Email", flex: 1, headerClassName: "header-table"},
-  {field: "department", headerName: "Department", flex: 1, headerClassName: "header-table"},
-  { field: "role", headerName: "Role", flex: 0.5, headerClassName: "header-table" },
+  {
+    field: "fullName",
+    headerName: "First Name",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "email",
+    headerName: "Email",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "department",
+    headerName: "Department",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "role",
+    headerName: "Role",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
   {
     field: "edit",
     headerName: "Edit",
@@ -146,9 +221,24 @@ export const usercolumn = [
   },
 ];
 export const departmentcolumn = [
-  { field: "departmentName", headerName: "Department Name", flex: 1, headerClassName: "header-table" },
-  { field: "manager", headerName: "Department Manager", flex: 1, headerClassName: "header-table"},
-  { field: "numberOfStaff", headerName: "Number of Staff", flex: 1, headerClassName: "header-table"},
+  {
+    field: "departmentName",
+    headerName: "Department Name",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "manager",
+    headerName: "Department Manager",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "numberOfStaff",
+    headerName: "Number of Staff",
+    flex: 1,
+    headerClassName: "header-table",
+  },
   {
     field: "edit",
     headerName: "Edit",
