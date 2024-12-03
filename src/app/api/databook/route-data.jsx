@@ -106,7 +106,7 @@ export function useDepartmentRouteData() {
   return { departmenttable};
 }
 
-export function useDepartmentGoalAccessmentRouteData() {
+export function useGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [goalAssessment, setGoalAssessment] = useState([]);
   const goalAssessmentData = goalAssessment.map((goalAssessment) => ({

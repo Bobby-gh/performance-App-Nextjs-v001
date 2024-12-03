@@ -13,6 +13,7 @@ import {
   useDepartmentRouteData,
   useEmployeesGoalRouteData,
   useEmployeesRouteData,
+  useGoalAccessmentRouteData,
   useGoalRouteData,
 } from "../api/databook/route-data";
 
@@ -74,12 +75,12 @@ export function MonitorGoalTable() {
 }
 export function AccessGoalTable() {
   // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
-  const { departmentgoaltable } = useGoalRouteData();
+  const { goalAssessmentData } = useGoalAccessmentRouteData();
   return (
     <div>
       <div>
         <DataGrid
-          rows={departmentgoaltable}
+          rows={goalAssessmentData}
           columns={accessinggoalcolumn}
           initialState={{
             pagination: {
