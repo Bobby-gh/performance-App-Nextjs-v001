@@ -198,7 +198,7 @@ export function TopGoalTable() {
           }}
           pageSizeOptions={[10, 15]}
           slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row.departmentId}
+          getRowId={(row) => row._id}
           sx={{
             border: 0,
             borderRadius: 2,
