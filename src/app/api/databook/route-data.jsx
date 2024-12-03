@@ -14,6 +14,7 @@ import {
   GOAL_STATUS_COUNT,
   ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL,
   PERFORMANCE_MATRIX_CHART_URL,
+  TOP_GOALS,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -112,7 +113,7 @@ export function useTopGoalsRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(DEPARTMENTS_URL, {
+        const response = await axios.get(TOP_GOALS, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
