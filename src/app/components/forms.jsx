@@ -587,7 +587,7 @@ export function VerifyEmailForm() {
         setLogin(true);
       }
     } catch (err) {
-      alert(err);
+      alert(err.response.data);
       console.log(err);
     } finally {
       setLoading(false);
