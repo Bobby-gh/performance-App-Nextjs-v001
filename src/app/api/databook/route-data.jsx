@@ -128,6 +128,7 @@ export function useTopGoalsRouteData() {
     
     fetchData();
   }, [auth]);
+  
   console.log({"topgoals": topGoal})
   return { topGoal };
 }
