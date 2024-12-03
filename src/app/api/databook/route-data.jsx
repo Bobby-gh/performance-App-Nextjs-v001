@@ -121,7 +121,7 @@ export function useGoalAccessmentRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://performanceappbackendv001-production.up.railway.app/api/v1/goal-assessments", {
+        const response = await axios.get(DEPARTMENTS_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
