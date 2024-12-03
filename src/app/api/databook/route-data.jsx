@@ -105,6 +105,32 @@ export function useDepartmentRouteData() {
   return { departmenttable };
 }
 
+export function useTopGoalsRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [topGoal, setTopGoal] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(DEPARTMENTS_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setTopGoal(response.data.departments);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    console.log({"topgoals": topGoal})
+    fetchData();
+  }, [auth]);
+
+  return { topGoal };
+}
+
 export function useGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [goalAssessment, setGoalAssessment] = useState([]);

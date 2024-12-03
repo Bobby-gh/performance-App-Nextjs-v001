@@ -15,4 +15,5 @@ export const GOAL_STATUS_COUNT = "/goals/goal-status-count"
 export const CREATE_DEPRATMENT ="/departments"
 export const RESET_PASSWORD ="/reset-password"
 export const REQUEST_RESET_PASSWORD ="/request-password-reset"
+export const TOP_GOALS = "/goal-assessments/get-top-assessment"
 
