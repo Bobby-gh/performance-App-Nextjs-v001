@@ -120,7 +120,7 @@ export function useTopGoalsRouteData() {
           },
           withCredentials: true,
         });
-        setTopGoal(response.data.departments);
+        setTopGoal(response.data);
       } catch (err) {
         console.log(err);
       }
