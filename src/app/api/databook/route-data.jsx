@@ -121,14 +121,14 @@ export function useGoalAccessmentRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(DEPARTMENTS_URL, {
+        const response = await axios.get(GOAL_ASSESSMENT_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
           },
           withCredentials: true,
         });
-        setGoalAssessment(response);
+        setGoalAssessment(response.data);
       } catch (err) {
         console.log(err);
       }
