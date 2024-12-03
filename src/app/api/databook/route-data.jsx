@@ -128,7 +128,7 @@ export function useGoalAccessmentRouteData() {
           },
           withCredentials: true,
         });
-        setGoalAssessment(response.data);
+        setGoalAssessment(response);
       } catch (err) {
         console.log(err);
       }
