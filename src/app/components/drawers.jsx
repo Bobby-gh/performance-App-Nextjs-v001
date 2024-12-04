@@ -13,6 +13,7 @@ import {
 } from "../api/databook/route-data";
 import {
   CREATE_DEPRATMENT,
+  EMPLOYEES_URL,
   GOAL_ASSESSMENT_URL,
   GOALS_URL,
 } from "../api/routes";
@@ -250,7 +251,7 @@ export function AccessGoal() {
           withCredentials: true,
         }
       );
-      alert("User Saved Successfully");
+      alert("Goal Acessed Successfully");
       handleClose();
       reload();
     } catch (error) {
