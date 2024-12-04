@@ -522,7 +522,6 @@ export function Userforms(props) {
           fullName: userFormData.fullName,
           department: departments,
           email: userFormData.email,
-          role: role,
         },
         {
           headers: {
