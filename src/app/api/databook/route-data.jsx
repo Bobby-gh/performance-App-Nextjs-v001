@@ -15,6 +15,7 @@ import {
   ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL,
   PERFORMANCE_MATRIX_CHART_URL,
   TOP_GOALS,
+  UNACCESSED_GOALS_URL,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -59,7 +60,7 @@ export function useUnassessedGoalRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(GOALS_URL, {
+        const response = await axios.get(UNACCESSED_GOALS_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
