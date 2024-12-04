@@ -202,7 +202,7 @@ export function CreateGoal() {
 export function AccessGoal() {
   const { auth } = useContext(AuthContext);
   const { departmentgoaltable } = useGoalRouteData();
-  const [goal, setGoal] = useState("");
+  const [goalId, setGoal] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [assessData, setAssessData] = useState({
     workQuality: "",
@@ -223,18 +223,30 @@ export function AccessGoal() {
     }));
   };
 
-  console.log(JSON.stringify({
-    goalId: goal,
-    workQuality: assessData.workQuality,
-    productivity: assessData.productivity,
-    communication: assessData.communication,
-    proceduralKnowledge: assessData.proceduralKnowledge,
-    reliability: assessData.reliability,
-    teamwork: assessData.teamWork,
-    creativity: assessData.creativity,
-    rating: assessData.rating,
-    comment: assessData.comment,
-  }))
+  const {
+    workQuality,
+    productivity,
+    communication,
+    proceduralKnowledge,
+    reliability,
+    teamWork,
+    creativity,
+    rating,
+    comment,
+  } = assessData;
+
+  JSON.stringify({
+    goalId,
+    workQuality,
+    productivity,
+    communication,
+    proceduralKnowledge,
+    reliability,
+    teamWork,
+    creativity,
+    rating,
+    comment,
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -243,16 +255,16 @@ export function AccessGoal() {
       await axios.post(
         GOAL_ASSESSMENT_URL,
         JSON.stringify({
-          goalId: goal,
-          workQuality: assessData.workQuality,
-          productivity: assessData.productivity,
-          communication: assessData.communication,
-          proceduralKnowledge: assessData.proceduralKnowledge,
-          reliability: assessData.reliability,
-          teamwork: assessData.teamWork,
-          creativity: assessData.creativity,
-          rating: assessData.rating,
-          comment: assessData.comment,
+          goalId,
+          workQuality,
+          productivity,
+          communication,
+          proceduralKnowledge,
+          reliability,
+          teamWork,
+          creativity,
+          rating,
+          comment,
         }),
         {
           headers: {
@@ -306,7 +318,7 @@ export function AccessGoal() {
             <div className="relative mb-6" data-te-input-wrapper-init>
               <select
                 name="goal"
-                value={goal}
+                value={goalId}
                 onChange={(e) => setGoal(e.target.value)}
                 className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 required>
