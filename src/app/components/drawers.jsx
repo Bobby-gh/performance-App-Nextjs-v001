@@ -235,7 +235,7 @@ export function AccessGoal() {
     comment,
   } = assessData;
 
-  JSON.stringify({
+  console.log(JSON.stringify({
     goalId,
     workQuality,
     productivity,
@@ -246,7 +246,7 @@ export function AccessGoal() {
     creativity,
     rating,
     comment,
-  });
+  }));
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
