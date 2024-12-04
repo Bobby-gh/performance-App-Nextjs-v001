@@ -512,6 +512,7 @@ export function Userforms(props) {
     email: "",
   });
 
+  console.log(departments)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
