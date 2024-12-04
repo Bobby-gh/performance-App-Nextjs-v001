@@ -219,21 +219,23 @@ export function AccessGoal() {
     }));
   };
 
+  console.log(JSON.stringify({
+    goalId: goal,
+    workQuality: assessData.workQuality,
+    productivity: assessData.productivity,
+    communication: assessData.communication,
+    proceduralKnowledge: assessData.proceduralKnowledge,
+    reliability: assessData.reliability,
+    teamwork: assessData.teamWork,
+    creativity: assessData.creativity,
+    rating: assessData.rating, 
+    comment: assessData.comment,
+  }))
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(JSON.stringify({
-      goalId: goal,
-      workQuality: assessData.workQuality,
-      productivity: assessData.productivity,
-      communication: assessData.communication,
-      proceduralKnowledge: assessData.proceduralKnowledge,
-      reliability: assessData.reliability,
-      teamwork: assessData.teamWork,
-      creativity: assessData.creativity,
-      rating: assessData.rating, 
-      comment: assessData.comment,
-    }))
+
     try {
       await axios.post(
         JSON.stringify({
