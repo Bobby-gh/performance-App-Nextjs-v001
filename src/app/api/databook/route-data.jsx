@@ -77,6 +77,7 @@ export function useEmployeesRouteData() {
     fetchData();
   }, [auth]);
 
+  console.log({'employe':employeetable})
   return { employeetable };
 }
 
