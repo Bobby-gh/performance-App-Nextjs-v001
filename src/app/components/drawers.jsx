@@ -11,7 +11,11 @@ import {
   useDepartmentRouteData,
   useGoalRouteData,
 } from "../api/databook/route-data";
-import { CREATE_DEPRATMENT, GOALS_URL } from "../api/routes";
+import {
+  CREATE_DEPRATMENT,
+  GOAL_ASSESSMENT_URL,
+  GOALS_URL,
+} from "../api/routes";
 import { AuthContext } from "../contex/context-context";
 
 export function CreateGoal() {
@@ -33,8 +37,8 @@ export function CreateGoal() {
     setLoading(true);
     try {
       await axios.post(
-        GOALS_URL,JSON.stringify(
-        {
+        GOALS_URL,
+        JSON.stringify({
           goalTitle: formData.title,
           goalDescription: formData.description,
           goalDeadline: formData.endDate,
@@ -198,7 +202,7 @@ export function CreateGoal() {
 export function AccessGoal() {
   const { auth } = useContext(AuthContext);
   const { departmentgoaltable } = useGoalRouteData();
-  const [goal, setGoal] = useState("")
+  const [goal, setGoal] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [assessData, setAssessData] = useState({
     workQuality: "",
@@ -219,25 +223,13 @@ export function AccessGoal() {
     }));
   };
 
-  console.log(JSON.stringify({
-    goalId: goal,
-    workQuality: assessData.workQuality,
-    productivity: assessData.productivity,
-    communication: assessData.communication,
-    proceduralKnowledge: assessData.proceduralKnowledge,
-    reliability: assessData.reliability,
-    teamwork: assessData.teamWork,
-    creativity: assessData.creativity,
-    rating: assessData.rating, 
-    comment: assessData.comment,
-  }))
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       await axios.post(
+        GOAL_ASSESSMENT_URL,
         JSON.stringify({
           goalId: goal,
           workQuality: assessData.workQuality,
@@ -247,7 +239,7 @@ export function AccessGoal() {
           reliability: assessData.reliability,
           teamwork: assessData.teamWork,
           creativity: assessData.creativity,
-          rating: assessData.rating, 
+          rating: assessData.rating,
           comment: assessData.comment,
         }),
         {
@@ -263,7 +255,7 @@ export function AccessGoal() {
       reload();
     } catch (error) {
       alert(error);
-      console.log(error)
+      console.log(error);
       handleClose();
       reload();
     } finally {
@@ -310,9 +302,7 @@ export function AccessGoal() {
                   Select a goal
                 </option>
                 {departmentgoaltable.map((goals) => (
-                  <option
-                    key={goals._id}
-                    value={goals._id}>
+                  <option key={goals._id} value={goals._id}>
                     {goals.goalTitle}
                   </option>
                 ))}
@@ -694,7 +684,8 @@ export function Departmentforms() {
     setLoading(true);
     try {
       await axios.post(
-        CREATE_DEPRATMENT,JSON.stringify({
+        CREATE_DEPRATMENT,
+        JSON.stringify({
           departmentName: name,
         }),
         {
@@ -710,7 +701,7 @@ export function Departmentforms() {
       reload();
     } catch (error) {
       alert(error);
-      console.log(error)
+      console.log(error);
       handleClose();
       reload();
     } finally {
