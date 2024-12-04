@@ -143,7 +143,7 @@ export function EmployeeTable() {
           }}
           pageSizeOptions={[10, 15]}
           slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row._id}
+          getRowId={(row) => row.userId}
           sx={{
             border: 0,
             borderRadius: 2,
