@@ -2,7 +2,7 @@
 export const GOALS_URL ="/goals"
 export const DEPARTMENTS_URL = "/departments"
 export const EMPLOYEES_GOALS_URL = "/employee-goals"
-export const EMPLOYEES_URL = "/add-member"
+export const EMPLOYEES_URL = "/users"
 export const GOAL_ASSESSMENT_URL ="/goal-assessments"
 export const LOGIN_URL ="/login"
 export const SIGNUP_URL ="/register"
