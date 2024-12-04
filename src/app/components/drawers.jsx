@@ -625,7 +625,7 @@ export function Userforms(props) {
                 onChange={(e) => setRole(e.target.value)}
                 required>
                 <option>Select ...</option>
-                <option value="'General Manager">General Manager </option>
+                <option value="General Manager">General Manager </option>
                 <option value="Manager">Manager </option>
                 <option value="Junior Staff">Staff </option>
               </select>
