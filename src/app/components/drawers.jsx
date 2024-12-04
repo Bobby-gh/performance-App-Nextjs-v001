@@ -503,7 +503,7 @@ export function AccessGoal() {
 }
 export function Userforms(props) {
   const { auth } = useContext(AuthContext);
-  const [departments, setDepartments] = useState([]);
+  const [departments, setDepartments] = useState("");
   const { departmenttable } = useDepartmentRouteData();
   const [role, setRole] = useState("");
   const [isLoading, setLoading] = useState(false);
