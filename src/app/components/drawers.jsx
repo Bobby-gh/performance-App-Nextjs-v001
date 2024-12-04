@@ -645,7 +645,7 @@ export function Userforms(props) {
                   Select a department
                 </option>
                 {departmenttable.map((department) => (
-                  <option key={department._id} value={department._id}>
+                  <option key={department.departmentId} value={department.departmentId}>
                     {department.departmentName}
                   </option>
                 ))}
