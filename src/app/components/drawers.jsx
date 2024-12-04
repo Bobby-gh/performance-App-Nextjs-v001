@@ -10,6 +10,7 @@ import {
   useCreateDepartment,
   useDepartmentRouteData,
   useGoalRouteData,
+  useUnassessedGoalRouteData,
 } from "../api/databook/route-data";
 import {
   CREATE_DEPRATMENT,
@@ -202,7 +203,7 @@ export function CreateGoal() {
 }
 export function AccessGoal() {
   const { auth } = useContext(AuthContext);
-  const { departmentgoaltable } = useGoalRouteData();
+  const { departmentgoal } = useUnassessedGoalRouteData();
   const [goal, setGoal] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [assessData, setAssessData] = useState({
@@ -304,7 +305,7 @@ export function AccessGoal() {
                 <option value="" disabled>
                   Select a goal
                 </option>
-                {departmentgoaltable.map((goals) => (
+                {departmentgoal.map((goals) => (
                   <option key={goals._id} value={goals._id}>
                     {goals.goalTitle}
                   </option>

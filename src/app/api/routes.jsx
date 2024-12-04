@@ -1,5 +1,6 @@
 
 export const GOALS_URL ="/goals"
+export const UNACCESSED_GOALS_URL ="/goals/my-assigned-goal"
 export const DEPARTMENTS_URL = "/departments"
 export const EMPLOYEES_GOALS_URL = "/employee-goals"
 export const EMPLOYEES_URL = "/users"

@@ -48,9 +48,35 @@ export function useGoalRouteData() {
 
     fetchData();
   }, [auth]);
-  console.log({ "number of goals resposne": departmentgoal });
-  console.log({ "number of goal": departmentgoaltable });
+
   return { departmentgoaltable };
+}
+
+export function useUnassessedGoalRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [departmentgoal, setDepartmenttable] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(GOALS_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+
+        setDepartmenttable(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+  
+  return { departmentgoal };
 }
 
 export function useEmployeesRouteData() {
