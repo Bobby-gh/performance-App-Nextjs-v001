@@ -681,10 +681,9 @@ export function Departmentforms() {
     console.log(name)
     try {
       await axios.post(
-        CREATE_DEPRATMENT,
-        {
+        CREATE_DEPRATMENT,JSON.stringify({
           departmentName: name,
-        },
+        }),
         {
           headers: {
             "Content-Type": "application/json",
