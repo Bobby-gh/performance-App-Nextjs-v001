@@ -546,8 +546,7 @@ export function Userforms(props) {
     setUserFormData({
       fullName: "",
       email: "",
-      password: "",
-      department: "",
+      departments: "",
       role: "",
     });
   };
