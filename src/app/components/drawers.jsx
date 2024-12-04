@@ -33,14 +33,14 @@ export function CreateGoal() {
     setLoading(true);
     try {
       await axios.post(
-        GOALS_URL,
+        GOALS_URL,JSON.stringify(
         {
           goalTitle: formData.title,
           goalDescription: formData.description,
           goalDeadline: formData.endDate,
           taskAssignedTo: departments,
           target: formData.target,
-        },
+        }),
         {
           headers: {
             "Content-Type": "application/json",
@@ -678,7 +678,6 @@ export function Departmentforms() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(name)
     try {
       await axios.post(
         CREATE_DEPRATMENT,JSON.stringify({
@@ -697,6 +696,7 @@ export function Departmentforms() {
       reload();
     } catch (error) {
       alert(error);
+      console.log(error)
       handleClose();
       reload();
     } finally {
