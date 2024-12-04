@@ -94,7 +94,7 @@ export function useEmployeesRouteData() {
           },
           withCredentials: true,
         });
-        setEmployeetable(response.data);
+        setEmployeetable(response.data.usersResponse);
       } catch (err) {
         console.log(err);
       }
