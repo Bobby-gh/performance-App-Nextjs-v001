@@ -68,7 +68,7 @@ export function useEmployeesRouteData() {
           },
           withCredentials: true,
         });
-        setEmployeetable(response.data.users);
+        setEmployeetable(response.data);
       } catch (err) {
         console.log(err);
       }
