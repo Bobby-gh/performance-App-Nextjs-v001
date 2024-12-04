@@ -77,7 +77,6 @@ export function useUnassessedGoalRouteData() {
     fetchData();
   }, [auth]);
 
-  console.log({'unaccessed goal':departmentgoal})
   return { departmentgoal };
 }
 
@@ -158,7 +157,6 @@ export function useTopGoalsRouteData() {
     fetchData();
   }, [auth]);
   
-  console.log({"topgoals": topGoal})
   return { topGoal };
 }
 

@@ -155,7 +155,7 @@ export const accessinggoalcolumn = [
 ];
 export const usercolumn = [
   {
-    field: "fullName",
+    field: "name",
     headerName: "First Name",
     flex: 1,
     headerClassName: "header-table",
