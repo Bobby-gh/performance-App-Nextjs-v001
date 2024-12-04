@@ -678,6 +678,7 @@ export function Departmentforms() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log(name)
     try {
       await axios.post(
         CREATE_DEPRATMENT,
