@@ -24,10 +24,6 @@ export const goalsettingcolumn = [
     headerName: "Goal Status",
     flex: 0.5,
     headerClassName: "header-table",
-    renderCell: (params) => {
-      const statusText = params.value ? "Reviewed" : "Not Reviewed";
-      return <span>{statusText}</span>;
-    },
   },
   {
     field: "detail",

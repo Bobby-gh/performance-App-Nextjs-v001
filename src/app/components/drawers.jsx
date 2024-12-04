@@ -201,13 +201,13 @@ export function AccessGoal() {
   const [goal, setGoal] = useState("")
   const [isLoading, setLoading] = useState(false);
   const [assessData, setAssessData] = useState({
-    workQuality: 1,
-    productivity: 1,
-    communication: 1,
-    proceduralKnowledge: 1,
-    reliability: 1,
-    teamWork: 1,
-    creativity: 1,
+    workQuality: "",
+    productivity: "",
+    communication: "",
+    proceduralKnowledge: "",
+    reliability: "",
+    teamWork: "",
+    creativity: "",
     rating: "",
     comment: "",
   });
@@ -222,6 +222,18 @@ export function AccessGoal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log(JSON.stringify({
+      goalId: goal,
+      workQuality: assessData.workQuality,
+      productivity: assessData.productivity,
+      communication: assessData.communication,
+      proceduralKnowledge: assessData.proceduralKnowledge,
+      reliability: assessData.reliability,
+      teamwork: assessData.teamWork,
+      creativity: assessData.creativity,
+      rating: assessData.rating, 
+      comment: assessData.comment,
+    }))
     try {
       await axios.post(
         JSON.stringify({
