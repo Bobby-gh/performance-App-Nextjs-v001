@@ -522,6 +522,7 @@ export function Userforms(props) {
           fullName: userFormData.fullName,
           department: departments,
           email: userFormData.email,
+          role: role,
         },
         {
           headers: {
@@ -536,6 +537,7 @@ export function Userforms(props) {
       reload();
     } catch (error) {
       alert(error);
+      console.log(error)
       handleClose();
       reload();
     } finally {
