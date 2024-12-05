@@ -1,6 +1,6 @@
 import { FaHome } from "react-icons/fa";
 import { GoGoal } from "react-icons/go";
-import { MdOutlineAssessment, MdGroups2 } from "react-icons/md";
+import { MdOutlineAssessment, MdGroups2, MdOutlineAssignment } from "react-icons/md";
 import { TbBrandCampaignmonitor } from "react-icons/tb";
 import { LuUser2 } from "react-icons/lu";
 
@@ -12,9 +12,14 @@ export const MenuItems = [
         icon: <FaHome/>
     },
     {
-        title: "Goal Setting",
-        path: "/home/goal-setting",
+        title: "Goals",
+        path: "/home/goals",
         icon: <GoGoal/>
+    },
+    {
+        title: "Assign Goals",
+        path: "/home/goal-setting",
+        icon: <MdOutlineAssignment/>
     },
     {
         title: "Goal Monitoring",

@@ -16,6 +16,7 @@ import {
   PERFORMANCE_MATRIX_CHART_URL,
   TOP_GOALS,
   UNACCESSED_GOALS_URL,
+  MY_GOALS_URL,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -51,6 +52,40 @@ export function useGoalRouteData() {
   }, [auth]);
 
   return { departmentgoaltable };
+}
+
+export function useMyGoalRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [mygoal, setMygoal] = useState([]);
+  const mygoaltable = departmentgoal.map((departmentgoal) => ({
+    ...departmentgoal,
+    taskAssignedTo: departmentgoal.taskAssignedTo,
+    dateAssigned: new Date(departmentgoal.dateAssigned).toLocaleDateString(),
+    goalDeadline: new Date(departmentgoal.goalDeadline).toLocaleDateString(),
+  }));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(MY_GOALS_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        console.log(response.data);
+        setMygoal(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+  console.log({ "personal goals": mygoaltable });
+  return { mygoaltable };
 }
 
 export function useUnassessedGoalRouteData() {
@@ -226,7 +261,7 @@ export function useGeneralPerformanceChartRouteData() {
 
     fetchData();
   }, [auth]);
-  console.log({ "General performance": generalPerformance });
+  
   return { generalPerformance };
 }
 

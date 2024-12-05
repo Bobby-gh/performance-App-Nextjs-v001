@@ -9,10 +9,9 @@ import { useGoalCountRouteData } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 
 export function InformationalSummary() {
-  const { goalCount} = useGoalCountRouteData();
-  console.log({"goal count desctruction": goalCount})
+  const { goalCount } = useGoalCountRouteData();
+  console.log({ "goal count desctruction": goalCount });
   const { achieved, notAchieved, partiallyAchieved } = goalCount;
-  
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
@@ -22,7 +21,7 @@ export function InformationalSummary() {
             <FaTrophy size={20} />
           </span>
           <span className="flex flex-col items-end">
-            <h3 >Achieved Goals</h3>
+            <h3>Achieved Goals</h3>
             <h3 className="font-bold text-3xl">{achieved}</h3>
           </span>
         </div>
@@ -441,8 +440,7 @@ export function AddUser() {
               <select
                 autoComplete="off"
                 type="text"
-                className="border rounded-lg p-4 w-full border-slate-400 mb-2 pr-16"
-              >
+                className="border rounded-lg p-4 w-full border-slate-400 mb-2 pr-16">
                 <option>choose role</option>
                 <option>Junior staff</option>
                 <option>Manager</option>
@@ -452,8 +450,7 @@ export function AddUser() {
               <select
                 autoComplete="off"
                 type="text"
-                className="border rounded-lg p-4 w-full border-slate-400 mt-2"
-              >
+                className="border rounded-lg p-4 w-full border-slate-400 mt-2">
                 <option>choose a department</option>
                 <option>Junior staff</option>
                 <option>Manager</option>
@@ -465,5 +462,23 @@ export function AddUser() {
         </div>
       </div>
     </main>
+  );
+}
+
+export function Goal(title, date) {
+  return (
+    <div className="card  bg-white rounded-lg p-4">
+      <div className="flex justify-between mb-16">
+        <span className="flex flex-col items-end">
+          <h3>Unachieved Goals</h3>
+          <h3 className="font-bold text-3xl"></h3>
+        </span>
+      </div>
+      <hr className="h-px my-6 border-0 dark:bg-gray-700" />
+      <div className="flex">
+        <span className="text-blue-900">+55%</span>
+        <span className="ml-2">than last Month</span>
+      </div>
+    </div>
   );
 }

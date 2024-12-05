@@ -87,7 +87,7 @@ export function CreateGoal() {
         onClick={handleOpen}
         size="large"
         variant="outlined">
-        <div className="px-6 text-sm">Goal</div>
+        <div className="px-6 text-sm">Assign Goal</div>
         <MdOutlineAddToPhotos size={25} />
       </Button>
       <Drawer anchor={"right"} open={open} onClose={handleClose}>
