@@ -54,7 +54,7 @@ export function useGoalRouteData() {
   return { departmentgoaltable };
 }
 
-export function useMyGoalRouteData() {
+export function MyGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [mygoals, setMygoal] = useState([]);
   const mygoal = mygoals.map((goal) => ({
