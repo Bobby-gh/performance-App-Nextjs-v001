@@ -54,16 +54,12 @@ export function useGoalRouteData() {
   return { departmentgoaltable };
 }
 
-export function MyGoalRouteData() {
+import axios from 'axios';
+import { AuthContext } from './AuthContext'; // Update the import path as necessary
+
+export function useMyGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [mygoals, setMygoal] = useState([]);
-  const mygoal = mygoals.map((goal) => ({
-    ...goal,
-    taskAssignedTo: goal.taskAssignedTo,
-    dateAssigned: new Date(goal.dateAssigned).toLocaleDateString(),
-    goalDeadline: new Date(goal.goalDeadline).toLocaleDateString(),
-  }));
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,9 +81,17 @@ export function MyGoalRouteData() {
     fetchData();
   }, [auth]);
 
+  const mygoal = mygoals.map((goal) => ({
+    ...goal,
+    taskAssignedTo: goal.taskAssignedTo,
+    dateAssigned: new Date(goal.dateAssigned).toLocaleDateString(),
+    goalDeadline: new Date(goal.goalDeadline).toLocaleDateString(),
+  }));
+
   console.log({ "personal goals": mygoal });
   return { mygoal };
 }
+
 
 export function useUnassessedGoalRouteData() {
   const { auth } = useContext(AuthContext);

@@ -1,11 +1,10 @@
-import { MyGoalRouteData, useMyGoalRouteData } from "@/app/api/databook/route-data";
+import { useMyGoalRouteData } from "@/app/api/databook/route-data";
 import { Goals } from "@/app/components/infocards";
 import React from "react";
 
 
 export default function MyGoals(){
-
-    // const {mygoal} = useMyGoalRouteData()
+    const {mygoal} = useMyGoalRouteData()
     return (
         <div className="grid grid-cols-3 2xl:grid-cols-4 gap-4 cursor-pointer">
           {/* {mygoal.map((card, index) => (
@@ -14,7 +13,7 @@ export default function MyGoals(){
               id={card.id}
             />
           ))} */}
-          <MyGoalRouteData/>
+          {mygoal}
         </div>
     )
 }
