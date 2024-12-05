@@ -34,14 +34,14 @@ export function useGoalRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(MY_GOALS_URL, {
+        const response = await axios.get(GOALS_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
           },
           withCredentials: true,
         });
-        console.log({'reponse goal': response.data});
+        console.log(response.data);
         setDepartmenttable(response.data);
       } catch (err) {
         console.log(err);
@@ -51,7 +51,6 @@ export function useGoalRouteData() {
     fetchData();
   }, [auth]);
 
-  console.log({ "personal goals": departmentgoaltable });
   return { departmentgoaltable };
 }
 
