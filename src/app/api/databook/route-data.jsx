@@ -34,7 +34,7 @@ export function useGoalRouteData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(GOALS_URL, {
+        const response = await axios.get(MY_GOALS_URL, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
@@ -280,7 +280,7 @@ export function useOrganizationalAveragePerMonthChartRouteData() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          MY_GOALS_URL,
+          ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL,
           {
             headers: {
               "Content-Type": "application/json",
