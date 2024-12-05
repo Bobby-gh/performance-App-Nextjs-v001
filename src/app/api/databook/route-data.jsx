@@ -51,6 +51,7 @@ export function useGoalRouteData() {
     fetchData();
   }, [auth]);
 
+  console.log({ "personal goals": departmentgoaltable });
   return { departmentgoaltable };
 }
 
