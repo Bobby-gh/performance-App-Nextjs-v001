@@ -4,6 +4,7 @@ import { GoalTable } from "@/app/components/tables";
 import React from "react";
 
 export default function GoalSetting() {
+  
   return (
     <main className="m-4">
       <LoadingPopup/>
