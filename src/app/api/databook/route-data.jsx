@@ -54,8 +54,6 @@ export function useGoalRouteData() {
   return { departmentgoaltable };
 }
 
-import axios from 'axios';
-import { AuthContext } from './AuthContext'; // Update the import path as necessary
 
 export function useMyGoalRouteData() {
   const { auth } = useContext(AuthContext);
