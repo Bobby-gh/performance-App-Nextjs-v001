@@ -280,7 +280,7 @@ export function useOrganizationalAveragePerMonthChartRouteData() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          ORGANIZATIONAL_AVERAGE_PER_MONTH_CHART_URL,
+          MY_GOALS_URL,
           {
             headers: {
               "Content-Type": "application/json",
