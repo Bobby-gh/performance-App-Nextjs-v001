@@ -465,13 +465,13 @@ export function AddUser() {
   );
 }
 
-export function Goals(title, date) {
+export function Goals({ title, date }) {
   return (
-    <div className="card  bg-white rounded-lg p-4">
+    <div className="card bg-white rounded-lg p-4">
       <div className="flex justify-between mb-16">
-        <span className="flex flex-col items-end">
-          <h3>Unachieved Goals</h3>
-          <h3 className="font-bold text-3xl"></h3>
+        <span className="flex flex-col items-start">
+          <h3>{title}</h3>
+          <h3 className="font-bold text-3xl">{date}</h3>
         </span>
       </div>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -482,3 +482,4 @@ export function Goals(title, date) {
     </div>
   );
 }
+
