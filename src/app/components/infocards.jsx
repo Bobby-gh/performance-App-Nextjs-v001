@@ -465,7 +465,7 @@ export function AddUser() {
   );
 }
 
-export function Goal(title, date) {
+export function Goals(title, date) {
   return (
     <div className="card  bg-white rounded-lg p-4">
       <div className="flex justify-between mb-16">
