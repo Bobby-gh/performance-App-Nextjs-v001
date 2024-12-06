@@ -69,8 +69,8 @@ export function useMyGoalRouteData() {
           },
           withCredentials: true,
         });
-        console.log(response.data);
-        setMygoal(response.data);
+        console.log(response);
+        setMygoal(response);
       } catch (err) {
         console.log(err);
       }
