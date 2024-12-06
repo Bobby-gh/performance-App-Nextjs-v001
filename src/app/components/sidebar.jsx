@@ -1,12 +1,14 @@
 'use client'
-import React from "react";
+import React, { useContext } from "react";
 import { MenuItems } from "./menuitems";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
+import { AuthContext } from "../contex/context-context";
 
 export function Sidebar() {
   const currentPathname = usePathname()
+  const {auth} = useContext(AuthContext)
 
    const filteredMenuItems = MenuItems.filter((item) => {
     if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
