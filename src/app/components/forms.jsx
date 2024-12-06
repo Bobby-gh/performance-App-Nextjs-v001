@@ -38,6 +38,7 @@ export function LoginForm() {
         setAuth({
           token: response.data.token,
           name: response.data.fullName,
+          refNum: response.data.refNum
         });
 
         Cookies.set("token", response.data.token, {
@@ -45,6 +46,10 @@ export function LoginForm() {
           sameSite: "Strict",
         });
         Cookies.set("name", response.data.fullName, {
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "Strict",
+        });
+        Cookies.set("refNum", response.data.refNum, {
           secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
         });

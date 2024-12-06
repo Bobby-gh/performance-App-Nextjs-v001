@@ -7,6 +7,20 @@ import classNames from "classnames";
 
 export function Sidebar() {
   const currentPathname = usePathname()
+
+   const filteredMenuItems = MenuItems.filter((item) => {
+    if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
+      return !["/home/goals"].includes(item.path);
+    }
+    if (auth.refNum === "ref?2!") {
+      return !["/home/department"].includes(item.path);
+    }
+    if (auth.refNum === "ref?3!") {
+      return !["/home/department", "/home/employees", "/home/goal-setting"].includes(item.path);
+    }
+    return false; 
+  });
+
   return (
    
     <main className="w-32 sm:w-72 ">
@@ -20,7 +34,7 @@ export function Sidebar() {
       <div>
         <div className="flex flex-col justify-center p-6">
           <ul>
-            {MenuItems.map((item) => (
+            {filteredMenuItems.map((item) => (
               <li
                 key={item.title}>
                 <Link href={item.path} className={classNames({

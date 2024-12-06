@@ -1,43 +1,52 @@
-'use client'
+"use client";
 import { useEffect, useState } from "react";
-import { AuthContext } from "./context-context";
-import Cookies from 'js-cookie';
-
-
+import { AuthContext, GoalSelect } from "./context-context";
+import Cookies from "js-cookie";
 
 export const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({
-        name: "",
-        token: "",
-        email: "",
-        password: "",
-    });
+  const [auth, setAuth] = useState({
+    name: "",
+    token: "",
+    email: "",
+    refNum: "",
+  });
 
-    console.log(auth)
-    useEffect(() => {
-      const savedEmail = Cookies.get('email');
-      const savedToken = Cookies.get('token');
-      const savedName = Cookies.get('name');
-      if (savedEmail || savedToken) {
-        setAuth({
-          email: savedEmail ? savedEmail : null,
-          token: savedToken ? savedToken : null,
-          name: savedName ? savedName : null,
-        });
-      }
-    }, []);
-    const clearAuth = () => {
+  useEffect(() => {
+    const savedEmail = Cookies.get("email");
+    const savedToken = Cookies.get("token");
+    const savedName = Cookies.get("name");
+    const savedRef = Cookies.get("refNum");
+    if (savedEmail || savedToken) {
       setAuth({
-        name: "",
-        token: "",
-        email: "",
-        password: "",
+        email: savedEmail ? savedEmail : null,
+        token: savedToken ? savedToken : null,
+        name: savedName ? savedName : null,
+        refNum: savedRef ? savedRef : null,
       });
-    };
-  
-    return (
-      <AuthContext.Provider value={{ auth, setAuth, clearAuth }}>
-        {children}
-      </AuthContext.Provider>
-    );
+    }
+  }, []);
+  const clearAuth = () => {
+    setAuth({
+      name: "",
+      token: "",
+      email: "",
+      refNum: "",
+    });
   };
+
+  return (
+    <AuthContext.Provider value={{ auth, setAuth, clearAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const GoalProvider = ({children}) => {
+  const [goal, setGoal] = useState("")
+
+return(
+  <GoalSelect.Provider value={{goal, setGoal}}>
+    {children}
+  </GoalSelect.Provider>
+)
+}

@@ -396,38 +396,63 @@ export function AddDepartment() {
 }
 
 export function AddUser() {
+  const [progress, setProgress] = useState(actualProgress);
+
+  const handleProgressChange = (event) => {
+    setProgress(event.target.value);
+  };
+
   return (
-    <main>
-      <div className=" p-6 flex flex-col space-y-6">
-        <div className="flex flex-col items-center">
-          <h6 className="mb-12 text-sm">Goal ID</h6>
-        </div>
-        <div className="flex space-x-6 ">
-          <div className="flex-col">
-            <div className="mb-4 flex flex-row items-center">
-              <span className="mr-4">Goal Name</span>
-              <span>Customs Uk</span>
-            </div>
-            <div className="mb-4 flex flex-row items-center">
-              <span className="mr-4">Goal Description</span>
-              <span>knaihv@ymail.com</span>
-            </div>
-            <div className="mb-4 flex flex-row items-center">
-              <span className="mr-4">Goal Deadline</span>
-              <span>Britain</span>
-            </div>
-            <div className="mb-4 flex flex-row items-center">
-              <span className="mr-4">Status</span>
-              <span>JohnBull Street</span>
-            </div>
-            <div className="mb-4 flex flex-row items-center">
-              <span className="mr-4">Actual Progress</span>
-              <span>JohnBull Street</span>
-            </div>
-          </div>
+    <div className="p-4 border rounded shadow-md max-w-md bg-white">
+      {/* Goal Header */}
+      <h3 className="text-lg font-bold mb-2">{goalName}</h3>
+      <p className="text-gray-600 text-sm mb-4">
+        <strong>Goal ID:</strong> {goalId}
+      </p>
+
+      {/* Goal Details */}
+      <div className="text-gray-700 text-sm mb-4">
+        <p>
+          <strong>Description:</strong> {goalDescription}
+        </p>
+        <p>
+          <strong>Deadline:</strong> {goalDeadline}
+        </p>
+        <p>
+          <strong>Status:</strong> {status}
+        </p>
+      </div>
+
+      {/* Progress Section */}
+      <div className="mb-4">
+        <p className="text-gray-700 text-sm mb-2">
+          <strong>Actual Progress:</strong> {progress}%
+        </p>
+        <div className="relative w-full h-4 bg-gray-200 rounded">
+          <div
+            className="absolute h-4 bg-blue-500 rounded"
+            style={{ width: `${progress}%` }}></div>
         </div>
       </div>
-    </main>
+
+      {/* Update Progress */}
+      <div className="mt-4">
+        <label
+          htmlFor={`progress-${goalId}`}
+          className="block text-gray-600 mb-2">
+          Update Progress:
+        </label>
+        <input
+          id={`progress-${goalId}`}
+          type="range"
+          min="0"
+          max="100"
+          value={progress}
+          onChange={handleProgressChange}
+          className="w-full"
+        />
+      </div>
+    </div>
   );
 }
 
