@@ -14,7 +14,7 @@ export default function MyGoals() {
     <div className="flex-[1]">
       <AddUser />
     </div>
-    <div className="flex-[2]">
+    <div className="flex-[1]">
       <div className="grid grid-cols-2 2xl:grid-cols-3 gap-4 cursor-pointer">
         {mygoal.map((goal, index) => (
           <Goals
