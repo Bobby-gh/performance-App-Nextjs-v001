@@ -466,7 +466,7 @@ export function GoalDetails({onclick}) {
           max="100"
           value={progress}
           onChange={handleInputChange}
-          className="w-40 border h-8 rounded p-2 text-center"
+          className="w-40 border h-4 rounded p-2 text-center"
         />
       </div>
 
