@@ -57,7 +57,7 @@ export function useGoalRouteData() {
 
 export function useMyGoalRouteData() {
   const { auth } = useContext(AuthContext);
-  const [mygoals, setMygoal] = useState([]);
+  const [mygoal, setMygoal] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,10 +79,10 @@ export function useMyGoalRouteData() {
     fetchData();
   }, [auth]);
 
-  const mygoal = mygoals.map((goal) => ({
-    ...goal,
-    goalDeadline: new Date(goal.goalDeadline).toLocaleDateString(),
-  }));
+  // const mygoal = mygoals.map((goal) => ({
+  //   ...goal,
+  //   goalDeadline: new Date(goal.goalDeadline).toLocaleDateString(),
+  // }));
 
   console.log({ "personal goals": mygoal });
   return { mygoal };
