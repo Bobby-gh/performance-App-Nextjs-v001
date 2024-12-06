@@ -6,7 +6,7 @@ import React from "react";
 
 
 export default function MyGoals() {
-  const { mygoal } = useMyGoalRouteData;
+  const { mygoal } = useMyGoalRouteData();
   console.log({"my goals:": mygoal})
 
   return (
