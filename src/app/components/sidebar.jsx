@@ -9,6 +9,7 @@ import { AuthContext } from "../contex/context-context";
 export function Sidebar() {
   const currentPathname = usePathname()
   const {auth} = useContext(AuthContext)
+  console.log({"refnum": auth.refNum})
 
    const filteredMenuItems = MenuItems.filter((item) => {
     if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
