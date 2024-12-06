@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { useGoalCountRouteData } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
+import { useState } from "react";
 
 export function InformationalSummary() {
   const { goalCount } = useGoalCountRouteData();
