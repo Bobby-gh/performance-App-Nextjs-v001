@@ -7,6 +7,7 @@ import React, { useContext } from "react";
 export default function MyGoals() {
   const { setGoal } = useContext(GoalSelectContext);
   const { mygoal } = useMyGoalRouteData();
+  console.log({"my goal": mygoal})
 
   const handleCardClick = (goal) => {
     setGoal(goal);
@@ -27,6 +28,7 @@ export default function MyGoals() {
               goalTitle={goal.goalTitle}
               goalDeadline={goal.goalDeadline}
               status={goal.status}
+              progress = {goal.actualProgress}
               onClick={() => handleCardClick(goal)}
             />
           ))}

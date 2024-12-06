@@ -398,7 +398,7 @@ export function AddDepartment() {
 }
 
 export function GoalDetails() {
-  const {goal} = useContext(GoalSelectContext)
+  const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
 
   const handleProgressChange = (event) => {
@@ -426,18 +426,6 @@ export function GoalDetails() {
         </p>
       </div>
 
-      {/* Progress Section */}
-      <div className="mb-4">
-        <p className="text-gray-700 text-sm mb-2">
-          <strong>Actual Progress:</strong> {progress}%
-        </p>
-        <div className="relative w-full h-4 bg-gray-200 rounded">
-          <div
-            className="absolute h-4 bg-blue-500 rounded"
-            style={{ width: `${progress}%` }}></div>
-        </div>
-      </div>
-
       {/* Update Progress */}
       <div className="mt-4">
         <label
@@ -459,11 +447,22 @@ export function GoalDetails() {
   );
 }
 
-export function Goals({ goalTitle, id, status, goalDeadline, onClick }) {
+export function Goals({ goalTitle, id, status, goalDeadline, onClick, progress }) {
   return (
     <div
       className="card bg-white rounded-lg p-4 cursor-pointer"
       onClick={onClick}>
+      {/* Progress Section */}
+      <div className="mb-4">
+        <p className="text-gray-700 text-sm mb-2">
+          <strong>Actual Progress:</strong> {progress}%
+        </p>
+        <div className="relative w-full h-4 bg-gray-200 rounded">
+          <div
+            className="absolute h-4 bg-blue-500 rounded"
+            style={{ width: `${progress}%` }}></div>
+        </div>
+      </div>
       <div className="flex mb-2">
         <span className="flex ">
           <h3>Goal:</h3>
