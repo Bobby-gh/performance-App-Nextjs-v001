@@ -1,3 +1,4 @@
+'use client'
 import { useMyGoalRouteData } from "@/app/api/databook/route-data";
 import { AddUser, Goals } from "@/app/components/infocards";
 import React from "react";
