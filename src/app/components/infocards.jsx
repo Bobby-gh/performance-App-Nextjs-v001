@@ -418,10 +418,10 @@ export function GoalDetails({onclick}) {
       </div>
       {/* Goal Header */}
       <p className="text-gray-700 text-sm mb-6">
-        <strong>Goal Name:</strong> {goal.goalTitle}
+        <strong>Goal ID:</strong> {goal.id}
       </p>
       <p className="text-gray-700 text-sm mb-6">
-        <strong>Goal ID:</strong> {goal.id}
+        <strong>Goal Name:</strong> {goal.goalTitle}
       </p>
 
       {/* Goal Details */}
