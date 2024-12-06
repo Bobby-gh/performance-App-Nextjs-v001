@@ -8,7 +8,7 @@ export default function MyGoals() {
   console.log({ "my goals:": mygoal });
 
   return (
-    <main className="m-4 flex space-y-4">
+    <main className="m-4 flex space-x-4">
       <div className="flex-[1]">
         <AddUser />
       </div>
