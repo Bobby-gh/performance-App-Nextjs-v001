@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { AuthContext, GoalSelect } from "./context-context";
+import { AuthContext, GoalSelectContext } from "./context-context";
 import Cookies from "js-cookie";
 
 export const AuthProvider = ({ children }) => {
@@ -45,8 +45,8 @@ export const GoalProvider = ({children}) => {
   const [goal, setGoal] = useState("")
 
 return(
-  <GoalSelect.Provider value={{goal, setGoal}}>
+  <GoalSelectContext.Provider value={{goal, setGoal}}>
     {children}
-  </GoalSelect.Provider>
+  </GoalSelectContext.Provider>
 )
 }
