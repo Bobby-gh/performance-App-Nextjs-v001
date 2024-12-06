@@ -398,65 +398,31 @@ export function AddDepartment() {
 export function AddUser() {
   return (
     <main>
-      <div className="mb-4 card border border-2 shadow-lg rounded-lg p-4 border-slate-400">
-        <div className="flex flex-row justify-between">
-          <p className="text-blue-500">
-            fill in the details to create a new user
-          </p>
-          <div>
-            <button className="flex flex-row items-center text-blue-500 bg-blue-100 p-3 rounded-lg">
-              <div className="px-6 text-sm">Employee</div>
-              <MdOutlineAddToPhotos size={25} />
-            </button>
-          </div>
+      <div className=" p-6 flex flex-col space-y-6">
+        <div className="flex flex-col items-center">
+          <h6 className="mb-12 text-sm">Goal ID</h6>
         </div>
-        <div className="grid grid-cols-3 divide-x divide-gray-200">
-          <div className="col-span-2">
-            <div className="pt-2 flex flex-row">
-              <input
-                placeholder="User Name"
-                autoComplete="off"
-                type="text"
-                className="border rounded-lg p-4 w-full border-slate-400 m-2"
-              />
-              <input
-                placeholder="User Password"
-                autoComplete="off"
-                type="text"
-                className="border rounded-lg p-4 w-full border-slate-400 m-2"
-              />
+        <div className="flex space-x-6 ">
+          <div className="flex-col">
+            <div className="mb-4 flex flex-row items-center">
+              <span className="mr-4">Goal Name</span>
+              <span>Customs Uk</span>
             </div>
-            <div className=" m-2">
-              <input
-                placeholder="User Email"
-                autoComplete="off"
-                type="text"
-                className="border rounded-lg p-4 w-full border-slate-400 "
-              />
+            <div className="mb-4 flex flex-row items-center">
+              <span className="mr-4">Goal Description</span>
+              <span>knaihv@ymail.com</span>
             </div>
-          </div>
-          <div>
-            <div className="pt-2 m-2">
-              <select
-                autoComplete="off"
-                type="text"
-                className="border rounded-lg p-4 w-full border-slate-400 mb-2 pr-16">
-                <option>choose role</option>
-                <option>Junior staff</option>
-                <option>Manager</option>
-                <option>General Manager</option>
-                <option>Administrator</option>
-              </select>
-              <select
-                autoComplete="off"
-                type="text"
-                className="border rounded-lg p-4 w-full border-slate-400 mt-2">
-                <option>choose a department</option>
-                <option>Junior staff</option>
-                <option>Manager</option>
-                <option>General Manager</option>
-                <option>Administrator</option>
-              </select>
+            <div className="mb-4 flex flex-row items-center">
+              <span className="mr-4">Goal Deadline</span>
+              <span>Britain</span>
+            </div>
+            <div className="mb-4 flex flex-row items-center">
+              <span className="mr-4">Status</span>
+              <span>JohnBull Street</span>
+            </div>
+            <div className="mb-4 flex flex-row items-center">
+              <span className="mr-4">Actual Progress</span>
+              <span>JohnBull Street</span>
             </div>
           </div>
         </div>
@@ -488,4 +454,3 @@ export function Goals({ goalTitle, id, status, goalDeadline }) {
     </div>
   );
 }
-
