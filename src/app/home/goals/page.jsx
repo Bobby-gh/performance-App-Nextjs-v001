@@ -1,22 +1,31 @@
 import { useMyGoalRouteData } from "@/app/api/databook/route-data";
-import { Goals } from "@/app/components/infocards";
+import { AddUser, Goals } from "@/app/components/infocards";
 import React from "react";
 
 
 
 export default function MyGoals() {
-//   const { mygoal } = useMyGoalRouteData();
+  const { mygoal } = useMyGoalRouteData();
 
   return (
-    <div className="grid grid-cols-3 2xl:grid-cols-4 gap-4 cursor-pointer">
-      {/* {mygoal.map((card, index) => (
-        <Goals
-          key={index}
-          title={card.taskAssignedTo} 
-          date={card.goalDeadline} 
-        />
-      ))} */}
+    <main className="mt-8 flex">
+    <div className="flex-[1]">
+      <AddUser />
     </div>
+    <div className="flex-[2]">
+      <div className="grid grid-cols-3 2xl:grid-cols-4 gap-4 cursor-pointer">
+        {mygoal.map((goal, index) => (
+          <Goals
+            key={index}
+            id={goal.id}
+            goalTitle={goal.goalTitle}
+            goalDeadline={goal.goalDeadline}
+            status={goal.status}
+          />
+        ))}
+      </div>
+    </div>
+  </main>
   );
 }
 

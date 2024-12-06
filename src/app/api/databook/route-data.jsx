@@ -81,8 +81,6 @@ export function useMyGoalRouteData() {
 
   const mygoal = mygoals.map((goal) => ({
     ...goal,
-    taskAssignedTo: goal.taskAssignedTo,
-    dateAssigned: new Date(goal.dateAssigned).toLocaleDateString(),
     goalDeadline: new Date(goal.goalDeadline).toLocaleDateString(),
   }));
 
