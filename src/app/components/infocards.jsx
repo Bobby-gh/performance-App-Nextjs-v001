@@ -471,14 +471,14 @@ export function Goals({ goalTitle, id, status, goalDeadline }) {
       <div className="flex mb-4">
         <span className="flex ">
           <h3>Goal:</h3>
-          <h3 className="pl-4"> {goalTitle}</h3>
+          <h3 className="pl-2"> {goalTitle}</h3>
         </span>
       </div>
       <div className="flex mb-4">
-        <span className="flex justify-between">
+        <div className="flex justify-between">
           <h3>{goalDeadline}</h3>
-          <h3 className="font-bold text-3xl">{status}</h3>
-        </span>
+          <h3>{status}</h3>
+        </div>
       </div>
       <hr className="h-px my-2 border-0 dark:bg-gray-700" />
       <div className="flex">
