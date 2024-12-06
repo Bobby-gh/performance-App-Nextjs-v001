@@ -57,7 +57,7 @@ export function useGoalRouteData() {
 
 export function useMyGoalRouteData() {
   const { auth } = useContext(AuthContext);
-  const [mygoal, setMygoal] = useState([]);
+  const [mygoal, setMygoal] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
