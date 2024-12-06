@@ -7,17 +7,19 @@ import React, { useContext } from "react";
 export default function MyGoals() {
   const { setGoal } = useContext(GoalSelectContext);
   const { mygoal } = useMyGoalRouteData();
-  console.log({"my goal": mygoal})
 
   const handleCardClick = (goal) => {
     setGoal(goal);
-    console.log("Selected Goal:", goal);
+  };
+
+  const handleUpdate = (goal) => {
+    console.log("working")
   };
 
   return (
     <main className="m-4 flex space-x-4">
       <div className="flex-[1]">
-        <GoalDetails />
+        <GoalDetails onclick={handleUpdate}/>
       </div>
       <div className="flex-[1.7]">
         <div className="grid grid-cols-2 2xl:grid-cols-3 gap-4 cursor-pointer">

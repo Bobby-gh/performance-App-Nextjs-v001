@@ -21,7 +21,7 @@ export function Sidebar() {
     if (auth.refNum === "ref?3!") {
       return !["/home/department", "/home/employees", "/home/goal-setting"].includes(item.path);
     }
-    return false; 
+    return !["/home/department", "/home/employees", "/home/goal-setting"].includes(item.path);
   });
 
   return (

@@ -397,57 +397,96 @@ export function AddDepartment() {
   );
 }
 
-export function GoalDetails() {
+export function GoalDetails({onclick}) {
   const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
 
-  const handleProgressChange = (event) => {
-    setProgress(event.target.value);
+  const handleInputChange = (event) => {
+    const value = Math.min(100, Math.max(0, Number(event.target.value))); // Ensure progress is between 0 and 100
+    setProgress(value);
   };
 
+
+
   return (
-    <div className="p-4 border rounded shadow-md max-w-md bg-white">
+    <div className="p-4 border-r-2 h-screen border-gray-400">
+      <div className="mb-12">
+        <Notification
+          typeHeader={"Update Goal Progress"}
+          message={"Enter your progress level in the update box"}
+        />
+      </div>
       {/* Goal Header */}
-      <h3 className="text-lg font-bold mb-2">{goal.goalName}</h3>
-      <p className="text-gray-600 text-sm mb-4">
+      <p className="text-gray-700 text-sm mb-6">
+        <strong>Goal Name:</strong> {goal.goalName}
+      </p>
+      <p className="text-gray-700 text-sm mb-6">
         <strong>Goal ID:</strong> {goal.goalId}
       </p>
 
       {/* Goal Details */}
       <div className="text-gray-700 text-sm mb-4">
-        <p>
+        <p className="mb-6">
           <strong>Description:</strong> {goal.goalDescription}
         </p>
-        <p>
+        <p className="mb-6">
           <strong>Deadline:</strong> {goal.goalDeadline}
         </p>
-        <p>
+        <p className="mb-6">
+          <strong>Target:</strong> {goal.target}
+        </p>
+        <p className="mb-6">
           <strong>Status:</strong> {goal.status}
+        </p>
+        <p className="mb-6">
+          <strong>Current Progress:</strong> {goal.progress}
         </p>
       </div>
 
+      <div className="mb-6">
+        <p className="text-gray-700 text-sm mb-2">
+          <strong>Progress:</strong> {progress}%
+        </p>
+        <div className="relative w-full h-8 bg-gray-200">
+          <div
+            className="absolute h-4 bg-blue-500 rounded"
+            style={{ width: `${progress}%` }}></div>
+        </div>
+      </div>
+
       {/* Update Progress */}
-      <div className="mt-4">
-        <label
-          htmlFor={`progress-${goal.goalId}`}
-          className="block text-gray-600 mb-2">
-          Update Progress:
+      <div className="flex items-center space-x-4 mt-4 mb-12">
+        <label htmlFor="progress-input" className="text-gray-600 text-sm">
+          <strong>Enter Progress (0-100):</strong>
         </label>
         <input
-          id={`progress-${goal.goalId}`}
-          type="range"
+          id="progress-input"
+          type="number"
           min="0"
           max="100"
           value={progress}
-          onChange={handleProgressChange}
-          className="w-full"
+          onChange={handleInputChange}
+          className="w-40 border h-8 rounded p-2 text-center"
         />
       </div>
+
+      <button
+        className="w-full p-2 bg-blue-500 rounded-xl text-white"
+        onClick={onclick}>
+        Update Progress
+      </button>
     </div>
   );
 }
 
-export function Goals({ goalTitle, id, status, goalDeadline, onClick, progress }) {
+export function Goals({
+  goalTitle,
+  id,
+  status,
+  goalDeadline,
+  onClick,
+  progress,
+}) {
   return (
     <div
       className="card bg-white rounded-lg p-4 cursor-pointer"
@@ -481,5 +520,14 @@ export function Goals({ goalTitle, id, status, goalDeadline, onClick, progress }
         <span className="ml-2 text-blue-900 text-xsm">{status}</span>
       </div>
     </div>
+  );
+}
+
+export function Notification({ message, typeHeader }) {
+  return (
+    <main className="border-l-4 px-4 border-slate-400">
+      <div className="font-bold text-lg mb-2">{typeHeader}</div>
+      <div className="text-lg">{message}</div>
+    </main>
   );
 }
