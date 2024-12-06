@@ -470,17 +470,17 @@ export function Goals({ goalTitle, id, status, goalDeadline }) {
     <div className="card bg-white rounded-lg p-4">
       <div className="flex mb-4">
         <span className="flex ">
-          <h3>GoalName: </h3>
-          <h3 className="text-lg"> {goalTitle}</h3>
+          <h3>Goal:</h3>
+          <h3 className="pl-4"> {goalTitle}</h3>
         </span>
       </div>
-      <div className="flex justify-between mb-4">
-        <span className="flex flex-col items-start">
+      <div className="flex mb-4">
+        <span className="flex justify-between">
           <h3>{goalDeadline}</h3>
           <h3 className="font-bold text-3xl">{status}</h3>
         </span>
       </div>
-      <hr className="h-px my-6 border-0 dark:bg-gray-700" />
+      <hr className="h-px my-2 border-0 dark:bg-gray-700" />
       <div className="flex">
         <span className="text-blue-900">+55%</span>
         <span className="ml-2">than last Month</span>
