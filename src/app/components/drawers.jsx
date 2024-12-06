@@ -14,7 +14,7 @@ import {
 } from "../api/databook/route-data";
 import {
   CREATE_DEPRATMENT,
-  EMPLOYEES_URL,
+  CREATE_EMPLOYEES_URL,
   GOAL_ASSESSMENT_URL,
   GOALS_URL,
 } from "../api/routes";
@@ -519,7 +519,7 @@ export function Userforms(props) {
     setLoading(true);
     try {
       await axios.post(
-        EMPLOYEES_URL,
+        CREATE_EMPLOYEES_URL,
         {
           fullName: userFormData.fullName,
           department: departments,
