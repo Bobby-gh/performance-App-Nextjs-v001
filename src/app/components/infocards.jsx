@@ -482,8 +482,8 @@ export function Goals({ goalTitle, id, status, goalDeadline }) {
       </div>
       <hr className="h-px my-2 border-0 dark:bg-gray-700" />
       <div className="flex">
-        <span className="text-blue-900">status: </span>
-        <span className="ml-2">{status}</span>
+        <span className="">status: </span>
+        <span className="ml-2 text-blue-900 text-xsm">{status}</span>
       </div>
     </div>
   );
