@@ -7,7 +7,7 @@ import React from "react";
 
 export default function MyGoals() {
   const { mygoal } = useMyGoalRouteData;
-  console.log(mygoal)
+  console.log({"my goals:": mygoal})
 
   return (
     <main className="mt-8 flex">
