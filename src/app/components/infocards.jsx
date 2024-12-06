@@ -468,7 +468,7 @@ export function AddUser() {
 export function Goals({ goalTitle, id, status, goalDeadline }) {
   return (
     <div className="card bg-white rounded-lg p-4">
-      <div className="flex mb-4">
+      <div className="flex mb-2">
         <span className="flex ">
           <h3>Goal:</h3>
           <h3 className="pl-2"> {goalTitle}</h3>
@@ -476,14 +476,14 @@ export function Goals({ goalTitle, id, status, goalDeadline }) {
       </div>
       <div className="flex mb-4">
         <div className="flex justify-between">
-          <h3>{goalDeadline}</h3>
-          <h3>{status}</h3>
+          <h3>Deadline:</h3>
+          <h3 className="pl-2">{goalDeadline}</h3>
         </div>
       </div>
       <hr className="h-px my-2 border-0 dark:bg-gray-700" />
       <div className="flex">
-        <span className="text-blue-900">+55%</span>
-        <span className="ml-2">than last Month</span>
+        <span className="text-blue-900">status: </span>
+        <span className="ml-2">{status}</span>
       </div>
     </div>
   );
