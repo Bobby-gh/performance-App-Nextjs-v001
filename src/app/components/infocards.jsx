@@ -471,7 +471,7 @@ export function GoalDetails({onclick}) {
       </div>
 
       <button
-        className="w-full p-2 bg-blue-500 rounded-xl text-white"
+        className="w-full p-2 bg-slate-500 rounded-xl text-white"
         onClick={onclick}>
         Update Progress
       </button>
@@ -517,7 +517,7 @@ export function Goals({
       <hr className="h-px my-2 border-0 dark:bg-gray-700" />
       <div className="flex">
         <span className="">status: </span>
-        <span className="ml-2 text-blue-900 text-xsm">{status}</span>
+        <span className="ml-2 text-slate-500 text-xsm">{status}</span>
       </div>
     </div>
   );
@@ -526,8 +526,8 @@ export function Goals({
 export function Notification({ message, typeHeader }) {
   return (
     <main className="border-l-4 px-4 border-slate-400">
-      <div className="font-bold text-lg mb-2">{typeHeader}</div>
-      <div className="text-lg">{message}</div>
+      <div className="font-bold text-lg text-gray-700 mb-2">{typeHeader}</div>
+      <div className="text-sm">{message}</div>
     </main>
   );
 }
