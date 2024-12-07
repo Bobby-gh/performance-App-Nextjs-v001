@@ -63,9 +63,9 @@ export function LoginForm() {
   };
 
   return (
-    <main className="w-96">
+    <main className="w-[430px]">
       <div>
-        <div className="flex justify-center p-8">
+        <div className="flex justify-center p-12">
           <img
             src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
             alt="Paris"
