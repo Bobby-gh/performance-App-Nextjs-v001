@@ -187,7 +187,7 @@ export function ForgetPassword() {
   };
 
   return (
-    <main className="w-96">
+    <main className="w-[430px]">
       <div>
         <div className="flex  mt-[17%] mb-[30%] text-xl font-bold">
           Enter email for Verification
@@ -293,7 +293,7 @@ export function ResetPassword() {
   };
 
   return (
-    <main className="w-96">
+    <main className="w-[430px]">
       <div>
         <div className="flex  mt-[17%] mb-[25%] text-xl font-bold">
           Set your New Password
@@ -407,7 +407,7 @@ export function SignUpForm() {
   };
 
   return (
-    <main className="w-96">
+    <main className="w-[430px]">
       <div>
         <div className="flex mb-4 text-2xl">Get Started</div>
         <form autoComplete="off">
@@ -601,7 +601,7 @@ export function VerifyEmailForm() {
   };
 
   return (
-    <main className="w-96">
+    <main className="w-[430px]">
       <div>
         <div className="mb-4 text-xl">Activate your Account</div>
         <div className="mb-[30%] text-sm">
