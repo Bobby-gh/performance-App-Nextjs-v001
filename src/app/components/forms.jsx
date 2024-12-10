@@ -285,6 +285,7 @@ export function ResetPassword() {
         }
       );
       if (response.request.status === 200) {
+        router.push("/", { scroll: false });
       }
     } catch (err) {
       alert(err);
@@ -373,7 +374,6 @@ export function ResetPassword() {
             </span>
           </div>
         </form>
-        {auth.token && router.push("/home", { scroll: false })}
       </div>
     </main>
   );
