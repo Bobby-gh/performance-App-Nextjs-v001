@@ -416,7 +416,7 @@ export function GoalDetails() {
     console.log("am working")
     try {
 
-      const response = await axios.post(
+      const response = await axios.patch(
         UPDATE_GOAL_PROGRESS,
         JSON.stringify({
           goalId: goal.id,
@@ -435,6 +435,7 @@ export function GoalDetails() {
         alert('Progress updated successfully');
       }
     } catch (err) {
+      console.log(err)
       alert(`Error: ${err.message}`);
     } finally {
       setLoading(false);
