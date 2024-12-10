@@ -22,7 +22,7 @@ export default function MyGoals() {
         <GoalDetails onclick={handleUpdate}/>
       </div>
       <div className="flex-[1.7]">
-        <div className="grid grid-cols-2 2xl:grid-cols-3 gap-4 cursor-pointer">
+        <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 cursor-pointer">
           {mygoal.map((goal, index) => (
             <Goals
               key={index}

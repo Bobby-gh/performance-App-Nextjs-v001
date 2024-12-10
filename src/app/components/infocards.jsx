@@ -397,19 +397,22 @@ export function AddDepartment() {
   );
 }
 
-export function GoalDetails({onclick}) {
+export function GoalDetails({ onclick }) {
   const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
 
   const handleInputChange = (event) => {
-    const value = Math.min(100, Math.max(0, Number(event.target.value))); // Ensure progress is between 0 and 100
+    const value = Math.min(100, Math.max(0, Number(event.target.value)));
     setProgress(value);
   };
 
-
-
   return (
     <div className="p-4 border-r-2 h-screen border-gray-400">
+      <div className="relative w-full h-8 mb-6 bg-gray-200">
+        <div
+          className="absolute h-8 bg-blue-500 rounded"
+          style={{ width: `${goal.actualProgress}%` }}></div>
+      </div>
       <div className="mb-12">
         <Notification
           typeHeader={"Update Goal Progress"}
@@ -426,38 +429,32 @@ export function GoalDetails({onclick}) {
 
       {/* Goal Details */}
       <div className="text-gray-700 text-sm mb-4">
-        <p className="mb-6">
-          <strong>Description:</strong> {goal.goalDescription}
-        </p>
-        <p className="mb-6">
-          <strong>Deadline:</strong> {goal.goalDeadline}
-        </p>
-        <p className="mb-6">
-          <strong>Target:</strong> {goal.target}
-        </p>
-        <p className="mb-6">
-          <strong>Status:</strong> {goal.status}
-        </p>
-        <p className="mb-6">
-          <strong>Current Progress:</strong> {goal.actualProgress}
-        </p>
-      </div>
-
-      <div className="mb-6">
-        <p className="text-gray-700 text-sm mb-2">
-          <strong>Progress:</strong> {progress}%
-        </p>
-        <div className="relative w-full h-8 bg-gray-200">
-          <div
-            className="absolute h-8 bg-blue-500 rounded"
-            style={{ width: `${progress}%` }}></div>
+        <div className="flex mb-4">
+          <strong className="w-1/3">Description:</strong>
+          <p className="w-2/3">{goal.goalDescription}</p>
+        </div>
+        <div className="flex mb-4">
+          <strong className="w-1/3">Deadline:</strong>
+          <p className="w-2/3">{goal.goalDeadline}</p>
+        </div>
+        <div className="flex mb-4">
+          <strong className="w-1/3">Status:</strong>
+          <p className="w-2/3">{goal.status}</p>
+        </div>
+        <div className="flex mb-4">
+          <strong className="w-1/3">Actual Progress:</strong>
+          <p className="w-2/3">{goal.actualProgress}</p>
+        </div>
+        <div className="flex mb-4">
+          <strong className="w-1/3">Target:</strong>
+          <p className="w-2/3">{goal.target}</p>
         </div>
       </div>
 
       {/* Update Progress */}
       <div className="flex items-center space-x-4 mt-4 mb-12">
         <label htmlFor="progress-input" className="text-gray-600 text-sm">
-          <strong>Enter Progress (0-100):</strong>
+          <strong className="w-1/3">Enter Progress:</strong>
         </label>
         <input
           id="progress-input"
@@ -466,7 +463,7 @@ export function GoalDetails({onclick}) {
           max="100"
           value={progress}
           onChange={handleInputChange}
-          className="w-40 border h-8 rounded p-2 text-center"
+          className="w-40 border h-8 rounded p-2 text-center w-2/3"
         />
       </div>
 
