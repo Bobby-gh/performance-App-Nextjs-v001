@@ -10,6 +10,7 @@ import { MdOutlineAddToPhotos } from "react-icons/md";
 import { useContext, useState } from "react";
 import { AuthContext, GoalSelectContext } from "../contex/context-context";
 import axios from "../api/axios";
+import { UPDATE_GOAL_PROGRESS } from "../api/routes";
 
 export function InformationalSummary() {
   const { goalCount } = useGoalCountRouteData();
@@ -416,7 +417,7 @@ export function GoalDetails() {
     try {
 
       const response = await axios.post(
-        LOGIN_URL,
+        UPDATE_GOAL_PROGRESS,
         JSON.stringify({
           goalId: goal.id,
           progressIncrement: progress,
