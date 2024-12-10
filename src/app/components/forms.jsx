@@ -62,6 +62,7 @@ export function LoginForm() {
       }
     } catch (err) {
       alert(err);
+      console.log(err)
     } finally {
       setLoading(false);
     }
@@ -187,6 +188,7 @@ export function ForgetPassword() {
       }
     } catch (err) {
       alert(err);
+      console.log(err)
     } finally {
       setLoading(false);
       setEmailSent(false);
