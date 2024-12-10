@@ -6,6 +6,7 @@ import { AuthContext } from "../contex/context-context";
 import {
   LOGIN_URL,
   REQUEST_RESET_PASSWORD,
+  RESET_PASSWORD,
   SIGNUP_URL,
   VERIFYEMAIL_URL,
 } from "../api/routes";
@@ -273,7 +274,7 @@ export function ResetPassword() {
     setLoading(true);
     try {
       const response = await axios.post(
-        LOGIN_URL,
+        RESET_PASSWORD,
         JSON.stringify({
           newPassword: userDetails.password,
           token: userDetails.token,
