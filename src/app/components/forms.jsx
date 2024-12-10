@@ -3,7 +3,12 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contex/context-context";
-import { LOGIN_URL, REQUEST_RESET_PASSWORD, SIGNUP_URL, VERIFYEMAIL_URL } from "../api/routes";
+import {
+  LOGIN_URL,
+  REQUEST_RESET_PASSWORD,
+  SIGNUP_URL,
+  VERIFYEMAIL_URL,
+} from "../api/routes";
 import { TfiEmail } from "react-icons/tfi";
 import Cookies from "js-cookie";
 import axios from "../api/axios";
@@ -35,11 +40,11 @@ export function LoginForm() {
         }
       );
       if (response.request.status === 200) {
-        console.log({"oringal auth": response.data})
+        console.log({ "oringal auth": response.data });
         setAuth({
           token: response.data.token,
           name: response.data.fullName,
-          refNum: response.data.refNum
+          refNum: response.data.refNum,
         });
 
         Cookies.set("token", response.data.token, {
@@ -156,9 +161,8 @@ export function ForgetPassword() {
   const [userDetails, setUserDetails] = useState({
     email: "",
   });
-  const [emailSent, setEmailSent] = useState(false)
+  const [emailSent, setEmailSent] = useState(false);
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -178,14 +182,14 @@ export function ForgetPassword() {
           secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
         });
-        setEmailSent(true)
-        router.push("/reset-password", { scroll: false })
+        setEmailSent(true);
+        router.push("/reset-password", { scroll: false });
       }
     } catch (err) {
       alert(err);
     } finally {
       setLoading(false);
-      setEmailSent(false)
+      setEmailSent(false);
     }
   };
 
@@ -250,24 +254,16 @@ export function ForgetPassword() {
 
 export function ResetPassword() {
   const router = useRouter();
-  const [email, setEmail]= useState("")
+  const [email, setEmail] = useState("");
   const [isLoading, setLoading] = useState(false);
   const { auth, setAuth } = React.useContext(AuthContext);
-  const [token, setToken] = useState("");
   const [userDetails, setUserDetails] = useState({
     password: "",
+    token: "",
   });
   useEffect(() => {
     const emailFromCookie = Cookies.get("email");
     setEmail(emailFromCookie);
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const searchParams = new URLSearchParams(window.location.search);
-      const ref = searchParams.get("ref");
-      setToken(ref);
-    }
   }, []);
 
   const handleSubmit = async (e) => {
@@ -278,7 +274,7 @@ export function ResetPassword() {
         LOGIN_URL,
         JSON.stringify({
           newPassword: userDetails.password,
-          token: token,
+          token: userDetails.token,
         }),
         {
           headers: { "Content-Type": "application/json" },
@@ -307,6 +303,22 @@ export function ResetPassword() {
           <span className=" text-lg">{email}</span>
         </div>
         <form autoComplete="off">
+          <div className="flex flex-col">
+            <label>token</label>
+            <input
+              placeholder="Type email here"
+              autoComplete="off"
+              type="email"
+              value={userDetails.token}
+              onChange={(e) =>
+                setUserDetails((prevDetails) => ({
+                  ...prevDetails,
+                  token: e.target.value,
+                }))
+              }
+              className="border border-blue-500 rounded-lg p-4 my-2"
+            />
+          </div>
           <div className="flex flex-col">
             <label>Password</label>
             <input

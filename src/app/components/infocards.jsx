@@ -8,7 +8,7 @@ import {
 import { useGoalCountRouteData } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { useContext, useState } from "react";
-import { GoalSelectContext } from "../contex/context-context";
+import { AuthContext, GoalSelectContext } from "../contex/context-context";
 
 export function InformationalSummary() {
   const { goalCount } = useGoalCountRouteData();
@@ -397,40 +397,69 @@ export function AddDepartment() {
   );
 }
 
-export function GoalDetails({ onclick }) {
+export function GoalDetails() {
+  const {auth} = useContext(AuthContext)
   const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
+  const [isLoading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
     const value = Math.min(100, Math.max(0, Number(event.target.value)));
     setProgress(value);
   };
 
+  const handleUpdate = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    setLoading(true);
+    console.log("am working")
+    try {
+
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({
+          goalId: goal.id,
+          progressIncrement: progress,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+
+        }
+      );
+
+      if (response.status === 200) {
+        alert('Progress updated successfully');
+      }
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="p-4 border-r-2 h-screen border-gray-400">
+      {/* Progress Bar */}
       <div className="relative w-full h-8 mb-6 bg-gray-200">
         <div
           className="absolute h-8 bg-blue-500 rounded"
-          style={{ width: `${goal.actualProgress}%` }}></div>
+          style={{ width: `${progress}%` }}></div>
       </div>
+
+      {/* Notification */}
       <div className="mb-12">
         <Notification
-          typeHeader={"Update Goal Progress"}
-          message={"Enter your progress level in the update box"}
+          typeHeader="Update Goal Progress"
+          message="Enter your progress level in the update box"
         />
       </div>
-      {/* Goal Header */}
-      <p className="text-gray-700 text-sm mb-6">
-        <strong className="w-1/3"></strong> 
-      </p>
-      <p className="text-gray-700 text-sm mb-6">
-        <strong className="w-1/3"></strong> 
-      </p>
 
       {/* Goal Details */}
       <div className="text-gray-700 text-sm mb-4">
         <div className="flex mb-4">
-          <strong className="w-1/3">Goal ID::</strong>
+          <strong className="w-1/3">Goal ID:</strong>
           <p className="w-2/3">{goal.id}</p>
         </div>
         <div className="flex mb-4">
@@ -451,7 +480,7 @@ export function GoalDetails({ onclick }) {
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Actual Progress:</strong>
-          <p className="w-2/3">{goal.actualProgress}</p>
+          <p className="w-2/3">{progress}%</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Target:</strong>
@@ -471,14 +500,15 @@ export function GoalDetails({ onclick }) {
           max="100"
           value={progress}
           onChange={handleInputChange}
-          className="w-40 border h-8 rounded p-2 text-center w-2/3"
+          className="w-40 border h-8 rounded p-2 text-center"
         />
       </div>
 
       <button
         className="w-full p-2 bg-slate-500 rounded-xl text-white"
-        onClick={onclick}>
-        Submit Progress
+        onClick={handleUpdate}
+        disabled={isLoading}>
+        {isLoading ? 'Submitting...' : 'Submit Progress'}
       </button>
     </div>
   );

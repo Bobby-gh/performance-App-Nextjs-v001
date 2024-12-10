@@ -1,4 +1,5 @@
 "use client";
+import axios from "@/app/api/axios";
 import { useMyGoalRouteData } from "@/app/api/databook/route-data";
 import { GoalDetails, Goals } from "@/app/components/infocards";
 import { GoalSelectContext } from "@/app/contex/context-context";
@@ -12,14 +13,12 @@ export default function MyGoals() {
     setGoal(goal);
   };
 
-  const handleUpdate = (goal) => {
-    console.log("working")
-  };
+
 
   return (
     <main className="m-4 flex space-x-4">
       <div className="flex-[1]">
-        <GoalDetails onclick={handleUpdate}/>
+        <GoalDetails />
       </div>
       <div className="flex-[1.7]">
         <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 cursor-pointer">
@@ -30,7 +29,7 @@ export default function MyGoals() {
               goalTitle={goal.goalTitle}
               goalDeadline={goal.goalDeadline}
               status={goal.status}
-              progress = {goal.actualProgress}
+              progress={goal.actualProgress}
               onClick={() => handleCardClick(goal)}
             />
           ))}
