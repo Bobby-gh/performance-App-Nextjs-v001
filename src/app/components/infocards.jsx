@@ -413,7 +413,6 @@ export function GoalDetails() {
   const handleUpdate = async (event) => {
     event.preventDefault(); // Prevent default form submission
     setLoading(true);
-    console.log("am working")
     try {
 
       const response = await axios.patch(
@@ -483,7 +482,7 @@ export function GoalDetails() {
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Actual Progress:</strong>
-          <p className="w-2/3">{progress}%</p>
+          <p className="w-2/3">{goal.actualProgress}%</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Target:</strong>
