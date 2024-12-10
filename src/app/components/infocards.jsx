@@ -421,14 +421,22 @@ export function GoalDetails({ onclick }) {
       </div>
       {/* Goal Header */}
       <p className="text-gray-700 text-sm mb-6">
-        <strong>Goal ID:</strong> {goal.id}
+        <strong className="w-1/3"></strong> 
       </p>
       <p className="text-gray-700 text-sm mb-6">
-        <strong>Goal Name:</strong> {goal.goalTitle}
+        <strong className="w-1/3"></strong> 
       </p>
 
       {/* Goal Details */}
       <div className="text-gray-700 text-sm mb-4">
+        <div className="flex mb-4">
+          <strong className="w-1/3">Goal ID::</strong>
+          <p className="w-2/3">{goal.id}</p>
+        </div>
+        <div className="flex mb-4">
+          <strong className="w-1/3">Goal Name:</strong>
+          <p className="w-2/3">{goal.goalTitle}</p>
+        </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Description:</strong>
           <p className="w-2/3">{goal.goalDescription}</p>
