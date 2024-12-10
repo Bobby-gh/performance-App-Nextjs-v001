@@ -277,7 +277,7 @@ export function ResetPassword() {
       const response = await axios.post(
         LOGIN_URL,
         JSON.stringify({
-          email: userDetails.email,
+          newPassword: userDetails.password,
           token: token,
         }),
         {
