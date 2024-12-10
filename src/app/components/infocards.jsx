@@ -9,6 +9,7 @@ import { useGoalCountRouteData } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { useContext, useState } from "react";
 import { AuthContext, GoalSelectContext } from "../contex/context-context";
+import axios from "../api/axios";
 
 export function InformationalSummary() {
   const { goalCount } = useGoalCountRouteData();
@@ -445,7 +446,7 @@ export function GoalDetails() {
       <div className="relative w-full h-8 mb-6 bg-gray-200">
         <div
           className="absolute h-8 bg-blue-500 rounded"
-          style={{ width: `${progress}%` }}></div>
+          style={{ width: `${goal.actualProgress}%` }}></div>
       </div>
 
       {/* Notification */}
