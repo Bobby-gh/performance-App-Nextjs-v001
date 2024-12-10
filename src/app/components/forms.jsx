@@ -285,6 +285,7 @@ export function ResetPassword() {
       }
     } catch (err) {
       alert(err);
+      console.log(err)
     } finally {
       setLoading(false);
     }
