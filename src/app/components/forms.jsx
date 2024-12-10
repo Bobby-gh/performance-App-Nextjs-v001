@@ -179,6 +179,7 @@ export function ForgetPassword() {
           sameSite: "Strict",
         });
         setEmailSent(true)
+        router.push("/reset-password", { scroll: false })
       }
     } catch (err) {
       alert(err);
@@ -242,7 +243,6 @@ export function ForgetPassword() {
             </span>
           </div>
         </form>
-        {emailSent && router.push("/reset-password", { scroll: false })}
       </div>
     </main>
   );
