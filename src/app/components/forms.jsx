@@ -293,8 +293,9 @@ export function ResetPassword() {
   return (
     <main className="w-[430px]">
       <div>
-        <div className="flex  mt-[17%] mb-[25%] text-xl font-bold">
-          Set your New Password
+        <div className=" mt-[10%] mb-[15%]">
+          <p className="text-xl font-bold">Set your New Password</p>
+          <p className="text-sm">Check your email for a verified token</p>
         </div>
         <div className="flex space-x-2 mb-8 items-center">
           <span>
