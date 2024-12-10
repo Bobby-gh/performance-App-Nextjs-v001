@@ -481,8 +481,8 @@ export function GoalDetails() {
           <p className="w-2/3">{goal.status}</p>
         </div>
         <div className="flex mb-4">
-          <strong className="w-1/3">Actual Progress:</strong>
-          <p className="w-2/3">{goal.actualProgress}%</p>
+          <strong className="w-1/3">Current Progress:</strong>
+          <p className="w-2/3">{goal.actualProgress}</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Target:</strong>
