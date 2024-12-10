@@ -319,22 +319,24 @@ export function ResetPassword() {
               className="border border-blue-500 rounded-lg p-4 my-2"
             />
           </div>
-          <div className="flex flex-col">
-            <label>Password</label>
-            <input
-              placeholder="Type email here"
-              autoComplete="off"
-              type="email"
-              value={userDetails.password}
-              onChange={(e) =>
-                setUserDetails((prevDetails) => ({
-                  ...prevDetails,
-                  password: e.target.value,
-                }))
-              }
-              className="border border-blue-500 rounded-lg p-4 my-2"
-            />
-          </div>
+          {userDetails.token && (
+            <div className="flex flex-col">
+              <label>Password</label>
+              <input
+                placeholder="Type email here"
+                autoComplete="off"
+                type="email"
+                value={userDetails.password}
+                onChange={(e) =>
+                  setUserDetails((prevDetails) => ({
+                    ...prevDetails,
+                    password: e.target.value,
+                  }))
+                }
+                className="border border-blue-500 rounded-lg p-4 my-2"
+              />
+            </div>
+          )}
           <div
             className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
             onClick={handleSubmit}>
