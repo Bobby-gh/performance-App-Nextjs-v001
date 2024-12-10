@@ -454,7 +454,7 @@ export function GoalDetails() {
       <div className="mb-12">
         <Notification
           typeHeader="Update Goal Progress"
-          message="Enter your progress level in the update box"
+          message="Select project to update progress"
         />
       </div>
 
