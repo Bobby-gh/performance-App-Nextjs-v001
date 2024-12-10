@@ -153,19 +153,15 @@ export function LoginForm() {
 export function ForgetPassword() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
-  const { auth, setAuth } = React.useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({
     email: "",
   });
+  const [emailSent, setEmailSent] = useState(false)
 
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    Cookies.set("email", JSON.stringify(userDetails.email), {
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-    });
     try {
       const response = await axios.post(
         REQUEST_RESET_PASSWORD,
@@ -178,18 +174,24 @@ export function ForgetPassword() {
         }
       );
       if (response.request.status === 200) {
+        Cookies.set("email", JSON.stringify(userDetails.email), {
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "Strict",
+        });
+        setEmailSent(true)
       }
     } catch (err) {
       alert(err);
     } finally {
       setLoading(false);
+      setEmailSent(false)
     }
   };
 
   return (
     <main className="w-[430px]">
       <div>
-        <div className="flex  mt-[17%] mb-[30%] text-xl font-bold">
+        <div className="flex  mt-[17%] mb-[20%] text-xl font-bold">
           Enter email for Verification
         </div>
         <form autoComplete="off">
@@ -240,7 +242,7 @@ export function ForgetPassword() {
             </span>
           </div>
         </form>
-        {auth.token && router.push("/home", { scroll: false })}
+        {emailSent && router.push("/reset-password", { scroll: false })}
       </div>
     </main>
   );
@@ -311,11 +313,11 @@ export function ResetPassword() {
               placeholder="Type email here"
               autoComplete="off"
               type="email"
-              value={userDetails.email}
+              value={userDetails.password}
               onChange={(e) =>
                 setUserDetails((prevDetails) => ({
                   ...prevDetails,
-                  email: e.target.value,
+                  password: e.target.value,
                 }))
               }
               className="border border-blue-500 rounded-lg p-4 my-2"
