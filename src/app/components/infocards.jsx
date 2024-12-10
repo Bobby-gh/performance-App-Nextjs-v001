@@ -478,7 +478,7 @@ export function GoalDetails({ onclick }) {
       <button
         className="w-full p-2 bg-slate-500 rounded-xl text-white"
         onClick={onclick}>
-        Update Progress
+        Submit Progress
       </button>
     </div>
   );
