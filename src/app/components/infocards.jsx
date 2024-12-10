@@ -447,7 +447,7 @@ export function GoalDetails() {
       <div className="relative w-full h-8 mb-6 bg-gray-200">
         <div
           className="absolute h-8 bg-blue-500 rounded"
-          style={{ width: `${goal.actualProgress}%` }}></div>
+          style={{ width: `${goal.actualProgressPercent}%` }}></div>
       </div>
 
       {/* Notification */}

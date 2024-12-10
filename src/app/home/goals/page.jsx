@@ -29,7 +29,7 @@ export default function MyGoals() {
               goalTitle={goal.goalTitle}
               goalDeadline={goal.goalDeadline}
               status={goal.status}
-              progress={goal.actualProgress}
+              progress={goal.actualProgressPercent}
               onClick={() => handleCardClick(goal)}
             />
           ))}
