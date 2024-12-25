@@ -23,7 +23,7 @@ import {
 
 export function useGoalRouteData() {
   const { auth } = useContext(AuthContext);
-  const { trigger } = useContext(Modaltrigger);
+  const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   const [departmentgoal, setDepartmenttable] = useState([]);
   const departmentgoaltable = departmentgoal.map((departmentgoal) => ({
     ...departmentgoal,
@@ -54,7 +54,7 @@ export function useGoalRouteData() {
 
   if (trigger) {
     fetchData();
-    triggerComponent(false);
+    resettriggerComponent()
   }
 
   return { departmentgoaltable };

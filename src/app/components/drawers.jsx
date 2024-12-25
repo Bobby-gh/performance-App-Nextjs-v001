@@ -58,7 +58,7 @@ export function CreateGoal() {
         }
       );
       alert("Goal Saved Successfully");
-      triggerComponent(true)
+      triggerComponent()
       handleClose();
       reload();
     } catch (error) {
