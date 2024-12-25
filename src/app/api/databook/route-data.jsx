@@ -50,13 +50,15 @@ export function useGoalRouteData() {
     };
 
     fetchData();
-
-    if (trigger) {
-      console.log("am working")
-      fetchData();
-      resettriggerComponent()
-    }
   }, [auth]);
+
+  useEffect(() => {
+    if (trigger) {
+      console.log("Trigger is active, fetching data...");
+      fetchData();
+      resettriggerComponent();
+    }
+  }, [trigger]);
 
   return { departmentgoaltable };
 }
