@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { AuthContext, GoalSelectContext } from "./context-context";
+import { AuthContext, GoalSelectContext, Modaltrigger } from "./context-context";
 import Cookies from "js-cookie";
 
 export const AuthProvider = ({ children }) => {
