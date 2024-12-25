@@ -32,23 +32,23 @@ export function useGoalRouteData() {
     goalDeadline: new Date(departmentgoal.goalDeadline).toLocaleDateString(),
   }));
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(GOALS_URL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-        console.log(response.data);
-        setDepartmenttable(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(GOALS_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+      console.log(response.data);
+      setDepartmenttable(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [auth]);
 
