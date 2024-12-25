@@ -52,6 +52,7 @@ export function useGoalRouteData() {
     fetchData();
 
     if (trigger) {
+      console.log("am working")
       fetchData();
       resettriggerComponent()
     }
