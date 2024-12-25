@@ -5,7 +5,7 @@ import { Navbar } from "../components/navbar";
 export default function Layout({ children }) {
   return (
     
-      <main className="flex bg-slate-100 h-screen overflow-hidden">
+      <main className="flex bg-gray-200 h-screen overflow-hidden">
         <div className="border border-2 border-r-slate-400 ">
           <Sidebar />
         </div>

@@ -39,7 +39,7 @@ export function OrganizationPerformanceDashboard() {
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="average_performance" fill="rgb(148 163 184)"/>
+          <Bar dataKey="average_performance" fill="blue"/>
         </BarChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -101,7 +101,7 @@ export function GeneralPerformanceDashboard() {
             endAngle={110}
             innerRadius={90}
             outerRadius={120}
-            fill="rgb(148 163 184)"
+            fill="blue"
             datakey="overallAverage"
             sx={(theme) => ({
               [`& .${gaugeClasses.valueText}`]: {

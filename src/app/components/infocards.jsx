@@ -21,7 +21,7 @@ export function InformationalSummary() {
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
       <div className="card  bg-white rounded-lg p-4">
         <div className="flex justify-between mb-16">
-          <span className="p-4 bg-slate-400 rounded-lg">
+          <span className="p-4 bg-blue-900 rounded-lg text-white">
             <FaTrophy size={20} />
           </span>
           <span className="flex flex-col items-end">
@@ -35,9 +35,9 @@ export function InformationalSummary() {
           <span className="ml-2">than last Month</span>
         </div>
       </div>
-      <div className="card  bg-white rounded-lg p-4">
+      <div className="card bg-white rounded-lg p-4">
         <div className="flex justify-between mb-16">
-          <span className="p-4 bg-slate-400 rounded-lg">
+          <span className="p-4 bg-blue-900 text-white rounded-lg">
             <FaThumbsUp size={20} />
           </span>
           <span className="flex flex-col items-end">
@@ -53,7 +53,7 @@ export function InformationalSummary() {
       </div>
       <div className="card  bg-white rounded-lg p-4">
         <div className="flex justify-between mb-16">
-          <span className="p-4 bg-slate-400 rounded-lg">
+          <span className="p-4 bg-blue-900 text-white rounded-lg">
             <FaThumbsDown size={20} />
           </span>
           <span className="flex flex-col items-end">
@@ -507,7 +507,7 @@ export function GoalDetails() {
       </div>
 
       <button
-        className="w-full p-2 bg-slate-500 rounded-xl text-white"
+        className="w-full p-2 bg-blue-900 rounded-xl text-white"
         onClick={handleUpdate}
         disabled={isLoading}>
         {isLoading ? 'Submitting...' : 'Submit Progress'}
@@ -562,8 +562,8 @@ export function Goals({
 
 export function Notification({ message, typeHeader }) {
   return (
-    <main className="border-l-4 px-4 border-slate-400">
-      <div className="font-bold text-lg text-gray-700 mb-2">{typeHeader}</div>
+    <main className="border-l-4 px-4 border-blue-900">
+      <div className="font-bold text-lg text-blue-900 mb-2">{typeHeader}</div>
       <div className="text-sm">{message}</div>
     </main>
   );

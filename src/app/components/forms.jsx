@@ -115,13 +115,13 @@ export function LoginForm() {
 
           <div className="flex justify-end">
             <Link href="/forget-password" prefetch={false}>
-              <h4 className="text-blue italic text-sm text-[#08376B]">
+              <h4 className="text-blue italic text-sm text-blue-700">
                 forgot password?
               </h4>
             </Link>
           </div>
           <div
-            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
+            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-900"
             onClick={handleSubmit}>
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
@@ -137,14 +137,14 @@ export function LoginForm() {
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
-            <span className="px-2 text-sm text-gray-500">or</span>
+            <span className="px-2 text-sm text-blue-700">or</span>
             <div className="flex-grow border-t border-slate-500"></div>
           </div>
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
             <span className="text-sm text-black">Dont have an account?</span>
-            <span className="text-slate-500 text-sm">
+            <span className="text-blue-700 text-sm">
               <Link href="/signup" prefetch={false}>
                 Sign Up
               </Link>
@@ -220,7 +220,7 @@ export function ForgetPassword() {
             />
           </div>
           <div
-            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
+            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-900"
             onClick={handleSubmit}>
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
@@ -243,7 +243,7 @@ export function ForgetPassword() {
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
             <span className="text-sm text-black">Return?</span>
-            <span className="text-slate-500 text-sm">
+            <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
                 Home
               </Link>
@@ -304,7 +304,7 @@ export function ResetPassword() {
         </div>
         <div className="flex space-x-2 mb-8 items-center">
           <span>
-            <TfiEmail size={20} color="#04B1C4" />
+            <TfiEmail size={20} color="blue" />
           </span>
           <span className=" text-lg">{email}</span>
         </div>
@@ -344,7 +344,7 @@ export function ResetPassword() {
             </div>
           )}
           <div
-            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-slate-500"
+            className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-900"
             onClick={handleSubmit}>
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
@@ -360,14 +360,14 @@ export function ResetPassword() {
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
-            <span className="px-2 text-sm text-gray-500">or</span>
+            <span className="px-2 text-sm text-blue-700">or</span>
             <div className="flex-grow border-t border-slate-500"></div>
           </div>
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
             <span className="text-sm text-black">Return?</span>
-            <span className="text-slate-500 text-sm">
+            <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
                 Home
               </Link>
@@ -545,7 +545,7 @@ export function SignUpForm() {
               className="border border-blue-500 rounded-lg p-3 my-2"></input>
           </div>
           <div
-            className="flex justify-center p-3 text-white rounded-lg mt-4 bg-slate-500"
+            className="flex justify-center p-3 text-white rounded-lg mt-4 bg-blue-900"
             onClick={handleSubmit}>
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
@@ -561,7 +561,7 @@ export function SignUpForm() {
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
-            <span className="px-2 text-sm text-gray-500">or</span>
+            <span className="px-2 text-sm text-blue-700">or</span>
             <div className="flex-grow border-t border-slate-500"></div>
           </div>
 
@@ -570,7 +570,7 @@ export function SignUpForm() {
             <span className="text-sm text-black">
               Already having an Account?
             </span>
-            <span className="text-slate-500 text-sm">
+            <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
                 Login In
               </Link>
@@ -645,7 +645,7 @@ export function VerifyEmailForm() {
             />
           </div>
           <div
-            className="flex justify-center p-3 text-white rounded-lg mt-4 bg-slate-500"
+            className="flex justify-center p-3 text-white rounded-lg mt-4 bg-blue-900"
             onClick={handleSubmit}>
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
@@ -668,7 +668,7 @@ export function VerifyEmailForm() {
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
             <span className="text-sm text-black">Do you want to return</span>
-            <span className="text-slate-500 text-sm">
+            <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
                 Home?
               </Link>

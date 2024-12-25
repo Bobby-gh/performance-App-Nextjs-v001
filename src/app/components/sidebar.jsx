@@ -19,9 +19,9 @@ export function Sidebar() {
       return !["/home/department"].includes(item.path);
     }
     if (auth.refNum === "ref?3!") {
-      return !["/home/department", "/home/employees", "/home/goal-setting"].includes(item.path);
+      return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
     }
-    return !["/home/department", "/home/employees", "/home/goal-setting"].includes(item.path);
+    return !["/home/department", "/home/employees", "/home/goal-setting","/home/goal-assessment"].includes(item.path);
   });
 
   return (
@@ -41,8 +41,8 @@ export function Sidebar() {
               <li
                 key={item.title}>
                 <Link href={item.path} className={classNames({
-                  "flex items-center text-md p-4 m-2 hover:bg-slate-400 rounded-lg": true,
-                  "bg-slate-400 rounded-lg": currentPathname === item.path
+                  "flex items-center text-md p-4 m-2 hover:bg-blue-900 hover:text-white rounded-lg": true,
+                  "bg-blue-900 rounded-lg text-white": currentPathname === item.path
                 })}>
                   {item.icon} <span className="ml-2 hidden transition duration-300 ease-out sm:block">{item.title}</span>
                 </Link>
