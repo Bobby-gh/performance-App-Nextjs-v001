@@ -459,34 +459,34 @@ export function GoalDetails() {
       </div>
 
       {/* Goal Details */}
-      <div className="text-gray-700 text-sm mb-4">
+      <div className="text-black text-sm mb-4">
         <div className="flex mb-4">
           <strong className="w-1/3">Goal ID:</strong>
-          <p className="w-2/3">{goal.id}</p>
+          <p className="w-2/3 text-blue-900">{goal.id}</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Goal Name:</strong>
-          <p className="w-2/3">{goal.goalTitle}</p>
+          <p className="w-2/3 text-blue-900">{goal.goalTitle}</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Description:</strong>
-          <p className="w-2/3">{goal.goalDescription}</p>
+          <p className="w-2/3 text-blue-900">{goal.goalDescription}</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Deadline:</strong>
-          <p className="w-2/3">{goal.goalDeadline}</p>
+          <p className="w-2/3 text-blue-900">{goal.goalDeadline}</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Status:</strong>
-          <p className="w-2/3">{goal.status}</p>
+          <p className="w-2/3 text-blue-900">{goal.status}</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Current Progress:</strong>
-          <p className="w-2/3">{goal.actualProgress}</p>
+          <p className="w-2/3 text-blue-900">{goal.actualProgress}</p>
         </div>
         <div className="flex mb-4">
           <strong className="w-1/3">Target:</strong>
-          <p className="w-2/3">{goal.target}</p>
+          <p className="w-2/3 text-blue-900">{goal.target}</p>
         </div>
       </div>
 
@@ -530,7 +530,7 @@ export function Goals({
       onClick={onClick}>
       {/* Progress Section */}
       <div className="mb-4">
-        <p className="text-gray-700 text-sm mb-2">
+        <p className="text-blue-900 text-sm mb-2">
           <strong>Actual Progress:</strong> {progress}%
         </p>
         <div className="relative w-full h-4 bg-gray-200 rounded">
@@ -554,7 +554,7 @@ export function Goals({
       <hr className="h-px my-2 border-0 dark:bg-gray-700" />
       <div className="flex">
         <span className="">status: </span>
-        <span className="ml-2 text-slate-500 text-xsm">{status}</span>
+        <span className="ml-2 text-blue-900 text-xsm">{status}</span>
       </div>
     </div>
   );
