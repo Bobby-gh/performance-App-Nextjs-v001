@@ -493,7 +493,7 @@ export function GoalDetails() {
       {/* Update Progress */}
       <div className="flex items-center space-x-4 mt-4 mb-12">
         <label htmlFor="progress-input" className="text-gray-600 text-sm">
-          <strong className="w-1/3">Enter Progress:</strong>
+          <strong className="w-1/3 text-black">Enter Progress:</strong>
         </label>
         <input
           id="progress-input"
@@ -554,7 +554,7 @@ export function Goals({
       <hr className="h-px my-2 border-0 dark:bg-gray-700" />
       <div className="flex">
         <span className="">status: </span>
-        <span className="ml-2 text-blue-900 text-xsm">{status}</span>
+        <span className="ml-2 text-blue-900 text-sm">{status}</span>
       </div>
     </div>
   );
