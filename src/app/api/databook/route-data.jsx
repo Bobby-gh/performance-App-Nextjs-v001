@@ -50,12 +50,12 @@ export function useGoalRouteData() {
     };
 
     fetchData();
-  }, [auth]);
 
-  if (trigger) {
-    fetchData();
-    resettriggerComponent()
-  }
+    if (trigger) {
+      fetchData();
+      resettriggerComponent()
+    }
+  }, [auth]);
 
   return { departmentgoaltable };
 }
