@@ -70,13 +70,16 @@ export function CreateGoal() {
     }
   };
   const reload = () => {
+    setDepartments(""); 
+    setPriority("");
     setFormData({
       title: "",
       description: "",
       target: "",
       endDate: "",
       department: "",
-    });
+    }); 
+    
   };
 
   function handleOpen() {
@@ -252,6 +255,7 @@ export function CreateGoal() {
   );
 }
 export function AccessGoal() {
+  const { triggerComponent } = useContext(Modaltrigger);
   const { auth } = useContext(AuthContext);
   const { departmentgoal } = useUnassessedGoalRouteData();
   const [goal, setGoal] = useState("");
@@ -303,6 +307,7 @@ export function AccessGoal() {
         }
       );
       alert("Goal Acessed Successfully");
+      triggerComponent();
       handleClose();
       reload();
     } catch (error) {
@@ -315,7 +320,18 @@ export function AccessGoal() {
     }
   };
   const reload = () => {
-    setAssessData("");
+    setGoal("");
+    setAssessData({
+      workQuality: "",
+      productivity: "",
+      communication: "",
+      proceduralKnowledge: "",
+      reliability: "",
+      teamWork: "",
+      creativity: "",
+      rating: "",
+      comment: "",
+    });
   };
 
   const [open, setOpen] = React.useState(false);
@@ -551,7 +567,8 @@ export function AccessGoal() {
     </>
   );
 }
-export function Userforms(props) {
+export function Userforms() {
+  const {triggerComponent} = useContext(Modaltrigger)
   const { auth } = useContext(AuthContext);
   const [departments, setDepartments] = useState("");
   const { departmenttable } = useDepartmentRouteData();
@@ -582,7 +599,7 @@ export function Userforms(props) {
         }
       );
       alert("Employee details saved successfully");
-      props.reloadTableHandler();
+      triggerComponent()
       handleClose();
       reload();
     } catch (error) {
@@ -598,9 +615,9 @@ export function Userforms(props) {
     setUserFormData({
       fullName: "",
       email: "",
-      departments: "",
-      role: "",
     });
+    setDepartments("");
+    setRole("")
   };
 
   const handleUserFormDataChange = (e) => {
@@ -736,6 +753,7 @@ export function Userforms(props) {
 }
 
 export function Departmentforms() {
+  const {triggerComponent} = useContext(Modaltrigger)
   const { auth } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -759,6 +777,7 @@ export function Departmentforms() {
       );
       alert("Department Saved Successfully");
       handleClose();
+      triggerComponent()
       reload();
     } catch (error) {
       alert(error);

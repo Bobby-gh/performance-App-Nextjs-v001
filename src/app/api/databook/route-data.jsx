@@ -126,26 +126,35 @@ export function useUnassessedGoalRouteData() {
 export function useEmployeesRouteData() {
   const { auth } = useContext(AuthContext);
   const [employeetable, setEmployeetable] = useState([]);
+  const { trigger, resettriggerComponent } = useContext(Modaltrigger);
+
+  const fetchData = async () => {
+    try {
+      console.log("Fetching goal count data...");
+      const response = await axios.get(EMPLOYEES_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+      setEmployeetable(response.data.usersResponse);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("Fetching goal count data...");
-        const response = await axios.get(EMPLOYEES_URL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-        setEmployeetable(response.data.usersResponse);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     fetchData();
   }, [auth]);
+
+  useEffect(() => {
+    if (trigger) {
+      console.log("Trigger is active, fetching data...");
+      fetchData();
+      resettriggerComponent();
+    }
+  }, [trigger]);
 
   return { employeetable };
 }
@@ -153,25 +162,34 @@ export function useEmployeesRouteData() {
 export function useDepartmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [departmenttable, setDepartmenttable] = useState([]);
+  const { trigger, resettriggerComponent } = useContext(Modaltrigger);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(DEPARTMENTS_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+      setDepartmenttable(response.data.departments);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(DEPARTMENTS_URL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-        setDepartmenttable(response.data.departments);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     fetchData();
   }, [auth]);
+
+  useEffect(() => {
+    if (trigger) {
+      console.log("Trigger is active, fetching data...");
+      fetchData();
+      resettriggerComponent();
+    }
+  }, [trigger]);
 
   return { departmenttable };
 }
@@ -205,6 +223,7 @@ export function useTopGoalsRouteData() {
 export function useGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [goalAssessment, setGoalAssessment] = useState([]);
+  const { trigger, resettriggerComponent } = useContext(Modaltrigger);
 
   const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
@@ -216,31 +235,39 @@ export function useGoalAccessmentRouteData() {
     comment: goal.comment || "",
   }));
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!auth?.token) {
-        console.warn("Authorization token is missing.");
-        return;
-      }
-      try {
-        const response = await axios.get(GOAL_ASSESSMENT_URL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-        setGoalAssessment(response.data);
-      } catch (err) {
-        console.error(
-          "Error fetching goal assessments:",
-          err.response || err.message || err
-        );
-      }
-    };
+  const fetchData = async () => {
+    if (!auth?.token) {
+      console.warn("Authorization token is missing.");
+      return;
+    }
+    try {
+      const response = await axios.get(GOAL_ASSESSMENT_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+      setGoalAssessment(response.data);
+    } catch (err) {
+      console.error(
+        "Error fetching goal assessments:",
+        err.response || err.message || err
+      );
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [auth]);
+
+  useEffect(() => {
+    if (trigger) {
+      console.log("Trigger is active, fetching data...");
+      fetchData();
+      resettriggerComponent();
+    }
+  }, [trigger]);
 
   return { goalAssessmentData };
 }

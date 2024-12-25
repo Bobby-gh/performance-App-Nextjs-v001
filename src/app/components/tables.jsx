@@ -44,36 +44,8 @@ export function GoalTable() {
   );
 }
 
-export function MonitorGoalTable() {
-  // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
-  const { departmentgoaltable } = useGoalRouteData();
-  return (
-    <div>
-      <div>
-        <DataGrid
-          rows={departmentgoaltable}
-          columns={accessinggoalcolumn}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[10, 15]}
-          slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row._id}
-          sx={{
-            border: 0,
-            borderRadius: 2,
-            p: 2,
-            minWidth: 300,
-          }}
-        />
-      </div>
-    </div>
-  );
-}
+
 export function AccessGoalTable() {
-  // const { departassessmenttable } = useDepartmentGoalAccessmentRouteData;
   const { goalAssessmentData } = useGoalAccessmentRouteData();
   return (
     <div>
