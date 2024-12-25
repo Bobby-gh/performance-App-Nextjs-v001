@@ -552,9 +552,9 @@ export function Goals({
         </div>
       </div>
       <hr className="h-px my-2 border-0 dark:bg-gray-700" />
-      <div className="flex">
+      <div className="flex items-center">
         <span className="">status: </span>
-        <span className="ml-2 text-blue-900 text-sm">{status}</span>
+        <span className="ml-2 text-blue-900 text-xs">{status}</span>
       </div>
     </div>
   );
