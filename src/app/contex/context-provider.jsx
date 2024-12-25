@@ -51,3 +51,23 @@ return(
   </GoalSelectContext.Provider>
 )
 }
+
+
+export const ModaltriggerProvider =({children}) => {
+  const [trigger, setTrigger] = useState(false)
+
+  const triggerComponent = () => {
+    setTrigger(true);
+  };
+
+  const resettriggerComponent = () => {
+    setTrigger(false);
+  };
+
+
+  return (
+    <Modaltrigger.Provider value={{ trigger, triggerComponent, resettriggerComponent }}>
+      {children}
+    </Modaltrigger.Provider>
+  );
+}

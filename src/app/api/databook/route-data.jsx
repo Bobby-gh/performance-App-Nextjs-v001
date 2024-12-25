@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../contex/context-context";
+import { AuthContext, Modaltrigger } from "../../contex/context-context";
 import axios from "../axios";
 import {
   CREATE_DEPRATMENT,
@@ -23,6 +23,7 @@ import {
 
 export function useGoalRouteData() {
   const { auth } = useContext(AuthContext);
+  const { trigger } = useContext(Modaltrigger);
   const [departmentgoal, setDepartmenttable] = useState([]);
   const departmentgoaltable = departmentgoal.map((departmentgoal) => ({
     ...departmentgoal,
@@ -51,9 +52,13 @@ export function useGoalRouteData() {
     fetchData();
   }, [auth]);
 
+  if (trigger) {
+    fetchData();
+    triggerComponent(false);
+  }
+
   return { departmentgoaltable };
 }
-
 
 export function useMyGoalRouteData() {
   const { auth } = useContext(AuthContext);
@@ -87,7 +92,6 @@ export function useMyGoalRouteData() {
   console.log({ "personal goals": mygoal });
   return { mygoal };
 }
-
 
 export function useUnassessedGoalRouteData() {
   const { auth } = useContext(AuthContext);
@@ -140,7 +144,6 @@ export function useEmployeesRouteData() {
     fetchData();
   }, [auth]);
 
-  
   return { employeetable };
 }
 
@@ -189,10 +192,10 @@ export function useTopGoalsRouteData() {
         console.log(err);
       }
     };
-    
+
     fetchData();
   }, [auth]);
-  
+
   return { topGoal };
 }
 
@@ -236,7 +239,6 @@ export function useGoalAccessmentRouteData() {
     fetchData();
   }, [auth]);
 
-
   return { goalAssessmentData };
 }
 
@@ -262,7 +264,7 @@ export function useGeneralPerformanceChartRouteData() {
 
     fetchData();
   }, [auth]);
-  
+
   return { generalPerformance };
 }
 

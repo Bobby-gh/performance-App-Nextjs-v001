@@ -7,10 +7,8 @@ import { useState, useContext } from "react";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
-  useCreateDepartment,
   useDepartmentRouteData,
   useEmployeesRouteData,
-  useGoalRouteData,
   useUnassessedGoalRouteData,
 } from "../api/databook/route-data";
 import {
@@ -19,9 +17,10 @@ import {
   GOAL_ASSESSMENT_URL,
   GOALS_URL,
 } from "../api/routes";
-import { AuthContext } from "../contex/context-context";
+import { AuthContext, Modaltrigger } from "../contex/context-context";
 
 export function CreateGoal() {
+  const {triggerComponent} = useContext(Modaltrigger)
   const { auth } = useContext(AuthContext);
   const { departmenttable } = useDepartmentRouteData();
   const { employeetable } = useEmployeesRouteData();
@@ -59,6 +58,7 @@ export function CreateGoal() {
         }
       );
       alert("Goal Saved Successfully");
+      triggerComponent(true)
       handleClose();
       reload();
     } catch (error) {
