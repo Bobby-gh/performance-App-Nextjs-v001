@@ -57,7 +57,6 @@ export function CreateGoal() {
           },
         }
       );
-      alert("Goal Saved Successfully");
       triggerComponent();
       handleClose();
       reload();
@@ -306,7 +305,6 @@ export function AccessGoal() {
           withCredentials: true,
         }
       );
-      alert("Goal Acessed Successfully");
       triggerComponent();
       handleClose();
       reload();
@@ -598,7 +596,6 @@ export function Userforms() {
           },
         }
       );
-      alert("Employee details saved successfully");
       triggerComponent()
       handleClose();
       reload();
@@ -775,7 +772,6 @@ export function Departmentforms() {
           withCredentials: true,
         }
       );
-      alert("Department Saved Successfully");
       handleClose();
       triggerComponent()
       reload();
