@@ -243,7 +243,7 @@ export const departmentcolumn = [
     renderCell: (params) => {
       const handleEditClick = () => {
         // Implement the edit logic here
-        console.log(`Editing row with ID: ${params.row.id}`);
+        console.log(`Editing row with ID: ${params.row.departmentId}`);
       };
 
       return (
@@ -263,7 +263,7 @@ export const departmentcolumn = [
     renderCell: (params) => {
       const handleDeleteClick = () => {
         // Implement the delete logic here
-        console.log(`Editing row with ID: ${params.row.id}`);
+        console.log(`Editing row with ID: ${params.row.departmentId}`);
       };
 
       return (
