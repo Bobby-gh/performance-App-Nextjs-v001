@@ -1,3 +1,4 @@
+import { AssignGoal } from "@/app/components/tableDetails";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 export const goalsettingcolumn = [
@@ -30,20 +31,7 @@ export const goalsettingcolumn = [
     headerName: "Detail",
     headerClassName: "header-table",
     flex: 0.5,
-    renderCell: (params) => {
-      const handleEditClick = () => {
-        // Implement the edit logic here
-        console.log(`Editing row with ID: ${params.row._id}`);
-      };
-
-      return (
-        <>
-          <button onClick={handleEditClick} className="px-2">
-            <FaEdit className="icons" />
-          </button>
-        </>
-      );
-    },
+    renderCell: (params) => AssignGoal(params)
   },
 ];
 
