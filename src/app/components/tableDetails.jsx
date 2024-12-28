@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../contex/context-context";
 import { FaEye, FaSave } from "react-icons/fa";
-import { Box, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
+import { Box, FormControl, Modal, Select, TextField } from "@mui/material";
 
 
 export function AssignGoal(params) {
@@ -70,7 +70,7 @@ export function AssignGoal(params) {
                   <div className="relative mb-6" data-te-input-wrapper-init>
                     <TextField
                       label="Goal Title"
-                      value={goalTitle}
+                      value={assignGoal.goalTitle}
                       autoComplete="off"
                     //   onChange={(e) => setRiskName(e.target.value)}
                       disabled
