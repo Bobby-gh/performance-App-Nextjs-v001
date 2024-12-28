@@ -1,8 +1,8 @@
 'use client'
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../contex/context-context";
-import { FaEye } from "react-icons/fa";
-import { Box, FormControl, Modal, TextField } from "@mui/material";
+import { FaEye, FaSave } from "react-icons/fa";
+import { Box, FormControl, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/material";
 
 
 export function AssignGoal(params) {
@@ -12,8 +12,11 @@ export function AssignGoal(params) {
     const [assignGoal, setAssignedGoal] = useState({
         goalId: params._id,
         goalTitle: params.goalTitle,
-        goalDescription:params.goalDescription
-    })
+        goalDescription:params.goalDescription,
+        goalStatus: params.status,
+        assignedTo: params.taskAssignedTo
+    });
+    const[deadline, setDeadline]= useState(params.goalDeadline)
     
   
     const style = {
@@ -57,7 +60,7 @@ export function AssignGoal(params) {
                   <div className="relative mb-6" data-te-input-wrapper-init>
                     <TextField
                       label="Goal ID"
-                    //   value={riskID}
+                      value={assignGoal.goalId}
                       autoComplete="off"
                     //   onChange={(e) => setRiskID(e.target.value)}
                       disabled
@@ -75,25 +78,32 @@ export function AssignGoal(params) {
                     />
                   </div>
                   <div className="relative mb-6" data-te-input-wrapper-init>
-                    <InputLabel>Response Activity Status</InputLabel>
-                    <Select
-                      label="Response Activity Status"
-                    //   value={riskResponseActivitiyStatus}
+                    <TextField
+                      label="Description"
+                      value={assignGoal.goalDescription}
+                      multiline
                       autoComplete="off"
-                    //   onChange={(e) =>
-                    //     setRiskResponseActivitiyStatus(e.target.value)
-                    //   }
+                    //   onChange={(e) => setChallenges(e.target.value)}
                       required
-                      style={{ width: "100%" }}>
-                      <MenuItem value="YES">YES</MenuItem>
-                      <MenuItem value="NO">NO</MenuItem>
-                    </Select>
+                      style={{ width: "100%" }}
+                    />
+                  </div>
+                  <div className="relative mb-6" data-te-input-wrapper-init>
+                    <TextField
+                      label="status"
+                      value={assignGoal.goalStatus}
+                      multiline
+                      autoComplete="off"
+                    //   onChange={(e) => setChallenges(e.target.value)}
+                      required
+                      style={{ width: "100%" }}
+                    />
                   </div>
                   <div className="relative mb-6" data-te-input-wrapper-init>
                     <TextField
                       type="date"
                       label="Created At"
-                    //   value={cDate}
+                      value={deadline}
                       autoComplete="off"
                     //   onChange={(e) => {
                     //     const selectedDate = e.target.value;
@@ -118,41 +128,8 @@ export function AssignGoal(params) {
                   </div>
                 </div>
                 <div className="grid grid-cols-4 gap-3 mb-6">
-                  <div className="relative mb-6" data-te-input-wrapper-init>
-                    <TextField
-                      label="challenges"
-                    //   value={challenges}
-                      multiline
-                      autoComplete="off"
-                    //   onChange={(e) => setChallenges(e.target.value)}
-                      required
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <div className="relative mb-6" data-te-input-wrapper-init>
-                    <TextField
-                      label="Response Implementation"
-                      multiline
-                    //   value={riskResponseImplementation}
-                      autoComplete="off"
-                    //   onChange={(e) =>
-                    //     setRiskResponseImplementation(e.target.value)
-                    //   }
-                      required
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <div className="relative mb-6" data-te-input-wrapper-init>
-                    <TextField
-                      label="Recomended Changes"
-                      multiline
-                    //   value={recommendedChanges}
-                      autoComplete="off"
-                    //   onChange={(e) => setRecommendedChanges(e.target.value)}
-                      required
-                      style={{ width: "100%" }}
-                    />
-                  </div>
+                
+                  
                   <div className="relative mb-6" data-te-input-wrapper-init>
                     <TextField
                       label="Comments"
