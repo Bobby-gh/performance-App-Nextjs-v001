@@ -6,17 +6,17 @@ import { Box, FormControl, Modal, Select, TextField } from "@mui/material";
 
 
 export function AssignGoal(params) {
-    const {auth} = useContext(AuthContext);
     const [open, setOpen] = useState(false);
     const close = () => setOpen(false);
+    console.log({"params goal": params})
     const [assignGoal, setAssignedGoal] = useState({
-        goalId: params._id,
-        goalTitle: params.goalTitle,
-        goalDescription:params.goalDescription,
-        goalStatus: params.status,
-        assignedTo: params.taskAssignedTo
+        goalId: params.row._id,
+        goalTitle: params.row.goalTitle,
+        goalDescription:params.row.goalDescription,
+        goalStatus: params.row.status,
+        assignedTo: params.row.taskAssignedTo
     });
-    const[deadline, setDeadline]= useState(params.goalDeadline)
+    const[deadline, setDeadline]= useState(params.row.goalDeadline)
     
   
     const style = {
@@ -73,7 +73,6 @@ export function AssignGoal(params) {
                       value={assignGoal.goalTitle}
                       autoComplete="off"
                     //   onChange={(e) => setRiskName(e.target.value)}
-                      disabled
                       style={{ width: "100%" }}
                     />
                   </div>
@@ -98,6 +97,18 @@ export function AssignGoal(params) {
                       required
                       style={{ width: "100%" }}
                     />
+                  </div>
+                </div>
+                <div className="grid grid-cols-4 gap-3 mb-6">
+                  <div className="relative mb-6" data-te-input-wrapper-init>
+                    <Select
+                      label="Risk Reviewer"
+                    //   value={mitigationOwner}
+                      autoComplete="off"
+                    //   onChange={(e) => setMitigationOwner(e.target.value)}
+                      required
+                      style={{ width: "100%" }}>
+                    </Select>
                   </div>
                   <div className="relative mb-6" data-te-input-wrapper-init>
                     <TextField
@@ -125,31 +136,6 @@ export function AssignGoal(params) {
                       disabled
                       style={{ width: "100%" }}
                     />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 gap-3 mb-6">
-                
-                  
-                  <div className="relative mb-6" data-te-input-wrapper-init>
-                    <TextField
-                      label="Comments"
-                      multiline
-                    //   value={comments}
-                      autoComplete="off"
-                    //   onChange={(e) => setComments(e.target.value)}
-                      required
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <div className="relative mb-6" data-te-input-wrapper-init>
-                    <Select
-                      label="Risk Reviewer"
-                    //   value={mitigationOwner}
-                      autoComplete="off"
-                    //   onChange={(e) => setMitigationOwner(e.target.value)}
-                      required
-                      style={{ width: "100%" }}>
-                    </Select>
                   </div>
                 </div>
               </div>
