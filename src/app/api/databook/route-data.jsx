@@ -98,7 +98,7 @@ export function useMyGoalRouteData() {
 
 export function useUnassessedGoalRouteData() {
   const { auth } = useContext(AuthContext);
-  const [departmentgoal, setDepartmenttable] = useState([]);
+  const [unaccessedgoal, setUnaccessedGoal] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,7 +111,7 @@ export function useUnassessedGoalRouteData() {
           withCredentials: true,
         });
 
-        setDepartmenttable(response.data);
+        setUnaccessedGoal(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -120,7 +120,7 @@ export function useUnassessedGoalRouteData() {
     fetchData();
   }, [auth]);
 
-  return { departmentgoal };
+  return { unaccessedgoal };
 }
 
 export function useEmployeesRouteData() {
