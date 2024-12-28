@@ -3,10 +3,12 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../contex/context-context";
 import { FaEye, FaSave } from "react-icons/fa";
 import { Box, FormControl, Modal, Select, TextField } from "@mui/material";
+import { useDepartmentRouteData } from "../api/databook/route-data";
 
 export function AssignGoal(params) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
+  const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) => new Date(dateString).toISOString().split("T")[0];
   const [assignGoal, setAssignedGoal] = useState({
     goalId: params.row._id,
@@ -100,11 +102,19 @@ export function AssignGoal(params) {
                 <div className="relative mb-6" data-te-input-wrapper-init>
                   <Select
                     label="Assinged To"
-                      value={assignGoal.assignedTo}
+                    value={assignGoal.assignedTo}
                     autoComplete="off"
                     //   onChange={(e) => setMitigationOwner(e.target.value)}
                     required
-                    style={{ width: "100%" }}></Select>
+                    style={{ width: "100%" }}>
+                    {departmenttable.map((department) => (
+                      <MenuItem
+                        key={department.departmentId}
+                        value={department.departmentId}>
+                        {department.departmentName}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </div>
                 <div className="relative mb-6" data-te-input-wrapper-init>
                   <TextField
@@ -129,7 +139,6 @@ export function AssignGoal(params) {
                     //     // Set the formatted date to state
                     //     setRiskCreatedAt(formattedDate);
                     //   }}
-                    disabled
                     style={{ width: "100%" }}
                   />
                 </div>
