@@ -229,7 +229,7 @@ export function useGoalAccessmentRouteData() {
     _id: goal._id,
     taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
     goalTitle: goal.goalAssessed?.goalTitle || "",
-    goalDeadline: goal.goalAssessed?.goalDeadline || "",
+    goalDeadline:  new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString()|| "",
     performancePercent: goal.averageRating?.performancePercent || 0,
     rating: goal.rating?.toUpperCase() || "",
     comment: goal.comment || "",

@@ -256,7 +256,7 @@ export function CreateGoal() {
 export function AccessGoal() {
   const { triggerComponent } = useContext(Modaltrigger);
   const { auth } = useContext(AuthContext);
-  const { departmentgoal } = useUnassessedGoalRouteData();
+  const { unaccessedgoal } = useUnassessedGoalRouteData();
   const [goal, setGoal] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [assessData, setAssessData] = useState({
@@ -367,7 +367,7 @@ export function AccessGoal() {
                 className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 required>
                 <option value="" disabled></option>
-                {departmentgoal.map((goals) => (
+                {unaccessedgoal.map((goals) => (
                   <option key={goals._id} value={goals._id}>
                     {goals.goalTitle}
                   </option>
