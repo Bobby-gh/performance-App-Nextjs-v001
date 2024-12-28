@@ -1,12 +1,19 @@
 'use client'
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../contex/context-context";
+import { FaEye } from "react-icons/fa";
+import { Box, FormControl, Modal, TextField } from "@mui/material";
 
 
 export function AssignGoal(params) {
     const {auth} = useContext(AuthContext);
     const [open, setOpen] = useState(false);
     const close = () => setOpen(false);
+    const [assignGoal, setAssignedGoal] = useState({
+        goalId: params._id,
+        goalTitle: params.goalTitle,
+        goalDescription:params.goalDescription
+    })
     
   
     const style = {
@@ -35,7 +42,6 @@ export function AssignGoal(params) {
     };
     return (
       <>
-        <ToastContainer hideProgressBar autoClose={1000} />
         <button onClick={handleOpen} className="px-2">
           <FaEye className="icons" />
         </button>
@@ -50,7 +56,7 @@ export function AssignGoal(params) {
                 <div className="grid grid-cols-4 gap-3 mb-6">
                   <div className="relative mb-6" data-te-input-wrapper-init>
                     <TextField
-                      label="Risk ID"
+                      label="Goal ID"
                     //   value={riskID}
                       autoComplete="off"
                     //   onChange={(e) => setRiskID(e.target.value)}
@@ -60,8 +66,8 @@ export function AssignGoal(params) {
                   </div>
                   <div className="relative mb-6" data-te-input-wrapper-init>
                     <TextField
-                      label="Risk Name"
-                    //   value={riskName}
+                      label="Goal Title"
+                      value={goalTitle}
                       autoComplete="off"
                     //   onChange={(e) => setRiskName(e.target.value)}
                       disabled
