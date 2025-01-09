@@ -10,9 +10,9 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  Legend
+  Legend,
 } from "recharts";
-import { Gauge, gaugeClasses, BarChart as MuiBarchart} from "@mui/x-charts";
+import { Gauge, gaugeClasses, BarChart as MuiBarchart } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import {
   useGeneralPerformanceChartRouteData,
@@ -179,10 +179,10 @@ export function FinancialGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold pb-8 text-black">Financial Goal</div>
+        <div className="text-lg font-bold text-black">Financial Goal</div>
         <div className="flex items-center justify-center">
           <Gauge
-            value={generalPerformance}
+            value={40}
             height={300}
             cx="50%"
             cy="50%"
@@ -203,7 +203,7 @@ export function FinancialGoal() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={({ value }) => `${value}%`}
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
           />
         </div>
       </div>
@@ -217,12 +217,12 @@ export function HumanResourceGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold pb-8 text-black">
+        <div className="text-lg font-bold text-black">
           Human Resource Goal
         </div>
         <div className="flex items-center justify-center">
           <Gauge
-            value={generalPerformance}
+            value={80}
             height={300}
             cx="50%"
             cy="50%"
@@ -243,7 +243,7 @@ export function HumanResourceGoal() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={({ value }) => `${value}%`}
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
           />
         </div>
       </div>
@@ -257,12 +257,12 @@ export function CustomerCentricGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold pb-8 text-black">
+        <div className="text-lg font-bold text-black">
           Customer Centric Goal
         </div>
         <div className="flex items-center justify-center">
           <Gauge
-            value={generalPerformance}
+            value={10}
             height={300}
             cx="50%"
             cy="50%"
@@ -283,7 +283,7 @@ export function CustomerCentricGoal() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={({ value }) => `${value}%`}
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
           />
         </div>
       </div>
@@ -297,7 +297,7 @@ export function AchievedGoalChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold pb-8 text-black">Achieved Goal</div>
+        <div className="text-[16px] font-bold text-black">Achieved Goal</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={40}
@@ -321,9 +321,7 @@ export function AchievedGoalChart() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={
-              ({ value, valueMax }) => `${value} / ${valueMax}`
-           }
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
           />
         </div>
       </div>
@@ -337,7 +335,7 @@ export function PartiallyAchievedChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold pb-8 text-black">
+        <div className="text-lg font-bold text-black">
           Partially Achieved Goal
         </div>
         <div className="flex items-center justify-center">
@@ -363,9 +361,7 @@ export function PartiallyAchievedChart() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={
-              ({ value, valueMax }) => `${value} / ${valueMax}`
-           }
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
           />
         </div>
       </div>
@@ -379,7 +375,7 @@ export function NotAchievedChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold pb-8 text-black">
+        <div className="text-lg font-bold text-black">
           Not Achieved Goal
         </div>
         <div className="flex items-center justify-center">
@@ -405,9 +401,7 @@ export function NotAchievedChart() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={
-              ({ value, valueMax }) => `${value} / ${valueMax}`
-           }
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
           />
         </div>
       </div>
@@ -415,53 +409,58 @@ export function NotAchievedChart() {
   );
 }
 
-
-
-const XAxisData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const XAxisData = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "July",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 const seriesA = {
   data: [2, 3, 1, 4, 5],
-  label: 'Achieved',
+  label: "Achieved",
 };
 const seriesB = {
   data: [3, 1, 4, 2, 1],
-  label: 'Partially Achieved',
+  label: "Partially Achieved",
 };
 const seriesC = {
   data: [3, 2, 4, 5, 1],
-  label: 'Not Achieved',
+  label: "Not Achieved",
 };
 export default function BasicStacking() {
   return (
-    <div className="card bg-white rounded-lg mb-8 mt-12 shadow-lg">
-      <div className="flex justify-between px-8 pt-4">
-        <h3 className="text-lg font-bold text-black">AVERAGE PERFORMANCE</h3>
+    <div className="card bg-white rounded-lg mt-12 shadow-lg">
+      <div className="flex justify-end px-8 pt-4">
         <span className="flex items-center">
           <DataDateAccess />
         </span>
       </div>
       <MuiBarchart
-      height={400}
-      xAxis={[
-        {
-          id: 'defaultized-x-axis-0',
-          data: XAxisData,
-          scaleType: 'band', 
-        },
-      ]}
-      
-      series={[
-        { ...seriesA, stack: 'total' },
-        { ...seriesB, stack: 'total' },
-        { ...seriesC, stack: 'total' },
-      ]}
-      slotProps={{
-        legend: {
-          direction: 'row',
-          position: { vertical: 'bottom', horizontal: 'middle' },
-          padding: 0,
-        },
-      }}
-    />
+        height={320}
+        xAxis={[
+          {
+            id: "defaultized-x-axis-0",
+            data: XAxisData,
+            scaleType: "band",
+          },
+        ]}
+        series={[
+          { ...seriesA, stack: "total" },
+          { ...seriesB, stack: "total" },
+          { ...seriesC, stack: "total" },
+        ]}
+        slotProps={{
+          legend: { hidden: true },
+        }}
+      />
     </div>
   );
 }

@@ -321,7 +321,7 @@ export function DataDateAccess() {
   return (
     <div>
       <div className="flex flex-row-reverse">
-        <div className="p-3 mr -2">
+        <div className="p-3 mr-2">
           <div className="relative mb-2" data-te-input-wrapper-init>
             <input
               type="date"
