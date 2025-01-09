@@ -10,8 +10,9 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  Legend
 } from "recharts";
-import { Gauge, gaugeClasses } from "@mui/x-charts";
+import { Gauge, gaugeClasses, BarChart as MuiBarchart} from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import {
   useGeneralPerformanceChartRouteData,
@@ -22,8 +23,8 @@ import {
 import { DataDateAccess } from "./infocards";
 
 export function OrganizationPerformanceDashboard() {
-  const { organizationalChart} = useOrganizationalAveragePerMonthChartRouteData();
-  
+  const { organizationalChart } =
+    useOrganizationalAveragePerMonthChartRouteData();
 
   return (
     <div className=" p-7 bg-white rounded-lg">
@@ -39,7 +40,7 @@ export function OrganizationPerformanceDashboard() {
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="average_performance" fill="#08397e"/>
+          <Bar dataKey="average_performance" fill="#08397e" />
         </BarChart>
       </ResponsiveContainer>
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -52,8 +53,7 @@ export function OrganizationPerformanceDashboard() {
 }
 
 export function PerformanceMatrixDashboard() {
-  const { performanceMatrixChart} =
-    usePerformanceMatrixChartRouteData();
+  const { performanceMatrixChart } = usePerformanceMatrixChartRouteData();
 
   return (
     <div className="p-7 bg-gray-200 rounded-lg">
@@ -83,7 +83,7 @@ export function PerformanceMatrixDashboard() {
 }
 
 export function GeneralPerformanceDashboard() {
-  const { generalPerformance} = useGeneralPerformanceChartRouteData();
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
 
   return (
     <div>
@@ -128,23 +128,13 @@ export function GeneralPerformanceDashboard() {
 }
 
 export function ProgressBarChat() {
-  const { performanceMatrixChart } =
-    usePerformanceMatrixChartRouteData();
+  const { performanceMatrixChart } = usePerformanceMatrixChartRouteData();
   return (
-    <div className="p-3 card">
-      <div className="grid grid-cols-5 gap-4">
-        <div className="col-span-4" />
-        <div className="flex flex-row">
-          <section className="m-2">
-            <p>Years</p>
-          </section>
-          <select>
-            <option>2024</option>
-            <option>2025</option>
-          </select>
-        </div>
-      </div>
-      <ResponsiveContainer height={200}>
+    <div className="p-3 card bg-white rounded-lg">
+      <span className="flex items-center">
+        <DataDateAccess />
+      </span>
+      <ResponsiveContainer height={300}>
         <BarChart data={performanceMatrixChart}>
           <YAxis />
           <Tooltip />
@@ -160,7 +150,7 @@ export function ProgressBarChat() {
 
 export function InProgressVsCompleted() {
   const { goalStatus } = useGoalStatus();
-  console.log({"completedvrsuncompleted": goalStatus})
+  console.log({ completedvrsuncompleted: goalStatus });
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
       <h3 className="pb-3">
@@ -179,6 +169,299 @@ export function InProgressVsCompleted() {
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
+    </div>
+  );
+}
+
+export function FinancialGoal() {
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+
+  return (
+    <div>
+      <div className="p-4 bg-white rounded-lg">
+        <div className="text-lg font-bold pb-8 text-black">Financial Goal</div>
+        <div className="flex items-center justify-center">
+          <Gauge
+            value={generalPerformance}
+            height={300}
+            cx="50%"
+            cy="50%"
+            startAngle={-110}
+            endAngle={110}
+            innerRadius={90}
+            outerRadius={120}
+            fill="#08397e"
+            datakey="overallAverage"
+            sx={(theme) => ({
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 40,
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: "#08397e",
+              },
+              [`& .${gaugeClasses.referenceArc}`]: {
+                fill: theme.palette.text.disabled,
+              },
+            })}
+            text={({ value }) => `${value}%`}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function HumanResourceGoal() {
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+
+  return (
+    <div>
+      <div className="p-4 bg-white rounded-lg">
+        <div className="text-lg font-bold pb-8 text-black">
+          Human Resource Goal
+        </div>
+        <div className="flex items-center justify-center">
+          <Gauge
+            value={generalPerformance}
+            height={300}
+            cx="50%"
+            cy="50%"
+            startAngle={-110}
+            endAngle={110}
+            innerRadius={90}
+            outerRadius={120}
+            fill="#08397e"
+            datakey="overallAverage"
+            sx={(theme) => ({
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 40,
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: "#08397e",
+              },
+              [`& .${gaugeClasses.referenceArc}`]: {
+                fill: theme.palette.text.disabled,
+              },
+            })}
+            text={({ value }) => `${value}%`}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function CustomerCentricGoal() {
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+
+  return (
+    <div>
+      <div className="p-4 bg-white rounded-lg">
+        <div className="text-lg font-bold pb-8 text-black">
+          Customer Centric Goal
+        </div>
+        <div className="flex items-center justify-center">
+          <Gauge
+            value={generalPerformance}
+            height={300}
+            cx="50%"
+            cy="50%"
+            startAngle={-110}
+            endAngle={110}
+            innerRadius={90}
+            outerRadius={120}
+            fill="#08397e"
+            datakey="overallAverage"
+            sx={(theme) => ({
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 40,
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: "#08397e",
+              },
+              [`& .${gaugeClasses.referenceArc}`]: {
+                fill: theme.palette.text.disabled,
+              },
+            })}
+            text={({ value }) => `${value}%`}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function AchievedGoalChart() {
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+
+  return (
+    <div>
+      <div className="p-4 bg-white rounded-lg">
+        <div className="text-lg font-bold pb-8 text-black">Achieved Goal</div>
+        <div className="flex items-center justify-center">
+          <Gauge
+            value={40}
+            height={300}
+            cx="50%"
+            cy="50%"
+            startAngle={-110}
+            endAngle={110}
+            innerRadius={90}
+            outerRadius={120}
+            fill="#08397e"
+            datakey="overallAverage"
+            sx={(theme) => ({
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 30,
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: "green",
+              },
+              [`& .${gaugeClasses.referenceArc}`]: {
+                fill: theme.palette.text.disabled,
+              },
+            })}
+            text={
+              ({ value, valueMax }) => `${value} / ${valueMax}`
+           }
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function PartiallyAchievedChart() {
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+
+  return (
+    <div>
+      <div className="p-4 bg-white rounded-lg">
+        <div className="text-lg font-bold pb-8 text-black">
+          Partially Achieved Goal
+        </div>
+        <div className="flex items-center justify-center">
+          <Gauge
+            value={30}
+            height={300}
+            cx="50%"
+            cy="50%"
+            startAngle={-110}
+            endAngle={110}
+            innerRadius={90}
+            outerRadius={120}
+            fill="#08397e"
+            datakey="overallAverage"
+            sx={(theme) => ({
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 30,
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: "yellow",
+              },
+              [`& .${gaugeClasses.referenceArc}`]: {
+                fill: theme.palette.text.disabled,
+              },
+            })}
+            text={
+              ({ value, valueMax }) => `${value} / ${valueMax}`
+           }
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function NotAchievedChart() {
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+
+  return (
+    <div>
+      <div className="p-4 bg-white rounded-lg">
+        <div className="text-lg font-bold pb-8 text-black">
+          Not Achieved Goal
+        </div>
+        <div className="flex items-center justify-center">
+          <Gauge
+            value={60}
+            height={300}
+            cx="50%"
+            cy="50%"
+            startAngle={-110}
+            endAngle={110}
+            innerRadius={90}
+            outerRadius={120}
+            fill="#08397e"
+            datakey="overallAverage"
+            sx={(theme) => ({
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 30,
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: "red",
+              },
+              [`& .${gaugeClasses.referenceArc}`]: {
+                fill: theme.palette.text.disabled,
+              },
+            })}
+            text={
+              ({ value, valueMax }) => `${value} / ${valueMax}`
+           }
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
+const XAxisData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const seriesA = {
+  data: [2, 3, 1, 4, 5],
+  label: 'Achieved',
+};
+const seriesB = {
+  data: [3, 1, 4, 2, 1],
+  label: 'Partially Achieved',
+};
+const seriesC = {
+  data: [3, 2, 4, 5, 1],
+  label: 'Not Achieved',
+};
+export default function BasicStacking() {
+  return (
+    <div className="card bg-white rounded-lg mb-8 mt-12 shadow-lg">
+      <div className="flex justify-between px-8 pt-4">
+        <h3 className="text-lg font-bold text-black">AVERAGE PERFORMANCE</h3>
+        <span className="flex items-center">
+          <DataDateAccess />
+        </span>
+      </div>
+      <MuiBarchart
+      height={400}
+      xAxis={[
+        {
+          id: 'defaultized-x-axis-0',
+          data: XAxisData,
+          scaleType: 'band', 
+        },
+      ]}
+      
+      series={[
+        { ...seriesA, stack: 'total' },
+        { ...seriesB, stack: 'total' },
+        { ...seriesC, stack: 'total' },
+      ]}
+      slotProps={{
+        legend: {
+          direction: 'row',
+          position: { vertical: 'bottom', horizontal: 'middle' },
+          padding: 0,
+        },
+      }}
+    />
     </div>
   );
 }

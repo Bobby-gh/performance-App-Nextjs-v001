@@ -5,6 +5,20 @@ import { FaEye, FaSave } from "react-icons/fa";
 import { Box, FormControl, MenuItem, Modal, Select, TextField } from "@mui/material";
 import { useDepartmentRouteData } from "../api/databook/route-data";
 
+
+const ModalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "#FFFFFF",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 1,
+    width: 1200,
+  };
+
+
 export function AssignGoal(params) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -18,18 +32,6 @@ export function AssignGoal(params) {
     assignedTo: params.row.taskAssignedTo,
     deadline: params.row.goalDeadline,
   });
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "#FFFFFF",
-    boxShadow: 24,
-    p: 4,
-    borderRadius: 1,
-    width: 1200,
-  };
 
   function handleOpen() {
     setOpen(!open);
@@ -52,7 +54,7 @@ export function AssignGoal(params) {
         onClose={close}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <Box sx={style}>
+        <Box sx={ModalStyle}>
           <FormControl fullWidth>
             <div className=" px-10 py-10">
               <div className="grid grid-cols-4 gap-3 mb-6">
