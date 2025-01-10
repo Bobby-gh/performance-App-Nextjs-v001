@@ -431,10 +431,10 @@ const seriesC = {
   data: [3, 2, 4, 5, 1],
   label: "Not Achieved",
 };
-export default function BasicStacking() {
+export default function OrganizationalEfficiency() {
   return (
     <div className="card bg-white rounded-lg mt-12 shadow-lg">
-      <div className="text-lg font-bold text-black">Organizational Achievement</div>
+      <div className="text-lg font-bold mx-8 mt-4 text-black">Organizational Efficiency</div>
       <MuiBarchart
         height={320}
         xAxis={[
@@ -453,6 +453,32 @@ export default function BasicStacking() {
           legend: { hidden: true },
         }}
       />
+    </div>
+  );
+}
+
+
+export function OrganizationPerformanceReport() {
+  const { organizationalChart } =
+    useOrganizationalAveragePerMonthChartRouteData();
+
+  return (
+    <div className=" p-7 bg-white rounded-lg">
+      <div className="flex justify-between">
+        <h3 className="text-lg font-bold text-black">General PERFORMANCE</h3>
+        <span className="flex items-center">
+          <DataDateAccess />
+        </span>
+      </div>
+      <ResponsiveContainer height={250}>
+        <BarChart data={organizationalChart}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="average_performance" fill="#08397e" />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }

@@ -16,7 +16,7 @@ export default function ReportingData() {
   console.log(activeTab)
   const renderComponent = () => {
     switch (activeTab) {
-      case "Strattegic Performance":
+      case "Strategic Performance":
         return <StrategicPerformance/>;
       case "Operational Effeciency":
         return <OperationalEfficiency />;
