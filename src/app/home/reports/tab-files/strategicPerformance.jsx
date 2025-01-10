@@ -1,5 +1,5 @@
 
-import OrganizationPerformanceReport from "@/app/components/charts";
+import {OrganizationPerformanceReport} from "@/app/components/charts";
 import { TopGoalTable } from "@/app/components/tables";
 import React from "react";
 

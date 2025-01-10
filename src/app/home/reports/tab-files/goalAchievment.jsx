@@ -1,9 +1,6 @@
 import React from "react";
 import {
   AchievedGoalChart,
-  CustomerCentricGoal,
-  FinancialGoal,
-  HumanResourceGoal,
   NotAchievedChart,
   PartiallyAchievedChart,
 } from "@/app/components/charts";

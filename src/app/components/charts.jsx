@@ -431,7 +431,7 @@ const seriesC = {
   data: [3, 2, 4, 5, 1],
   label: "Not Achieved",
 };
-export default function OrganizationalEfficiency() {
+export function OrganizationalEfficiency() {
   return (
     <div className="card bg-white rounded-lg mt-12 shadow-lg">
       <div className="text-lg font-bold mx-8 mt-8 text-black">Organizational Efficiency</div>
@@ -465,7 +465,7 @@ export function OrganizationPerformanceReport() {
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">General PERFORMANCE</h3>
+        <h3 className="text-lg font-bold text-black">General Performance</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
