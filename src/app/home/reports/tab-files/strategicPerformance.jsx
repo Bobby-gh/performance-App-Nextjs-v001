@@ -7,7 +7,7 @@ export default function StrategicPerformance() {
   return (
     <div className="mt-8 mx-8">
       <OrganizationPerformanceReport/>
-      <div className="mt-8">
+      <div className="mt-8 card bg-white rounded-lg">
         <TopGoalTable/>
       </div>
     </div>

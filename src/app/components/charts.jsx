@@ -431,10 +431,10 @@ const seriesC = {
   data: [3, 2, 4, 5, 1],
   label: "Not Achieved",
 };
-export function OrganizationalEfficiency() {
+export default function OrganizationalEfficiency() {
   return (
     <div className="card bg-white rounded-lg mt-12 shadow-lg">
-      <div className="text-lg font-bold mx-8 mt-8 text-black">Organizational Efficiency</div>
+      <div className="text-lg font-bold mx-8 pt-6 text-black">Organizational Efficiency</div>
       <MuiBarchart
         height={320}
         xAxis={[
