@@ -25,7 +25,7 @@ export default function ReportingData() {
       case "Goal Achievement":
         return <GoalAchievemnetReport/>;
       default:
-        return <StrategicPerformance />;;
+        return <BalanceScoreCard />;
     }
   };
 
