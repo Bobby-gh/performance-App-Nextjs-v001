@@ -217,9 +217,7 @@ export function HumanResourceGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">
-          Human Resource Goal
-        </div>
+        <div className="text-lg font-bold text-black">Human Resource Goal</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={80}
@@ -375,9 +373,7 @@ export function NotAchievedChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">
-          Not Achieved Goal
-        </div>
+        <div className="text-lg font-bold text-black">Not Achieved Goal</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={60}
@@ -438,11 +434,7 @@ const seriesC = {
 export default function BasicStacking() {
   return (
     <div className="card bg-white rounded-lg mt-12 shadow-lg">
-      <div className="flex justify-end px-8 pt-4">
-        <span className="flex items-center">
-          <DataDateAccess />
-        </span>
-      </div>
+      <div className="text-lg font-bold text-black">Organizational Achievement</div>
       <MuiBarchart
         height={320}
         xAxis={[

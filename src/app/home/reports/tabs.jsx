@@ -1,15 +1,14 @@
 export const Tabs = [
-    {
-      title: "Strategic Performance"
-    },
-    {
-      title: "Operational Effeciency"
-    },
-    {
-      title: "Balance Scorecard"
-    },
-    {
-      title: "Goal Achievement"
-    },
-  ];
-  
+  {
+    title: "Balance Scorecard",
+  },
+  {
+    title: "Operational Effeciency",
+  },
+  {
+    title: "Strategic Performance",
+  },
+  {
+    title: "Goal Achievement",
+  },
+];
