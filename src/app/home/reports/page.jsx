@@ -7,7 +7,7 @@ import BalanceScoreCard from './tab-files/balanceScoreCard';
 import GoalAchievemnetReport from './tab-files/goalAchievment';
 
 export default function ReportingData() {
-  const [activeTab, setActiveTab] = useState("Documents"); // Default to "Documents"
+  const [activeTab, setActiveTab] = useState("Balance Scorecard"); // Default to "Documents"
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -16,12 +16,12 @@ export default function ReportingData() {
   console.log(activeTab)
   const renderComponent = () => {
     switch (activeTab) {
-      case "Strategic Performance":
-        return <StrategicPerformance/>;
-      case "Operational Effeciency":
-        return <OperationalEfficiency />;
       case "Balance Scorecard":
         return <BalanceScoreCard />;
+      case "Operational Effeciency":
+        return <OperationalEfficiency />;
+      case "Strategic Performance":
+        return <StrategicPerformance/>;
       case "Goal Achievement":
         return <GoalAchievemnetReport/>;
       default:
