@@ -434,7 +434,7 @@ const seriesC = {
 export default function OrganizationalEfficiency() {
   return (
     <div className="card bg-white rounded-lg mt-12 shadow-lg">
-      <div className="text-lg font-bold mx-8 pt-6 text-black">Organizational Efficiency</div>
+      <div className="flex justify-end"><div className="text-lg font-bold mx-8 pt-6 text-black">Organizational Efficiency</div></div>
       <MuiBarchart
         height={320}
         xAxis={[
