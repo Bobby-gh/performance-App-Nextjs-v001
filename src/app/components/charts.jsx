@@ -21,6 +21,7 @@ import {
   usePerformanceMatrixChartRouteData,
 } from "../api/databook/route-data";
 import { DataDateAccess } from "./infocards";
+import { StarOutline, StarSharp } from "@mui/icons-material";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart } =
@@ -96,7 +97,7 @@ export function GeneralPerformanceDashboard() {
             value={generalPerformance}
             height={300}
             cx="50%"
-            cy="50%"
+            cy="55%"
             startAngle={-110}
             endAngle={110}
             innerRadius={90}
@@ -179,13 +180,13 @@ export function FinancialGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">Financial Goal</div>
-        <div className="flex items-center justify-center">
+        <div className="text-md font-bold text-black">Financial Goal</div>
+        <div>
           <Gauge
-            value={40}
-            height={300}
+            value={80}
+            height={230}
             cx="50%"
-            cy="50%"
+            cy="60%"
             startAngle={-110}
             endAngle={110}
             innerRadius={90}
@@ -194,7 +195,7 @@ export function FinancialGoal() {
             datakey="overallAverage"
             sx={(theme) => ({
               [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 40,
+                fontSize: 30,
               },
               [`& .${gaugeClasses.valueArc}`]: {
                 fill: "#08397e",
@@ -217,13 +218,13 @@ export function HumanResourceGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">Human Resource Goal</div>
-        <div className="flex items-center justify-center">
+        <div className="text-md font-bold text-black">Human Resource Goal</div>
+        <div>
           <Gauge
             value={80}
-            height={300}
+            height={230}
             cx="50%"
-            cy="50%"
+            cy="60%"
             startAngle={-110}
             endAngle={110}
             innerRadius={90}
@@ -232,10 +233,48 @@ export function HumanResourceGoal() {
             datakey="overallAverage"
             sx={(theme) => ({
               [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 40,
+                fontSize: 30,
               },
               [`& .${gaugeClasses.valueArc}`]: {
                 fill: "#08397e",
+              },
+              [`& .${gaugeClasses.referenceArc}`]: {
+                fill: theme.palette.text.disabled,
+              },
+            })}
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function InternalProcessandInnovation() {
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+
+  return (
+    <div>
+      <div className="p-4 bg-white rounded-lg">
+        <div className="text-md font-bold text-black">Process and Innovation</div>
+        <div>
+          <Gauge
+            value={80}
+            height={230}
+            cx="50%"
+            cy="60%"
+            startAngle={-110}
+            endAngle={110}
+            innerRadius={80}
+            outerRadius={110}
+            fill="#08397e"
+            datakey="overallAverage"
+            sx={(theme) => ({
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 30,
+              },
+              [`& .${gaugeClasses.valueArc}`]: {
+                fill: "red",
               },
               [`& .${gaugeClasses.referenceArc}`]: {
                 fill: theme.palette.text.disabled,
@@ -255,15 +294,15 @@ export function CustomerCentricGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">
+        <div className="text-md font-bold text-black">
           Customer Centric Goal
         </div>
-        <div className="flex items-center justify-center">
+        <div>
           <Gauge
-            value={10}
-            height={300}
+            value={80}
+            height={230}
             cx="50%"
-            cy="50%"
+            cy="60%"
             startAngle={-110}
             endAngle={110}
             innerRadius={90}
@@ -272,10 +311,10 @@ export function CustomerCentricGoal() {
             datakey="overallAverage"
             sx={(theme) => ({
               [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 40,
+                fontSize: 30,
               },
               [`& .${gaugeClasses.valueArc}`]: {
-                fill: "#08397e",
+                fill: "red",
               },
               [`& .${gaugeClasses.referenceArc}`]: {
                 fill: theme.palette.text.disabled,
@@ -295,13 +334,13 @@ export function AchievedGoalChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-[16px] font-bold text-black">Achieved Goal</div>
+        <div className="text-lg font-bold text-black">Completed Goals</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={40}
-            height={300}
+            height={250}
             cx="50%"
-            cy="50%"
+            cy="65%"
             startAngle={-110}
             endAngle={110}
             innerRadius={90}
@@ -334,14 +373,14 @@ export function PartiallyAchievedChart() {
     <div>
       <div className="p-4 bg-white rounded-lg">
         <div className="text-lg font-bold text-black">
-          Partially Achieved Goal
+          In Progress
         </div>
         <div className="flex items-center justify-center">
           <Gauge
             value={30}
-            height={300}
+            height={250}
             cx="50%"
-            cy="50%"
+            cy="65%"
             startAngle={-110}
             endAngle={110}
             innerRadius={90}
@@ -373,13 +412,13 @@ export function NotAchievedChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">Not Achieved Goal</div>
+        <div className="text-lg font-bold text-black">Not Completed</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={60}
-            height={300}
+            height={250}
             cx="50%"
-            cy="50%"
+            cy="65%"
             startAngle={-110}
             endAngle={110}
             innerRadius={90}
@@ -405,59 +444,6 @@ export function NotAchievedChart() {
   );
 }
 
-const XAxisData = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "July",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-const seriesA = {
-  data: [2, 3, 1, 4, 5],
-  label: "Achieved",
-};
-const seriesB = {
-  data: [3, 1, 4, 2, 1],
-  label: "Partially Achieved",
-};
-const seriesC = {
-  data: [3, 2, 4, 5, 1],
-  label: "Not Achieved",
-};
-export default function OrganizationalEfficiency() {
-  return (
-    <div className="card bg-white rounded-lg mt-12 shadow-lg">
-      <div className="flex justify-end"><div className="text-lg font-bold mx-8 pt-6 text-black">Organizational Efficiency</div></div>
-      <MuiBarchart
-        height={320}
-        xAxis={[
-          {
-            id: "defaultized-x-axis-0",
-            data: XAxisData,
-            scaleType: "band",
-          },
-        ]}
-        series={[
-          { ...seriesA, stack: "total" },
-          { ...seriesB, stack: "total" },
-          { ...seriesC, stack: "total" },
-        ]}
-        slotProps={{
-          legend: { hidden: true },
-        }}
-      />
-    </div>
-  );
-}
-
-
 export function OrganizationPerformanceReport() {
   const { organizationalChart } =
     useOrganizationalAveragePerMonthChartRouteData();
@@ -482,3 +468,19 @@ export function OrganizationPerformanceReport() {
     </div>
   );
 }
+
+export function BadgesReport() {
+
+
+  return (
+    <div className=" p-7 bg-white rounded-lg flex flex-rows">
+      <img height={50} src="https://th.bing.com/th/id/OIP.PfpDK33DpPJ0nu2MeuJo8AHaHa?w=250&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7"/>
+      <div className="flex flex-col space-y-8">
+        <div className="flex flex-rows items-center"><StarSharp style={{fill: "gold", fontSize:'40px'}} /> <p className="pl-4">Number of Outstanding Employees</p><p className="pl-4">23</p></div>
+        <div className="flex flex-rows items-center"><StarSharp style={{fill: "#cd7f32",fontSize: '38px'}} /> <p className="pl-4">Number of Outstanding Employees</p><p className="pl-4">23</p></div>
+        <div className="flex flex-rows items-center"><StarSharp style={{fill: "#c0c0c0",fontSize: '36px'}} /> <p className="pl-4">Number of Outstanding Employees</p><p className="pl-4">23</p></div>
+      </div>
+    </div>
+  );
+}
+

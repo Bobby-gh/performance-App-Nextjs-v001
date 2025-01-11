@@ -5,6 +5,7 @@ import StrategicPerformance from './tab-files/strategicPerformance';
 import ReportingNavigation from './navigation';
 import BalanceScoreCard from './tab-files/balanceScoreCard';
 import GoalAchievemnetReport from './tab-files/goalAchievment';
+import Badges from './tab-files/badges';
 
 export default function ReportingData() {
   const [activeTab, setActiveTab] = useState("Balance Scorecard"); // Default to "Documents"
@@ -22,8 +23,10 @@ export default function ReportingData() {
         return <OperationalEfficiency />;
       case "Strategic Performance":
         return <StrategicPerformance/>;
-      case "Goal Achievement":
+      case "System Goals":
         return <GoalAchievemnetReport/>;
+      case "Badges":
+        return <Badges/>;
       default:
         return <BalanceScoreCard />;
     }

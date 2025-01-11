@@ -9,6 +9,9 @@ export const Tabs = [
     title: "Strategic Performance",
   },
   {
-    title: "Goal Achievement",
+    title: "System Goals",
+  },
+  {
+    title: "Badges",
   },
 ];
