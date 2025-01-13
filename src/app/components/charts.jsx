@@ -256,7 +256,9 @@ export function InternalProcessandInnovation() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">Process and Innovation</div>
+        <div className="text-md font-bold text-black">
+          Process and Innovation
+        </div>
         <div>
           <Gauge
             value={80}
@@ -372,9 +374,7 @@ export function PartiallyAchievedChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">
-          In Progress
-        </div>
+        <div className="text-lg font-bold text-black">In Progress</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={30}
@@ -470,17 +470,26 @@ export function OrganizationPerformanceReport() {
 }
 
 export function BadgesReport() {
-
-
   return (
     <div className=" p-7 bg-white rounded-lg flex flex-rows">
-      <img height={50} src="https://th.bing.com/th/id/OIP.PfpDK33DpPJ0nu2MeuJo8AHaHa?w=250&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7"/>
+      <img
+        height={50}
+        src="https://th.bing.com/th/id/OIP.PfpDK33DpPJ0nu2MeuJo8AHaHa?w=250&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+      />
       <div className="flex flex-col space-y-8">
-        <div className="flex flex-rows items-center"><StarSharp style={{fill: "gold", fontSize:'40px'}} /> <p className="pl-4">Number of Outstanding Employees</p><p className="pl-4">23</p></div>
-        <div className="flex flex-rows items-center"><StarSharp style={{fill: "#cd7f32",fontSize: '38px'}} /> <p className="pl-4">Number of Outstanding Employees</p><p className="pl-4">23</p></div>
-        <div className="flex flex-rows items-center"><StarSharp style={{fill: "#c0c0c0",fontSize: '36px'}} /> <p className="pl-4">Number of Outstanding Employees</p><p className="pl-4">23</p></div>
+        <div className="flex flex-rows items-center">
+          <StarSharp style={{ fill: "gold", fontSize: "40px" }} />
+        </div>
+        <div className="flex flex-rows items-center">
+          <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
+          <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
+        </div>
+        <div className="flex flex-rows items-center">
+          <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />{" "}
+          <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
+          <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
+        </div>
       </div>
     </div>
   );
 }
-
