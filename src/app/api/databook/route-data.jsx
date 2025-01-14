@@ -302,7 +302,6 @@ export function useOrganizationalAveragePerMonthChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
   const organizationalChart = [
-    { month: "0", average_performance: 0 },
     ...organizationaldata,
   ];
 

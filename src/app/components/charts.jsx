@@ -336,7 +336,7 @@ export function AchievedGoalChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">Completed Goals</div>
+        <div className="text-lg font-bold text-black">Achieved</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={40}
@@ -374,7 +374,7 @@ export function PartiallyAchievedChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">In Progress</div>
+        <div className="text-lg font-bold text-black">Partially Acheived</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={30}
@@ -412,7 +412,7 @@ export function NotAchievedChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">Not Completed</div>
+        <div className="text-lg font-bold text-black">Not Achieved</div>
         <div className="flex items-center justify-center">
           <Gauge
             value={60}

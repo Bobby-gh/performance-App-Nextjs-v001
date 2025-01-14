@@ -25,7 +25,7 @@ export function InformationalSummary() {
             <FaTrophy size={20} />
           </span>
           <span className="flex flex-col items-end">
-            <h3>Completed Goals</h3>
+            <h3>Achieved</h3>
             <h3 className="font-bold text-3xl">{achieved}</h3>
           </span>
         </div>
@@ -41,7 +41,7 @@ export function InformationalSummary() {
             <FaThumbsUp size={20} />
           </span>
           <span className="flex flex-col items-end">
-            <h3>In Progress</h3>
+            <h3>Partially Achieved</h3>
             <h3 className="font-bold text-3xl">{partiallyAchieved}</h3>
           </span>
         </div>
@@ -57,7 +57,7 @@ export function InformationalSummary() {
             <FaThumbsDown size={20} />
           </span>
           <span className="flex flex-col items-end">
-            <h3>Not Completed</h3>
+            <h3>Not Achieved</h3>
             <h3 className="font-bold text-3xl">{notAchieved}</h3>
           </span>
         </div>
