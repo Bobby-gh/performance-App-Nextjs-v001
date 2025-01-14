@@ -159,8 +159,8 @@ export function EmployeePerformance() {
           <Pie
             data={goalStatus}
             dataKey="value"
-            outerRadius={125}
-            innerRadius={70}
+            outerRadius={95}
+            innerRadius={50}
           />
           <Tooltip />
         </PieChart>
