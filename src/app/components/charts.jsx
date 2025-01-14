@@ -154,13 +154,13 @@ export function EmployeePerformance() {
   console.log({ completedvrsuncompleted: goalStatus });
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
-      <ResponsiveContainer height={180}>
+      <ResponsiveContainer height={250}>
         <PieChart>
           <Pie
             data={goalStatus}
             dataKey="value"
-            outerRadius={95}
-            innerRadius={50}
+            outerRadius={115}
+            innerRadius={70}
           />
           <Tooltip />
         </PieChart>
