@@ -154,11 +154,7 @@ export function EmployeePerformance() {
   console.log({ completedvrsuncompleted: goalStatus });
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
-      <h3 className="pb-3">
-        <span style={{ color: "#cc23b3" }}>Completed </span>Vs{" "}
-        <span style={{ color: "#4B5563" }}>In progress </span>Vs{" "}
-        <span style={{ color: "#2394cc" }}>Not Started</span>
-      </h3>
+      <h3 className="pb-3">Reward Agregates</h3>
       <ResponsiveContainer height={180}>
         <PieChart>
           <Pie
@@ -180,7 +176,7 @@ export function FinancialGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">Financial Goal</div>
+        <div className="text-md font-bold text-black">Financial </div>
         <div>
           <Gauge
             value={80}
@@ -218,7 +214,7 @@ export function HumanResourceGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">Human Resource Goal</div>
+        <div className="text-md font-bold text-black">Human Relationship</div>
         <div>
           <Gauge
             value={80}
@@ -296,9 +292,7 @@ export function CustomerCentricGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">
-          Customer Centric Goal
-        </div>
+        <div className="text-md font-bold text-black">Customer Centred</div>
         <div>
           <Gauge
             value={80}
@@ -471,26 +465,41 @@ export function OrganizationPerformanceReport() {
 
 export function BadgesReport() {
   return (
-    <div className=" p-7 bg-white rounded-lg flex flex-rows">
-      <img
-        height={50}
-        src="https://th.bing.com/th/id/OIP.PfpDK33DpPJ0nu2MeuJo8AHaHa?w=250&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-      />
-      <div className="flex flex-col space-y-8">
-        <div className="flex flex-rows items-center">
-          <StarSharp style={{ fill: "gold", fontSize: "40px" }} />
-        </div>
-        <div className="flex flex-rows items-center">
-          <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
-          <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
-        </div>
-        <div className="flex flex-rows items-center">
-          <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />{" "}
-          <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
-          <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
-        </div>
+    <div className=" p-7 bg-white rounded-lg">
+      <div className="border-l-4 px-4 border-blue-500 mb-6">
+        <p className="font-bold text-blue-500">Top Performer Award</p>
+        <p>
+          These awards celebrates exceptional performance and dedication to the
+          Organization.
+        </p>
       </div>
-      <div>
+      <div className="flex flex-rows justify-between">
+        <div className="flex items-center">
+          <img
+            height={40}
+            src="https://th.bing.com/th/id/OIP.PfpDK33DpPJ0nu2MeuJo8AHaHa?w=250&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+          />
+          <div className="flex flex-col space-y-8">
+            <div className="flex flex-rows items-center">
+              <StarSharp style={{ fill: "gold", fontSize: "40px" }} />
+              <p className="pl-24 text-yellow-500 font-bold">Gold Badges:</p>
+              <p className="pl-4">34</p>
+            </div>
+            <div className="flex flex-rows items-center">
+              <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
+              <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
+              <p className="pl-14 text-[#cd7f32] font-medium">Silver Badges:</p>
+              <p className="pl-4">34</p>
+            </div>
+            <div className="flex flex-rows items-center">
+              <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />{" "}
+              <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
+              <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
+              <p className="pl-6 text-[#c0c0c0] font-medium">Bronze Badges:</p>
+              <p className="pl-2">34</p>
+            </div>
+          </div>
+        </div>
         <EmployeePerformance />
       </div>
     </div>
