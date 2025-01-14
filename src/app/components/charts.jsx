@@ -16,6 +16,7 @@ import { Gauge, gaugeClasses, BarChart as MuiBarchart } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import {
   useGeneralPerformanceChartRouteData,
+  useGoalCategoryCountRouteData,
   useGoalStatus,
   useOrganizationalAveragePerMonthChartRouteData,
   usePerformanceMatrixChartRouteData,
@@ -170,7 +171,8 @@ export function EmployeePerformance() {
 }
 
 export function FinancialGoal() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const { goalCateoryCount } = useGoalCategoryCountRouteData();
+  console.log(goalCateoryCount)
 
   return (
     <div>

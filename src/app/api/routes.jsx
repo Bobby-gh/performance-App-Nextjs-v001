@@ -20,4 +20,4 @@ export const RESET_PASSWORD ="/reset-password"
 export const REQUEST_RESET_PASSWORD ="/request-password-reset"
 export const TOP_GOALS = "/goal-assessments/get-top-assessment"
 export const UPDATE_GOAL_PROGRESS = "/goals/update-progress"
-
+export const GOAL_CATEGORY_COUNT = "/goals/goal-type-count"

@@ -17,6 +17,7 @@ import {
   TOP_GOALS,
   UNACCESSED_GOALS_URL,
   MY_GOALS_URL,
+  GOAL_CATEGORY_COUNT,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -407,6 +408,30 @@ export function useGoalCountRouteData() {
   return { goalCount };
 }
 
+export function useGoalCategoryCountRouteData() {
+  const { auth } = useContext(AuthContext);
+  const [goalCateoryCount, setGoalCount] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(GOAL_CATEGORY_COUNT, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setGoalCount(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+  return { goalCateoryCount };
+}
 /************************************************Post ROutes*************************************/
 
 export function useCreateDepartment() {
