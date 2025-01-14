@@ -149,7 +149,7 @@ export function ProgressBarChat() {
   );
 }
 
-export function InProgressVsCompleted() {
+export function EmployeePerformance() {
   const { goalStatus } = useGoalStatus();
   console.log({ completedvrsuncompleted: goalStatus });
   return (
@@ -489,6 +489,9 @@ export function BadgesReport() {
           <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
           <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
         </div>
+      </div>
+      <div>
+        <EmployeePerformance />
       </div>
     </div>
   );
