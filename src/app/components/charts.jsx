@@ -473,8 +473,8 @@ export function BadgesReport() {
           Organization.
         </p>
       </div>
-      <div className="flex flex-rows justify-between">
-        <div className="flex items-center">
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-2 flex items-center">
           <img
             height={40}
             src="https://th.bing.com/th/id/OIP.PfpDK33DpPJ0nu2MeuJo8AHaHa?w=250&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7"
@@ -500,7 +500,7 @@ export function BadgesReport() {
             </div>
           </div>
         </div>
-        <EmployeePerformance />
+        <div><EmployeePerformance /></div>
       </div>
     </div>
   );
