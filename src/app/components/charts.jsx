@@ -179,8 +179,11 @@ export function FinancialGoal() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const values = goalCateoryCount.find(item => item.Customer)
   if (values && values.Customer) {
-    setValue.totalValue(values.Customer.valueMax);
-    setValue.actualValue(values.Customer.value);
+    setValue(prevState => ({
+      ...prevState, 
+      totalValue: values.Customer.valueMax,
+      actualValue: values.Customer.value
+    }));
   } else {
     console.log("Customer key not found or is undefined");
   }
@@ -230,8 +233,11 @@ export function HumanResourceGoal() {
   console.log(goalCateoryCount)
   const values = goalCateoryCount.find(item => item.Human)
   if (values && values.Customer) {
-    setValue.totalValue(values.Human.valueMax);
-    setValue.actualValue(values.Human.value);
+    setValue(prevState => ({
+      ...prevState, 
+      totalValue: values.Human.valueMax,
+      actualValue: values.Human.value
+    }));
   } else {
     console.log("Customer key not found or is undefined");
   }
