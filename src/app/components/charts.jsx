@@ -173,7 +173,7 @@ export function EmployeePerformance() {
 export function FinancialGoal() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const value = goalCateoryCount.find(item => item.Customer)
-  console.log(value)
+  console.log(value.Customer)
 
   return (
     <div>
@@ -181,8 +181,8 @@ export function FinancialGoal() {
         <div className="text-md font-bold text-black">Financial </div>
         <div>
           <Gauge
-            valueMax={value.Customer.valueMax}
-            value={value.Customer.value}
+            valueMax={50}
+            value={6}
             height={230}
             cx="50%"
             cy="60%"
