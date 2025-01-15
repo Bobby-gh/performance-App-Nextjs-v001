@@ -211,7 +211,9 @@ export function FinancialGoal() {
 }
 
 export function HumanResourceGoal() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const { goalCateoryCount } = useGoalCategoryCountRouteData();
+  console.log(goalCateoryCount)
+  const value = goalCateoryCount.find((item) => item.Customer);
 
   return (
     <div>
