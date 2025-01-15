@@ -173,7 +173,11 @@ export function EmployeePerformance() {
 export function FinancialGoal() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const value = goalCateoryCount.find(item => item.Customer)
-  console.log(value)
+  if (value && value.Customer) {
+    console.log(value.Customer);
+  } else {
+    console.log("Customer key not found or is undefined");
+  }
 
   return (
     <div>
