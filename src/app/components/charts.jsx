@@ -172,7 +172,7 @@ export function EmployeePerformance() {
 
 export function FinancialGoal() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
-  console.log(goalCateoryCount.financial)
+  console.log(goalCateoryCount.find(item => item.Customer))
 
   return (
     <div>
