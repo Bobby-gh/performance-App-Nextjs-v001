@@ -23,6 +23,7 @@ import {
 } from "../api/databook/route-data";
 import { DataDateAccess } from "./infocards";
 import { StarOutline, StarSharp } from "@mui/icons-material";
+import { useState } from "react";
 
 export function OrganizationPerformanceDashboard() {
   const { organizationalChart } =
@@ -171,10 +172,15 @@ export function EmployeePerformance() {
 }
 
 export function FinancialGoal() {
+  const [value, setValue] = useState({
+    actualValue: "",
+    totalValue : ""
+  })
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
-  const value = goalCateoryCount.find(item => item.Customer)
-  if (value && value.Customer) {
-    console.log(value.Customer.valueMax);
+  const values = goalCateoryCount.find(item => item.Customer)
+  if (values && values.Customer) {
+    setValue.totalValue(values.Customer.valueMax);
+    setValue.actualValue(values.Customer.value);
   } else {
     console.log("Customer key not found or is undefined");
   }
@@ -185,8 +191,8 @@ export function FinancialGoal() {
         <div className="text-md font-bold text-black">Financial </div>
         <div>
           <Gauge
-            valueMax={value.Customer.valueMax}
-            value={value.Customer.value}
+            valueMax={value.totalValue}
+            value={value.actualValue}
             height={230}
             cx="50%"
             cy="60%"
