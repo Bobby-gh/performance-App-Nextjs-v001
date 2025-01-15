@@ -222,7 +222,19 @@ export function FinancialGoal() {
 }
 
 export function HumanResourceGoal() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const [value, setValue] = useState({
+    actualValue: "",
+    totalValue : ""
+  })
+  const { goalCateoryCount } = useGoalCategoryCountRouteData();
+  console.log(goalCateoryCount)
+  const values = goalCateoryCount.find(item => item.Human)
+  if (values && values.Customer) {
+    setValue.totalValue(values.Customer.valueMax);
+    setValue.actualValue(values.Customer.value);
+  } else {
+    console.log("Customer key not found or is undefined");
+  }
 
   return (
     <div>
