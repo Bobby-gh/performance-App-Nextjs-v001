@@ -179,8 +179,10 @@ export function FinancialGoal() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const values = goalCateoryCount.find(item => item.Customer)
   if (values && values.Customer) {
-    setValue.totalValue(values.Customer.valueMax);
-    setValue.actualValue(values.Customer.value);
+    setValue({
+      totalValue: values.Customer.valueMax,
+      actualValue: values.Customer.value
+    })
   } else {
     console.log("Customer key not found or is undefined");
   }
