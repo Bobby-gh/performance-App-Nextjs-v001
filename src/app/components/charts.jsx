@@ -179,10 +179,8 @@ export function FinancialGoal() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const values = goalCateoryCount.find(item => item.Customer)
   if (values && values.Customer) {
-    setValue({
-      totalValue: values.Customer.valueMax,
-      actualValue: values.Customer.value
-    });
+    setValue.totalValue(values.Customer.valueMax);
+    setValue.actualValue(values.Customer.value);
   } else {
     console.log("Customer key not found or is undefined");
   }
@@ -224,21 +222,7 @@ export function FinancialGoal() {
 }
 
 export function HumanResourceGoal() {
-  const [value, setValue] = useState({
-    actualValue: "",
-    totalValue : ""
-  })
-  const { goalCateoryCount } = useGoalCategoryCountRouteData();
-  console.log(goalCateoryCount)
-  const values = goalCateoryCount.find(item => item.Human)
-  if (values && values.Customer) {
-    setValue({
-      totalValue: values.Human.valueMax,
-      actualValue: values.Human.value
-    });
-  } else {
-    console.log("Customer key not found or is undefined");
-  }
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
 
   return (
     <div>
@@ -246,8 +230,7 @@ export function HumanResourceGoal() {
         <div className="text-md font-bold text-black">Human Relationship</div>
         <div>
           <Gauge
-            valueMax={value.totalValue}
-            value={value.actualValue}
+            value={80}
             height={230}
             cx="50%"
             cy="60%"
