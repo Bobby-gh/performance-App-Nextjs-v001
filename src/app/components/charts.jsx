@@ -180,7 +180,6 @@ export function FinancialGoal() {
         <div className="text-md font-bold text-black">Financial </div>
         <div>
           <Gauge
-            valueMax={value.valueMax}
             value={value.value}
             height={230}
             cx="50%"
