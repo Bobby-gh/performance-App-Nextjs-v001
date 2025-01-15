@@ -242,7 +242,8 @@ export function HumanResourceGoal() {
         <div className="text-md font-bold text-black">Human Relationship</div>
         <div>
           <Gauge
-            value={80}
+            valueMax={value.totalValue}
+            value={value.actualValue}
             height={230}
             cx="50%"
             cy="60%"
