@@ -172,7 +172,7 @@ export function EmployeePerformance() {
 
 export function FinancialGoal() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
-  const value = goalCateoryCount.find((item) => item.Customer);
+  const value = goalCateoryCount.find(item => item.Customer)
   console.log(value.valueMax)
 
   return (
@@ -181,7 +181,7 @@ export function FinancialGoal() {
         <div className="text-md font-bold text-black">Financial </div>
         <div>
           <Gauge
-            value={value.value}
+            value={80}
             height={230}
             cx="50%"
             cy="60%"
@@ -211,9 +211,7 @@ export function FinancialGoal() {
 }
 
 export function HumanResourceGoal() {
-  const { goalCateoryCount } = useGoalCategoryCountRouteData();
-  console.log(goalCateoryCount)
-  const value = goalCateoryCount.find((item) => item.Customer);
+  const { generalPerformance } = useGeneralPerformanceChartRouteData();
 
   return (
     <div>
@@ -504,9 +502,7 @@ export function BadgesReport() {
             </div>
           </div>
         </div>
-        <div>
-          <EmployeePerformance />
-        </div>
+        <div><EmployeePerformance /></div>
       </div>
     </div>
   );
