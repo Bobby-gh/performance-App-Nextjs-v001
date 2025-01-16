@@ -215,7 +215,9 @@ console.log(goalCateoryCount)
 }
 
 export function HumanResourceGoal() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const { goalCateoryCount } = useGoalCategoryCountRouteData();
+  const value = goalCateoryCount.Human?.Human?.value;
+  const valueMax = goalCateoryCount.Human?.Human?.valueMax;
 
   return (
     <div>
@@ -223,7 +225,8 @@ export function HumanResourceGoal() {
         <div className="text-md font-bold text-black">Human Relationship</div>
         <div>
           <Gauge
-            value={80}
+            valueMax={valueMax}
+            value={value}
             height={230}
             cx="50%"
             cy="60%"
@@ -293,7 +296,9 @@ export function InternalProcessandInnovation() {
 }
 
 export function CustomerCentricGoal() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const { goalCateoryCount } = useGoalCategoryCountRouteData();
+  const value = goalCateoryCount.Customer?.Customer?.value;
+  const valueMax = goalCateoryCount.Customer?.Customer?.valueMax;
 
   return (
     <div>
@@ -301,7 +306,8 @@ export function CustomerCentricGoal() {
         <div className="text-md font-bold text-black">Customer Centred</div>
         <div>
           <Gauge
-            value={80}
+          valueMax={valueMax}
+            value={value}
             height={230}
             cx="50%"
             cy="60%"
