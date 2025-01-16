@@ -257,8 +257,8 @@ export function HumanResourceGoal() {
 
 export function InternalProcessandInnovation() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
-  const value = goalCateoryCount.Inovation?.Inovation?.value;
-  const valueMax = goalCateoryCount.Inovation?.Inovation?.valueMax;
+  const value = goalCateoryCount.Inovation?.Innovation?.value;
+  const valueMax = goalCateoryCount.Inovation?.Innovation?.valueMax;
 
   return (
     <div>
