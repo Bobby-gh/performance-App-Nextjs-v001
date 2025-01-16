@@ -256,7 +256,9 @@ export function HumanResourceGoal() {
 }
 
 export function InternalProcessandInnovation() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const { goalCateoryCount } = useGoalCategoryCountRouteData();
+  const value = goalCateoryCount.Inovation?.Inovation?.value;
+  const valueMax = goalCateoryCount.Inovation?.Inovation?.valueMax;
 
   return (
     <div>
@@ -266,7 +268,8 @@ export function InternalProcessandInnovation() {
         </div>
         <div>
           <Gauge
-            value={80}
+            valueMax={valueMax}
+            value={value}
             height={230}
             cx="50%"
             cy="60%"
