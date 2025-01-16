@@ -176,7 +176,7 @@ export function FinancialGoal() {
   const value = goalCateoryCount.Financial?.financial?.value;
   const valueMax = goalCateoryCount.Financial?.financial?.valueMax;
 
-console.log(value)
+console.log(goalCateoryCount)
 
   return (
     <div>
@@ -184,8 +184,8 @@ console.log(value)
         <div className="text-md font-bold text-black">Financial </div>
         <div>
           <Gauge
-            valueMax={30}
-            value={5}
+            valueMax={valueMax}
+            value={value}
             height={230}
             cx="50%"
             cy="60%"
