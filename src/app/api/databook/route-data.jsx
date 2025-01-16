@@ -230,7 +230,8 @@ export function useGoalAccessmentRouteData() {
     _id: goal._id,
     taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
     goalTitle: goal.goalAssessed?.goalTitle || "",
-    goalDeadline:  new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString()|| "",
+    goalDeadline:
+      new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
     rating: goal.rating?.toUpperCase() || "",
     comment: goal.comment || "",
@@ -302,9 +303,7 @@ export function useGeneralPerformanceChartRouteData() {
 export function useOrganizationalAveragePerMonthChartRouteData() {
   const { auth } = useContext(AuthContext);
   const [organizationaldata, setOrganizationalChart] = useState([]);
-  const organizationalChart = [
-    ...organizationaldata,
-  ];
+  const organizationalChart = [...organizationaldata];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -410,7 +409,11 @@ export function useGoalCountRouteData() {
 
 export function useGoalCategoryCountRouteData() {
   const { auth } = useContext(AuthContext);
-  const [goalCateoryCount, setGoalCount] = useState([]);
+  const [goalCateoryCount, setGoalCount] = useState({
+    Human: "",
+    Financial: "",
+    Customer: "",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -422,7 +425,15 @@ export function useGoalCategoryCountRouteData() {
           },
           withCredentials: true,
         });
-        setGoalCount(response.data);
+        const value = response.data;
+        const customerValue = value.find((item) => item.Customer);
+        const HumanValue = value.find((item) => item.Human);
+        const financialValue = value.find((item) => item.financial);
+        setGoalCount({
+          Human: HumanValue,
+          Financial: financialValue,
+          Customer: customerValue,
+        });
       } catch (err) {
         console.log(err);
       }

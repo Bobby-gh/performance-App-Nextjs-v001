@@ -172,20 +172,8 @@ export function EmployeePerformance() {
 }
 
 export function FinancialGoal() {
-  const [value, setValue] = useState({
-    actualValue: "",
-    totalValue : ""
-  })
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
-  const values = goalCateoryCount.find(item => item.Customer)
-  if (values && values.Customer) {
-    setValue({
-      totalValue: values.Customer.valueMax,
-      actualValue: values.Customer.value
-    })
-  } else {
-    console.log("Customer key not found or is undefined");
-  }
+  console.log(goalCateoryCount.Financial)
 
   return (
     <div>
