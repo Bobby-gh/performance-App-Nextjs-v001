@@ -173,8 +173,10 @@ export function EmployeePerformance() {
 
 export function FinancialGoal() {
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
-  const value = goalCateoryCount.Financial
-  console.log(value)
+  
+const valueMax = goalCateoryCount.Financial.financial.valueMax;
+console.log(valueMax); // Output: 1
+
 
   return (
     <div>
