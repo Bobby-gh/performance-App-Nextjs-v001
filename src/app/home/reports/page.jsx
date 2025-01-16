@@ -6,6 +6,7 @@ import ReportingNavigation from './navigation';
 import BalanceScoreCard from './tab-files/balanceScoreCard';
 import GoalAchievemnetReport from './tab-files/goalAchievment';
 import Badges from './tab-files/badges';
+import { LoadingPopup } from '@/app/api/sessions';
 
 export default function ReportingData() {
   const [activeTab, setActiveTab] = useState("Balance Scorecard"); // Default to "Documents"
@@ -34,6 +35,7 @@ export default function ReportingData() {
 
   return (
     <div>
+      <LoadingPopup/>
       <ReportingNavigation onTabChange={handleTabChange} />
       <div className="mt-6">
         {renderComponent()}
