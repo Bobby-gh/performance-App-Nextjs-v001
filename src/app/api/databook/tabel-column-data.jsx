@@ -9,6 +9,12 @@ export const goalsettingcolumn = [
     headerClassName: "header-table",
   },
   {
+    field: "goalType",
+    headerName: "Goal Category",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
     field: "taskAssignedTo",
     headerName: "Department ",
     flex: 1,

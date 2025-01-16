@@ -5,7 +5,7 @@ import {
   HumanResourceGoal,
   InternalProcessandInnovation,
 } from "@/app/components/charts";
-import { TopGoalTable } from "@/app/components/tables";
+import { GoalTable} from "@/app/components/tables";
 
 export default function BalanceScoreCard() {
   return (
@@ -17,7 +17,7 @@ export default function BalanceScoreCard() {
         <InternalProcessandInnovation/>
       </div>
       <div className="mt-8 card bg-white rounded-lg">
-        <TopGoalTable/>
+        <GoalTable/>
       </div>
     </div>
   );
