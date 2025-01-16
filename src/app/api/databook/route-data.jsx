@@ -426,6 +426,7 @@ export function useGoalCategoryCountRouteData() {
           withCredentials: true,
         });
         const value = response.data;
+        console.log({"value": value})
         const customerValue = value.find((item) => item.Customer);
         const HumanValue = value.find((item) => item.Human);
         const financialValue = value.find((item) => item.financial);
