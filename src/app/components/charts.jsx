@@ -20,6 +20,7 @@ import {
   useGoalStatus,
   useOrganizationalAveragePerMonthChartRouteData,
   usePerformanceMatrixChartRouteData,
+  useGoalCountRouteData
 } from "../api/databook/route-data";
 import { DataDateAccess } from "./infocards";
 import { StarOutline, StarSharp } from "@mui/icons-material";
@@ -371,7 +372,7 @@ export function AchievedGoalChart() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={({ value, valueMax }) => `${value}`}
+            text={({ value}) => `${value}`}
           />
         </div>
       </div>
