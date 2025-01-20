@@ -340,7 +340,9 @@ export function CustomerCentricGoal() {
 }
 
 export function AchievedGoalChart() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const { goalCount } = useGoalCountRouteData()
+  const {achieved} = goalCount;
+
 
   return (
     <div>
@@ -348,7 +350,7 @@ export function AchievedGoalChart() {
         <div className="text-lg font-bold text-black">Completed</div>
         <div className="flex items-center justify-center">
           <Gauge
-            value={40}
+            value={achieved}
             height={250}
             cx="50%"
             cy="65%"
@@ -369,7 +371,7 @@ export function AchievedGoalChart() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={({ value, valueMax }) => `${value} / ${valueMax}`}
+            text={({ value, valueMax }) => `${value}`}
           />
         </div>
       </div>
@@ -378,7 +380,8 @@ export function AchievedGoalChart() {
 }
 
 export function PartiallyAchievedChart() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const { goalCount } = useGoalCountRouteData()
+  const {partiallyAchieved} = goalCount;
 
   return (
     <div>
@@ -386,7 +389,7 @@ export function PartiallyAchievedChart() {
         <div className="text-lg font-bold text-black">In Progress</div>
         <div className="flex items-center justify-center">
           <Gauge
-            value={30}
+            value={partiallyAchieved}
             height={250}
             cx="50%"
             cy="65%"
@@ -407,7 +410,7 @@ export function PartiallyAchievedChart() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={({ value, valueMax }) => `${value} / ${valueMax}`}
+            text={({ value, valueMax }) => `${value}`}
           />
         </div>
       </div>
@@ -416,7 +419,8 @@ export function PartiallyAchievedChart() {
 }
 
 export function NotAchievedChart() {
-  const { generalPerformance } = useGeneralPerformanceChartRouteData();
+  const { goalCount } = useGoalCountRouteData()
+  const {notAchieved} = goalCount;
 
   return (
     <div>
@@ -424,7 +428,7 @@ export function NotAchievedChart() {
         <div className="text-lg font-bold text-black">Not Started</div>
         <div className="flex items-center justify-center">
           <Gauge
-            value={60}
+            value={notAchieved}
             height={250}
             cx="50%"
             cy="65%"
@@ -445,7 +449,7 @@ export function NotAchievedChart() {
                 fill: theme.palette.text.disabled,
               },
             })}
-            text={({ value, valueMax }) => `${value} / ${valueMax}`}
+            text={({ value, valueMax }) => `${value}`}
           />
         </div>
       </div>
