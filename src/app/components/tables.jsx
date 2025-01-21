@@ -186,7 +186,7 @@ export function TopGoalTable() {
 }
 
 export function OperationalEffeciencyTable() {
-  const { departmentgoaltable } = useGoalRouteData();
+  const { goalAssessmentData } = useGoalAccessmentRouteData();
   return (
     <div>
       <div>
@@ -207,7 +207,7 @@ export function OperationalEffeciencyTable() {
             height: 650,
           }}>
           <DataGrid
-            rows={departmentgoaltable}
+            rows={goalAssessmentData}
             columns={operationaleffeciencycolumn}
             initialState={{
               pagination: {
