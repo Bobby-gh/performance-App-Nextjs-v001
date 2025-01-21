@@ -285,7 +285,7 @@ export function InternalProcessandInnovation() {
                 fontSize: 30,
               },
               [`& .${gaugeClasses.valueArc}`]: {
-                fill: "red",
+                fill: "yellow",
               },
               [`& .${gaugeClasses.referenceArc}`]: {
                 fill: theme.palette.text.disabled,
@@ -326,7 +326,7 @@ export function CustomerCentricGoal() {
                 fontSize: 30,
               },
               [`& .${gaugeClasses.valueArc}`]: {
-                fill: "yellow",
+                fill: "red",
               },
               [`& .${gaugeClasses.referenceArc}`]: {
                 fill: theme.palette.text.disabled,
