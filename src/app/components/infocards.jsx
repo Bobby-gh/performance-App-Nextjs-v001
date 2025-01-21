@@ -5,7 +5,7 @@ import {
   FaThumbsUp,
   FaRegSmileWink,
 } from "react-icons/fa";
-import { useGoalCountRouteData } from "../api/databook/route-data";
+import { useGoalStatus } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { useContext, useState } from "react";
 import { AuthContext, GoalSelectContext } from "../contex/context-context";
@@ -13,9 +13,9 @@ import axios from "../api/axios";
 import { UPDATE_GOAL_PROGRESS } from "../api/routes";
 
 export function InformationalSummary() {
-  const { goalCount } = useGoalCountRouteData();
-  console.log({ "goal count desctruction": goalCount });
-  const { achieved, notAchieved, partiallyAchieved } = goalCount;
+  const { goalStatus } = useGoalStatus();
+  console.log({ "goal count desctruction": goalStatus });
+  const { Completed, InProgress, NotStarted } = goalStatus;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
@@ -26,7 +26,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3>Completed</h3>
-            <h3 className="font-bold text-3xl">{achieved}</h3>
+            <h3 className="font-bold text-3xl">{Completed}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -42,7 +42,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3>In Progress</h3>
-            <h3 className="font-bold text-3xl">{partiallyAchieved}</h3>
+            <h3 className="font-bold text-3xl">{InProgress}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
@@ -58,7 +58,7 @@ export function InformationalSummary() {
           </span>
           <span className="flex flex-col items-end">
             <h3>Not Started</h3>
-            <h3 className="font-bold text-3xl">{notAchieved}</h3>
+            <h3 className="font-bold text-3xl">{NotStarted}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
