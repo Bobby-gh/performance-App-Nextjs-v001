@@ -1,6 +1,6 @@
 "use client";
 
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, Box, gridClasses } from "@mui/x-data-grid";
 import {
   accessinggoalcolumn,
   balancescorecardcolumn,
@@ -17,7 +17,6 @@ import {
   useGoalRouteData,
   useTopGoalsRouteData,
 } from "../api/databook/route-data";
-import { Box } from "@mui/material";
 
 export function GoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
