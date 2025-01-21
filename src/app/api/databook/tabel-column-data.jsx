@@ -89,20 +89,20 @@ export const operationaleffeciencycolumn = [
     headerClassName: "header-table",
   },
   {
-    field: "status",
-    headerName: "Goal Status",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
     field: "performancePercent",
     headerName: "Score(%)",
-    flex: 0.5,
+    flex: 1,
     headerClassName: "header-table",
   },
   {
     field: "goalDeadline",
     headerName: "End Date",
+    flex: 0.5,
+    headerClassName: "header-table",
+  }, 
+  {
+    field: "comment",
+    headerName: "Remark",
     flex: 0.5,
     headerClassName: "header-table",
   },

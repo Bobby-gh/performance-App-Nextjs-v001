@@ -227,13 +227,13 @@ export function OperationalEffeciencyTable() {
               const value = params.value;
               if (typeof value === "number") {
                 if (value >= 80) {
-                  return "high";
-                } else if (value >= 50) {
-                  return "veryhigh";
-                } else if (value >= 20) {
-                  return "medium";
-                } else {
                   return "low";
+                } else if (value >= 50) {
+                  return "medium";
+                } else if (value >= 20) {
+                  return "veryhigh";
+                } else {
+                  return "high";
                 }
               }
             }}
