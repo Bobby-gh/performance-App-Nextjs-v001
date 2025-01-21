@@ -223,14 +223,17 @@ export function OperationalEffeciencyTable() {
               minWidth: 300,
             }}
             getCellClassName={(params) => {
-              if (params.value >= 80) {
-                return "high";
-              } else if (params.value >= 50) {
-                return "veryhigh";
-              } else if (params.value >= 20) {
-                return "medium";
-              } else if (params.value === "Low") {
-                return "low";
+              const value = params.value;
+              if (typeof value === "number") {
+                if (value >= 80) {
+                  return "high";
+                } else if (value >= 50) {
+                  return "veryhigh";
+                } else if (value >= 20) {
+                  return "medium";
+                } else {
+                  return "low";
+                }
               }
             }}
           />
