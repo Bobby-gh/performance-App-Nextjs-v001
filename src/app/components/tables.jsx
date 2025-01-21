@@ -1,6 +1,7 @@
 "use client";
 
-import { DataGrid, GridToolbar, Box, gridClasses } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
+import { Box } from '@mui/material'; 
 import {
   accessinggoalcolumn,
   balancescorecardcolumn,
