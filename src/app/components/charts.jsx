@@ -342,6 +342,7 @@ export function CustomerCentricGoal() {
 
 export function AchievedGoalChart() {
   const { goalStatus } = useGoalStatus();
+  console.log({ "goal count desctruction": goalStatus });
   const { Completed, Total } = goalStatus;
 
 
@@ -383,6 +384,7 @@ export function AchievedGoalChart() {
 
 export function PartiallyAchievedChart() {
   const { goalStatus } = useGoalStatus();
+  console.log({ "goal count desctruction": goalStatus });
   const { InProgress, Total } = goalStatus;
 
   return (
@@ -423,6 +425,7 @@ export function PartiallyAchievedChart() {
 
 export function NotAchievedChart() {
   const { goalStatus } = useGoalStatus();
+  console.log({ "goal count desctruction": goalStatus });
   const { NotStarted, Total } = goalStatus;
 
 
