@@ -41,6 +41,74 @@ export const goalsettingcolumn = [
   },
 ];
 
+export const balancescorecardcolumn = [
+  {
+    field: "goalTitle",
+    headerName: "Goal Title",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "goalType",
+    headerName: "Goal Category",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "taskAssignedTo",
+    headerName: "Department ",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "goalDeadline",
+    headerName: "End Date",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
+  {
+    field: "detail",
+    headerName: "Detail",
+    headerClassName: "header-table",
+    flex: 0.5,
+    renderCell: (params) => AssignGoal(params)
+  },
+];
+
+export const operationaleffeciencycolumn = [
+  {
+    field: "goalTitle",
+    headerName: "Goal Title",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "taskAssignedTo",
+    headerName: "Department ",
+    flex: 1,
+    headerClassName: "header-table",
+  },
+  {
+    field: "status",
+    headerName: "Goal Status",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
+  {
+    field: "goalDeadline",
+    headerName: "End Date",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
+  {
+    field: "detail",
+    headerName: "Detail",
+    headerClassName: "header-table",
+    flex: 0.5,
+    renderCell: (params) => AssignGoal(params)
+  },
+];
+
 export const topgoalcolumn = [
   {
     field: "goalTitle",
