@@ -37,7 +37,7 @@ export const goalsettingcolumn = [
     headerName: "Detail",
     headerClassName: "header-table",
     flex: 0.5,
-    renderCell: (params) => AssignGoal(params)
+    renderCell: (params) => AssignGoal(params),
   },
 ];
 
@@ -71,7 +71,7 @@ export const balancescorecardcolumn = [
     headerName: "Detail",
     headerClassName: "header-table",
     flex: 0.5,
-    renderCell: (params) => AssignGoal(params)
+    renderCell: (params) => AssignGoal(params),
   },
 ];
 
@@ -95,6 +95,12 @@ export const operationaleffeciencycolumn = [
     headerClassName: "header-table",
   },
   {
+    field: "performancePercent",
+    headerName: "Score(%)",
+    flex: 0.5,
+    headerClassName: "header-table",
+  },
+  {
     field: "goalDeadline",
     headerName: "End Date",
     flex: 0.5,
@@ -105,7 +111,7 @@ export const operationaleffeciencycolumn = [
     headerName: "Detail",
     headerClassName: "header-table",
     flex: 0.5,
-    renderCell: (params) => AssignGoal(params)
+    renderCell: (params) => AssignGoal(params),
   },
 ];
 
