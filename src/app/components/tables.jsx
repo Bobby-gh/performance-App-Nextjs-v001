@@ -6,6 +6,7 @@ import {
   balancescorecardcolumn,
   departmentcolumn,
   goalsettingcolumn,
+  operationaleffeciencycolumn,
   topgoalcolumn,
   usercolumn,
 } from "../api/databook/tabel-column-data";
@@ -207,7 +208,7 @@ export function OperationalEffeciencyTable() {
           }}>
           <DataGrid
             rows={departmentgoaltable}
-            columns={balancescorecardcolumn}
+            columns={operationaleffeciencycolumn}
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 10 },
