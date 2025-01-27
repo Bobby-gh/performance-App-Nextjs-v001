@@ -8,6 +8,7 @@ import {
   departmentcolumn,
   goalsettingcolumn,
   operationaleffeciencycolumn,
+  systemcolumn,
   topgoalcolumn,
   usercolumn,
 } from "../api/databook/tabel-column-data";
@@ -270,7 +271,7 @@ export function SystemGoalTable() {
           }}>
           <DataGrid
             rows={departmentgoaltable}
-            columns={operationaleffeciencycolumn}
+            columns={systemcolumn}
             initialState={{
               pagination: {
                 paginationModel: { page: 0, pageSize: 10 },
