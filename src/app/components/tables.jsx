@@ -53,6 +53,25 @@ export function AccessGoalTable() {
   return (
     <div>
       <div>
+      <Box
+          sx={{
+            [`.${gridClasses.cell}.veryhigh`]: {
+              backgroundColor: "#F84626",
+            },
+            [`.${gridClasses.cell}.high`]: {
+              backgroundColor: "#ecbe2f",
+            },
+            [`.${gridClasses.cell}.medium`]: {
+              backgroundColor: "#0B37D6",
+            },
+            [`.${gridClasses.cell}.low`]: {
+              backgroundColor: "#4A7C0B",
+            },
+            [`.${gridClasses.cell}.empty`]: {
+              backgroundColor: "#808080",
+            },
+            height: 650,
+          }}>
         <DataGrid
           rows={goalAssessmentData}
           columns={accessinggoalcolumn}
@@ -71,6 +90,7 @@ export function AccessGoalTable() {
             minWidth: 300,
           }}
         />
+        </Box>
       </div>
     </div>
   );

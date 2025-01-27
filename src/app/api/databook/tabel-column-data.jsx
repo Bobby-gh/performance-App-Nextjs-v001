@@ -101,12 +101,6 @@ export const operationaleffeciencycolumn = [
     headerClassName: "header-table",
   }, 
   {
-    field: "comment",
-    headerName: "Remark",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
     field: "detail",
     headerName: "Detail",
     headerClassName: "header-table",
