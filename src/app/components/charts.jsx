@@ -510,7 +510,7 @@ export function BadgesReport() {
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "gold", fontSize: "40px" }} />
               <p className="pl-24 text-yellow-500 font-bold">Gold Badges:</p>
-              <p className="pl-4">{badges.ratingsSummary.Outstanding}</p>
+              <p className="pl-4">{badges.ratingsSummary.ExceedsExpectations}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
