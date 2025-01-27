@@ -112,7 +112,6 @@ export function useMyGoalBadgesData() {
           },
           withCredentials: true,
         });
-        console.log(response);
         setBadges(response.data);
       } catch (err) {
         console.log(err);
