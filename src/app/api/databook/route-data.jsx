@@ -97,6 +97,36 @@ export function useMyGoalRouteData() {
   return { mygoal };
 }
 
+export function useMyGoalBadgesData() {
+  const { auth } = useContext(AuthContext);
+  const [mygoal, setMygoal] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(MY_GOALS_URL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        console.log(response.data);
+        setMygoal(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+
+
+  console.log({ "badges goals": mygoal });
+  return { mygoal };
+}
+
 export function useUnassessedGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [unaccessedgoal, setUnaccessedGoal] = useState([]);
