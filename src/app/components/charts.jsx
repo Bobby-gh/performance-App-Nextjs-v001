@@ -490,7 +490,9 @@ export function OrganizationPerformanceReport() {
 
 export function BadgesReport() {
   const { badges } = useMyGoalBadgesData();
-  const value = badges.ratingsSummary?.Outstanding;
+  const Outstanding = badges.ratingsSummary?.Outstanding;
+  const ExceedsExpectations = badges.ratingsSummary?.ExceedsExpectations;
+  const MeetsExpectations = badges.ratingsSummary?.MeetsExpectations;
   console.log(value)
   return (
     <div className=" p-7 bg-white rounded-lg">
@@ -511,20 +513,20 @@ export function BadgesReport() {
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "gold", fontSize: "40px" }} />
               <p className="pl-24 text-yellow-500 font-bold">Gold Badges:</p>
-              <p className="pl-4">1</p>
+              <p className="pl-4">{Outstanding}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
               <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
               <p className="pl-14 text-[#cd7f32] font-medium">Silver Badges:</p>
-              <p className="pl-4">3</p>
+              <p className="pl-4">{ExceedsExpectations}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />{" "}
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
               <p className="pl-6 text-[#c0c0c0] font-medium">Bronze Badges:</p>
-              <p className="pl-2">2</p>
+              <p className="pl-2">{MeetsExpectations}</p>
             </div>
           </div>
         </div>
