@@ -288,7 +288,7 @@ export function SystemGoalTable() {
             }}
             getCellClassName={(params) => {
               const value = params.value;
-              if (value === "pending") {
+              if (value === "pending ...") {
                 return "empty";
               }
               if (typeof value === "number") {

@@ -139,10 +139,10 @@ export const systemcolumn = [
     headerName: "End Date",
     flex: 0.5,
     headerClassName: "header-table",
-  }, 
+  },
   {
-    field: "comment",
-    headerName: "Remark",
+    field: "status",
+    headerName: "Goal Status",
     flex: 0.5,
     headerClassName: "header-table",
   },
