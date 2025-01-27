@@ -4,7 +4,7 @@ import {
   NotAchievedChart,
   PartiallyAchievedChart,
 } from "@/app/components/charts";
-import { TopGoalTable } from "@/app/components/tables";
+import { SystemGoalTable } from "@/app/components/tables";
 
 export default function GoalAchievemnetReport() {
   return (
@@ -15,7 +15,7 @@ export default function GoalAchievemnetReport() {
         <NotAchievedChart />
       </div>
       <div className="mt-8 card bg-white rounded-lg">
-        <TopGoalTable />
+        <SystemGoalTable/>
       </div>
     </div>
   );
