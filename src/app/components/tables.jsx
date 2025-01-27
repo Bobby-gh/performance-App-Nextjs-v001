@@ -200,6 +200,25 @@ export function TopGoalTable() {
   return (
     <div>
       <div>
+      <Box
+          sx={{
+            [`.${gridClasses.cell}.veryhigh`]: {
+              backgroundColor: "#F84626",
+            },
+            [`.${gridClasses.cell}.high`]: {
+              backgroundColor: "#ecbe2f",
+            },
+            [`.${gridClasses.cell}.medium`]: {
+              backgroundColor: "#0B37D6",
+            },
+            [`.${gridClasses.cell}.low`]: {
+              backgroundColor: "#4A7C0B",
+            },
+            [`.${gridClasses.cell}.empty`]: {
+              backgroundColor: "#808080",
+            },
+            height: 650,
+          }}>
         <DataGrid
           rows={topGoal}
           columns={topgoalcolumn}
@@ -217,7 +236,25 @@ export function TopGoalTable() {
             p: 2,
             minWidth: 300,
           }}
+          getCellClassName={(params) => {
+            const value = params.value;
+            if (value === "pending ...") {
+              return "empty";
+            }
+            if (typeof value === "number") {
+              if (value >= 80) {
+                return "low";
+              } else if (value >= 50) {
+                return "medium";
+              } else if (value >= 20) {
+                return "veryhigh";
+              } else {
+                return "high";
+              }
+            }
+          }}
         />
+        </Box>
       </div>
     </div>
   );
