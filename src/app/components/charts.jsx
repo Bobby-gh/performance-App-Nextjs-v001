@@ -154,14 +154,14 @@ export function ProgressBarChat() {
 }
 
 export function EmployeePerformance() {
-  const { goalStatus } = useGoalStatus();
-  console.log({ completedvrsuncompleted: goalStatus });
+  const { badges } = useMyGoalBadgesData();
+  console.log({ completedvrsuncompleted: badges });
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
       <ResponsiveContainer height={250}>
         <PieChart>
           <Pie
-            data={goalStatus}
+            data={badges.ratingsPie}
             dataKey="value"
             outerRadius={115}
             innerRadius={70}
@@ -489,8 +489,7 @@ export function OrganizationPerformanceReport() {
 }
 
 export function BadgesReport() {
-  const { badges } =
-  useMyGoalBadgesData();
+  const { badges } = useMyGoalBadgesData();
   console.log(badges.ratingsSummary)
   return (
     <div className=" p-7 bg-white rounded-lg">
