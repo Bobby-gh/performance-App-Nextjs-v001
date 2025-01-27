@@ -263,6 +263,9 @@ export function SystemGoalTable() {
             [`.${gridClasses.cell}.low`]: {
               backgroundColor: "#4A7C0B",
             },
+            [`.${gridClasses.cell}.empty`]: {
+              backgroundColor: "grey",
+            },
             height: 650,
           }}>
           <DataGrid
@@ -289,7 +292,9 @@ export function SystemGoalTable() {
                   return "low";
                 } else if (value >= 50) {
                   return "medium";
-                } else if (value >= 20) {
+                } else if (value == null) {
+                  return "empty";
+                }else if (value >= 20) {
                   return "veryhigh";
                 } else {
                   return "high";
