@@ -18,6 +18,7 @@ import {
   UNACCESSED_GOALS_URL,
   MY_GOALS_URL,
   GOAL_CATEGORY_COUNT,
+  GOAL_BADGES,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -104,7 +105,7 @@ export function useMyGoalBadgesData() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(MY_GOALS_URL, {
+        const response = await axios.get(GOAL_BADGES, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
