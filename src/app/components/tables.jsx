@@ -186,7 +186,7 @@ export function TopGoalTable() {
 }
 
 export function OperationalEffeciencyTable() {
-  const { goalAssessmentData } = useGoalAccessmentRouteData();
+  const { departmentgoaltable } = useGoalRouteData();
   return (
     <div>
       <div>
@@ -207,7 +207,66 @@ export function OperationalEffeciencyTable() {
             height: 650,
           }}>
           <DataGrid
-            rows={goalAssessmentData}
+            rows={departmentgoaltable}
+            columns={operationaleffeciencycolumn}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[10, 15]}
+            slots={{ toolbar: GridToolbar }}
+            getRowId={(row) => row._id}
+            sx={{
+              border: 0,
+              borderRadius: 2,
+              p: 2,
+              minWidth: 300,
+            }}
+            getCellClassName={(params) => {
+              const value = params.value;
+              if (typeof value === "number") {
+                if (value >= 80) {
+                  return "low";
+                } else if (value >= 50) {
+                  return "medium";
+                } else if (value >= 20) {
+                  return "veryhigh";
+                } else {
+                  return "high";
+                }
+              }
+            }}
+          />
+        </Box>
+      </div>
+    </div>
+  );
+}
+
+export function SystemGoalTable() {
+  const { departmentgoaltable } = useGoalRouteData();
+  return (
+    <div>
+      <div>
+        <Box
+          sx={{
+            [`.${gridClasses.cell}.veryhigh`]: {
+              backgroundColor: "#F84626",
+            },
+            [`.${gridClasses.cell}.high`]: {
+              backgroundColor: "#ecbe2f",
+            },
+            [`.${gridClasses.cell}.medium`]: {
+              backgroundColor: "#0B37D6",
+            },
+            [`.${gridClasses.cell}.low`]: {
+              backgroundColor: "#4A7C0B",
+            },
+            height: 650,
+          }}>
+          <DataGrid
+            rows={departmentgoaltable}
             columns={operationaleffeciencycolumn}
             initialState={{
               pagination: {
