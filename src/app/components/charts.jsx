@@ -20,7 +20,8 @@ import {
   useGoalStatus,
   useOrganizationalAveragePerMonthChartRouteData,
   usePerformanceMatrixChartRouteData,
-  useGoalCountRouteData
+  useGoalCountRouteData,
+  useMyGoalBadgesData
 } from "../api/databook/route-data";
 import { DataDateAccess } from "./infocards";
 import { StarOutline, StarSharp } from "@mui/icons-material";
@@ -488,6 +489,8 @@ export function OrganizationPerformanceReport() {
 }
 
 export function BadgesReport() {
+  const { badges } =
+  useMyGoalBadgesData();
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="border-l-4 px-4 border-blue-500 mb-6">

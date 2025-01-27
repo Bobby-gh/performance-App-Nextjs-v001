@@ -99,7 +99,7 @@ export function useMyGoalRouteData() {
 
 export function useMyGoalBadgesData() {
   const { auth } = useContext(AuthContext);
-  const [mygoal, setMygoal] = useState([]);
+  const [badges, setBadges] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,7 +112,7 @@ export function useMyGoalBadgesData() {
           withCredentials: true,
         });
         console.log(response.data);
-        setMygoal(response.data);
+        setBadges(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -123,8 +123,8 @@ export function useMyGoalBadgesData() {
 
 
 
-  console.log({ "badges goals": mygoal });
-  return { mygoal };
+  console.log({ "badges goals": badges });
+  return { badges };
 }
 
 export function useUnassessedGoalRouteData() {
