@@ -490,7 +490,7 @@ export function OrganizationPerformanceReport() {
 
 export function BadgesReport() {
   const { badges } = useMyGoalBadgesData();
-  const value = badges.ratingsSummary?.Customer?.Outstanding;
+  const value = badges.ratingsSummary?.Outstanding;
   console.log(value)
   return (
     <div className=" p-7 bg-white rounded-lg">
