@@ -1,7 +1,7 @@
 "use client";
 
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
-import { Box } from '@mui/material'; 
+import { Box } from "@mui/material";
 import {
   accessinggoalcolumn,
   balancescorecardcolumn,
@@ -288,14 +288,15 @@ export function SystemGoalTable() {
             }}
             getCellClassName={(params) => {
               const value = params.value;
+              if (value === "pending") {
+                return "empty";
+              }
               if (typeof value === "number") {
                 if (value >= 80) {
                   return "low";
                 } else if (value >= 50) {
                   return "medium";
-                } else if (value === "pending") {
-                  return "empty";
-                }else if (value >= 20) {
+                } else if (value >= 20) {
                   return "veryhigh";
                 } else {
                   return "high";
