@@ -265,7 +265,7 @@ export function SystemGoalTable() {
               backgroundColor: "#4A7C0B",
             },
             [`.${gridClasses.cell}.empty`]: {
-              backgroundColor: "gray",
+              backgroundColor: "grey",
             },
             height: 650,
           }}>
