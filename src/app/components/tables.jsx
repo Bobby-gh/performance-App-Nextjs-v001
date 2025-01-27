@@ -205,6 +205,9 @@ export function OperationalEffeciencyTable() {
             [`.${gridClasses.cell}.low`]: {
               backgroundColor: "#4A7C0B",
             },
+            [`.${gridClasses.cell}.empty`]: {
+              backgroundColor: "#808080",
+            },
             height: 650,
           }}>
           <DataGrid
@@ -226,6 +229,9 @@ export function OperationalEffeciencyTable() {
             }}
             getCellClassName={(params) => {
               const value = params.value;
+              if (value === "pending ...") {
+                return "empty";
+              }
               if (typeof value === "number") {
                 if (value >= 80) {
                   return "low";
