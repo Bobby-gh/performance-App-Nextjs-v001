@@ -510,20 +510,20 @@ export function BadgesReport() {
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "gold", fontSize: "40px" }} />
               <p className="pl-24 text-yellow-500 font-bold">Gold Badges:</p>
-              <p className="pl-4">1</p>
+              <p className="pl-4">{badges.ratingsSummary.Outstanding}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
               <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
               <p className="pl-14 text-[#cd7f32] font-medium">Silver Badges:</p>
-              <p className="pl-4">3</p>
+              <p className="pl-4">{badges.ratingsSummary.ExceedsExpectations}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />{" "}
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
               <p className="pl-6 text-[#c0c0c0] font-medium">Bronze Badges:</p>
-              <p className="pl-2">2</p>
+              <p className="pl-2">{badges.ratingsSummary.MeetsExpectations}</p>
             </div>
           </div>
         </div>
