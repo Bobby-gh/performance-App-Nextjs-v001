@@ -292,7 +292,7 @@ export function SystemGoalTable() {
                   return "low";
                 } else if (value >= 50) {
                   return "medium";
-                } else if (value == null) {
+                } else if (value === "pending") {
                   return "empty";
                 }else if (value >= 20) {
                   return "veryhigh";
