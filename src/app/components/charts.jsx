@@ -493,7 +493,6 @@ export function BadgesReport() {
   const Outstanding = badges.ratingsSummary?.Outstanding;
   const ExceedsExpectations = badges.ratingsSummary?.ExceedsExpectations;
   const MeetsExpectations = badges.ratingsSummary?.MeetsExpectations;
-  console.log(value)
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="border-l-4 px-4 border-blue-500 mb-6">
