@@ -15,8 +15,12 @@ import Cookies from "js-cookie";
 import axios from "../api/axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { LanguageButton } from "../language/language_switcher";
+import { FaLanguage } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export function LoginForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const { auth, setAuth } = React.useContext(AuthContext);
@@ -63,7 +67,7 @@ export function LoginForm() {
       }
     } catch (err) {
       alert(err);
-      console.log(err)
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -72,6 +76,12 @@ export function LoginForm() {
   return (
     <main className="w-[430px]">
       <div>
+        <div className="flex flex-row-reverse mt-3 mr-3 items-center">
+          <LanguageButton />
+          <span className="pr-2">
+            <FaLanguage size={20} color="blue" />
+          </span>
+        </div>
         <div className="flex justify-center p-12">
           <img
             src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
@@ -81,7 +91,7 @@ export function LoginForm() {
         </div>
         <form autoComplete="off">
           <div className="flex flex-col">
-            <label>Email</label>
+            <label>{t("email")}</label>
             <input
               placeholder="Type email here"
               autoComplete="off"
@@ -97,7 +107,7 @@ export function LoginForm() {
             />
           </div>
           <div className="flex flex-col">
-            <label>Password</label>
+            <label>{t("password")}</label>
             <input
               placeholder="Enter password"
               autoComplete="off"
@@ -189,7 +199,7 @@ export function ForgetPassword() {
       }
     } catch (err) {
       alert(err);
-      console.log(err)
+      console.log(err);
     } finally {
       setLoading(false);
       setEmailSent(false);
@@ -289,7 +299,7 @@ export function ResetPassword() {
       }
     } catch (err) {
       alert(err);
-      console.log(err)
+      console.log(err);
     } finally {
       setLoading(false);
     }
