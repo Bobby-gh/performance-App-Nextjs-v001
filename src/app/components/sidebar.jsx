@@ -5,8 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { AuthContext } from "../contex/context-context";
+import { useTranslation } from "react-i18next";
+
 
 export function Sidebar() {
+  const { t } = useTranslation();
+
   const currentPathname = usePathname()
   const {auth} = useContext(AuthContext)
   console.log({"refnum": auth.refNum})
@@ -21,7 +25,7 @@ export function Sidebar() {
     if (auth.refNum === "ref?3!") {
       return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
     }
-    return !["/home/department", "/home/employees", "/home/goal-setting","/home/goal-assessment"].includes(item.path);
+    return ![""].includes(item.path);
   });
 
   return (
@@ -44,7 +48,7 @@ export function Sidebar() {
                   "flex items-center text-md p-4 m-2 hover:bg-blue-900 hover:text-white rounded-lg": true,
                   "bg-blue-900 rounded-lg text-white": currentPathname === item.path
                 })}>
-                  {item.icon} <span className="ml-2 hidden transition duration-300 ease-out sm:block">{item.title}</span>
+                  {item.icon} <span className="ml-2 hidden transition duration-300 ease-out sm:block">{t(item.title)}</span>
                 </Link>
               </li>
             ))}

@@ -4,6 +4,8 @@ import { AuthContext } from "../contex/context-context";
 import { FaEye, FaSave } from "react-icons/fa";
 import { Box, FormControl, MenuItem, Modal, Select, TextField } from "@mui/material";
 import { useDepartmentRouteData } from "../api/databook/route-data";
+import { useTranslation } from "react-i18next";
+
 
 
 const ModalStyle = {
@@ -20,6 +22,7 @@ const ModalStyle = {
 
 
 export function AssignGoal(params) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   const { departmenttable } = useDepartmentRouteData();
@@ -70,7 +73,7 @@ export function AssignGoal(params) {
                 </div>
                 <div className="relative mb-6" data-te-input-wrapper-init>
                   <TextField
-                    label="Goal Title"
+                    label={t("goalTitle")}
                     value={assignGoal.goalTitle}
                     autoComplete="off"
                     //   onChange={(e) => setRiskName(e.target.value)}

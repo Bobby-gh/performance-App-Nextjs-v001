@@ -26,15 +26,18 @@ import {
 import { DataDateAccess } from "./infocards";
 import { StarOutline, StarSharp } from "@mui/icons-material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 
 export function OrganizationPerformanceDashboard() {
+  const { t } = useTranslation();
   const { organizationalChart } =
     useOrganizationalAveragePerMonthChartRouteData();
 
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">AVERAGE PERFORMANCE</h3>
+        <h3 className="text-lg font-bold text-black">{t("averagePerformance")}</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -51,19 +54,20 @@ export function OrganizationPerformanceDashboard() {
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
       <div className="mt-4 flex items-center">
         <IoIosTime />
-        <span className="ml-2">last updated</span>
+        <span className="ml-2">{t("lastUpdated")}</span>
       </div>
     </div>
   );
 }
 
 export function PerformanceMatrixDashboard() {
+  const { t } = useTranslation();
   const { performanceMatrixChart } = usePerformanceMatrixChartRouteData();
 
   return (
     <div className="p-7 bg-gray-200 rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">PERFORMANCE MATRIX</h3>
+        <h3 className="text-lg font-bold text-black">{t("performanceMatrix")}</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -81,20 +85,21 @@ export function PerformanceMatrixDashboard() {
       <hr className="h-px my-6 border-0 dark:bg-gray-700" />
       <div className="mt-4 flex items-center">
         <IoIosTime />
-        <span className="ml-2">last updated</span>
+        <span className="ml-2">{t("lastUpdated")}</span>
       </div>
     </div>
   );
 }
 
-export function GeneralPerformanceDashboard() {
+export function GeneralPerformanceDashboard() { 
+  const { t } = useTranslation();
   const { generalPerformance } = useGeneralPerformanceChartRouteData();
 
   return (
     <div>
       <div className="p-7 bg-white rounded-lg">
         <div className="text-lg font-bold pb-8 text-black">
-          General Performance
+        {t("generalPerformance")}
         </div>
         <div className="flex items-center justify-center">
           <Gauge
@@ -125,7 +130,7 @@ export function GeneralPerformanceDashboard() {
         <hr className="h-px my-4 border-0 dark:bg-gray-700" />
         <div className="mt-4 flex items-center">
           <IoIosTime />
-          <span className="ml-2">last updated</span>
+          <span className="ml-2">{t("lastUpdated")}</span>
         </div>
       </div>
     </div>
@@ -174,6 +179,7 @@ export function EmployeePerformance() {
 }
 
 export function FinancialGoal() {
+  const { t } = useTranslation();
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const value = goalCateoryCount.Financial?.financial?.value;
   const valueMax = goalCateoryCount.Financial?.financial?.valueMax;
@@ -183,7 +189,7 @@ console.log(goalCateoryCount)
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">Financial </div>
+        <div className="text-md font-bold text-black">{t("financial")} </div>
         <div>
           <Gauge
             valueMax={valueMax}
@@ -217,6 +223,7 @@ console.log(goalCateoryCount)
 }
 
 export function HumanResourceGoal() {
+  const { t } = useTranslation();
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const value = goalCateoryCount.Human?.Human?.value;
   const valueMax = goalCateoryCount.Human?.Human?.valueMax;
@@ -224,7 +231,7 @@ export function HumanResourceGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">Human Relationship</div>
+        <div className="text-md font-bold text-black">{t("humanRelationship")}</div>
         <div>
           <Gauge
             valueMax={valueMax}
@@ -258,6 +265,7 @@ export function HumanResourceGoal() {
 }
 
 export function InternalProcessandInnovation() {
+  const { t } = useTranslation();
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const value = goalCateoryCount.Inovation?.Innovation?.value;
   const valueMax = goalCateoryCount.Inovation?.Innovation?.valueMax;
@@ -266,7 +274,7 @@ export function InternalProcessandInnovation() {
     <div>
       <div className="p-4 bg-white rounded-lg">
         <div className="text-md font-bold text-black">
-          Process and Innovation
+        {t("processAndInnovation")}
         </div>
         <div>
           <Gauge
@@ -301,6 +309,7 @@ export function InternalProcessandInnovation() {
 }
 
 export function CustomerCentricGoal() {
+  const { t } = useTranslation();
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
   const value = goalCateoryCount.Customer?.Customer?.value;
   const valueMax = goalCateoryCount.Customer?.Customer?.valueMax;
@@ -308,7 +317,7 @@ export function CustomerCentricGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">Customer Centred</div>
+        <div className="text-md font-bold text-black">{t("customerCentred")}</div>
         <div>
           <Gauge
           valueMax={valueMax}
@@ -342,6 +351,7 @@ export function CustomerCentricGoal() {
 }
 
 export function AchievedGoalChart() {
+  const { t } = useTranslation();
   const { goalStatus } = useGoalStatus();
   const { Completed, Total } = goalStatus;
 
@@ -349,7 +359,7 @@ export function AchievedGoalChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">Completed</div>
+        <div className="text-lg font-bold text-black">{t("completed")}</div>
         <div className="flex items-center justify-center">
           <Gauge
             valueMax={Total}
@@ -383,13 +393,14 @@ export function AchievedGoalChart() {
 }
 
 export function PartiallyAchievedChart() {
+  const { t } = useTranslation();
   const { goalStatus } = useGoalStatus();
   const { InProgress, Total } = goalStatus;
 
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">In Progress</div>
+        <div className="text-lg font-bold text-black">{t("inProgress")}</div>
         <div className="flex items-center justify-center">
           <Gauge
             valueMax={Total}
@@ -423,6 +434,7 @@ export function PartiallyAchievedChart() {
 }
 
 export function NotAchievedChart() {
+  const { t } = useTranslation();
   const { goalStatus } = useGoalStatus();
   const { NotStarted, Total } = goalStatus;
 
@@ -430,7 +442,7 @@ export function NotAchievedChart() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-lg font-bold text-black">Not Started</div>
+        <div className="text-lg font-bold text-black">{t("notStarted")}</div>
         <div className="flex items-center justify-center">
           <Gauge
             valueMax={Total}
@@ -464,13 +476,14 @@ export function NotAchievedChart() {
 }
 
 export function OrganizationPerformanceReport() {
+  const { t } = useTranslation();
   const { organizationalChart } =
     useOrganizationalAveragePerMonthChartRouteData();
 
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">General Performance</h3>
+        <h3 className="text-lg font-bold text-black">{t("generalPerformance")}</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -489,6 +502,7 @@ export function OrganizationPerformanceReport() {
 }
 
 export function BadgesReport() {
+  const { t } = useTranslation();
   const { badges } = useMyGoalBadgesData();
   const Outstanding = badges.ratingsSummary?.Outstanding;
   const ExceedsExpectations = badges.ratingsSummary?.ExceedsExpectations;
@@ -496,10 +510,9 @@ export function BadgesReport() {
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="border-l-4 px-4 border-blue-500 mb-6">
-        <p className="font-bold text-blue-500">Top Performer Award</p>
+        <p className="font-bold text-blue-500">{t("topPerformerAward")}</p>
         <p>
-          These awards celebrates exceptional performance and dedication to the
-          Organization.
+        {t("awardsDescription")}
         </p>
       </div>
       <div className="grid grid-cols-3 gap-4">
@@ -511,20 +524,20 @@ export function BadgesReport() {
           <div className="flex flex-col space-y-8">
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "gold", fontSize: "40px" }} />
-              <p className="pl-24 text-yellow-500 font-bold">Gold Badges:</p>
+              <p className="pl-24 text-yellow-500 font-bold">{t("goldBadges")}:</p>
               <p className="pl-4">{Outstanding}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
               <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
-              <p className="pl-14 text-[#cd7f32] font-medium">Silver Badges:</p>
+              <p className="pl-14 text-[#cd7f32] font-medium">{t("silverBadges")}:</p>
               <p className="pl-4">{ExceedsExpectations}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />{" "}
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
-              <p className="pl-6 text-[#c0c0c0] font-medium">Bronze Badges:</p>
+              <p className="pl-6 text-[#c0c0c0] font-medium">{t("bronzeBadges")}:</p>
               <p className="pl-2">{MeetsExpectations}</p>
             </div>
           </div>

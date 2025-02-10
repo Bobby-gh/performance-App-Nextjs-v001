@@ -93,7 +93,7 @@ export function LoginForm() {
           <div className="flex flex-col">
             <label>{t("email")}</label>
             <input
-              placeholder="Type email here"
+              placeholder= {t("typeEmailHere")}
               autoComplete="off"
               type="email"
               value={userDetails.email}
@@ -109,7 +109,7 @@ export function LoginForm() {
           <div className="flex flex-col">
             <label>{t("password")}</label>
             <input
-              placeholder="Enter password"
+              placeholder={t("enterPassword")}
               autoComplete="off"
               type="password"
               value={userDetails.password}
@@ -126,7 +126,7 @@ export function LoginForm() {
           <div className="flex justify-end">
             <Link href="/forget-password" prefetch={false}>
               <h4 className="text-blue italic text-sm text-blue-700">
-                forgot password?
+                {t("forgotPassword")}
               </h4>
             </Link>
           </div>
@@ -136,27 +136,27 @@ export function LoginForm() {
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
                 <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">Loading</p>
+                  <p className="text-sm pr-2">{t("loading")}</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
-                "Submit"
+                t("submit")
               )}
             </button>
           </div>
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
-            <span className="px-2 text-sm text-blue-700">or</span>
+            <span className="px-2 text-sm text-blue-700">{t("or")}</span>
             <div className="flex-grow border-t border-slate-500"></div>
           </div>
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
-            <span className="text-sm text-black">Dont have an account?</span>
+            <span className="text-sm text-black">{t("dontHaveAccount")}</span>
             <span className="text-blue-700 text-sm">
               <Link href="/signup" prefetch={false}>
-                Sign Up
+              {t("signUp")}
               </Link>
             </span>
           </div>
@@ -168,6 +168,7 @@ export function LoginForm() {
 }
 
 export function ForgetPassword() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
@@ -210,13 +211,13 @@ export function ForgetPassword() {
     <main className="w-[430px]">
       <div>
         <div className="flex  mt-[17%] mb-[20%] text-xl font-bold">
-          Enter email for Verification
+        {t("enterEmailForVerification")}
         </div>
         <form autoComplete="off">
           <div className="flex flex-col">
-            <label>Email</label>
+            <label>{t("email")}</label>
             <input
-              placeholder="Type email here"
+              placeholder={t("typeEmailHere")}
               autoComplete="off"
               type="email"
               value={userDetails.email}
@@ -235,27 +236,27 @@ export function ForgetPassword() {
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
                 <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">Loading</p>
+                  <p className="text-sm pr-2">{t("loading")}</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
-                "Submit"
+                t("submit")
               )}
             </button>
           </div>
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
-            <span className="px-2 text-sm text-gray-500">or</span>
+            <span className="px-2 text-sm text-gray-500">{t("or")}</span>
             <div className="flex-grow border-t border-slate-500"></div>
           </div>
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
-            <span className="text-sm text-black">Return?</span>
+            <span className="text-sm text-black">{t("return")}?</span>
             <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
-                Home
+              {t("home")}
               </Link>
             </span>
           </div>
@@ -266,6 +267,7 @@ export function ForgetPassword() {
 }
 
 export function ResetPassword() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -309,8 +311,8 @@ export function ResetPassword() {
     <main className="w-[430px]">
       <div>
         <div className=" mt-[10%] mb-[15%]">
-          <p className="text-xl font-bold">Set your New Password</p>
-          <p className="text-sm">Check your email for a verified token</p>
+          <p className="text-xl font-bold">{t("setNewPassword")}</p>
+          <p className="text-sm">{t("checkEmailForToken")}</p>
         </div>
         <div className="flex space-x-2 mb-8 items-center">
           <span>
@@ -320,9 +322,9 @@ export function ResetPassword() {
         </div>
         <form autoComplete="off">
           <div className="flex flex-col">
-            <label>token</label>
+            <label>{t("token")}</label>
             <input
-              placeholder="Type email here"
+              placeholder={t("typeEmailHere")}
               autoComplete="off"
               type="email"
               value={userDetails.token}
@@ -337,9 +339,9 @@ export function ResetPassword() {
           </div>
           {userDetails.token && (
             <div className="flex flex-col">
-              <label>Password</label>
+              <label>{t("password")}</label>
               <input
-                placeholder="Type email here"
+                placeholder={t("typeEmailHere")}
                 autoComplete="off"
                 type="email"
                 value={userDetails.password}
@@ -359,27 +361,27 @@ export function ResetPassword() {
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
                 <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">Loading</p>
+                  <p className="text-sm pr-2">{t("loading")}</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
-                "Submit"
+                t("submit")
               )}
             </button>
           </div>
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
-            <span className="px-2 text-sm text-blue-700">or</span>
+            <span className="px-2 text-sm text-blue-700">{t("or")}</span>
             <div className="flex-grow border-t border-slate-500"></div>
           </div>
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
-            <span className="text-sm text-black">Return?</span>
+            <span className="text-sm text-black">{t("return")}?</span>
             <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
-                Home
+              {t("home")}
               </Link>
             </span>
           </div>
@@ -390,6 +392,7 @@ export function ResetPassword() {
 }
 
 export function SignUpForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const [activateAccount, setActivateAccount] = useState(false);
@@ -440,10 +443,10 @@ export function SignUpForm() {
   return (
     <main className="w-[430px]">
       <div>
-        <div className="flex mb-4 text-2xl">Get Started</div>
+        <div className="flex mb-4 text-2xl">{t("getStarted")}</div>
         <form autoComplete="off">
           <div className="flex flex-col">
-            <label className="italic text-xs">company name</label>
+            <label className="italic text-xs">{t("companyName")}</label>
             <input
               autoComplete="off"
               type="text"
@@ -459,7 +462,7 @@ export function SignUpForm() {
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col">
-              <label className="italic text-xs">country</label>
+              <label className="italic text-xs">{t("country")}</label>
               <input
                 autoComplete="off"
                 type="text"
@@ -474,7 +477,7 @@ export function SignUpForm() {
               />
             </div>
             <div className="flex flex-col">
-              <label className="italic text-xs">subscription</label>
+              <label className="italic text-xs">{t("subscription")}</label>
               <select
                 className="border border-blue-500 rounded-lg p-3 my-2"
                 value={userDetails.subscriptionType}
@@ -484,17 +487,17 @@ export function SignUpForm() {
                     subscriptionType: e.target.value,
                   }))
                 }>
-                <option>Select ...</option>
-                <option value="free">Free</option>
-                <option value="basic">Basic</option>
-                <option value="standard">Standard</option>
-                <option value="premium">Custom</option>
+                <option>{t("select")} ...</option>
+                <option value="free">{t("free")}</option>
+                <option value="basic">{t("basic")}</option>
+                <option value="standard">{t("standard")}</option>
+                <option value="premium">{t("custom")}</option>
               </select>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col">
-              <label className="italic text-xs">address</label>
+              <label className="italic text-xs">{t("address")}</label>
               <input
                 autoComplete="off"
                 type="text"
@@ -509,7 +512,7 @@ export function SignUpForm() {
               />
             </div>
             <div className="flex flex-col">
-              <label className="italic text-xs">contact</label>
+              <label className="italic text-xs">{t("contact")}</label>
               <input
                 autoComplete="off"
                 type="phone"
@@ -525,7 +528,7 @@ export function SignUpForm() {
             </div>
           </div>
           <div className="flex flex-col">
-            <label className="italic text-xs">email</label>
+            <label className="italic text-xs">{t("email")}</label>
             <input
               autoComplete="off"
               type="email"
@@ -540,9 +543,9 @@ export function SignUpForm() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="italic text-xs">Password</label>
+            <label className="italic text-xs">{t("password")}</label>
             <input
-              placeholder="Enter password"
+              placeholder={t("enterPassword")}
               autoComplete="off"
               type="password"
               value={userDetails.password}
@@ -560,7 +563,7 @@ export function SignUpForm() {
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
                 <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">Loading</p>
+                  <p className="text-sm pr-2">{t("loading")}</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
@@ -571,18 +574,18 @@ export function SignUpForm() {
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
-            <span className="px-2 text-sm text-blue-700">or</span>
+            <span className="px-2 text-sm text-blue-700">{t("or")}</span>
             <div className="flex-grow border-t border-slate-500"></div>
           </div>
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
             <span className="text-sm text-black">
-              Already having an Account?
+            {t("alreadyHaveAccount")}
             </span>
             <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
-                Login In
+              {t("loginIn")}
               </Link>
             </span>
           </div>
@@ -594,6 +597,7 @@ export function SignUpForm() {
 }
 
 export function VerifyEmailForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [login, setLogin] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -634,13 +638,13 @@ export function VerifyEmailForm() {
   return (
     <main className="w-[430px]">
       <div>
-        <div className="mb-4 text-xl">Activate your Account</div>
+        <div className="mb-4 text-xl">{t("activateAccount")}</div>
         <div className="mb-[30%] text-sm">
-          Enter the verification token from your email
+        {t("enterVerificationToken")}
         </div>
         <form autoComplete="off ">
           <div className="flex flex-col">
-            <label className="italic text-xs">token</label>
+            <label className="italic text-xs">{t("token")}</label>
             <input
               autoComplete="off"
               type="text"
@@ -660,27 +664,27 @@ export function VerifyEmailForm() {
             <button type="submit" disabled={isLoading} className="px-16">
               {isLoading ? (
                 <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">Loading</p>
+                  <p className="text-sm pr-2">{t("loading")}</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
-                "Submit"
+                t("submit")
               )}
             </button>
           </div>
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
-            <span className="px-2 text-sm text-gray-500">or</span>
+            <span className="px-2 text-sm text-gray-500">{t("or")}</span>
             <div className="flex-grow border-t border-slate-500"></div>
           </div>
 
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
-            <span className="text-sm text-black">Do you want to return</span>
+            <span className="text-sm text-black">{t("doYouWantToReturn")}</span>
             <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
-                Home?
+              {t("home")}?
               </Link>
             </span>
           </div>

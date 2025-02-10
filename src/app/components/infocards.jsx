@@ -11,8 +11,12 @@ import { useContext, useState } from "react";
 import { AuthContext, GoalSelectContext } from "../contex/context-context";
 import axios from "../api/axios";
 import { UPDATE_GOAL_PROGRESS } from "../api/routes";
+import { useTranslation } from "react-i18next";
+
+
 
 export function InformationalSummary() {
+  const { t } = useTranslation();
   const { goalStatus } = useGoalStatus();
   console.log({ "goal count desctruction": goalStatus });
   const { Completed, InProgress, NotStarted } = goalStatus;
@@ -25,14 +29,14 @@ export function InformationalSummary() {
             <FaTrophy size={20} />
           </span>
           <span className="flex flex-col items-end">
-            <h3>Completed</h3>
+            <h3>{t("completed")}</h3>
             <h3 className="font-bold text-3xl">{Completed}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="flex">
           <span className="text-blue-900">+55%</span>
-          <span className="ml-2">than last Month</span>
+          <span className="ml-2">{t("thanLastMonth")}</span>
         </div>
       </div>
       <div className="card bg-white rounded-lg p-4">
@@ -41,14 +45,14 @@ export function InformationalSummary() {
             <FaThumbsUp size={20} />
           </span>
           <span className="flex flex-col items-end">
-            <h3>In Progress</h3>
+            <h3>{t("inProgress")}</h3>
             <h3 className="font-bold text-3xl">{InProgress}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="flex">
           <span className="text-blue-900">+55%</span>
-          <span className="ml-2">than last Month</span>
+          <span className="ml-2">{t("thanLastMonth")}</span>
         </div>
       </div>
       <div className="card  bg-white rounded-lg p-4">
@@ -57,14 +61,14 @@ export function InformationalSummary() {
             <FaThumbsDown size={20} />
           </span>
           <span className="flex flex-col items-end">
-            <h3>Not Started</h3>
+            <h3>{t("notStarted")}</h3>
             <h3 className="font-bold text-3xl">{NotStarted}</h3>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="flex">
           <span className="text-blue-900">+55%</span>
-          <span className="ml-2">than last Month</span>
+          <span className="ml-2">{t("thanLastMonth")}</span>
         </div>
       </div>
     </div>
@@ -318,6 +322,7 @@ export function UserPerformanceSummary() {
 }
 
 export function DataDateAccess() {
+  const { t } = useTranslation();
   return (
     <div>
       <div className="flex flex-row-reverse">
@@ -330,7 +335,7 @@ export function DataDateAccess() {
               required
             />
             <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-              Date to
+            {t("dateTo")}
             </label>
           </div>
         </div>
@@ -343,7 +348,7 @@ export function DataDateAccess() {
               required
             />
             <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-              Date from
+            {t("dateFrom")}
             </label>
           </div>
         </div>
@@ -358,7 +363,7 @@ export function DataDateAccess() {
               <option value="GENERALMANAGER">Last Selected</option>
             </select>
             <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-              Select Date
+             {t("selectDate")}
             </label>
           </div>
         </div>

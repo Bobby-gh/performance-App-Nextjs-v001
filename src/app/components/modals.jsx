@@ -5,8 +5,11 @@ import { useContext, useState } from "react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { AuthContext } from "../contex/context-context";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
+
 
 export function LogOut() {
+  const { t } = useTranslation();
   const {clearAuth} = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -47,7 +50,7 @@ export function LogOut() {
     <>
       <button onClick={handleOpen} className="flex items-center">
           <RiLogoutCircleRLine />
-          <span className="ml-2">sign out</span>
+          <span className="ml-2">{t("signOut")}</span>
         </button>
       <Modal
         open={open}

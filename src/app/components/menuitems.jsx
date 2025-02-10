@@ -7,37 +7,37 @@ import { PiChartDonut } from "react-icons/pi";
 
 export const MenuItems = [
     {
-        title: "Dashboard",
+        title: "dashboard",
         path: "/home",
         icon: <FaHome/>
     },
     {
-        title: "Projects",
+        title: "projects",
         path: "/home/goals",
         icon: <GoGoal/>
     },
     {
-        title: "Assign Goals",
+        title: "assignGoals",
         path: "/home/goal-setting",
         icon: <MdOutlineAssignment/>
     },
     {
-        title: "Goal Assessment",
+        title: "goalAssessment",
         path: "/home/goal-assessment",
         icon: <MdOutlineAssessment/>
     },
     {
-        title: "Department",
+        title: "department",
         path: "/home/department",
         icon: <MdGroups2/>
     },
     {
-        title: "Employees",
+        title: "employees",
         path: "/home/employees",
         icon: <LuUser2/>
     },
     {
-        title: "Reports",
+        title: "reports",
         path: "/home/reports",
         icon: <PiChartDonut/>
     }
