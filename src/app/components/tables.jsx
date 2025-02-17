@@ -3,10 +3,10 @@
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import {
-  accessinggoalcolumn,
+  useAccessingGoalColumn,
   balancescorecardcolumn,
   departmentcolumn,
-  goalsettingcolumn,
+  useGoalSettingColumn,
   operationaleffeciencycolumn,
   systemcolumn,
   topgoalcolumn,
@@ -20,8 +20,11 @@ import {
   useTopGoalsRouteData,
 } from "../api/databook/route-data";
 
+
+
 export function GoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
+  const goalsettingcolumn = useGoalSettingColumn();
   return (
     <div>
       <div>
@@ -50,6 +53,7 @@ export function GoalTable() {
 
 export function AccessGoalTable() {
   const { goalAssessmentData } = useGoalAccessmentRouteData();
+  const accessinggoalcolumn = useAccessingGoalColumn();
   return (
     <div>
       <div>

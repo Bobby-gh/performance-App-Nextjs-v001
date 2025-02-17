@@ -1,378 +1,406 @@
 import { AssignGoal } from "@/app/components/tableDetails";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
-export const goalsettingcolumn = [
-  {
-    field: "goalTitle",
-    headerName: "Goal Title",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalType",
-    headerName: "Goal Category",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "taskAssignedTo",
-    headerName: "Department ",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalDeadline",
-    headerName: "End Date",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "status",
-    headerName: "Goal Status",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "detail",
-    headerName: "Detail",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => AssignGoal(params),
-  },
-];
+export const useGoalSettingColumn = () => {
+  const { t } = useTranslation();
 
-export const balancescorecardcolumn = [
-  {
-    field: "goalTitle",
-    headerName: "Goal Title",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalType",
-    headerName: "Goal Category",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "taskAssignedTo",
-    headerName: "Department ",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalDeadline",
-    headerName: "End Date",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "detail",
-    headerName: "Detail",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => AssignGoal(params),
-  },
-];
+  return [
+    {
+      field: "goalTitle",
+      headerName: t("goalTitle"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalType",
+      headerName: t("goalCategory"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "taskAssignedTo",
+      headerName: t("department"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalDeadline",
+      headerName: t("endDate"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "status",
+      headerName: t("goalStatus"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "detail",
+      headerName: t("detail"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => AssignGoal(params),
+    },
+  ];
+};
 
-export const operationaleffeciencycolumn = [
-  {
-    field: "goalTitle",
-    headerName: "Goal Title",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "taskAssignedTo",
-    headerName: "Department ",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "performancePercent",
-    headerName: "Score(%)",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalDeadline",
-    headerName: "End Date",
-    flex: 0.5,
-    headerClassName: "header-table",
-  }, 
-  {
-    field: "detail",
-    headerName: "Detail",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => AssignGoal(params),
-  },
-];
+export const useBalanceScoreCardColumn = () => {
+  const { t } = useTranslation();
 
-export const systemcolumn = [
-  {
-    field: "goalTitle",
-    headerName: "Goal Title",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "taskAssignedTo",
-    headerName: "Department ",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "performancePercent",
-    headerName: "Score(%)",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalDeadline",
-    headerName: "End Date",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "status",
-    headerName: "Goal Status",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "detail",
-    headerName: "Detail",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => AssignGoal(params),
-  },
-];
+  return [
+    {
+      field: "goalTitle",
+      headerName: t("goalTitle"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalType",
+      headerName: t("goalCategory"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "taskAssignedTo",
+      headerName: t("department"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalDeadline",
+      headerName: t("endDate"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "detail",
+      headerName: t("detail"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => AssignGoal(params),
+    },
+  ];
+};
 
-export const topgoalcolumn = [
-  {
-    field: "goalTitle",
-    headerName: "Goal Title",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "departmentName",
-    headerName: "Department ",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "dateAssigned",
-    headerName: "Assigned Date",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "performancePercent",
-    headerName: "Goal Score (%)",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalDeadline",
-    headerName: "End Date",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "detail",
-    headerName: "Detail",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => {
-      const handleEditClick = () => {
-        // Implement the edit logic here
-        console.log(`Editing row with ID: ${params.row._id}`);
-      };
+export const useOperationalEffeciencyColumn = () => {
+  const { t } = useTranslation();
 
-      return (
-        <>
-          <button onClick={handleEditClick} className="px-2">
-            <FaEdit className="icons" />
+  return [
+    {
+      field: "goalTitle",
+      headerName: t("goalTitle"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "taskAssignedTo",
+      headerName: t("department"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "performancePercent",
+      headerName: t("scorePercentage"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalDeadline",
+      headerName: t("endDate"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "detail",
+      headerName: t("detail"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => AssignGoal(params),
+    },
+  ];
+};
+
+export const useSystemColumn = () => {
+  const { t } = useTranslation();
+
+  return [
+    {
+      field: "goalTitle",
+      headerName: t("goalTitle"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "taskAssignedTo",
+      headerName: t("department"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "performancePercent",
+      headerName: t("scorePercentage"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalDeadline",
+      headerName: t("endDate"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "status",
+      headerName: t("goalStatus"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "detail",
+      headerName: t("detail"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => AssignGoal(params),
+    },
+  ];
+};
+
+export const useTopGoalColumn = () => {
+  const { t } = useTranslation();
+
+  return [
+    {
+      field: "goalTitle",
+      headerName: t("goalTitle"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "departmentName",
+      headerName: t("department"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "dateAssigned",
+      headerName: t("assignedDate"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "performancePercent",
+      headerName: t("goalScorePercentage"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalDeadline",
+      headerName: t("endDate"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "detail",
+      headerName: t("detail"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => {
+        const handleEditClick = () => {
+          console.log(`Editing row with ID: ${params.row._id}`);
+        };
+
+        return (
+          <>
+            <button onClick={handleEditClick} className="px-2">
+              <FaEdit className="icons" />
+            </button>
+          </>
+        );
+      },
+    },
+  ];
+};
+
+export const useAccessingGoalColumn = () => {
+  const { t } = useTranslation();
+
+  return [
+    {
+      field: "taskAssignedTo",
+      headerName: t("department"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalTitle",
+      headerName: t("goalName"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "goalDeadline",
+      headerName: t("endDate"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "performancePercent",
+      headerName: t("scorePercentage"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "comment",
+      headerName: t("remark"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "detail",
+      headerName: t("detail"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => {
+        const handleEditClick = () => {
+          console.log(`Editing row with ID: ${params.row.id}`);
+        };
+
+        return (
+          <>
+            <button onClick={handleEditClick} className="px-2">
+              <FaEdit className="icons" />
+            </button>
+          </>
+        );
+      },
+    },
+  ];
+};
+
+export const useUserColumn = () => {
+  const { t } = useTranslation();
+
+  return [
+    {
+      field: "name",
+      headerName: t("firstName"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "email",
+      headerName: t("email"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "department",
+      headerName: t("department"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "role",
+      headerName: t("role"),
+      flex: 0.5,
+      headerClassName: "header-table",
+    },
+    {
+      field: "edit",
+      headerName: t("edit"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => {
+        const handleEditClick = () => {
+          console.log(`Editing row with ID: ${params.row.id}`);
+        };
+
+        return (
+          <>
+            <button onClick={handleEditClick} className="px-2">
+              <FaEdit className="icons" />
+            </button>
+          </>
+        );
+      },
+    },
+    {
+      field: "delete",
+      headerName: t("delete"),
+      headerClassName: "header-table",
+      renderCell: (params) => {
+        const handleDeleteClick = () => {
+          console.log(`Editing row with ID: ${params.row.id}`);
+        };
+
+        return (
+          <button onClick={handleDeleteClick} className="px-2">
+            <FaTrash className="icons" />
           </button>
-        </>
-      );
+        );
+      },
     },
-  },
-];
+  ];
+};
 
-export const accessinggoalcolumn = [
-  {
-    field: "taskAssignedTo",
-    headerName: "Department",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalTitle",
-    headerName: "Goal Name",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "goalDeadline",
-    headerName: "End Date",
-    flex: 1,
-    headerClassName: "header-table",
-  },
+export const useDepartmentColumn = () => {
+  const { t } = useTranslation();
 
-  {
-    field: "performancePercent",
-    headerName: "Score(%)",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "comment",
-    headerName: "Remark",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "detail",
-    headerName: "Detail",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => {
-      const handleEditClick = () => {
-        // Implement your edit logic here
-        console.log(`Editing row with ID: ${params.row.id}`);
-      };
+  return [
+    {
+      field: "departmentName",
+      headerName: t("departmentName"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "manager",
+      headerName: t("departmentManager"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "numberOfStaff",
+      headerName: t("numberOfStaff"),
+      flex: 1,
+      headerClassName: "header-table",
+    },
+    {
+      field: "edit",
+      headerName: t("edit"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => {
+        const handleEditClick = () => {
+          console.log(`Editing row with ID: ${params.row.departmentId}`);
+        };
 
-      return (
-        <>
-          <button onClick={handleEditClick} className="px-2">
-            <FaEdit className="icons" />
+        return (
+          <>
+            <button onClick={handleEditClick} className="px-2">
+              <FaEdit className="icons" />
+            </button>
+          </>
+        );
+      },
+    },
+    {
+      field: "delete",
+      headerName: t("delete"),
+      headerClassName: "header-table",
+      flex: 0.5,
+      renderCell: (params) => {
+        const handleDeleteClick = () => {
+          console.log(`Editing row with ID: ${params.row.departmentId}`);
+        };
+
+        return (
+          <button onClick={handleDeleteClick} className="px-2">
+            <FaTrash className="icons" />
           </button>
-        </>
-      );
+        );
+      },
     },
-  },
-];
-export const usercolumn = [
-  {
-    field: "name",
-    headerName: "First Name",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "department",
-    headerName: "Department",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "role",
-    headerName: "Role",
-    flex: 0.5,
-    headerClassName: "header-table",
-  },
-  {
-    field: "edit",
-    headerName: "Edit",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => {
-      const handleEditClick = () => {
-        // Implement the edit logic here
-        console.log(`Editing row with ID: ${params.row.id}`);
-      };
-
-      return (
-        <>
-          <button onClick={handleEditClick} className="px-2">
-            <FaEdit className="icons" />
-          </button>
-        </>
-      );
-    },
-  },
-  {
-    field: "delete",
-    headerName: "delete",
-    headerClassName: "header-table",
-    renderCell: (params) => {
-      const handleDeleteClick = () => {
-        // Implement the delete logic here
-        console.log(`Editing row with ID: ${params.row.id}`);
-      };
-
-      return (
-        <button onClick={handleDeleteClick} className="px-2">
-          <FaTrash className="icons" />
-        </button>
-      );
-    },
-  },
-];
-export const departmentcolumn = [
-  {
-    field: "departmentName",
-    headerName: "Department Name",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "manager",
-    headerName: "Department Manager",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "numberOfStaff",
-    headerName: "Number of Staff",
-    flex: 1,
-    headerClassName: "header-table",
-  },
-  {
-    field: "edit",
-    headerName: "Edit",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => {
-      const handleEditClick = () => {
-        // Implement the edit logic here
-        console.log(`Editing row with ID: ${params.row.departmentId}`);
-      };
-
-      return (
-        <>
-          <button onClick={handleEditClick} className="px-2">
-            <FaEdit className="icons" />
-          </button>
-        </>
-      );
-    },
-  },
-  {
-    field: "delete",
-    headerName: "delete",
-    headerClassName: "header-table",
-    flex: 0.5,
-    renderCell: (params) => {
-      const handleDeleteClick = () => {
-        // Implement the delete logic here
-        console.log(`Editing row with ID: ${params.row.departmentId}`);
-      };
-
-      return (
-        <button onClick={handleDeleteClick} className="px-2">
-          <FaTrash className="icons" />
-        </button>
-      );
-    },
-  },
-];
+  ];
+};

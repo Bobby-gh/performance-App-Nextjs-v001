@@ -405,6 +405,7 @@ export function AddDepartment() {
 }
 
 export function GoalDetails() {
+  const { t } = useTranslation();
   const {auth} = useContext(AuthContext)
   const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
@@ -458,39 +459,39 @@ export function GoalDetails() {
       {/* Notification */}
       <div className="mb-12">
         <Notification
-          typeHeader="Update Goal Progress"
-          message="Select project to update progress"
+          typeHeader= {t("updateGoalProgress")} 
+          message={t("selectProjectToUpdateProgress")} 
         />
       </div>
 
       {/* Goal Details */}
       <div className="text-black text-sm mb-4">
         <div className="flex mb-4">
-          <strong className="w-1/3">Goal ID:</strong>
+          <strong className="w-1/3">{t("goalId")}:</strong>
           <p className="w-2/3 text-blue-900">{goal.id}</p>
         </div>
         <div className="flex mb-4">
-          <strong className="w-1/3">Goal Name:</strong>
+          <strong className="w-1/3">{t("goalName")}:</strong>
           <p className="w-2/3 text-blue-900">{goal.goalTitle}</p>
         </div>
         <div className="flex mb-4">
-          <strong className="w-1/3">Description:</strong>
+          <strong className="w-1/3">{t("description")}:</strong>
           <p className="w-2/3 text-blue-900">{goal.goalDescription}</p>
         </div>
         <div className="flex mb-4">
-          <strong className="w-1/3">Deadline:</strong>
+          <strong className="w-1/3">{t("deadline")}:</strong>
           <p className="w-2/3 text-blue-900">{goal.goalDeadline}</p>
         </div>
         <div className="flex mb-4">
-          <strong className="w-1/3">Status:</strong>
+          <strong className="w-1/3">{t("status")}:</strong>
           <p className="w-2/3 text-blue-900">{goal.status}</p>
         </div>
         <div className="flex mb-4">
-          <strong className="w-1/3">Current Progress:</strong>
+          <strong className="w-1/3">{t("currentProgress")}:</strong>
           <p className="w-2/3 text-blue-900">{goal.actualProgress}</p>
         </div>
         <div className="flex mb-4">
-          <strong className="w-1/3">Target:</strong>
+          <strong className="w-1/3">{t("target")}:</strong>
           <p className="w-2/3 text-blue-900">{goal.target}</p>
         </div>
       </div>
@@ -498,7 +499,7 @@ export function GoalDetails() {
       {/* Update Progress */}
       <div className="flex items-center space-x-4 mt-4 mb-12">
         <label htmlFor="progress-input" className="text-gray-600 text-sm">
-          <strong className="w-1/3 text-black">Enter Progress:</strong>
+          <strong className="w-1/3 text-black">{t("enterProgress")}:</strong>
         </label>
         <input
           id="progress-input"
@@ -515,7 +516,7 @@ export function GoalDetails() {
         className="w-full p-2 bg-blue-900 rounded-xl text-white"
         onClick={handleUpdate}
         disabled={isLoading}>
-        {isLoading ? 'Submitting...' : 'Submit Progress'}
+        {isLoading ? 'Submitting...' : t("submitProgress")}
       </button>
     </div>
   );

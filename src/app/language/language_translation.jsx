@@ -138,6 +138,17 @@ i18n.use(initReactI18next).init({
         or: "Or",
         typeEmailHere: "Type email here",
         enterPassword: "Enter password",
+
+        //infocards
+        goalId: "Goal ID",  
+        deadline: "Deadline",  
+        status: "Status",  
+        currentProgress: "Current Progress",  
+        target: "Target",  
+        enterProgress: "Enter Progress",  
+        submitProgress: "Submit Progress",
+        updateGoalProgress: "Update Goal Progress",  
+        selectProjectToUpdateProgress: "Select project to update progress",  
       },
     },
     fr: {
@@ -271,6 +282,16 @@ i18n.use(initReactI18next).init({
         typeEmailHere: "Entrez l'email ici",
         enterPassword: "Entrez le mot de passe",
 
+        //infocards
+        goalId: "ID de l'objectif",  
+        deadline: "Date limite",  
+        status: "Statut",  
+        currentProgress: "Progrès actuel",  
+        target: "Cible",  
+        enterProgress: "Saisir le progrès",  
+        submitProgress: "Soumettre le progrès", 
+        updateGoalProgress: "Mettre à jour la progression de l'objectif",
+        selectProjectToUpdateProgress: "Sélectionnez un projet pour mettre à jour la progression",  
 
       },
     },
