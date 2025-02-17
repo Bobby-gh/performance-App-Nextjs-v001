@@ -4,13 +4,7 @@ import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import {
   useAccessingGoalColumn,
-  balancescorecardcolumn,
-  departmentcolumn,
   useGoalSettingColumn,
-  operationaleffeciencycolumn,
-  systemcolumn,
-  topgoalcolumn,
-  usercolumn,
 } from "../api/databook/tabel-column-data";
 import {
   useDepartmentRouteData,
