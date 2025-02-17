@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  DashboardHeader,
   InformationalSummary,
   UserPerformanceSummary,
 } from "../components/infocards";
@@ -11,11 +12,12 @@ import {
 import { LoadingPopup } from "../api/sessions";
 import { TopGoalTable } from "../components/tables";
 
+
 export default function dashboard() {
   return (
     <main className="p-4">
       <LoadingPopup />
-      <header className="mb-4 text-xl font-semibold">Dashboard</header>
+        <DashboardHeader/>
       <section className="mb-6">
         <InformationalSummary />
       </section>

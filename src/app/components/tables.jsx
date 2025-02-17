@@ -147,7 +147,7 @@ export function TopDepartmentTable() {
 }
 export function EmployeeTable() {
   const { employeetable } = useEmployeesRouteData();
-  const userColumn = useUserColumn();
+  const usercolumn = useUserColumn();
 
   return (
     <div>

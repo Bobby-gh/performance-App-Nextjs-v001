@@ -138,6 +138,8 @@ i18n.use(initReactI18next).init({
         or: "Or",
         typeEmailHere: "Type email here",
         enterPassword: "Enter password",
+        organizationalDepartment: "Organizational Department",
+
 
         //infocards
         goalId: "Goal ID",  
@@ -149,6 +151,8 @@ i18n.use(initReactI18next).init({
         submitProgress: "Submit Progress",
         updateGoalProgress: "Update Goal Progress",  
         selectProjectToUpdateProgress: "Select project to update progress",  
+        organizationalEmployees: "Organizational Employees",
+
       },
     },
     fr: {
@@ -281,6 +285,8 @@ i18n.use(initReactI18next).init({
         or: "Ou",
         typeEmailHere: "Entrez l'email ici",
         enterPassword: "Entrez le mot de passe",
+        organizationalDepartment: "Département organisationnel",
+
 
         //infocards
         goalId: "ID de l'objectif",  
@@ -291,7 +297,9 @@ i18n.use(initReactI18next).init({
         enterProgress: "Saisir le progrès",  
         submitProgress: "Soumettre le progrès", 
         updateGoalProgress: "Mettre à jour la progression de l'objectif",
-        selectProjectToUpdateProgress: "Sélectionnez un projet pour mettre à jour la progression",  
+        selectProjectToUpdateProgress: "Sélectionnez un projet pour mettre à jour la progression",
+        organizationalEmployees: "Employés organisationnels",
+  
 
       },
     },
