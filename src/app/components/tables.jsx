@@ -5,6 +5,13 @@ import { Box } from "@mui/material";
 import {
   useAccessingGoalColumn,
   useGoalSettingColumn,
+  useBalanceScoreCardColumn,
+  useOperationalEffeciencyColumn,
+  useSystemColumn,
+  useTopGoalColumn,
+  useUserColumn, 
+  useDepartmentColumn,
+
 } from "../api/databook/tabel-column-data";
 import {
   useDepartmentRouteData,
@@ -113,6 +120,7 @@ export function AccessGoalTable() {
 
 export function TopDepartmentTable() {
   const { departmentgoaltable } = useGoalRouteData();
+  const accessinggoalcolumn = useAccessingGoalColumn();
   return (
     <div>
       <div>
@@ -139,6 +147,7 @@ export function TopDepartmentTable() {
 }
 export function EmployeeTable() {
   const { employeetable } = useEmployeesRouteData();
+  const userColumn = useUserColumn();
 
   return (
     <div>
@@ -167,6 +176,8 @@ export function EmployeeTable() {
 }
 export function DepartmentTable() {
   const { departmenttable } = useDepartmentRouteData();
+    const departmentcolumn = useDepartmentColumn();
+
   return (
     <div>
       <div>
@@ -195,6 +206,8 @@ export function DepartmentTable() {
 
 export function TopGoalTable() {
   const { topGoal } = useTopGoalsRouteData();
+    const topgoalcolumn = useTopGoalColumn();
+
   return (
     <div>
       <div>
@@ -260,6 +273,8 @@ export function TopGoalTable() {
 
 export function OperationalEffeciencyTable() {
   const { departmentgoaltable } = useGoalRouteData();
+  const operationaleffeciencycolumn = useOperationalEffeciencyColumn();
+
   return (
     <div>
       <div>
@@ -325,6 +340,8 @@ export function OperationalEffeciencyTable() {
 
 export function SystemGoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
+    const systemcolumn = useSystemColumn();
+
   return (
     <div>
       <div>
@@ -390,6 +407,8 @@ export function SystemGoalTable() {
 
 export function BalaceScorecardTable() {
   const { departmentgoaltable } = useGoalRouteData();
+  const balancescorecardcolumn = useBalanceScoreCardColumn();
+
   return (
     <div>
       <div>
