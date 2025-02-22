@@ -7,8 +7,11 @@ import BalanceScoreCard from './tab-files/balanceScoreCard';
 import GoalAchievemnetReport from './tab-files/goalAchievment';
 import Badges from './tab-files/badges';
 import { LoadingPopup } from '@/app/api/sessions';
+import { useTranslation } from 'react-i18next';
+
 
 export default function ReportingData() {
+  const { t } = useTranslation(); 
   const [activeTab, setActiveTab] = useState("Balance Scorecard"); // Default to "Documents"
 
   const handleTabChange = (tab) => {
@@ -16,18 +19,19 @@ export default function ReportingData() {
   };
 
   console.log(activeTab)
+  
   const renderComponent = () => {
     switch (activeTab) {
-      case "Balance Scorecard":
+      case t("balanceScorecard"): // Dynamically use the translation key
         return <BalanceScoreCard />;
-      case "Operational Effeciency":
+      case t("operationalEfficiency"):
         return <OperationalEfficiency />;
-      case "Strategic Performance":
-        return <StrategicPerformance/>;
-      case "System Goals":
-        return <GoalAchievemnetReport/>;
-      case "Badges":
-        return <Badges/>;
+      case t("strategicPerformance"):
+        return <StrategicPerformance />;
+      case t("systemGoals"):
+        return <GoalAchievemnetReport />;
+      case t("badges"):
+        return <Badges />;
       default:
         return <BalanceScoreCard />;
     }

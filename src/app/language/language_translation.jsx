@@ -138,8 +138,12 @@ i18n.use(initReactI18next).init({
         or: "Or",
         typeEmailHere: "Type email here",
         enterPassword: "Enter password",
+        goalScorePercentage: "Goal Score Percentage",
+        balanceScorecard: "Balance Scorecard",
+        systemGoals: "System Goals",
         organizationalDepartment: "Organizational Department",
-
+        lastSelected: "Last Selected",
+        scorePercentage: "Score Percentage",
 
         //infocards
         goalId: "Goal ID",  
@@ -286,7 +290,9 @@ i18n.use(initReactI18next).init({
         typeEmailHere: "Entrez l'email ici",
         enterPassword: "Entrez le mot de passe",
         organizationalDepartment: "Département organisationnel",
-
+        goalScorePercentage: "Pourcentage du score des objectifs",
+        lastSelected: "Dernier Sélectionné",
+        scorePercentage: "Pourcentage du score",
 
         //infocards
         goalId: "ID de l'objectif",  
@@ -299,8 +305,6 @@ i18n.use(initReactI18next).init({
         updateGoalProgress: "Mettre à jour la progression de l'objectif",
         selectProjectToUpdateProgress: "Sélectionnez un projet pour mettre à jour la progression",
         organizationalEmployees: "Employés organisationnels",
-  
-
       },
     },
   },
