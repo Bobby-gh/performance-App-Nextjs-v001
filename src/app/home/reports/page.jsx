@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function ReportingData() {
   const { t } = useTranslation(); 
-  const [activeTab, setActiveTab] = useState("Balance Scorecard"); // Default to "Documents"
+  const [activeTab, setActiveTab] = useState("balanceScorecard"); // Default to "Documents"
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -22,15 +22,15 @@ export default function ReportingData() {
   
   const renderComponent = () => {
     switch (activeTab) {
-      case t("balanceScorecard"): // Dynamically use the translation key
+      case "balanceScorecard": // Dynamically use the translation key
         return <BalanceScoreCard />;
-      case t("operationalEfficiency"):
+      case "operationalEfficiency":
         return <OperationalEfficiency />;
-      case t("strategicPerformance"):
+      case "strategicPerformance":
         return <StrategicPerformance />;
-      case t("systemGoals"):
+      case "systemGoals":
         return <GoalAchievemnetReport />;
-      case t("badges"):
+      case "badges":
         return <Badges />;
       default:
         return <BalanceScoreCard />;

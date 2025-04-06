@@ -25,7 +25,7 @@ export default function ReportingNavigation({ onTabChange }) {
                 className={`text-md p-4 ${activeTab === tab.key ? 'text-[#08376B] border-b-2 border-[#08376B]' : 'text-black'}`}
               >
                 <span className="ml-2 transition duration-300 ease-out">
-                  {tab.title} {/* Render translated title */}
+                {t(tab.title)} {/* Render translated title */}
                 </span>
               </button>
             </li>
