@@ -19,6 +19,7 @@ import {
   MY_GOALS_URL,
   GOAL_CATEGORY_COUNT,
   GOAL_BADGES,
+  DELETE_GOALS,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -504,4 +505,35 @@ export function useCreateDepartment() {
   };
 
   return { createDepartment };
+}
+
+
+/****************Delete Routes*************** */
+
+export function useGoalDelete() {
+  const { auth } = useContext(AuthContext);
+
+  const deleteGoals = async (id) => {
+
+    try {
+      const response = await axios.post(
+        DELETE_GOALS,
+        JSON.stringify({ id}),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          },
+          withCredentials: true,
+        }
+      );
+
+      return response; 
+    } catch (error) {
+      console.error("Error deleting goal:", error);
+      throw error; 
+    }
+  };
+
+  return { deleteGoals }; 
 }

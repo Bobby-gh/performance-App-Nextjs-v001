@@ -140,7 +140,7 @@ i18n.use(initReactI18next).init({
         enterPassword: "Enter password",
         goalScorePercentage: "Goal Score Percentage",
         balanceScorecard: "Balance Scorecard",
-        systemGoals: "System Goals",
+        systemGoals: "Corporate Goals",
         organizationalDepartment: "Organizational Department",
         lastSelected: "Last Selected",
         scorePercentage: "Score Percentage",

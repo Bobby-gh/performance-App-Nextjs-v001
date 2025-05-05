@@ -261,19 +261,7 @@ export const useAccessingGoalColumn = () => {
       headerName: t("detail"),
       headerClassName: "header-table",
       flex: 0.5,
-      renderCell: (params) => {
-        const handleEditClick = () => {
-          console.log(`Editing row with ID: ${params.row.id}`);
-        };
-
-        return (
-          <>
-            <button onClick={handleEditClick} className="px-2">
-              <FaEdit className="icons" />
-            </button>
-          </>
-        );
-      },
+      renderCell: (params) => AssessGoal(params)
     },
   ];
 };
