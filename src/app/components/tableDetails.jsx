@@ -65,7 +65,7 @@ export function AssignGoal(params) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <Box sx={style}>
+        <Box sx={ModalStyle}>
           <button
             onClick={handleClose}
             className="absolute top-4 right-4 text-black p-2 hover:bg-gray-400">
