@@ -284,7 +284,7 @@ export function UserPerformanceSummary() {
                     Lana Byr
                   </p>
                   <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                    email@windster.com
+                    email@windster.co
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
