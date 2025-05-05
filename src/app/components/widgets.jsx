@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Box, Button, CircularProgress, IconButton, Modal, Typography } from "@mui/material";
-import {  Modaltrigger } from "../../context/AuthContext";
 import { MdDelete } from "react-icons/md";
 import { useGoalDelete } from "../api/databook/route-data";
+import { Modaltrigger } from "../contex/context-context";
 
 export function Delete({ data, message, name }) {
     const [open, setOpen] = useState(false);
