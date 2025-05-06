@@ -9,9 +9,8 @@ import {
   useOperationalEffeciencyColumn,
   useSystemColumn,
   useTopGoalColumn,
-  useUserColumn, 
+  useUserColumn,
   useDepartmentColumn,
-
 } from "../api/databook/tabel-column-data";
 import {
   useDepartmentRouteData,
@@ -20,8 +19,6 @@ import {
   useGoalRouteData,
   useTopGoalsRouteData,
 } from "../api/databook/route-data";
-
-
 
 export function GoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
@@ -58,7 +55,7 @@ export function AccessGoalTable() {
   return (
     <div>
       <div>
-      <Box
+        <Box
           sx={{
             [`.${gridClasses.cell}.veryhigh`]: {
               backgroundColor: "#F84626",
@@ -77,41 +74,41 @@ export function AccessGoalTable() {
             },
             height: 650,
           }}>
-        <DataGrid
-          rows={goalAssessmentData}
-          columns={accessinggoalcolumn}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[10, 15]}
-          slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row._id}
-          sx={{
-            border: 0,
-            borderRadius: 2,
-            p: 2,
-            minWidth: 300,
-          }}
-          getCellClassName={(params) => {
-            const value = params.value;
-            if (value === "pending ...") {
-              return "empty";
-            }
-            if (typeof value === "number") {
-              if (value >= 80) {
-                return "low";
-              } else if (value >= 50) {
-                return "medium";
-              } else if (value >= 20) {
-                return "veryhigh";
-              } else {
-                return "high";
+          <DataGrid
+            rows={goalAssessmentData}
+            columns={accessinggoalcolumn}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[10, 15]}
+            slots={{ toolbar: GridToolbar }}
+            getRowId={(row) => row._id}
+            sx={{
+              border: 0,
+              borderRadius: 2,
+              p: 2,
+              minWidth: 300,
+            }}
+            getCellClassName={(params) => {
+              const value = params.value;
+              if (value === "pending ...") {
+                return "empty";
               }
-            }
-          }}
-        />
+              if (typeof value === "number") {
+                if (value >= 80) {
+                  return "low";
+                } else if (value >= 50) {
+                  return "medium";
+                } else if (value >= 20) {
+                  return "veryhigh";
+                } else {
+                  return "high";
+                }
+              }
+            }}
+          />
         </Box>
       </div>
     </div>
@@ -125,6 +122,13 @@ export function TopDepartmentTable() {
     <div>
       <div>
         <DataGrid
+          sx={{
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: "#1976d2", // your desired header background
+              color: "#fff", // header text color
+              fontWeight: "bold",
+            },
+          }}
           rows={departmentgoaltable}
           columns={accessinggoalcolumn}
           getRowId={(row) => row._id}
@@ -176,7 +180,7 @@ export function EmployeeTable() {
 }
 export function DepartmentTable() {
   const { departmenttable } = useDepartmentRouteData();
-    const departmentcolumn = useDepartmentColumn();
+  const departmentcolumn = useDepartmentColumn();
 
   return (
     <div>
@@ -206,12 +210,12 @@ export function DepartmentTable() {
 
 export function TopGoalTable() {
   const { topGoal } = useTopGoalsRouteData();
-    const topgoalcolumn = useTopGoalColumn();
+  const topgoalcolumn = useTopGoalColumn();
 
   return (
     <div>
       <div>
-      <Box
+        <Box
           sx={{
             [`.${gridClasses.cell}.veryhigh`]: {
               backgroundColor: "#F84626",
@@ -230,41 +234,41 @@ export function TopGoalTable() {
             },
             height: 650,
           }}>
-        <DataGrid
-          rows={topGoal}
-          columns={topgoalcolumn}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[10, 15]}
-          slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row._id}
-          sx={{
-            border: 0,
-            borderRadius: 2,
-            p: 2,
-            minWidth: 300,
-          }}
-          getCellClassName={(params) => {
-            const value = params.value;
-            if (value === "pending ...") {
-              return "empty";
-            }
-            if (typeof value === "number") {
-              if (value >= 80) {
-                return "low";
-              } else if (value >= 50) {
-                return "medium";
-              } else if (value >= 20) {
-                return "veryhigh";
-              } else {
-                return "high";
+          <DataGrid
+            rows={topGoal}
+            columns={topgoalcolumn}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[10, 15]}
+            slots={{ toolbar: GridToolbar }}
+            getRowId={(row) => row._id}
+            sx={{
+              border: 0,
+              borderRadius: 2,
+              p: 2,
+              minWidth: 300,
+            }}
+            getCellClassName={(params) => {
+              const value = params.value;
+              if (value === "pending ...") {
+                return "empty";
               }
-            }
-          }}
-        />
+              if (typeof value === "number") {
+                if (value >= 80) {
+                  return "low";
+                } else if (value >= 50) {
+                  return "medium";
+                } else if (value >= 20) {
+                  return "veryhigh";
+                } else {
+                  return "high";
+                }
+              }
+            }}
+          />
         </Box>
       </div>
     </div>
@@ -340,7 +344,7 @@ export function OperationalEffeciencyTable() {
 
 export function SystemGoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
-    const systemcolumn = useSystemColumn();
+  const systemcolumn = useSystemColumn();
 
   return (
     <div>
