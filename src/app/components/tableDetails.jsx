@@ -71,58 +71,7 @@ export function AssignGoal(params) {
             className="absolute top-4 right-4 text-black p-2 hover:bg-gray-400">
             ✖
           </button>
-
-          {/* Header */}
-          {/*<div className="font-bold text-3xl flex items-center text-[#04B1C4] justify-center mb-6">
-            GRC Risk Management
-          </div>*/}
-
-          {/* Scrollable Body */}
           <div className="overflow-y-auto max-h-[70vh] p-4">
-            <div className="grid grid-cols-6 bg-gray-300 mb-16 p-6 rounded-lg shadow-md">
-              {/* Left Section: Risk Cards */}
-              <div className="col-span-2 grid grid-cols-2 gap-4">
-                <div className="bg-blue-700 text-white h-48 w-40 p-5 flex flex-col items-center justify-center rounded-lg shadow-md">
-                  <p className="text-lg font-semibold">Inherent Risk</p>
-                  <p className="text-7xl font-bold">32</p>
-                  <p className="text-2xl font-bold">Very High</p>
-                </div>
-                <div className="bg-blue-700 text-white h-48 w-40 p-5 flex flex-col items-center justify-center rounded-lg shadow-md">
-                  <p className="text-lg font-semibold">Residual Risk</p>
-                  <p className="text-7xl font-bold">32</p>
-                  <p className="text-2xl font-bold">Very High</p>
-                </div>
-              </div>
-
-              {/* Right Section: Details */}
-              <div className="col-span-4 flex flex-col py-10">
-                <div className="flex  space-x-6 items-center justify-between w-full text-lg font-medium pb-4">
-                  <div className="text-gray-700">
-                    ID: <span className="font-semibold text-blue-700">{monitorInfo.riskId}</span>
-                  </div>
-                  <div className="text-gray-700">
-                    STATUS:{" "}
-                    <span className="font-semibold text-blue-700">
-                      {monitorInfo.status?.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="text-gray-700">
-                    CATEGORY:{" "}
-                    <span className="font-semibold text-blue-700">
-                      {monitorInfo.riskCategory?.toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-                <hr className="my-4 w-full border-gray-400" />
-                <div className="text-gray-700 text-lg font-medium">
-                  SUBJECT:{" "}
-                  <span className="font-semibold text-blue-700">
-                    {monitorInfo.riskName?.toUpperCase()}
-                  </span>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-800"></h3>
-              </div>
-            </div>
             <div>
             <FormControl fullWidth>
             <div className=" px-10 py-10">
