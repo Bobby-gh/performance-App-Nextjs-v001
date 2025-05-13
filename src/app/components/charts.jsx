@@ -351,6 +351,8 @@ export function CustomerCentricGoal() {
 }
 
 export function AchievedGoalChart() {
+  //for all the goals achieved within the system
+  
   const { t } = useTranslation();
   const { goalStatus } = useGoalStatus();
   const { Completed, Total } = goalStatus;
