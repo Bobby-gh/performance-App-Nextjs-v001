@@ -1,4 +1,4 @@
-import { AssignGoal } from "@/app/components/tableDetails";
+import { AssessGoal, AssignGoal } from "@/app/components/tableDetails";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
