@@ -4,8 +4,8 @@ import React from "react";
 import { Sidebar } from "../components/sidebar";
 import { Navbar } from "../components/navbar";
 import { AuthContext } from "../contex/context-context";
-import NotAuthorized from "../page-not-authorized/page";
-import SystemDown from "../system-down/page";
+import NotAuthorized from "../page-not-authorized";
+import SystemDown from "../system-down";
 import { LoadingPage } from "../components/loading";
 import { ToastProvider } from "../components/notification";
 
@@ -17,7 +17,7 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     try {
-      if (auth) {
+      if (!auth) {
         setValidated(true);
       } else {
         setValidated(false);
