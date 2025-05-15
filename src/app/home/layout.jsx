@@ -10,28 +10,26 @@ import SystemDown from "../system-down/page";
 import NotAuthorized from "../page-not-authorized/page";
 
 export default function Layout({ children }) {
-  const [validated, setValidated] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [systemDown, setSystemDown] = useState(false);
   const { auth } = useContext(AuthContext);
 
   useEffect(() => {
-    if (auth?.token) {
-      setValidated(true);
-    } else {
-      setValidated(false);
+    const token = Cookies.get("token");
+    if (token) {
+      setAuth(token);
     }
-    setIsCheckingAuth(false);
-  }, [auth?.token]);
+    setIsCheckingAuth(false);  
+  }, []);
 
-  if (isCheckingAuth) return <LoadingPage />;
-
-  if (!validated) return <NotAuthorized />;
+  if (isCheckingAuth) {
+    return <LoadingPage/>;
+  }
 
   return (
     <div>
       <div>
-        {validated ? (
+        {auth ? (
           <main className="flex h-screen bg-[#EFF1F9] p-4">
             <ToastProvider />
             <div>
