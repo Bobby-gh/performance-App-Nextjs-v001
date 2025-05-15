@@ -42,7 +42,7 @@ export  function GoalTable() {
   const handleEdit = (row) => {
     console.log("Edit", row);
   };
-  
+
   const handleNotifications = (row) => {
     console.log("Notifications", row);
   };
@@ -57,6 +57,12 @@ export  function GoalTable() {
         fontSize: "14px",
         background: "#08376B",
         color: "white",
+      },
+    },
+     muiTablePaperProps: {
+      elevation: 0,
+      sx: {
+        borderRadius: "10",
       },
     },
     muiTableBodyProps: {
