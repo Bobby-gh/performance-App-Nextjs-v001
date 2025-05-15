@@ -303,58 +303,16 @@ export const useDepartmentColumn = () => {
 
   return [
     {
-      field: "departmentName",
-      headerName: t("departmentName"),
-      flex: 1,
-      headerClassName: "header-table",
+      accessorKey: "departmentName",
+      header: t("departmentName"),
     },
     {
-      field: "manager",
-      headerName: t("departmentManager"),
-      flex: 1,
-      headerClassName: "header-table",
+      accessorKey: "manager",
+      header: t("departmentManager"),
     },
     {
-      field: "numberOfStaff",
-      headerName: t("numberOfStaff"),
-      flex: 1,
-      headerClassName: "header-table",
-    },
-    {
-      field: "edit",
-      headerName: t("edit"),
-      headerClassName: "header-table",
-      flex: 0.5,
-      renderCell: (params) => {
-        const handleEditClick = () => {
-          console.log(`Editing row with ID: ${params.row.departmentId}`);
-        };
-
-        return (
-          <>
-            <button onClick={handleEditClick} className="px-2">
-              <FaEdit className="icons" />
-            </button>
-          </>
-        );
-      },
-    },
-    {
-      field: "delete",
-      headerName: t("delete"),
-      headerClassName: "header-table",
-      flex: 0.5,
-      renderCell: (params) => {
-        const handleDeleteClick = () => {
-          console.log(`Editing row with ID: ${params.row.departmentId}`);
-        };
-
-        return (
-          <button onClick={handleDeleteClick} className="px-2">
-            <FaTrash className="icons" />
-          </button>
-        );
-      },
+      accessorKey: "numberOfStaff",
+      header: t("numberOfStaff"),
     },
   ];
 };

@@ -5,13 +5,17 @@ import React from "react";
 
 export default function Department() {
   return (
-    <main>
-      <LoadingPopup/>
-      <div className="mb-4 flex justify-between flex-row">
-        <Departmentforms/>
-      </div>
-      <div className="mt-16 bg-white rounded-lg">
-        <DepartmentTable />
+    <main className="mt-8">
+      <LoadingPopup />
+      <div className="card bg-white p-8 rounded-lg">
+        <div className="flex justify-end mb-4">
+          <div className="mt-1">
+            <Departmentforms />
+          </div>
+        </div>
+        <div>
+          <DepartmentTable />
+        </div>
       </div>
     </main>
   );
