@@ -575,12 +575,6 @@ export function Notification({ message, typeHeader }) {
   );
 }
 
-export function OrganisationalDepartment() {
-  const { t } = useTranslation();
-  return (
-    <div className="text-xl font-bold text-blue-500"> {t("organizationalDepartment")}</div>
-  );
-}
 
 export function DashboardHeader() {
   const { t } = useTranslation();
