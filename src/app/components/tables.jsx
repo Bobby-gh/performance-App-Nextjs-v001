@@ -23,7 +23,7 @@ import {
 
 
 
-export function GoalTable() {
+export function GoalTable1() {
   const { departmentgoaltable } = useGoalRouteData();
   const goalsettingcolumn = useGoalSettingColumn();
   return (
@@ -50,6 +50,42 @@ export function GoalTable() {
       </div>
     </div>
   );
+}
+
+export default function GoalTable() {
+  const { departmentgoaltable } = useGoalRouteData();
+  const goalsettingcolumn = useGoalSettingColumn();
+
+  
+  const data = useMemo(() => departmentgoaltable, [departmentgoaltable]);
+  const columns = useMemo(() => goalsettingcolumn, []);
+
+ 
+
+  const table = useMaterialReactTable({
+    muiTableHeadCellProps: {
+      sx: {
+        fontWeight: "normal",
+        fontSize: "14px",
+        background: "#08376B",
+        color: "white",
+      },
+    },
+    muiTableBodyProps: {
+      sx: {
+        "& tr:nth-of-type(even) > td": {
+          backgroundColor: "#f5f5f5",
+        },
+      },
+    },
+    columns,
+    data,
+    enableColumnOrdering: true,
+    enableRowSelection: true,
+    enablePagination: true
+  });
+
+  return <MaterialReactTable table={table} />;
 }
 
 export function AccessGoalTable() {
