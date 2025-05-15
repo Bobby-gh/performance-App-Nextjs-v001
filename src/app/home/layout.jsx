@@ -8,13 +8,18 @@ import { LoadingPage } from "../components/loading";
 import { ToastProvider } from "../components/notification";
 import SystemDown from "../system-down/page";
 import NotAuthorized from "../page-not-authorized/page";
+import { usePathname } from 'next/navigation';
+
+
+
 
 export default function Layout({ children }) {
   const [validated, setValidated] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [systemDown, setSystemDown] = useState(false);
   const { auth } = useContext(AuthContext);
-
+  const pathname = usePathname();
+  if (pathname === '/login') return;
   useEffect(() => {
     try {
       if (!auth) {
