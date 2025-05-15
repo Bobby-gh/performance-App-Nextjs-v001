@@ -17,7 +17,7 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     try {
-      if (!auth) {
+      if (auth) {
         setValidated(true);
       } else {
         setValidated(false);
