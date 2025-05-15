@@ -7,7 +7,7 @@ import React from "react";
 
 export default function GoalAssessment() {
   return (
-    <main className="m-4">
+    <main>
       <LoadingPopup/>
       <div className="mb-4 flex justify-between flex-row">
         <AccessGoal/>
