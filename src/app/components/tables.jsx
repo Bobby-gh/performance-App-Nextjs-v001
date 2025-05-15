@@ -41,7 +41,7 @@ export function GoalTable1() {
           slots={{ toolbar: GridToolbar }}
           getRowId={(row) => row._id}
           sx={{
-            border: 0,
+            border: 3,
             borderRadius: 2,
             p: 2,
             minWidth: 300,
