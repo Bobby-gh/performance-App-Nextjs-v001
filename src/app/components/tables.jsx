@@ -21,6 +21,11 @@ import {
   useTopGoalsRouteData,
 } from "../api/databook/route-data";
 
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from "material-react-table";
+
 
 
 export function GoalTable1() {
