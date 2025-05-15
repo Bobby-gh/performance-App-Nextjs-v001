@@ -8,6 +8,7 @@ import { LoadingPage } from "../components/loading";
 import { ToastProvider } from "../components/notification";
 import SystemDown from "../system-down/page";
 import NotAuthorized from "../page-not-authorized/page";
+import Cookies from "js-cookie";
 
 export default function Layout({ children }) {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
