@@ -2,24 +2,7 @@
 import { Backdrop, CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-export const LoadingPopup = () => {
-  const [isLoading, setLoading] = useState(true);
-  try {
-    useEffect(() => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 3000);
-    }, []);
-  } catch (err) {
-    console.log(err);
-  }
 
-  return (
-    <Backdrop open={isLoading} style={{ zIndex: 9999, color: "#fff" }}>
-      <CircularProgress />
-    </Backdrop>
-  );
-};
 
 
 export function LoadingPage () {

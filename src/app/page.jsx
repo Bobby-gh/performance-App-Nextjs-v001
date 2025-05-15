@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import notAvailable from "../images/notAvailable.png";
+import notAvailable from "../app/images/notAvailable.png";
 
 export default function NotAuthorized() {
   return (

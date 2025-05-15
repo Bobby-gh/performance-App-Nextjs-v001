@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from "next/image";
 import Cookies from "js-cookie";
-import notAvailable from "./images/notAvailable.png";
+import notAvailable from "../app/images/notAvailable.png";
 
 export default function NotFound() {
     const Auth = Cookies.get("token");
