@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  DashboardHeader,
   InformationalSummary,
   UserPerformanceSummary,
 } from "../components/infocards";
