@@ -1,6 +1,5 @@
 import { LoadingPopup } from "@/app/api/sessions";
 import { AccessGoal } from "@/app/components/drawers";
-import { AssessNewGoals } from "@/app/components/infocards";
 import { AccessGoalTable } from "@/app/components/tables";
 import React from "react";
 

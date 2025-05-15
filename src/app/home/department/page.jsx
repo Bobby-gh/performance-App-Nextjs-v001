@@ -1,6 +1,5 @@
 import { LoadingPopup } from "@/app/api/sessions";
 import { Departmentforms } from "@/app/components/drawers";
-import { AddDepartment, OrganisationalDepartment } from "@/app/components/infocards";
 import { DepartmentTable } from "@/app/components/tables";
 import React from "react";
 
