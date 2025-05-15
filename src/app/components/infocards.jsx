@@ -591,10 +591,5 @@ export function OrganizationalEmployees() {
   );
 }
 
-export function AssessNewGoals() {
-  const { t } = useTranslation();
-  return (
-    <div className="text-xl font-bold text-blue-500">{t("assessNewGoals")}</div>
-  );
-}
+
 
