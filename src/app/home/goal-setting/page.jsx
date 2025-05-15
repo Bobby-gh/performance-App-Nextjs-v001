@@ -10,7 +10,6 @@ export default function GoalSetting() {
     <main className="m-4">
       <LoadingPopup/>
       <div className="mb-4 flex justify-between flex-row">
-        <GoalsHeader/>
         <CreateGoal/>
       </div>
       <div className="mt-16  bg-white rounded-lg">

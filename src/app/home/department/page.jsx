@@ -9,7 +9,6 @@ export default function Department() {
     <main className="m-4">
       <LoadingPopup/>
       <div className="mb-4 flex justify-between flex-row">
-          <OrganisationalDepartment/>
         <Departmentforms/>
       </div>
       <div className="mt-16 bg-white rounded-lg">

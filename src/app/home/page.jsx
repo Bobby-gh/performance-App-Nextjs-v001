@@ -12,12 +12,10 @@ import {
 import { LoadingPopup } from "../api/sessions";
 import { TopGoalTable } from "../components/tables";
 
-
 export default function dashboard() {
   return (
-    <main className="p-4">
+    <main>
       <LoadingPopup />
-        <DashboardHeader/>
       <section className="mb-6">
         <InformationalSummary />
       </section>
@@ -30,7 +28,7 @@ export default function dashboard() {
         </div>
       </section>
       <section className="mt-6 card bg-white rounded-lg">
-        <TopGoalTable/>
+        <TopGoalTable />
       </section>
     </main>
   );
