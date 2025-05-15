@@ -19,7 +19,7 @@ export default function Layout({ children }) {
   const [systemDown, setSystemDown] = useState(false);
   const { auth } = useContext(AuthContext);
   const pathname = usePathname();
-  if (pathname === '/login') return;
+  if (pathname === '/') return;
   useEffect(() => {
     try {
       if (!auth) {
