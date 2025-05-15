@@ -7,37 +7,37 @@ export const useGoalSettingColumn = () => {
 
   return [
     {
-      field: "goalTitle",
+      accessorKey: "goalTitle",
       headerName: t("goalTitle"),
       flex: 1,
       headerClassName: "header-table",
     },
     {
-      field: "goalType",
+      accessorKey: "goalType",
       headerName: t("goalCategory"),
       flex: 1,
       headerClassName: "header-table",
     },
     {
-      field: "taskAssignedTo",
+      accessorKey: "taskAssignedTo",
       headerName: t("department"),
       flex: 1,
       headerClassName: "header-table",
     },
     {
-      field: "goalDeadline",
+      accessorKey: "goalDeadline",
       headerName: t("endDate"),
       flex: 0.5,
       headerClassName: "header-table",
     },
     {
-      field: "status",
+      accessorKey: "status",
       headerName: t("goalStatus"),
       flex: 0.5,
       headerClassName: "header-table",
     },
     {
-      field: "detail",
+      accessorKey: "detail",
       headerName: t("detail"),
       headerClassName: "header-table",
       flex: 0.5,
