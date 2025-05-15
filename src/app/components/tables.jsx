@@ -52,7 +52,7 @@ export function GoalTable1() {
   );
 }
 
-export default function GoalTable() {
+export  function GoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
   const goalsettingcolumn = useGoalSettingColumn();
 
