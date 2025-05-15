@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 export default function Layout({ children }) {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [systemDown, setSystemDown] = useState(false);
-  const { auth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   useEffect(() => {
     const token = Cookies.get("token");
