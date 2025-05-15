@@ -3,7 +3,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 i18n.use(initReactI18next).init({
-  fallbackLng: "fr", // Default language
+  fallbackLng: "en", // Default language
   interpolation: {
     escapeValue: false, // React already escapes values to prevent XSS
   },

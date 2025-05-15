@@ -1,7 +1,7 @@
 "use client";
 
 import { DataGrid, GridToolbar, gridClasses } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { Box, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import {
   useAccessingGoalColumn,
   useGoalSettingColumn,
@@ -26,37 +26,10 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { useMemo } from "react";
+import { MdEditNotifications } from "react-icons/md";
+import { IoNotificationsCircleOutline } from "react-icons/io5";
 
 
-
-export function GoalTable1() {
-  const { departmentgoaltable } = useGoalRouteData();
-  const goalsettingcolumn = useGoalSettingColumn();
-  return (
-    <div>
-      <div>
-        <DataGrid
-          rows={departmentgoaltable}
-          columns={goalsettingcolumn}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[10, 15]}
-          slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row._id}
-          sx={{
-            border: 3,
-            borderRadius: 2,
-            p: 2,
-            minWidth: 300,
-          }}
-        />
-      </div>
-    </div>
-  );
-}
 
 export  function GoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
@@ -65,6 +38,15 @@ export  function GoalTable() {
   
   const data = useMemo(() => departmentgoaltable, [departmentgoaltable]);
   const columns = useMemo(() => goalsettingcolumn, []);
+
+  const handleEdit = (row) => {
+    console.log("Edit", row);
+  };
+  
+  const handleNotifications = (row) => {
+    console.log("Notifications", row);
+  };
+
 
  
 
@@ -88,7 +70,33 @@ export  function GoalTable() {
     data,
     enableColumnOrdering: true,
     enableRowSelection: true,
-    enablePagination: true
+    enablePagination: true, 
+    enableRowActions: true,
+    positionActionsColumn: "last",
+    renderRowActionMenuItems: ({ closeMenu, row }) => [
+      <MenuItem
+        key="edit"
+        onClick={() => {
+          handleEdit(row);
+          closeMenu();
+        }}>
+        <ListItemIcon>
+          <MdEditNotifications fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Edit</ListItemText>
+      </MenuItem>,
+      <MenuItem
+        key="notifications"
+        onClick={() => {
+          handleNotifications(row);
+          closeMenu();
+        }}>
+        <ListItemIcon>
+          <IoNotificationsCircleOutline fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Notifications</ListItemText>
+      </MenuItem>,
+    ],
   });
 
   return <MaterialReactTable table={table} />;

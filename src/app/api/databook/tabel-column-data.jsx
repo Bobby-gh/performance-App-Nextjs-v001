@@ -9,39 +9,22 @@ export const useGoalSettingColumn = () => {
     {
       accessorKey: "goalTitle",
       header: t("goalTitle"),
-      flex: 1,
-      headerClassName: "header-table",
     },
     {
       accessorKey: "goalType",
       header: t("goalCategory"),
-      flex: 1,
-      headerClassName: "header-table",
     },
     {
       accessorKey: "taskAssignedTo",
       header: t("department"),
-      flex: 1,
-      headerClassName: "header-table",
     },
     {
       accessorKey: "goalDeadline",
       header: t("endDate"),
-      flex: 0.5,
-      headerClassName: "header-table",
     },
     {
       accessorKey: "status",
       header: t("goalStatus"),
-      flex: 0.5,
-      headerClassName: "header-table",
-    },
-    {
-      accessorKey: "detail",
-      header: t("detail"),
-      headerClassName: "header-table",
-      flex: 0.5,
-      renderCell: (params) => AssignGoal(params),
     },
   ];
 };
