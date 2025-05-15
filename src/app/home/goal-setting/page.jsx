@@ -9,7 +9,7 @@ export default function GoalSetting() {
     <main className="mt-8">
       <LoadingPopup/>
       <div className="card bg-white p-8 rounded-lg">
-        <div className="flex justify-end ">
+        <div className="flex justify-end mb-4">
           <div className="mt-1">
             <CreateGoal/>
           </div>
