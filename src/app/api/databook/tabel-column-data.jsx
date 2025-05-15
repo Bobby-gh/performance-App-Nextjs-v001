@@ -210,41 +210,24 @@ export const useAccessingGoalColumn = () => {
 
   return [
     {
-      field: "taskAssignedTo",
-      headerName: t("department"),
-      flex: 1,
-      headerClassName: "header-table",
+      accessorKey: "taskAssignedTo",
+      header: t("department"),
     },
     {
-      field: "goalTitle",
-      headerName: t("goalName"),
-      flex: 1,
-      headerClassName: "header-table",
+      accessorKey: "goalTitle",
+      header: t("goalName"),
     },
     {
-      field: "goalDeadline",
-      headerName: t("endDate"),
-      flex: 1,
-      headerClassName: "header-table",
+      accessorKey: "goalDeadline",
+      header: t("endDate"),
     },
     {
-      field: "performancePercent",
-      headerName: t("scorePercentage"),
-      flex: 0.5,
-      headerClassName: "header-table",
+      accessorKey: "performancePercent",
+      header: t("scorePercentage"),
     },
     {
-      field: "comment",
-      headerName: t("remark"),
-      flex: 0.5,
-      headerClassName: "header-table",
-    },
-    {
-      field: "detail",
-      headerName: t("detail"),
-      headerClassName: "header-table",
-      flex: 0.5,
-      renderCell: (params) => AssessGoal(params)
+      accessorKey: "comment",
+      header: t("remark"),
     },
   ];
 };
