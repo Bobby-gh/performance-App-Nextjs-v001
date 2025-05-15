@@ -3,7 +3,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 i18n.use(initReactI18next).init({
-  fallbackLng: "en", // Default language
+  fallbackLng: "fr", // Default language
   interpolation: {
     escapeValue: false, // React already escapes values to prevent XSS
   },
@@ -16,9 +16,9 @@ i18n.use(initReactI18next).init({
         forgotPassword: "Forgot password?",
         
         // Dashboard
-        dashboard: "Dashboard", //done
+        Dashboard: "Dashboard", //done
         performanceMatrix: "PERFORMANCE MATRIX",//done
-        projects: "Projects",//done
+        Projects: "Projects",//done
         assignGoals: "Assign Goals", //done
         assignGoal: "Assign Goal",//done
         goalAssessment: "Assessment", //done
@@ -167,8 +167,8 @@ i18n.use(initReactI18next).init({
         forgotPassword: "Mot de passe oublié ?",
         
         // Dashboard
-        dashboard: "Tableau de Bord",
-        projects: "Projets",
+        Dashboard: "Tableau de Bord",
+        Projects: "Projets",
         performanceMatrix: "MATRICE DE PERFORMANCE",
         assignGoals: "Attribuer des Objectifs",
         assignGoal: "Attribuer des Objectif",

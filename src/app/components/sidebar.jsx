@@ -13,7 +13,6 @@ export function Sidebar() {
 
   const currentPathname = usePathname()
   const {auth} = useContext(AuthContext)
-  console.log({"refnum": auth.refNum})
 
    const filteredMenuItems = MenuItems.filter((item) => {
     if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
@@ -42,7 +41,7 @@ export function Sidebar() {
       </div>
 
       {/* Menu Items */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center text-center">
         <ul className="w-full">
           {filteredMenuItems.map((item) => (
             <li key={item.title} className="flex flex-col items-center mb-2">

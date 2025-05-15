@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useContext, useEffect, useState } from "react";
 import React from "react";
 import { Sidebar } from "../components/sidebar";
@@ -59,5 +59,6 @@ export default function Layout({ children }) {
         )}
       </div>
     </div>
+
   );
 }

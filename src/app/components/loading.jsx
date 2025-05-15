@@ -3,8 +3,6 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 
-
-
 export function LoadingPage () {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">

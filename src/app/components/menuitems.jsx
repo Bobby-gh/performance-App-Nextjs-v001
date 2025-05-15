@@ -1,18 +1,18 @@
 import { FaHome } from "react-icons/fa";
 import { GoGoal } from "react-icons/go";
 import { MdOutlineAssessment, MdGroups2, MdOutlineAssignment } from "react-icons/md";
-import { LuUser2 } from "react-icons/lu";
 import { PiChartDonut } from "react-icons/pi";
+import { IoPerson } from "react-icons/io5";
 
 
 export const MenuItems = [
     {
-        title: "dashboard",
+        title: "Dashboard",
         path: "/home",
         icon: <FaHome/>
     },
     {
-        title: "projects",
+        title: "Projects",
         path: "/home/goals",
         icon: <GoGoal/>
     },
@@ -34,7 +34,7 @@ export const MenuItems = [
     {
         title: "employees",
         path: "/home/employees",
-        icon: <LuUser2/>
+        icon: <IoPerson/>
     },
     {
         title: "reports",
