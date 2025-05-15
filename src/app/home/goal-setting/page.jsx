@@ -6,13 +6,17 @@ import React from "react";
 export default function GoalSetting() {
   
   return (
-    <main>
+    <main className="mt-8">
       <LoadingPopup/>
-      <div className="mb-4 flex justify-between flex-row">
-        <CreateGoal/>
-      </div>
-      <div className="mt-16  bg-white rounded-lg">
-        <GoalTable />
+      <div className="card bg-white p-8 rounded-lg">
+        <div className="flex justify-end ">
+          <div className="mt-1">
+            <CreateGoal/>
+          </div>
+        </div>
+        <div>
+          <GoalTable/>
+        </div>
       </div>
     </main>
   );
