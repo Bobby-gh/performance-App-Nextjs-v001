@@ -30,7 +30,7 @@ export function Sidebar() {
 
   return (
 
-    <main className="w-24 h-full bg-[#6c80ff]  rounded-lg">
+    <main className="w-24 h-full bg-[#0b1558]  rounded-lg">
       {/* Logo */}
       <div className="flex justify-center p-2 mb-4">
         {/* Logo image */}
@@ -52,7 +52,7 @@ export function Sidebar() {
                 {/* Icon with hover and focus effects */}
                 <div
                   className={classNames(
-                    "text-lg p-2 rounded-lg transition-colors duration-200",
+                    "text-lg p-2 text-white rounded-lg transition-colors duration-200",
                     {
                       "bg-[#08397e] text-white": currentPathname === item.path, // Focused state
                       "hover:bg-[#08397e] hover:text-white": currentPathname !== item.path, // Hover effect only on the icon
@@ -62,7 +62,7 @@ export function Sidebar() {
                 </div>
 
                 {/* Title (beneath icon, unaffected by focus or hover) */}
-                <span className="text-xs mt-1 ">{t(item.title)}</span>
+                <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
               </a>
             </li>
           ))}
