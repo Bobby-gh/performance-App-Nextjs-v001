@@ -16,25 +16,17 @@ export default function Layout({ children }) {
   const { auth } = useContext(AuthContext);
 
   useEffect(() => {
-    try {
-      if (auth.token) {
-        setValidated(true);
-      } else {
-        setValidated(false);
-      }
-    } catch (err) {
-      if (err.response?.status === 500 || err.response?.status === 400) {
-        setSystemDown(true);
-      }
-      console.error("Validation failed:", err.response || err.message || err);
-    } finally {
-      setIsCheckingAuth(false);
+    if (auth?.token) {
+      setValidated(true);
+    } else {
+      setValidated(false);
     }
-  }, [auth]);
+    setIsCheckingAuth(false);
+  }, [auth?.token]);
 
-  if (isCheckingAuth) {
-    return <LoadingPage />;
-  }
+  if (isCheckingAuth) return <LoadingPage />;
+
+  if (!validated) return <NotAuthorized />;
 
   return (
     <div>
@@ -59,6 +51,5 @@ export default function Layout({ children }) {
         )}
       </div>
     </div>
-
   );
 }
