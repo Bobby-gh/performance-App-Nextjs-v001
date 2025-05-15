@@ -30,7 +30,7 @@ export default function Layout({ children }) {
     } finally {
       setIsCheckingAuth(false);
     }
-  }, []);
+  }, [auth]);
 
   if (isCheckingAuth) {
     return <LoadingPage />;
