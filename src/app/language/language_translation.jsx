@@ -21,7 +21,7 @@ i18n.use(initReactI18next).init({
         projects: "Projects",//done
         assignGoals: "Assign Goals", //done
         assignGoal: "Assign Goal",//done
-        goalAssessment: "Goal Assessment", //done
+        goalAssessment: "Assessment", //done
         goalName: "Goal Name", //done
         department: "Department", //done
         employees: "Employees", //done

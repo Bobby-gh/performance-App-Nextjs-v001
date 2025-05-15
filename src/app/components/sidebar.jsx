@@ -30,9 +30,10 @@ export function Sidebar() {
 
   return (
 
-    <main className="w-24 h-full bg-black rounded-lg">
+    <main className="w-24 h-full bg-[#b2b2b3]  rounded-lg">
       {/* Logo */}
-      <div className="flex justify-center p-2">
+      <div className="flex justify-center p-2 mb-4">
+        {/* Logo image */}
         <img
           src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
           alt="Paris"
@@ -61,7 +62,7 @@ export function Sidebar() {
                 </div>
 
                 {/* Title (beneath icon, unaffected by focus or hover) */}
-                <span className="text-xs mt-1 text-white">{t(item.title)}</span>
+                <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
               </a>
             </li>
           ))}

@@ -4,6 +4,8 @@ import { IoNotifications } from "react-icons/io5";
 import { LogOut } from "./modals";
 import { AuthContext } from "../contex/context-context";
 import { useTranslation } from "react-i18next";
+import { MdAccountCircle } from "react-icons/md";
+import { CgMenuGridR } from "react-icons/cg";
 
 
 export function Navbar() {
