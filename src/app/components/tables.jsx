@@ -28,7 +28,7 @@ import {
 
 
 
-export function GoalTable1() {
+export function GoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
   const goalsettingcolumn = useGoalSettingColumn();
   return (
@@ -57,7 +57,7 @@ export function GoalTable1() {
   );
 }
 
-export  function GoalTable() {
+export  function GoalTable1() {
   const { departmentgoaltable } = useGoalRouteData();
   const goalsettingcolumn = useGoalSettingColumn();
 
