@@ -11,44 +11,19 @@ import NotAuthorized from "../page-not-authorized/page";
 import Cookies from "js-cookie";
 
 export default function Layout({ children }) {
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const [validated, setValidated] = useState(false)
-  const { setAuth } = useContext(AuthContext);
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      setAuth((prev) => ({
-        ...prev,
-        token: token,
-      }));
-    }
-    setValidated(true)
-    setIsCheckingAuth(false);
-  }, []);
-
-  if (isCheckingAuth) {
-    return <LoadingPage />;
-  }
 
   return (
-    <div>
-      {validated ? (
-        <main className="flex h-screen bg-[#EFF1F9] p-4">
-          <ToastProvider />
-          <div>
-            <Sidebar />
-          </div>
-          <div className="flex-1 overflow-auto px-4 space-y-4">
-            <div>
-              <Navbar />
-            </div>
-            <div>{children}</div>
-          </div>
-        </main>
-      ) : (
-        <NotAuthorized />
-      )}
-    </div>
+    <main className="flex h-screen bg-[#EFF1F9] p-4">
+      <ToastProvider />
+      <div>
+        <Sidebar />
+      </div>
+      <div className="flex-1 overflow-auto px-4 space-y-4">
+        <div>
+          <Navbar />
+        </div>
+        <div>{children}</div>
+      </div>
+    </main>
   );
 }
