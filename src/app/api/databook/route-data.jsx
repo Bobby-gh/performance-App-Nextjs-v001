@@ -26,13 +26,7 @@ import {
 
 export function useGoalRouteData() {
   const { auth } = useContext(AuthContext);
-  const [departmentgoal, setDepartmenttable] = useState([]);
-  const departmentgoaltable = departmentgoal.map((departmentgoal) => ({
-    ...departmentgoal,
-    taskAssignedTo: departmentgoal.taskAssignedTo,
-    dateAssigned: new Date(departmentgoal.dateAssigned).toLocaleDateString(),
-    goalDeadline: new Date(departmentgoal.goalDeadline).toLocaleDateString(),
-  }));
+  const [departmentgoaltable, setDepartmenttable] = useState([]);
 
   const fetchData = async () => {
     try {
