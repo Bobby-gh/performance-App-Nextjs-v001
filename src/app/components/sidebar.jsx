@@ -47,6 +47,7 @@ export function Sidebar() {
       <div className="flex flex-col items-center text-center">
         <ul className="w-full">
           {filteredMenuItems.map((item) => {
+            console.log({currentPathname: currentPathname === item.path})
             const isActive = currentPathname === item.path;
 
             return (
