@@ -530,16 +530,16 @@ export function BadgesReport() {
               <p className="pl-4">{Outstanding}</p>
             </div>
             <div className="flex flex-rows items-center">
-              <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
-              <StarSharp style={{ fill: "#cd7f32", fontSize: "38px" }} />
-              <p className="pl-14 text-[#cd7f32] font-medium">{t("silverBadges")}:</p>
+              <StarSharp style={{ fill: "#c0c0c0", fontSize: "38px" }} />
+              <StarSharp style={{ fill: "#c0c0c0", fontSize: "38px" }} />
+              <p className="pl-14 text-[#c0c0c0] font-medium">{t("silverBadges")}:</p>
               <p className="pl-4">{ExceedsExpectations}</p>
             </div>
             <div className="flex flex-rows items-center">
-              <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />{" "}
-              <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
-              <StarSharp style={{ fill: "#c0c0c0", fontSize: "36px" }} />
-              <p className="pl-6 text-[#c0c0c0] font-medium">{t("bronzeBadges")}:</p>
+              <StarSharp style={{ fill: "#cd7f32", fontSize: "36px" }} />{" "}
+              <StarSharp style={{ fill: "#cd7f32", fontSize: "36px" }} />
+              <StarSharp style={{ fill: "#cd7f32", fontSize: "36px" }} />
+              <p className="pl-6 text-[#cd7f32] font-medium">{t("bronzeBadges")}:</p>
               <p className="pl-2">{MeetsExpectations}</p>
             </div>
           </div>

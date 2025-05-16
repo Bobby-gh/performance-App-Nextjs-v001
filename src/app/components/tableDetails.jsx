@@ -60,124 +60,108 @@ export function AssignGoal(params) {
           name = "assignGoal"
         />
     </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <Box sx={ModalStyle}>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box
+        sx={{
+          width: '90%',
+          maxWidth: '1000px',
+          margin: 'auto',
+          marginTop: '5%',
+          borderRadius: 3,
+          bgcolor: '#ffffff',
+          color: '#1f2937',
+          boxShadow: 24,
+          border: '1px solid #e5e7eb',
+          p: 0,
+          overflow: 'hidden',
+        }}
+      >
+        {/* Modal Header */}
+        <div className="bg-gray-900 text-blue-400 px-6 py-4 flex justify-between items-center">
+          <h2 className="text-xl font-semibold">Edit Assigned Goal</h2>
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 text-black p-2 hover:bg-gray-400">
-            ✖
+            className="text-gray-400 hover:text-red-500 text-xl transition"
+          >
+            ✕
           </button>
-          <div className="overflow-y-auto max-h-[70vh] p-4">
-            <div>
-            <FormControl fullWidth>
-            <div className=" px-10 py-10">
-              <div className="grid grid-cols-4 gap-3 mb-6">
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="Goal ID"
-                    value={assignGoal.goalId}
-                    autoComplete="off"
-                    //   onChange={(e) => setRiskID(e.target.value)}
-                    disabled
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label={t("goalTitle")}
-                    value={assignGoal.goalTitle}
-                    autoComplete="off"
-                    //   onChange={(e) => setRiskName(e.target.value)}
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="status"
-                    value={assignGoal.goalStatus}
-                    multiline
-                    autoComplete="off"
-                    //   onChange={(e) => setChallenges(e.target.value)}
-                    required
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="Description"
-                    value={assignGoal.goalDescription}
-                    multiline
-                    autoComplete="off"
-                    //   onChange={(e) => setChallenges(e.target.value)}
-                    required
-                    style={{ width: "100%" }}
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-4 gap-3 mb-6">
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <Select
-                    label="Assinged To"
-                    value={assignGoal.assignedTo}
-                    autoComplete="off"
-                    //   onChange={(e) => setMitigationOwner(e.target.value)}
-                    required
-                    style={{ width: "100%" }}>
-                    {departmenttable.map((department) => (
-                      <MenuItem
-                        key={department.departmentId}
-                        value={department.departmentId}>
-                        {department.departmentName}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    type="date"
-                    label="Created At"
-                    value={formattedDate(assignGoal.deadline)}
-                    autoComplete="off"
-                    //   onChange={(e) => {
-                    //     const selectedDate = e.target.value;
-                    //     const dateObj = new Date(selectedDate);
+        </div>
 
-                    //     // Extract year, month, and day components
-                    //     const year = dateObj.getFullYear();
-                    //     const month = String(dateObj.getMonth() + 1).padStart(
-                    //       2,
-                    //       "0"
-                    //     );
-                    //     const day = String(dateObj.getDate()).padStart(2, "0");
-
-                    //     // Format the date as "yyyy-MM-dd"
-                    //     const formattedDate = `${year}-${month}-${day}`;
-                    //     // Set the formatted date to state
-                    //     setRiskCreatedAt(formattedDate);
-                    //   }}
-                    style={{ width: "100%" }}
-                  />
-                </div>
-              </div>
+        {/* Modal Body */}
+        <div className="overflow-y-auto max-h-[70vh] p-6">
+          <FormControl fullWidth>
+            {/* Form Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+              <TextField
+                label="Goal ID"
+                value={assignGoal.goalId}
+                disabled
+                fullWidth
+              />
+              <TextField
+                label={t("goalTitle")}
+                value={assignGoal.goalTitle}
+                fullWidth
+              />
+              <TextField
+                label="Status"
+                value={assignGoal.goalStatus}
+                multiline
+                required
+                fullWidth
+              />
+              <TextField
+                label="Description"
+                value={assignGoal.goalDescription}
+                multiline
+                required
+                fullWidth
+              />
+              <Select
+                label="Assigned To"
+                value={assignGoal.assignedTo}
+                required
+                fullWidth
+                displayEmpty
+              >
+                {departmenttable.map((department) => (
+                  <MenuItem
+                    key={department.departmentId}
+                    value={department.departmentId}
+                  >
+                    {department.departmentName}
+                  </MenuItem>
+                ))}
+              </Select>
+              <TextField
+                type="date"
+                label="Created At"
+                value={formattedDate(assignGoal.deadline)}
+                fullWidth
+              />
             </div>
-            <div className="flex flex-row pb-3 pt-2 px-2 flex-row-reverse items-center">
+
+            {/* Save Button */}
+            <div className="flex justify-end mt-4">
               <button
-                className="flex flex row items-center p-3 m-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                 type="submit"
-                onClick={handleEditSubmit}>
-                <FaSave className="icons" />
+                onClick={handleEditSubmit}
+                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300"
+              >
+                <FaSave className="text-lg" />
                 Save
               </button>
             </div>
           </FormControl>
-            </div>
-          </div>
-        </Box>
-      </Modal>
+        </div>
+      </Box>
+    </Modal>
+
     </div>
   );
 }
@@ -222,124 +206,126 @@ export function AssessGoal(params) {
         open={open}
         onClose={close}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <Box sx={ModalStyle}>
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            width: '90%',
+            maxWidth: '1000px',
+            margin: 'auto',
+            marginTop: '5%',
+            borderRadius: 3,
+            bgcolor: '#ffffff', // white background
+            color: '#1f2937', // slate-800 for general text
+            boxShadow: 24,
+            border: '1px solid #e0e0e0',
+            p: 0, // remove default padding
+            overflow: 'hidden',
+          }}
+        >
           <FormControl fullWidth>
-            <div className="px-10 py-10">
-              <div className="grid grid-cols-4 gap-3 mb-6">
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="Goal ID"
-                    value={assessGoal.goalId}
-                    autoComplete="off"
-                    disabled
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label={t("goalTitle")}
-                    value={assessGoal.goalTitle}
-                    autoComplete="off"
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="Status"
-                    value={assessGoal.goalStatus}
-                    multiline
-                    autoComplete="off"
-                    required
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="Description"
-                    value={assessGoal.goalDescription}
-                    multiline
-                    autoComplete="off"
-                    required
-                    style={{ width: "100%" }}
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-4 gap-3 mb-6">
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <Select
-                    label="Assigned To"
-                    value={assessGoal.assignedTo}
-                    autoComplete="off"
-                    required
-                    style={{ width: "100%" }}>
-                    {departmenttable.map((department) => (
-                      <MenuItem
-                        key={department.departmentId}
-                        value={department.departmentId}>
-                        {department.departmentName}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    type="date"
-                    label="Created At"
-                    value={formattedDate(assessGoal.deadline)}
-                    autoComplete="off"
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="Goal Type"
-                    value={assessGoal.goalType}
-                    autoComplete="off"
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="Performance Percent"
-                    type="number"
-                    value={assessGoal.performancePercent}
-                    autoComplete="off"
-                    style={{ width: "100%" }}
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-4 gap-3 mb-6">
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <Select
-                    label="Reviewed"
-                    value={assessGoal.reviewed}
-                    autoComplete="off"
-                    required
-                    style={{ width: "100%" }}>
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                  </Select>
-                </div>
-                <div className="relative mb-6" data-te-input-wrapper-init>
-                  <TextField
-                    label="Assigned By"
-                    value={assessGoal.assignedBy}
-                    autoComplete="off"
-                    disabled
-                    style={{ width: "100%" }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row pb-3 pt-2 px-2 flex-row-reverse items-center">
+
+            {/* Header */}
+            <div className="bg-gray-900 text-blue-400 px-6 py-4 flex justify-between items-center">
+              <h2 className="text-xl font-semibold">Edit Assessed Goal</h2>
               <button
-                className="flex flex-row items-center p-3 m-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                type="submit"
-                onClick={handleEditSubmit}>
-                <FaSave className="icons" />
-                Save
+                onClick={close}
+                className="text-gray-400 hover:text-red-500 text-xl transition"
+              >
+                ✕
               </button>
+            </div>
+
+            {/* Body */}
+            <div className="px-6 py-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <TextField
+                  label="Goal ID"
+                  value={assessGoal.goalId}
+                  disabled
+                  fullWidth
+                />
+                <TextField
+                  label={t('goalTitle')}
+                  value={assessGoal.goalTitle}
+                  fullWidth
+                />
+                <TextField
+                  label="Status"
+                  value={assessGoal.goalStatus}
+                  multiline
+                  required
+                  fullWidth
+                />
+                <TextField
+                  label="Description"
+                  value={assessGoal.goalDescription}
+                  multiline
+                  required
+                  fullWidth
+                />
+                <Select
+                  label="Assigned To"
+                  value={assessGoal.assignedTo}
+                  required
+                  fullWidth
+                  displayEmpty
+                >
+                  {departmenttable.map((department) => (
+                    <MenuItem
+                      key={department.departmentId}
+                      value={department.departmentId}
+                    >
+                      {department.departmentName}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <TextField
+                  type="date"
+                  label="Created At"
+                  value={formattedDate(assessGoal.deadline)}
+                  fullWidth
+                />
+                <TextField
+                  label="Goal Type"
+                  value={assessGoal.goalType}
+                  fullWidth
+                />
+                <TextField
+                  label="Performance Percent"
+                  type="number"
+                  value={assessGoal.performancePercent}
+                  fullWidth
+                />
+                <Select
+                  label="Reviewed"
+                  value={assessGoal.reviewed}
+                  required
+                  fullWidth
+                  displayEmpty
+                >
+                  <MenuItem value={true}>Yes</MenuItem>
+                  <MenuItem value={false}>No</MenuItem>
+                </Select>
+                <TextField
+                  label="Assigned By"
+                  value={assessGoal.assignedBy}
+                  disabled
+                  fullWidth
+                />
+              </div>
+
+              {/* Save Button */}
+              <div className="flex justify-end mt-6">
+                <button
+                  type="submit"
+                  onClick={handleEditSubmit}
+                  className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300"
+                >
+                  <FaSave className="text-lg" />
+                  Save
+                </button>
+              </div>
             </div>
           </FormControl>
         </Box>
