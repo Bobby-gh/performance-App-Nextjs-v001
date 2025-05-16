@@ -1,11 +1,11 @@
 'use client'
 import React, { useContext } from "react";
+import { MenuItems } from "./menuitems";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { AuthContext } from "../contex/context-context";
 import { useTranslation } from "react-i18next";
-import { adminMenuItems, employeeMenuItems, managerMenuItems } from "./menuitems";
 
 
 export function Sidebar() {
@@ -13,17 +13,19 @@ export function Sidebar() {
 
   const currentPathname = usePathname()
   const {auth} = useContext(AuthContext)
-  let menuItems = [];
 
-  if (auth.refNum === "ref?1!" ) {
-    menuItems = adminMenuItems;
-  } else if (auth.refNum === "ref?2!") {
-    menuItems = managerMenuItems;
-  } else if (auth.refNum === "ref?3!") {
-    menuItems = employeeMenuItems;
-  } else {
-    menuItems = []; // or some default menu
-  }
+   const filteredMenuItems = MenuItems.filter((item) => {
+    if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
+      return !["/home/goals"].includes(item.path);
+    }
+    if (auth.refNum === "ref?2!") {
+      return !["/home/department"].includes(item.path);
+    }
+    if (auth.refNum === "ref?3!") {
+      return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
+    }
+    return ![""].includes(item.path);
+  });
 
   return (
 
@@ -39,18 +41,17 @@ export function Sidebar() {
       </div>
 
       {/* Menu Items */}
-      <div className="flex flex-col items-center text-center">
+      <div className="flex flex-col items-center">
         <ul className="w-full">
-          {menuItems.map((item) => (
-            console.log({currentPathname:currentPathname, path:item.path}),
+          {filteredMenuItems.map((item) => (
             <li key={item.title} className="flex flex-col items-center mb-2">
-              <a
+              <Link
                 href={item.path}
                 className="flex flex-col items-center w-full p-1 rounded-lg">
                 {/* Icon with hover and focus effects */}
                 <div
                   className={classNames(
-                    "text-lg p-2 text-white rounded-lg transition-colors duration-200",
+                    "text-lg p-2 text-black rounded-lg transition-colors duration-200",
                     {
                       "bg-[#08397e] text-white": currentPathname === item.path, // Focused state
                       "hover:bg-[#08397e] hover:text-white": currentPathname !== item.path, // Hover effect only on the icon
@@ -60,8 +61,8 @@ export function Sidebar() {
                 </div>
 
                 {/* Title (beneath icon, unaffected by focus or hover) */}
-                <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
-              </a>
+                <span className="text-xs mt-1 text-gray-600">{item.title}</span>
+              </Link>
             </li>
           ))}
         </ul>
