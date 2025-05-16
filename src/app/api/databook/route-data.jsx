@@ -26,7 +26,7 @@ import {
 
 export function useGoalRouteData() {
   const { auth } = useContext(AuthContext);
-  const [departmentgoaltable, setDepartmenttable] = useState([]);
+  const [departmentgoaltable, setDepartmenttable] = useState("");
 
   const fetchData = async () => {
     try {
@@ -37,7 +37,7 @@ export function useGoalRouteData() {
         },
         withCredentials: true,
       });
-      setDepartmenttable(response?.data);
+      setDepartmenttable(response);
     } catch (err) {
       console.log(err);
     }
