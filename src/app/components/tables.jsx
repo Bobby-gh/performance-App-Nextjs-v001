@@ -195,27 +195,23 @@ export  function AccessGoalTable() {
     enableRowActions: true,
     positionActionsColumn: "last",
     renderRowActionMenuItems: ({ closeMenu, row }) => [
-      <MenuItem
-        key="edit"
-        onClick={() => {
-          handleEdit(row);
-          closeMenu();
+      <MenuItem 
+      key="edit" 
+      onClick={() => { 
+        handleEdit(row); 
+        closeMenu(); 
         }}>
-        <ListItemIcon>
-          <MdEditNotifications fontSize="small" />
-        </ListItemIcon>
+        <ListItemIcon><MdEditNotifications fontSize="small" /></ListItemIcon>
         <ListItemText>Edit</ListItemText>
       </MenuItem>,
-      <MenuItem
-        key="notifications"
-        onClick={() => {
-          handleNotifications(row);
-          closeMenu();
+      <MenuItem 
+      key="delete" 
+      onClick={() => { 
+        handleDelete(row); 
+        closeMenu(); 
         }}>
-        <ListItemIcon>
-          <IoNotificationsCircleOutline fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Notifications</ListItemText>
+        <ListItemIcon><MdDelete fontSize="small" /></ListItemIcon>
+        <ListItemText>Delete</ListItemText>
       </MenuItem>,
     ],
   });
@@ -272,27 +268,13 @@ export  function DepartmentTable() {
     enableRowActions: true,
     positionActionsColumn: "last",
     renderRowActionMenuItems: ({ closeMenu, row }) => [
-      <MenuItem
-        key="edit"
-        onClick={() => {
-          handleEdit(row);
-          closeMenu();
-        }}>
-        <ListItemIcon>
-          <MdEditNotifications fontSize="small" />
-        </ListItemIcon>
+      <MenuItem key="edit" onClick={() => { handleEdit(row); closeMenu(); }}>
+        <ListItemIcon><MdEditNotifications fontSize="small" /></ListItemIcon>
         <ListItemText>Edit</ListItemText>
       </MenuItem>,
-      <MenuItem
-        key="notifications"
-        onClick={() => {
-          handleNotifications(row);
-          closeMenu();
-        }}>
-        <ListItemIcon>
-          <IoNotificationsCircleOutline fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Notifications</ListItemText>
+      <MenuItem key="delete" onClick={() => { handleDelete(row); closeMenu(); }}>
+        <ListItemIcon><MdDelete fontSize="small" /></ListItemIcon>
+        <ListItemText>Delete</ListItemText>
       </MenuItem>,
     ],
   });
@@ -349,27 +331,22 @@ export  function EmployeeTable() {
     enableRowActions: true,
     positionActionsColumn: "last",
     renderRowActionMenuItems: ({ closeMenu, row }) => [
-      <MenuItem
-        key="edit"
-        onClick={() => {
-          handleEdit(row);
-          closeMenu();
+      <MenuItem 
+      key="edit" 
+      onClick={() => { 
+        handleEdit(row); 
+        closeMenu(); 
         }}>
-        <ListItemIcon>
-          <MdEditNotifications fontSize="small" />
-        </ListItemIcon>
+        <ListItemIcon><MdEditNotifications fontSize="small" /></ListItemIcon>
         <ListItemText>Edit</ListItemText>
       </MenuItem>,
-      <MenuItem
-        key="notifications"
-        onClick={() => {
-          handleNotifications(row);
-          closeMenu();
-        }}>
-        <ListItemIcon>
-          <IoNotificationsCircleOutline fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Notifications</ListItemText>
+      <MenuItem 
+      key="delete" 
+      onClick={() => { 
+        handleDelete(row); 
+        closeMenu(); }}>
+        <ListItemIcon><MdDelete fontSize="small" /></ListItemIcon>
+        <ListItemText>Delete</ListItemText>
       </MenuItem>,
     ],
   });
