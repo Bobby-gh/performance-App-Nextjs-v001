@@ -11,7 +11,6 @@ import { CgMenuGridR } from "react-icons/cg";
 export function Navbar() {
   const { t } = useTranslation();
   const {auth} = React.useContext(AuthContext)
-  console.log({"navbar auth": auth})
   return (
      <nav className="flex justify-between">
       <div className="flex flex-row items-center"><span className="text-lg font-bold">{t("welcomeBack")}</span ><span className="ml-2 text-lg font-bold text-blue-900">{auth.name}</span></div>
