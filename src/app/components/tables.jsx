@@ -34,9 +34,10 @@ import { Modaltrigger } from "../contex/context-context";
 
 export  function GoalTable() {
   const { departmentgoaltable, fetchData } = useGoalRouteData();
-  const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   const goalsettingcolumn = useGoalSettingColumn();
-  const data = useMemo(() => departmentgoaltable?.data, [departmentgoaltable]);
+  const { trigger, resettriggerComponent } = useContext(Modaltrigger);
+  const rawData = departmentgoaltable?.data || [];
+  const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => goalsettingcolumn, []);
 
  
