@@ -16,7 +16,7 @@ export default function MyGoals() {
 
 
   return (
-    <main className="m-4 flex space-x-4">
+    <main className="flex space-x-4">
       <div className="flex-[1]">
         <GoalDetails />
       </div>

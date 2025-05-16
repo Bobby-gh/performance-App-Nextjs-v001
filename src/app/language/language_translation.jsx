@@ -16,12 +16,12 @@ i18n.use(initReactI18next).init({
         forgotPassword: "Forgot password?",
         
         // Dashboard
-        dashboard: "Dashboard", //done
+        Dashboard: "Dashboard", //done
         performanceMatrix: "PERFORMANCE MATRIX",//done
-        projects: "Projects",//done
+        Projects: "Projects",//done
         assignGoals: "Assign Goals", //done
         assignGoal: "Assign Goal",//done
-        goalAssessment: "Goal Assessment", //done
+        goalAssessment: "Assessment", //done
         goalName: "Goal Name", //done
         department: "Department", //done
         employees: "Employees", //done
@@ -167,8 +167,8 @@ i18n.use(initReactI18next).init({
         forgotPassword: "Mot de passe oublié ?",
         
         // Dashboard
-        dashboard: "Tableau de Bord",
-        projects: "Projets",
+        Dashboard: "Tableau de Bord",
+        Projects: "Projets",
         performanceMatrix: "MATRICE DE PERFORMANCE",
         assignGoals: "Attribuer des Objectifs",
         assignGoal: "Attribuer des Objectif",

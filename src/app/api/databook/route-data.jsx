@@ -62,6 +62,7 @@ export function useGoalRouteData() {
       resettriggerComponent();
     }
   }, [trigger]);
+  
   console.log({"goal data": departmentgoaltable})
   return { departmentgoaltable };
 }

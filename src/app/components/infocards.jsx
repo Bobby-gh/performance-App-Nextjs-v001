@@ -575,19 +575,8 @@ export function Notification({ message, typeHeader }) {
   );
 }
 
-export function OrganisationalDepartment() {
-  const { t } = useTranslation();
-  return (
-    <div className="text-xl font-bold text-blue-500"> {t("organizationalDepartment")}</div>
-  );
-}
 
-export function DashboardHeader() {
-  const { t } = useTranslation();
-  return (
-    <header className="mb-4 text-xl font-semibold">{t("dashboard")}</header>
-  );
-}
+
 
 export function GoalsHeader() {
   const { t } = useTranslation();
@@ -602,10 +591,5 @@ export function OrganizationalEmployees() {
   );
 }
 
-export function AssessNewGoals() {
-  const { t } = useTranslation();
-  return (
-    <div className="text-xl font-bold text-blue-500">{t("assessNewGoals")}</div>
-  );
-}
+
 

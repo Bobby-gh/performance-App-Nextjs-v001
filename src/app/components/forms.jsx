@@ -24,6 +24,7 @@ export function LoginForm() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const { auth, setAuth } = React.useContext(AuthContext);
+  const [success, setLogin] = useState(false)
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -64,6 +65,7 @@ export function LoginForm() {
           secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
         });
+        setLogin(true);
       }
     } catch (err) {
       alert(err);
@@ -161,7 +163,7 @@ export function LoginForm() {
             </span>
           </div>
         </form>
-        {auth.token && router.push("/home", { scroll: false })}
+        {success && router.push("/home", { scroll: false })}
       </div>
     </main>
   );
