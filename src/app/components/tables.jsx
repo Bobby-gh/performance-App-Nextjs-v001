@@ -262,6 +262,83 @@ export  function DepartmentTable() {
   return <MaterialReactTable table={table} />;
 }
 
+export  function EmployeeTable() {
+  const { employeetable } = useEmployeesRouteData();
+  const usercolumn = useUserColumn();
+
+  
+  const data = useMemo(() => employeetable, [employeetable]);
+  const columns = useMemo(() => usercolumn, []);
+
+  const handleEdit = (row) => {
+    console.log("Edit", row);
+  };
+
+  const handleNotifications = (row) => {
+    console.log("Notifications", row);
+  };
+
+
+ 
+
+  const table = useMaterialReactTable({
+    muiTableHeadCellProps: {
+      sx: {
+        fontWeight: "normal",
+        fontSize: "14px",
+        background: "#08376B",
+        color: "white",
+      },
+    },
+     muiTablePaperProps: {
+      elevation: 0,
+      sx: {
+        borderRadius: "10",
+      },
+    },
+    muiTableBodyProps: {
+      sx: {
+        "& tr:nth-of-type(even) > td": {
+          backgroundColor: "#f5f5f5",
+        },
+      },
+    },
+    columns,
+    data,
+    enableColumnOrdering: true,
+    enableRowSelection: true,
+    enablePagination: true, 
+    enableRowActions: true,
+    positionActionsColumn: "last",
+    renderRowActionMenuItems: ({ closeMenu, row }) => [
+      <MenuItem
+        key="edit"
+        onClick={() => {
+          handleEdit(row);
+          closeMenu();
+        }}>
+        <ListItemIcon>
+          <MdEditNotifications fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Edit</ListItemText>
+      </MenuItem>,
+      <MenuItem
+        key="notifications"
+        onClick={() => {
+          handleNotifications(row);
+          closeMenu();
+        }}>
+        <ListItemIcon>
+          <IoNotificationsCircleOutline fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Notifications</ListItemText>
+      </MenuItem>,
+    ],
+  });
+
+  return <MaterialReactTable table={table} />;
+}
+
 export function TopDepartmentTable() {
   const { departmentgoaltable } = useGoalRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
@@ -289,35 +366,7 @@ export function TopDepartmentTable() {
     </div>
   );
 }
-export function EmployeeTable() {
-  const { employeetable } = useEmployeesRouteData();
-  const usercolumn = useUserColumn();
 
-  return (
-    <div>
-      <div>
-        <DataGrid
-          rows={employeetable}
-          columns={usercolumn}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[10, 15]}
-          slots={{ toolbar: GridToolbar }}
-          getRowId={(row) => row.userId}
-          sx={{
-            border: 0,
-            borderRadius: 2,
-            p: 2,
-            minWidth: 300,
-          }}
-        />
-      </div>
-    </div>
-  );
-}
 
 
 export function TopGoalTable() {

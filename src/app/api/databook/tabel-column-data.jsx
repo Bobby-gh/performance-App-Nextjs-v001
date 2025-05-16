@@ -237,63 +237,28 @@ export const useUserColumn = () => {
 
   return [
     {
-      field: "name",
-      headerName: t("firstName"),
+      accessorKey: "name",
+      header: t("firstName"),
       flex: 1,
       headerClassName: "header-table",
     },
     {
-      field: "email",
-      headerName: t("email"),
+      accessorKey: "email",
+      header: t("email"),
       flex: 1,
       headerClassName: "header-table",
     },
     {
-      field: "department",
-      headerName: t("department"),
+      accessorKey: "department",
+      header: t("department"),
       flex: 1,
       headerClassName: "header-table",
     },
     {
-      field: "role",
-      headerName: t("role"),
+      accessorKey: "role",
+      header: t("role"),
       flex: 0.5,
       headerClassName: "header-table",
-    },
-    {
-      field: "edit",
-      headerName: t("edit"),
-      headerClassName: "header-table",
-      flex: 0.5,
-      renderCell: (params) => {
-        const handleEditClick = () => {
-          console.log(`Editing row with ID: ${params.row.id}`);
-        };
-
-        return (
-          <>
-            <button onClick={handleEditClick} className="px-2">
-              <FaEdit className="icons" />
-            </button>
-          </>
-        );
-      },
-    },
-    {
-      field: "delete",
-      headerName: t("delete"),
-      headerClassName: "header-table",
-      renderCell: (params) => {
-        const handleDeleteClick = () => {
-          console.log(`Editing row with ID: ${params.row.id}`);
-        };
-
-        return (
-          <button onClick={handleDeleteClick} className="px-2">
-            <FaTrash className="icons" />
-          </button>
-        );
-      },
     },
   ];
 };
