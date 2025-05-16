@@ -1,11 +1,11 @@
 'use client'
 import React, { useContext } from "react";
-import { MenuItems } from "./menuitems";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { AuthContext } from "../contex/context-context";
 import { useTranslation } from "react-i18next";
+import { adminMenuItems, employeeMenuItems, managerMenuItems } from "./menuitems";
 
 
 export function Sidebar() {
@@ -14,21 +14,17 @@ export function Sidebar() {
   const currentPathname = usePathname()
   const {auth} = useContext(AuthContext)
 
-   const filteredMenuItems = MenuItems.filter((item) => {
-    if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
-      return !["/home/goals"].includes(item.path);
-    }
-    if (auth.refNum === "ref?2!") {
-      return !["/home/department"].includes(item.path);
-    }
-    if (auth.refNum === "ref?3!") {
-      return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
-    }
-    return ![""].includes(item.path);
-  });
 
+  if (auth.refNum === "ref?1!" ) {
+    menuItems = adminMenuItems;
+  } else if (auth.refNum === "ref?2!") {
+    menuItems = managerMenuItems;
+  } else if (auth.refNum === "ref?3!") {
+    menuItems = employeeMenuItems;
+  } else {
+    menuItems = []; // or some default menu
+  }
 
-  console.log({})
   return (
 
     <main className="w-24 h-full bg-[#0b1558]  rounded-lg">
@@ -45,8 +41,7 @@ export function Sidebar() {
       {/* Menu Items */}
       <div className="flex flex-col items-center text-center">
         <ul className="w-full">
-          {filteredMenuItems.map((item) => (
-            console.log({currentPathname:currentPathname, path: item.path}),
+          {menuItems.map((item) => (
             <li key={item.title} className="flex flex-col items-center mb-2">
               <a
                 href={item.path}
