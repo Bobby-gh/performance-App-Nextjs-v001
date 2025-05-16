@@ -36,12 +36,13 @@ export  function GoalTable() {
   const departmentGoal = departmentgoaltable? departmentgoaltable : []
   const goalsettingcolumn = useGoalSettingColumn();
 
-  useEffect(() => {
-  console.log("Data changed", departmentgoaltable);
-}, [departmentgoaltable]);
+ 
 
   const data = useMemo(() => departmentGoal, [departmentGoal]);
   const columns = useMemo(() => goalsettingcolumn, []);
+   useEffect(() => {
+  console.log("Data changed", data);
+}, [data]);
 
   const handleEdit = (row) => {
     console.log("Edit", row);
