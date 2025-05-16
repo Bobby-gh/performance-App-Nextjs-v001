@@ -14,19 +14,18 @@ export function Sidebar() {
   const currentPathname = usePathname()
   const {auth} = useContext(AuthContext)
 
-
-  //  const filteredMenuItems = MenuItems.filter((item) => {
-  //   if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
-  //     return !["/home/goals"].includes(item.path);
-  //   }
-  //   if (auth.refNum === "ref?2!") {
-  //     return !["/home/department"].includes(item.path);
-  //   }
-  //   if (auth.refNum === "ref?3!") {
-  //     return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
-  //   }
-  //   return ![""].includes(item.path);
-  // });
+   const filteredMenuItems = MenuItems.filter((item) => {
+    if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
+      return !["/home/goals"].includes(item.path);
+    }
+    if (auth.refNum === "ref?2!") {
+      return !["/home/department"].includes(item.path);
+    }
+    if (auth.refNum === "ref?3!") {
+      return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
+    }
+    return ![""].includes(item.path);
+  });
 
 
   console.log({})
@@ -46,10 +45,10 @@ export function Sidebar() {
       {/* Menu Items */}
       <div className="flex flex-col items-center text-center">
         <ul className="w-full">
-          {MenuItems.map((item) => (
+          {filteredMenuItems.map((item) => (
             console.log({currentPathname:currentPathname, path: item.path}),
             <li key={item.title} className="flex flex-col items-center mb-2">
-              <Link
+              <a
                 href={item.path}
                 className="flex flex-col items-center w-full p-1 rounded-lg">
                 {/* Icon with hover and focus effects */}
@@ -66,7 +65,7 @@ export function Sidebar() {
 
                 {/* Title (beneath icon, unaffected by focus or hover) */}
                 <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
-              </Link>
+              </a>
             </li>
           ))}
         </ul>
