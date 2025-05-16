@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export function Sidebar() {
   const { t } = useTranslation();
-  const currentPathname = usePathname().replace(/\/+$/, "");
+  const currentPathname = usePathname();
   const {auth} = useContext(AuthContext)
 
 
@@ -49,7 +49,7 @@ export function Sidebar() {
                 href={item.path}
                 className="flex flex-col items-center w-full p-1 rounded-lg">
                 {/* Icon with hover and focus effects */}
-                <span
+                <div
                   className={classNames(
                     "text-lg p-2 text-white rounded-lg transition-colors duration-200",
                     {
@@ -58,7 +58,7 @@ export function Sidebar() {
                     }
                   )}>
                   {item.icon}
-                </span>
+                </div>
                 {/* Title (beneath icon, unaffected by focus or hover) */}
                 <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
               </Link>
