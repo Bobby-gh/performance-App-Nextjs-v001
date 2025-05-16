@@ -1,11 +1,11 @@
 'use client'
 import React, { useContext } from "react";
 import { MenuItems } from "./menuitems";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { AuthContext } from "../contex/context-context";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 
 export function Sidebar() {
@@ -48,8 +48,17 @@ export function Sidebar() {
               <Link
                 href={item.path}
                 className="flex flex-col items-center w-full p-1 rounded-lg">
-                
-{item.icon}
+                {/* Icon with hover and focus effects */}
+                <span
+                  className={classNames(
+                    "text-lg p-2 text-white rounded-lg transition-colors duration-200",
+                    {
+                      "bg-[#08397e] text-white": currentPathname === item.path, // Focused state
+                      "hover:bg-[#08397e] hover:text-white": currentPathname !== item.path, // Hover effect only on the icon
+                    }
+                  )}>
+                  {item.icon}
+                </span>
                 {/* Title (beneath icon, unaffected by focus or hover) */}
                 <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
               </Link>
