@@ -70,33 +70,6 @@ export function Sidebar() {
           ))}
         </ul>
       </div>
-
-      <div className="flex flex-col items-center">
-        <ul className="w-full">
-          {filteredMenuItems.map((item) => (
-            <li key={item.title} className="flex flex-col items-center mb-2">
-              <Link
-                href={item.path}
-                className="flex flex-col items-center w-full p-1 rounded-lg">
-                {/* Icon with hover and focus effects */}
-                <div
-                  className={classNames(
-                    "text-lg p-2 text-black rounded-lg transition-colors duration-200",
-                    {
-                      "bg-[#08397e] text-white": currentPathname === item.path, // Focused state
-                      "hover:bg-[#08397e] hover:text-white": currentPathname !== item.path, // Hover effect only on the icon
-                    }
-                  )}>
-                  {item.icon}
-                </div>
-
-                {/* Title (beneath icon, unaffected by focus or hover) */}
-                <span className="text-xs mt-1 text-gray-600">{item.title}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
     </main>
   );
 }
