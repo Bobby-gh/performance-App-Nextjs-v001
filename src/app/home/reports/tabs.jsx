@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 export const Tabs = () => {
   const { t } = useTranslation(); // access t function
 
-  return [
+  return [ 
     {
       key: "balanceScorecard", 
       title: t("balanceScorecard"), 
