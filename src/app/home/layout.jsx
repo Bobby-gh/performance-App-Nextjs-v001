@@ -8,6 +8,7 @@ import { LoadingPage } from "../components/loading";
 import { ToastProvider } from "../components/notification";
 import SystemDown from "../system-down/page";
 import NotAuthorized from "../page-not-authorized/page";
+import Cookies from "js-cookie";
 
 export default function Layout({ children }) {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
@@ -15,17 +16,16 @@ export default function Layout({ children }) {
   const [validated, setValidated] = useState(false);
   const { auth } = useContext(AuthContext);
 
- useEffect(() => {
-    if (auth.token && auth.token !== "") {
-      setValidated(true);
-    } else {
-      setValidated(false);
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      setAuth(token);
     }
-    setIsCheckingAuth(false);
-  }, [auth]);
+    setIsCheckingAuth(false);  
+  }, []);
 
   if (isCheckingAuth) {
-    return <LoadingPage />;
+    return <LoadingPage/>;
   }
 
   return (
@@ -43,9 +43,7 @@ export default function Layout({ children }) {
             <div>{children}</div>
           </div>
         </main>
-      ) : systemDown ? (
-        <SystemDown />
-      ) : (
+      )  : (
         <NotAuthorized />
       )}
     </div>
