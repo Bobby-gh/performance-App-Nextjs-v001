@@ -26,7 +26,6 @@ import {
 
 export function useGoalRouteData() {
   const { auth } = useContext(AuthContext);
-  const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   const [departmentgoal, setDepartmenttable] = useState([]);
   const departmentgoaltable = departmentgoal.map((departmentgoal) => ({
     ...departmentgoal,
@@ -44,7 +43,7 @@ export function useGoalRouteData() {
         },
         withCredentials: true,
       });
-      setDepartmenttable(response);
+      setDepartmenttable(response?.data);
     } catch (err) {
       console.log(err);
     }
@@ -53,17 +52,8 @@ export function useGoalRouteData() {
   useEffect(() => {
     fetchData();
   }, [auth]);
-
-  useEffect(() => {
-    if (trigger) {
-      console.log("Trigger is active, fetching data...");
-      fetchData();
-      resettriggerComponent();
-    }
-  }, [trigger]);
   
-  console.log({"goal data": departmentgoaltable})
-  return { departmentgoaltable };
+  return { departmentgoaltable, fetchData };
 }
 
 export function useMyGoalRouteData() {

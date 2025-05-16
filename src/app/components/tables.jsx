@@ -25,20 +25,35 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import { useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { MdEditNotifications } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
+import { Modaltrigger } from "../contex/context-context";
 
 
 
 export  function GoalTable() {
-  const { departmentgoaltable } = useGoalRouteData();
-  const dataOriginal = departmentgoaltable?.data || []
+  const { departmentgoaltable, fetchData } = useGoalRouteData();
+  const { trigger, resettriggerComponent } = useContext(Modaltrigger);
+  const dataOriginal = departmentgoaltable || []
   const goalsettingcolumn = useGoalSettingColumn();
 
  
+  useEffect(() => {
+    const fetchAndReset = async () => {
+      if (!trigger) return;
+      try {
+        await fetchData();
+      } finally {
+        resettriggerComponent();
+      }
+    };
 
-  const data = useMemo(() => dataOriginal, [dataOriginal]);
+    fetchAndReset();
+  }, [trigger]);
+
+
+  const data = useMemo(() => departmentgoaltable, [departmentgoaltable]);
   const columns = useMemo(() => goalsettingcolumn, []);
    useEffect(() => {
   console.log("Data changed 2", data);
