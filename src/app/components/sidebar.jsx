@@ -52,7 +52,7 @@ export function Sidebar() {
                 onClick={(e) => {
                   // Only executes during SPA navigation
                   console.log("Navigating...");
-
+                  console.log(item.path)
                   // Optionally prevent navigation
                   // e.preventDefault()
                 }}
