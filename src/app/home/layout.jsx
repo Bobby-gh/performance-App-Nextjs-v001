@@ -12,23 +12,28 @@ import Cookies from "js-cookie";
 
 export default function Layout({ children }) {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const { auth, setAuth } = useContext(AuthContext);
+  const [validated, setValidated] = useState(false)
+  const { setAuth } = useContext(AuthContext);
 
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
-      setAuth(token);
+      setAuth((prev) => ({
+        ...prev,
+        token: token,
+      }));
     }
-    setIsCheckingAuth(false);  
+    setValidated(true)
+    setIsCheckingAuth(false);
   }, []);
 
   if (isCheckingAuth) {
-    return <LoadingPage/>;
+    return <LoadingPage />;
   }
 
   return (
     <div>
-      {auth ? (
+      {validated ? (
         <main className="flex h-screen bg-[#EFF1F9] p-4">
           <ToastProvider />
           <div>
@@ -41,7 +46,7 @@ export default function Layout({ children }) {
             <div>{children}</div>
           </div>
         </main>
-      )  : (
+      ) : (
         <NotAuthorized />
       )}
     </div>
