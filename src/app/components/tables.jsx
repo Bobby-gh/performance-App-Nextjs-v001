@@ -36,7 +36,7 @@ export  function GoalTable() {
   const goalsettingcolumn = useGoalSettingColumn();
 
   
-  const data = useMemo(() => departmentgoaltable, [departmentgoaltable]);
+  const data = useMemo(() => departmentgoaltable, []);
   const columns = useMemo(() => goalsettingcolumn, []);
 
   const handleEdit = (row) => {
