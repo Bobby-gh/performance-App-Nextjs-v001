@@ -38,7 +38,7 @@ export  function GoalTable() {
   const goalsettingcolumn = useGoalSettingColumn();
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   const [open, setOpen] = useState(false);
-  const [assignGoalInfo, setAssignGoalInfo] = useState(null)
+  const [assignGoalInfo, setAssignGoalInfo] = useState("")
   const rawData = departmentgoaltable?.data || [];
   const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => goalsettingcolumn, []);
@@ -66,7 +66,8 @@ export  function GoalTable() {
 
   const handleEdit = (row) => {
     console.log("Edit", row);
-    setAssignGoalInfo(row?.original)
+    setAssignGoalInfo(row.original)
+    setOpen(true)
   };
 
   const handleDelete = (row) => {
