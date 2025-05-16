@@ -33,14 +33,15 @@ import { IoNotificationsCircleOutline } from "react-icons/io5";
 
 export  function GoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
+  const dataOriginal = departmentgoaltable?.data || []
   const goalsettingcolumn = useGoalSettingColumn();
 
  
 
-  const data = useMemo(() => departmentgoaltable ?? [], [departmentgoaltable]);
+  const data = useMemo(() => dataOriginal, [dataOriginal]);
   const columns = useMemo(() => goalsettingcolumn, []);
    useEffect(() => {
-  console.log("Data changed", data);
+  console.log("Data changed 2", data);
 }, [data]);
 
   const handleEdit = (row) => {

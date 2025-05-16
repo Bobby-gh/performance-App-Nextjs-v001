@@ -44,8 +44,7 @@ export function useGoalRouteData() {
         },
         withCredentials: true,
       });
-      console.log(response.data);
-      setDepartmenttable(response.data);
+      setDepartmenttable(response);
     } catch (err) {
       console.log(err);
     }
