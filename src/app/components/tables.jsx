@@ -25,10 +25,11 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import { useContext, useEffect, useMemo } from "react";
-import { MdEditNotifications } from "react-icons/md";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { MdDelete, MdEditNotifications } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { Modaltrigger } from "../contex/context-context";
+import { AssignGoal } from "./tableDetails";
 
 
 
@@ -36,11 +37,16 @@ export  function GoalTable() {
   const { departmentgoaltable, fetchData } = useGoalRouteData();
   const goalsettingcolumn = useGoalSettingColumn();
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
-  console.log({departmentgoaltable:departmentgoaltable})
+  const [open, setOpen] = useState(false);
+  cosnt [assignGoalInfo, setAssignGoalInfo] = useState(null)
   const rawData = departmentgoaltable?.data || [];
   const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => goalsettingcolumn, []);
 
+  const handleClose = () => {
+    setOpen(false);
+    setAssignGoalInfo("");
+  };
  
   useEffect(() => {
     const fetchAndReset = async () => {
@@ -56,15 +62,14 @@ export  function GoalTable() {
   }, [trigger]);
 
 
-   useEffect(() => {
-  console.log("Data changed 2", data);
-}, [data]);
+  
 
   const handleEdit = (row) => {
     console.log("Edit", row);
+    setAssignGoalInfo(row?.original)
   };
 
-  const handleNotifications = (row) => {
+  const handleDelete = (row) => {
     console.log("Notifications", row);
   };
 
@@ -115,18 +120,28 @@ export  function GoalTable() {
       <MenuItem
         key="notifications"
         onClick={() => {
-          handleNotifications(row);
+          handleDelete(row);
           closeMenu();
         }}>
         <ListItemIcon>
-          <IoNotificationsCircleOutline fontSize="small" />
+          <MdDelete fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Notifications</ListItemText>
+        <ListItemText>Delete</ListItemText>
       </MenuItem>,
     ],
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+  <div>
+    <MaterialReactTable table={table} />
+    {open && assignGoalInfo && (
+        <AssignGoal
+          data={assignGoalInfo}
+          open={open}
+          onClose={handleClose}
+        />
+    )}
+  </div>);
 }
 
 export  function AccessGoalTable() {

@@ -22,47 +22,28 @@ const ModalStyle = {
   };
 
 
-export function AssignGoal(params) {
+export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const close = () => setOpen(false);
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) => new Date(dateString).toISOString().split("T")[0];
   const [assignGoal, setAssignedGoal] = useState({
-    goalId: params.row._id,
-    goalTitle: params.row.goalTitle,
-    goalDescription: params.row.goalDescription,
-    goalStatus: params.row.status,
-    assignedTo: params.row.taskAssignedTo,
-    deadline: params.row.goalDeadline,
+    goalId: data._id,
+    goalTitle: data.goalTitle,
+    goalDescription: data.goalDescription,
+    goalStatus: data.status,
+    assignedTo: data.taskAssignedTo,
+    deadline: data.goalDeadline,
   });
 
-  function handleOpen() {
-    setOpen(!open);
-  }
-
-  function handleClose() {
-    setOpen(false);
-  }
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
   };
   return (
     <div>
-    <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-      <IconButton onClick={handleOpen} color="primary">
-        <FaEye />
-      </IconButton>
-        <Delete
-          data = {assignGoal.goalId}
-          message = "Are you sure you want to delete Goal?"
-          name = "assignGoal"
-        />
-    </div>
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -85,7 +66,7 @@ export function AssignGoal(params) {
         <div className="bg-gray-900 text-blue-400 px-6 py-4 flex justify-between items-center">
           <h2 className="text-xl font-semibold">Edit Assigned Goal</h2>
           <button
-            onClick={handleClose}
+            onClick={onClose}
             className="text-gray-400 hover:text-red-500 text-xl transition"
           >
             ✕
