@@ -48,7 +48,7 @@ export function Sidebar() {
           {filteredMenuItems.map((item) => (
             console.log({currentPathname:currentPathname, path: item.path}),
             <li key={item.title} className="flex flex-col items-center mb-2">
-              <a
+              <Link
                 href={item.path}
                 className="flex flex-col items-center w-full p-1 rounded-lg">
                 {/* Icon with hover and focus effects */}
@@ -65,7 +65,7 @@ export function Sidebar() {
 
                 {/* Title (beneath icon, unaffected by focus or hover) */}
                 <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
