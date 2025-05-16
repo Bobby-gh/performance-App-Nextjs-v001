@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 export function Sidebar() {
   const { t } = useTranslation();
 
-  const currentPathname = usePathname()
+  const currentPathname = usePathname().replace(/\/+$/, "");
 
   console.log({currentPathname:currentPathname})
   const {auth} = useContext(AuthContext)
