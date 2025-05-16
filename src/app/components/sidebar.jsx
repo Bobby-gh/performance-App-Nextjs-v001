@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export function Sidebar() {
   const { t } = useTranslation();
-  const currentPathname = usePathname();
+  const currentPathname = usePathname().replace(/\/+$/, "");
   const {auth} = useContext(AuthContext)
 
 
