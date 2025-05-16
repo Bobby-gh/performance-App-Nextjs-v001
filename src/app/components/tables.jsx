@@ -25,20 +25,19 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { MdEditNotifications } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
-import { AuthContext } from "../contex/context-context";
 
 
 
 export  function GoalTable() {
-  const {auth} = useContext(AuthContext)
   const { departmentgoaltable } = useGoalRouteData();
+  const departmentGoal = departmentgoaltable? departmentgoaltable : []
   const goalsettingcolumn = useGoalSettingColumn();
 
   
-  const data = useMemo(() => departmentgoaltable, [auth]);
+  const data = useMemo(() => departmentGoal, [departmentGoal]);
   const columns = useMemo(() => goalsettingcolumn, []);
 
   const handleEdit = (row) => {
