@@ -29,6 +29,7 @@ export function Sidebar() {
     return ![""].includes(item.path);
   });
 
+  console.log({filteredMenuItems:filteredMenuItems})
   return (
 
     <main className="w-24 h-full bg-[#0b1558]  rounded-lg">
