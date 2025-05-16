@@ -12,9 +12,7 @@ import Cookies from "js-cookie";
 
 export default function Layout({ children }) {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const [systemDown, setSystemDown] = useState(false);
-  const [validated, setValidated] = useState(false);
-  const { auth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -30,7 +28,7 @@ export default function Layout({ children }) {
 
   return (
     <div>
-      {validated ? (
+      {auth ? (
         <main className="flex h-screen bg-[#EFF1F9] p-4">
           <ToastProvider />
           <div>
