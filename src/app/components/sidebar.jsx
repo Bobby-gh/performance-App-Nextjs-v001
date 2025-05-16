@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useContext } from "react";
 import { MenuItems } from "./menuitems";
 import Link from "next/link";
@@ -7,12 +7,15 @@ import classNames from "classnames";
 import { AuthContext } from "../contex/context-context";
 import { useTranslation } from "react-i18next";
 
+
 export function Sidebar() {
   const { t } = useTranslation();
   const currentPathname = usePathname().replace(/\/+$/, "");
-  const { auth } = useContext(AuthContext);
+  const {auth} = useContext(AuthContext)
 
-  const filteredMenuItems = MenuItems.filter((item) => {
+
+
+   const filteredMenuItems = MenuItems.filter((item) => {
     if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
       return !["/home/goals"].includes(item.path);
     }
@@ -20,12 +23,7 @@ export function Sidebar() {
       return !["/home/department"].includes(item.path);
     }
     if (auth.refNum === "ref?3!") {
-      return ![
-        "/home/department",
-        "/home/employees",
-        "/home/goal-setting",
-        "/home/goal-assessment",
-      ].includes(item.path);
+      return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
     }
     return ![""].includes(item.path);
   });
@@ -49,31 +47,21 @@ export function Sidebar() {
             <li key={item.title} className="flex flex-col items-center mb-2">
               <Link
                 href={item.path}
-                onClick={(e) => {
-                  // Only executes during SPA navigation
-                  console.log("Navigating...");
-                  console.log( typeof item.path)
-                  // Optionally prevent navigation
-                  // e.preventDefault()
-                }}
                 className="flex flex-col items-center w-full p-1 rounded-lg">
                 {/* Icon with hover and focus effects */}
-                <div
+                <span
                   className={classNames(
                     "text-lg p-2 text-white rounded-lg transition-colors duration-200",
                     {
                       "bg-[#08397e] text-white": currentPathname === item.path, // Focused state
-                      "hover:bg-[#08397e] hover:text-white":
-                        currentPathname !== item.path, // Hover effect only on the icon
+                      "hover:bg-[#08397e] hover:text-white": currentPathname !== item.path, // Hover effect only on the icon
                     }
                   )}>
                   {item.icon}
-                </div>
+                </span>
 
                 {/* Title (beneath icon, unaffected by focus or hover) */}
-                <span className="text-xs mt-1 text-white ">
-                  {t(item.title)}
-                </span>
+                <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
               </Link>
             </li>
           ))}
