@@ -13,7 +13,6 @@ export function Sidebar() {
 
   const currentPathname = usePathname()
   const {auth} = useContext(AuthContext)
-  console.log({"refnum": auth.refNum})
 
    const filteredMenuItems = MenuItems.filter((item) => {
     if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
@@ -25,37 +24,48 @@ export function Sidebar() {
     if (auth.refNum === "ref?3!") {
       return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
     }
-    return !["/home/department", "/home/employees", "/home/goal-setting","/home/goal-assessment"].includes(item.path);
     return ![""].includes(item.path);
   });
 
   return (
 
-    <main className="w-32 sm:w-72 ">
-      <div className="hidden sm:block lg:flex sm:justify-center sm:p-8">
+    <main className="w-24 h-full bg-[#0b1558]  rounded-lg">
+      {/* Logo */}
+      <div className="flex justify-center p-2 mb-4">
+        {/* Logo image */}
         <img
           src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
           alt="Paris"
-          className="w-55 h-20"
+          className="w-16 h-auto"
         />
       </div>
-      <div>
-        <div className="flex flex-col justify-center p-6">
-          <ul>
-            {filteredMenuItems.map((item) => (
-              <li
-                key={item.title}>
-                <Link href={item.path} className={classNames({
-                  "flex items-center text-md p-4 m-2 hover:bg-blue-900 hover:text-white rounded-lg": true,
-                  "bg-blue-900 rounded-lg text-white": currentPathname === item.path
-                })}>
-                  {item.icon} <span className="ml-2 hidden transition duration-300 ease-out sm:block">{item.title}</span>
-                  {item.icon} <span className="ml-2 hidden transition duration-300 ease-out sm:block">{t(item.title)}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+
+      {/* Menu Items */}
+      <div className="flex flex-col items-center text-center">
+        <ul className="w-full">
+          {filteredMenuItems.map((item) => (
+            <li key={item.title} className="flex flex-col items-center mb-2">
+              <Link
+                href={item.path}
+                className="flex flex-col items-center w-full p-1 rounded-lg">
+                {/* Icon with hover and focus effects */}
+                <div
+                  className={classNames(
+                    "text-lg p-2 text-white rounded-lg transition-colors duration-200",
+                    {
+                      "bg-[#08397e] text-white": currentPathname === item.path, // Focused state
+                      "hover:bg-[#08397e] hover:text-white": currentPathname !== item.path, // Hover effect only on the icon
+                    }
+                  )}>
+                  {item.icon}
+                </div>
+
+                {/* Title (beneath icon, unaffected by focus or hover) */}
+                <span className="text-xs mt-1 text-white ">{t(item.title)}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </main>
   );
