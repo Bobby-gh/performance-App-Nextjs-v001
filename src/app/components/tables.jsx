@@ -36,6 +36,7 @@ export  function GoalTable() {
   const { departmentgoaltable, fetchData } = useGoalRouteData();
   const goalsettingcolumn = useGoalSettingColumn();
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
+  console.log({departmentgoaltable:departmentgoaltable})
   const rawData = departmentgoaltable?.data || [];
   const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => goalsettingcolumn, []);
