@@ -5,13 +5,17 @@ import React from "react";
 
 export default function Employees() {
   return (
-    <main>
-      <LoadingPopup/>
-      <div className="mb-4 flex justify-between flex-row">
-        <Userforms/>
-      </div>
-      <div className="mt-16 bg-white rounded-lg">
-        <EmployeeTable /> 
+    <main className="mt-8">
+      <LoadingPopup />
+      <div className="card bg-white p-8 rounded-lg">
+        <div className="flex justify-end mb-4">
+          <div className="mt-1">
+            <Userforms />
+          </div>
+        </div>
+        <div>
+          <EmployeeTable />
+        </div>
       </div>
     </main>
   );
