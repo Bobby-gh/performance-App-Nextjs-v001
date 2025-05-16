@@ -13,7 +13,7 @@ export function Sidebar() {
 
   const currentPathname = usePathname()
   const {auth} = useContext(AuthContext)
-
+  let menuItems = [];
 
   if (auth.refNum === "ref?1!" ) {
     menuItems = adminMenuItems;
