@@ -12,6 +12,8 @@ export function Sidebar() {
   const { t } = useTranslation();
 
   const currentPathname = usePathname()
+
+  console.log({currentPathname:currentPathname})
   const {auth} = useContext(AuthContext)
 
    const filteredMenuItems = MenuItems.filter((item) => {
