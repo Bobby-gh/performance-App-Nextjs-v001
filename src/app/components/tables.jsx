@@ -33,12 +33,11 @@ import { IoNotificationsCircleOutline } from "react-icons/io5";
 
 export  function GoalTable() {
   const { departmentgoaltable } = useGoalRouteData();
-  const departmentGoal = departmentgoaltable? departmentgoaltable : []
   const goalsettingcolumn = useGoalSettingColumn();
 
  
 
-  const data = useMemo(() => departmentGoal, [departmentGoal]);
+  const data = useMemo(() => departmentgoaltable ?? [], [departmentgoaltable]);
   const columns = useMemo(() => goalsettingcolumn, []);
    useEffect(() => {
   console.log("Data changed", data);
