@@ -27,6 +27,8 @@ export function Sidebar() {
     return ![""].includes(item.path);
   });
 
+
+  console.log({})
   return (
 
     <main className="w-24 h-full bg-[#0b1558]  rounded-lg">
@@ -44,6 +46,7 @@ export function Sidebar() {
       <div className="flex flex-col items-center text-center">
         <ul className="w-full">
           {filteredMenuItems.map((item) => (
+            console.log({currentPathname:currentPathname, path: item.path}),
             <li key={item.title} className="flex flex-col items-center mb-2">
               <a
                 href={item.path}
