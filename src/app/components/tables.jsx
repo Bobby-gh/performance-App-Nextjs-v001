@@ -150,8 +150,19 @@ export  function AccessGoalTable() {
   const { goalAssessment } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
 
+  const goalAssessmentData = goalAssessment.map((goal) => ({
+      _id: goal._id,
+      taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
+      goalTitle: goal.goalAssessed?.goalTitle || "",
+      goalDeadline:
+        new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
+      performancePercent: goal.averageRating?.performancePercent || 0,
+      rating: goal.rating?.toUpperCase() || "",
+      comment: goal.comment || "",
+    }));
+
   console.log({goalAssessment:goalAssessment})
-  const data = useMemo(() => goalAssessment? goalAssessment : [], [goalAssessment]);
+  const data = useMemo(() => goalAssessment? goalAssessmentData : [], [goalAssessment]);
   const columns = useMemo(() => accessinggoalcolumn, []);
 
   const handleEdit = (row) => {

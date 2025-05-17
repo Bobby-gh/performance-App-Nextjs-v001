@@ -238,8 +238,9 @@ export function useTopGoalsRouteData() {
 
 export function useGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
-  const [goalAssessment, setGoalAssessment] = useState("");
+  const [goalAssessment, setGoalAssessment] = useState([]);
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
+
 
 
   const fetchData = async () => {

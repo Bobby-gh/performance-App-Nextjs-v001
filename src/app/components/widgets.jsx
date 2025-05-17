@@ -95,16 +95,13 @@ export function FormInputField({
   required = false,
   error = "",
   id,
-  borderColor,
-  backgroundColor,
-  width,
 }) {
   return (
     <div className="mb-1">
       <div className="flex flex-row">
         {label && (
           <label
-            className={`block text-xs ${
+            className={`block text-[12.5px] text-[#08376B] ${
               (error ? "text-red-500" : "", disabled ? "text-gray-300" : "")
             }`}>
             {label} {required && <span className="required">*</span>}
@@ -121,7 +118,7 @@ export function FormInputField({
         onChange={onChange}
         required={required}
         autoComplete="false"
-        className={`${width} p-2 rounded-sm ${backgroundColor} ${borderColor} ${
+        className={`w-full p-2 bg-gray-200  ${
           (error ? "border border-red-500" : "", disabled ? "bg-gray-100" : "")
         }`}
       />
