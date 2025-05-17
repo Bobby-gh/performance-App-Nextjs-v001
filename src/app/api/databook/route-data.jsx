@@ -141,7 +141,7 @@ export function useUnassessedGoalRouteData() {
 
 export function useEmployeesRouteData() {
   const { auth } = useContext(AuthContext);
-  const [employeetable, setEmployeetable] = useState([]);
+  const [employeetable, setEmployeetable] = useState("");
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
 
   const fetchData = async () => {
@@ -154,7 +154,7 @@ export function useEmployeesRouteData() {
         },
         withCredentials: true,
       });
-      setEmployeetable(response.data.usersResponse);
+      setEmployeetable(response.data);
     } catch (err) {
       console.log(err);
     }

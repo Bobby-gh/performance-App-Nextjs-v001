@@ -239,26 +239,18 @@ export const useUserColumn = () => {
     {
       accessorKey: "name",
       header: t("firstName"),
-      flex: 1,
-      headerClassName: "header-table",
     },
     {
       accessorKey: "email",
       header: t("email"),
-      flex: 1,
-      headerClassName: "header-table",
     },
     {
       accessorKey: "department",
       header: t("department"),
-      flex: 1,
-      headerClassName: "header-table",
     },
     {
       accessorKey: "role",
       header: t("role"),
-      flex: 0.5,
-      headerClassName: "header-table",
     },
   ];
 };

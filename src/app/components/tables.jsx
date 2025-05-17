@@ -285,10 +285,11 @@ export  function DepartmentTable() {
 export  function EmployeeTable() {
   const { employeetable } = useEmployeesRouteData();
   const usercolumn = useUserColumn();
+  const rawData = employeetable?.usersResponse || [];
+  const data = useMemo(() => rawData, [rawData]);
+  const columns = useMemo(() => usercolumn, []);
 
   
-  const data = useMemo(() => employeetable, [employeetable]);
-  const columns = useMemo(() => usercolumn, []);
 
   const handleEdit = (row) => {
     console.log("Edit", row);
