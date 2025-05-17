@@ -185,8 +185,6 @@ export function AssignGoal({ data, open, onClose }) {
 }
 export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const close = () => setOpen(false);
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
@@ -220,20 +218,13 @@ export function AssessGoal({ data, open, onClose }) {
       
       <Modal
         open={open}
-        onClose={close}
+        onClose={onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={ModalModification}>
           {/* Modal Header */}
           <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
-            <button onClick={() => setEditMode(!editMode)}>
-              {editMode ? (
-                <FiEdit color="blue" size={20} />
-              ) : (
-                <FiEdit size={20} />
-              )}
-            </button>
-            <button onClick={close}>
+            <button onClick={onClose}>
               <IoClose size={24} />
             </button>
           </div>

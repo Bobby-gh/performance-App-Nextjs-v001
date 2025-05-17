@@ -116,7 +116,7 @@ export function CreateGoal() {
         </div>
         <hr />
         <form className="w-96">
-          <div className=" px-10 py-8">
+          <div className="px-10 py-12">
             {auth.refNum === "ref?1!" || auth.refNum === "ref?1!" ? (
               <CustomSelect
                 id="departmentName"
@@ -453,64 +453,58 @@ export function AccessGoal() {
               required
               group={false}
             />
-            <div className="grid grid-cols-2 gap-2">
-              <div className="relative mb-6" data-te-input-wrapper-init>
-                <select
-                  className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                  name="creativity"
-                  value={assessData.creativity}
-                  autoComplete="off"
-                  onChange={assessmentFormHandler}
-                  required>
-                  <option></option>
-                  <option value="1">{t("weak")}</option>
-                  <option value="2">{t("average")}</option>
-                  <option value="3">{t("good")}</option>
-                  <option value="4">{t("veryGood")}</option>
-                </select>
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  {t("creativity")}
-                </label>
-              </div>
-              <div className="relative mb-6" data-te-input-wrapper-init>
-                <select
-                  className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                  name="rating"
-                  value={assessData.rating}
-                  autoComplete="off"
-                  onChange={assessmentFormHandler}
-                  required>
-                  <option></option>
-                  <option value="Below Expectations">
-                    {t("belowExpectations")}
-                  </option>
-                  <option value="Meets Expectations">
-                    {t("meetsExpectations")}
-                  </option>
-                  <option value="Exceeds Expectations">
-                    {t("exceedsExpectations")}
-                  </option>
-                  <option value="Outstanding">{t("outstanding")}</option>
-                </select>
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  {t("goalRating")}
-                </label>
-              </div>
-            </div>
-            <div className="relative" data-te-input-wrapper-init>
-              <textarea
-                type="text"
-                className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                name="comment"
-                value={assessData.comment}
-                autoComplete="off"
-                onChange={assessmentFormHandler}
-                required
-              />
-              <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                {t("comment")}
-              </label>
-            </div>
+            <CustomSelect
+              id="creativity"
+              label={t("creativity")}
+              value={assessData.creativity}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            <CustomSelect
+              id="creativity"
+              label={t("creativity")}
+              value={assessData.creativity}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            <CustomSelect
+              id="rating"
+              label={t("creativity")}
+              value={assessData.rating}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "Below Expectations", label: t("belowExpectations") },
+                { value: "Meets Expectations", label: t("meetsExpectations") },
+                { value: "Exceeds Expectations", label: t("exceedsExpectations") },
+                { value: "Outstanding", label: t("outstanding") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            
+            <FormInputField
+              label={t("comment")}
+              id="comment"
+              onChange={assessmentFormHandler}
+              value={assessData.comment}
+            />
           </div>
           <div className="px-10">
             <button
