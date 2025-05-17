@@ -125,3 +125,16 @@ export function FormInputField({
     </div>
   );
 }
+
+export const ModalModification = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "#FFFFFF !important",
+  width: "87vw",
+  height: "90vh",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 1,
+};

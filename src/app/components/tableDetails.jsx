@@ -5,21 +5,12 @@ import { FaEye, FaSave } from "react-icons/fa";
 import { Box, FormControl, IconButton, MenuItem, Modal, Select, TextField } from "@mui/material";
 import { useDepartmentRouteData } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
-import { Delete } from "./widgets";
+import {  ModalModification } from "./widgets";
+import { FiEdit } from "react-icons/fi";
+import { IoClose } from "react-icons/io5";
 
 
 
-const ModalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "#FFFFFF",
-    boxShadow: 24,
-    p: 4,
-    borderRadius: 1,
-    width: 1200,
-  };
 
 
 export function AssignGoal({ data, open, onClose }) {
@@ -34,8 +25,15 @@ export function AssignGoal({ data, open, onClose }) {
     assignedTo: data.taskAssignedTo,
     deadline: data.goalDeadline,
   });
+  const [editableFields, setEditableFields] = useState({ ...assignGoal });
+  const [editMode, setEditMode] = useState(false);
+
+   const handleChange = (key, value) => {
+    setEditableFields((prev) => ({ ...prev, [key]: value }));
+  };
 
 
+  console.log({editableFields:editableFields})
   const handleEditSubmit = async (e) => {
     e.preventDefault();
   };
@@ -48,32 +46,82 @@ export function AssignGoal({ data, open, onClose }) {
       aria-describedby="modal-modal-description"
     >
       <Box
-        sx={{
-          width: '90%',
-          maxWidth: '1000px',
-          margin: 'auto',
-          marginTop: '5%',
-          borderRadius: 3,
-          bgcolor: '#ffffff',
-          color: '#1f2937',
-          boxShadow: 24,
-          border: '1px solid #e5e7eb',
-          p: 0,
-          overflow: 'hidden',
-        }}
+        sx={ModalModification}
       >
         {/* Modal Header */}
-        <div className="bg-gray-900 text-blue-400 px-6 py-4 flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Edit Assigned Goal</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-red-500 text-xl transition"
-          >
-            ✕
-          </button>
+        <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+          <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+            <button onClick={() => setEditMode(!editMode)}>
+              {editMode ? (
+                <FiEdit color="blue" size={20} />
+              ) : (
+                <FiEdit size={20} />
+              )}
+            </button>
+            <button onClick={onClose}>
+              <IoClose size={24} />
+            </button>
+          </div>
         </div>
 
         {/* Modal Body */}
+
+        <div className="p-6 space-y-2 mt-2 bg-[#D7E7FA] max-h-[90vh] rounded-lg">
+            <div className="flex justify-between mb-6">
+              <div className="gap-4">
+                <div className="font-semibold text-lg mb-2">
+                  {editMode ? (
+                    <input
+                      className="w-full bg-transparent outline-none focus:ring-0 focus:border-transparent"
+                      value={editableFields.goalTitle || ""}
+                      onChange={(e) =>
+                        handleChange("actionItem", e.target.value)
+                      }
+                    />
+                  ) : (
+                    editableFields.goalTitle
+                  )}
+                </div>
+
+                <div className="flex flex-wrap space-x-4 w-full items-center text-sm">
+
+                  <div className="flex items-center space-x-2">
+                    <IoCalendarClearOutline color="red" />
+                    <span className="text-red-500">
+                      Due Date:{" "}
+                      {editMode ? (
+                        <input
+                          type="date"
+                          className="border px-2 py-1 rounded"
+                          value={
+                            convertDate(
+                              editableFields.deadline
+                            ) || ""
+                          }
+                          onChange={(e) =>
+                            handleChange(
+                              "expectedCompletionDate",
+                              e.target.value
+                            )
+                          }
+                        />
+                      ) : (
+                        editableFields.deadline
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-blue-500 font-semibold text-sm whitespace-nowrap">
+                {editableFields.goalStatus}
+              </div>
+            </div>
+            <div className="my-6 bg-white p-4 rounded-lg max-h-[65vh] overflow-y-auto">
+              
+            </div>
+          </div>
+
         <div className="overflow-y-auto max-h-[70vh] p-6">
           <FormControl fullWidth>
             {/* Form Fields */}
