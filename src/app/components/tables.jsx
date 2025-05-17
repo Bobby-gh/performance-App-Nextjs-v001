@@ -150,7 +150,7 @@ export  function AccessGoalTable() {
   const { goalAssessmentData } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
 
-  
+  console.log({goalAssessmentData:goalAssessmentData})
   const data = useMemo(() => goalAssessmentData, [goalAssessmentData]);
   const columns = useMemo(() => accessinggoalcolumn, []);
 
