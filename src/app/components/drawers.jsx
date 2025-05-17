@@ -334,7 +334,7 @@ export function AccessGoal() {
         </div>
         <hr />
         <form className="w-96">
-          <div className=" px-10 py-8">
+          <div className="flex flex-col px-10 py-8 space-y-4">
             <CustomSelect
               id="goal"
               label={t("goal")}
@@ -469,23 +469,8 @@ export function AccessGoal() {
               group={false}
             />
             <CustomSelect
-              id="creativity"
-              label={t("creativity")}
-              value={assessData.creativity}
-              onChange={assessmentFormHandler}
-              options={[
-                { value: "1", label: t("weak") },
-                { value: "2", label: t("average") },
-                { value: "3", label: t("good") },
-                { value: "4", label: t("veryGood") },
-              ]}
-              searchable={true}
-              required
-              group={false}
-            />
-            <CustomSelect
               id="rating"
-              label={t("creativity")}
+              label={t("goalRating")}
               value={assessData.rating}
               onChange={assessmentFormHandler}
               options={[

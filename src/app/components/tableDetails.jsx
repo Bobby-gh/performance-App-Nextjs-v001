@@ -52,13 +52,6 @@ export function AssignGoal({ data, open, onClose }) {
           {/* Modal Header */}
           <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
             <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
-              <button onClick={() => setEditMode(!editMode)}>
-                {editMode ? (
-                  <FiEdit color="blue" size={20} />
-                ) : (
-                  <FiEdit size={20} />
-                )}
-              </button>
               <button onClick={onClose}>
                 <IoClose size={24} />
               </button>
@@ -118,11 +111,10 @@ export function AssignGoal({ data, open, onClose }) {
                 <FormControl fullWidth>
                   {/* Form Fields */}
                   <div className="grid grid-cols-2 gap-6 mb-6">
-                    <TextField
-                      label="Goal ID"
+                    <FormInputField
+                      label={t("Goal ID")}
+                      id="goalId"
                       value={assignGoal.goalId}
-                      disabled
-                      fullWidth
                     />
                     <TextField
                       label={t("goalTitle")}
@@ -143,20 +135,17 @@ export function AssignGoal({ data, open, onClose }) {
                       required
                       fullWidth
                     />
-                    <Select
+                    <ModalFormSelect
+                      id="assignedTO"
                       label="Assigned To"
                       value={assignGoal.assignedTo}
+                      options={departmenttable.map((department) => ({
+                        value: department.departmentId,
+                        label: department.departmentName,
+                      }))}
+                      onChange={setResponseActivityStatus}
                       required
-                      fullWidth
-                      displayEmpty>
-                      {departmenttable.map((department) => (
-                        <MenuItem
-                          key={department.departmentId}
-                          value={department.departmentId}>
-                          {department.departmentName}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                    />
                     <TextField
                       type="date"
                       label="Created At"
@@ -189,16 +178,16 @@ export function AssessGoal({ data, open, onClose }) {
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
   const [assessGoal, setAssessGoal] = useState({
-    goalId: data.row._id,
-    goalTitle: data.row.goalTitle,
-    goalDescription: data.row.goalDescription,
-    goalStatus: data.row.status,
-    assignedTo: data.row.taskAssignedTo,
-    deadline: data.row.goalDeadline,
-    goalType: data.row.goalType,
-    performancePercent: data.row.performancePercent,
-    reviewed: data.row.reviewed,
-    assignedBy: data.row.taskAssignedBy,
+    goalId: data?.data._id,
+    goalTitle: data?.data.goalTitle,
+    goalDescription: data?.data.goalDescription,
+    goalStatus: data?.data.status,
+    assignedTo: data?.data.taskAssignedTo,
+    deadline: data?.data.goalDeadline,
+    goalType: data?.data.goalType,
+    performancePercent: data?.data.performancePercent,
+    reviewed: data?.data.reviewed,
+    assignedBy: data?.data.taskAssignedBy,
   });
 
   const [editableFields, setEditableFields] = useState({ ...assessGoal });
@@ -215,7 +204,6 @@ export function AssessGoal({ data, open, onClose }) {
 
   return (
     <div>
-      
       <Modal
         open={open}
         onClose={onClose}
@@ -338,18 +326,14 @@ export function AssessGoal({ data, open, onClose }) {
                       type="date"
                       label="Created At"
                       value={formattedDate(assessGoal.deadline)}
-                      onChange={(e) =>
-                        handleChange("deadline", e.target.value)
-                      }
+                      onChange={(e) => handleChange("deadline", e.target.value)}
                       disabled={!editMode}
                       fullWidth
                     />
                     <TextField
                       label="Goal Type"
                       value={assessGoal.goalType}
-                      onChange={(e) =>
-                        handleChange("goalType", e.target.value)
-                      }
+                      onChange={(e) => handleChange("goalType", e.target.value)}
                       disabled={!editMode}
                       fullWidth
                     />
@@ -366,9 +350,7 @@ export function AssessGoal({ data, open, onClose }) {
                     <Select
                       label="Reviewed"
                       value={assessGoal.reviewed}
-                      onChange={(e) =>
-                        handleChange("reviewed", e.target.value)
-                      }
+                      onChange={(e) => handleChange("reviewed", e.target.value)}
                       required
                       disabled={!editMode}
                       fullWidth
