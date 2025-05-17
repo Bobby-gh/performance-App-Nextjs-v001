@@ -117,7 +117,7 @@ export function AssignGoal({ data, open, onClose }) {
               <div className="overflow-y-auto max-h-[70vh] p-6">
                 <FormControl fullWidth>
                   {/* Form Fields */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                  <div className="grid grid-cols-2 gap-6 mb-6">
                     <TextField
                       label="Goal ID"
                       value={assignGoal.goalId}
@@ -164,17 +164,17 @@ export function AssignGoal({ data, open, onClose }) {
                       fullWidth
                     />
                   </div>
+                  {/* Save Button */}
+                  <div className="flex justify-end mt-4">
+                    <button
+                      type="submit"
+                      onClick={handleEditSubmit}
+                      className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300">
+                      <FaSave className="text-lg" />
+                      Save
+                    </button>
+                  </div>
                 </FormControl>
-              </div>
-              {/* Save Button */}
-              <div className="flex justify-end mt-4">
-                <button
-                  type="submit"
-                  onClick={handleEditSubmit}
-                  className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300">
-                  <FaSave className="text-lg" />
-                  Save
-                </button>
               </div>
             </div>
           </div>
