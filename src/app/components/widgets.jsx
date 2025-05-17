@@ -3,6 +3,7 @@ import { Box, Button, CircularProgress, IconButton, Modal, Typography } from "@m
 import { MdDelete } from "react-icons/md";
 import { useGoalDelete } from "../api/databook/route-data";
 import { Modaltrigger } from "../contex/context-context";
+import Select from "react-select";
 
 export function Delete({ data, message, name }) {
     const [open, setOpen] = useState(false);

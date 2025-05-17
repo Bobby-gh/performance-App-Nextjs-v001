@@ -152,50 +152,44 @@ export function CreateGoal() {
               onChange={handleInputChange}
               value={formData.title}
             />
-            <div className="relative mb-6" data-te-input-wrapper-init>
-              <select
-                className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                name="category"
-                value={category}
-                autoComplete="off"
-                onChange={(e) => setCategory(e.target.value)}
-                required>
-                <option></option>
-                <option value="human relationship">
-                  {t("humanRelationship")}
-                </option>
-                <option value="financial">{t("financial")}</option>
-                <option value="customer centred">{t("customerCentred")}</option>
-                <option value="innovation">
-                  {t("internalProcessingAndInnovation")}
-                </option>
-              </select>
-              <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                {t("goalCategory")}
-              </label>
-            </div>
+            <CustomSelect
+              id="category"
+              value={category}
+              label={t("goalCategory")}
+              onChange={setCategory}
+              options={[
+                { value: "human relationship", label: t("humanRelationship") },
+                { value: "financial", label: t("financial") },
+                { value: "customer centred", label: t("customerCentred") },
+                {
+                  value: "innovation",
+                  label: t("internalProcessingAndInnovation"),
+                },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
             <FormInputField
               label={t("target")}
               id="startDate"
               onChange={handleInputChange}
               value={formData.target}
             />
-            <div className="relative mb-6" data-te-input-wrapper-init>
-              <select
-                type="text"
-                className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-                required>
-                <option></option>
-                <option value="low">{t("low")} </option>
-                <option value="medium">{t("medium")} </option>
-                <option value="high">{t("high")} </option>
-              </select>
-              <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                {t("priorityLevel")}
-              </label>
-            </div>
+            <CustomSelect
+              id="category"
+              value={priority}
+              label={t("priorityLevel")}
+              onChange={setPriority}
+              options={[
+                { value: "low", label: t("low") },
+                { value: "medium", label: t("medium") },
+                { value: "high", label: t("high") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
             <FormInputField
               label={t("description")}
               id="startDate"
@@ -341,24 +335,19 @@ export function AccessGoal() {
         <hr />
         <form className="w-96">
           <div className=" px-10 py-8">
-            <div className="relative mb-6" data-te-input-wrapper-init>
-              <select
-                name="goal"
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
-                className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                required>
-                <option value="" disabled></option>
-                {unaccessedgoal.map((goals) => (
-                  <option key={goals._id} value={goals._id}>
-                    {goals.goalTitle}
-                  </option>
-                ))}
-              </select>
-              <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                {t("goal")}
-              </label>
-            </div>
+            <CustomSelect
+              id="goal"
+              label={t("goal")}
+              value={goal}
+              onChange={setGoal}
+              options={unaccessedgoal.map((goals) => ({
+                value: goals._id,
+                label: goals.goalTitle,
+              }))}
+              searchable={true}
+              required
+              group={false}
+            />
             <div className="grid grid-cols-2 gap-2">
               <div className="relative mb-6" data-te-input-wrapper-init>
                 <select
