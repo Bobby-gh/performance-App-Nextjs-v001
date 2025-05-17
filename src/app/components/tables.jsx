@@ -43,10 +43,6 @@ export  function GoalTable() {
   const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => goalsettingcolumn, []);
 
-  useEffect(()=>{
-    console.log("i am looping")
-  },[data])
-
   const handleClose = () => {
     setOpen(false);
     setAssignGoalInfo("");
