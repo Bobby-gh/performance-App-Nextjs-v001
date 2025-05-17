@@ -255,7 +255,7 @@ export function useGoalAccessmentRouteData() {
         },
         withCredentials: true,
       });
-      setGoalAssessment(response.data);
+      setGoalAssessment(response);
     } catch (err) {
       console.error(
         "Error fetching goal assessments:",

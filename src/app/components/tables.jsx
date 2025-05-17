@@ -223,8 +223,6 @@ export  function AccessGoalTable() {
 export  function DepartmentTable() {
   const { departmenttable } = useDepartmentRouteData();
   const departmentcolumn = useDepartmentColumn();
-
-  
   const rawData = departmenttable?.departments || [];
   const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => departmentcolumn, []);
