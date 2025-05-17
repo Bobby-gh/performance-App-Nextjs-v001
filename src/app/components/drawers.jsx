@@ -681,6 +681,7 @@ export function Departmentforms() {
   const { auth } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -716,7 +717,6 @@ export function Departmentforms() {
     setName("");
   };
 
-  const [open, setOpen] = React.useState(false);
 
   function handleOpen() {
     setOpen(!open);
