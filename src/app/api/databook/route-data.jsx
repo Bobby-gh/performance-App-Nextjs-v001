@@ -189,7 +189,7 @@ export function useDepartmentRouteData() {
         },
         withCredentials: true,
       });
-      setDepartmenttable(response.data.departments);
+      setDepartmenttable(response.data);
     } catch (err) {
       console.log(err);
     }
@@ -238,19 +238,9 @@ export function useTopGoalsRouteData() {
 
 export function useGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
-  const [goalAssessment, setGoalAssessment] = useState([]);
+  const [goalAssessment, setGoalAssessment] = useState("");
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
 
-  const goalAssessmentData = goalAssessment.map((goal) => ({
-    _id: goal._id,
-    taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
-    goalTitle: goal.goalAssessed?.goalTitle || "",
-    goalDeadline:
-      new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
-    performancePercent: goal.averageRating?.performancePercent || 0,
-    rating: goal.rating?.toUpperCase() || "",
-    comment: goal.comment || "",
-  }));
 
   const fetchData = async () => {
     if (!auth?.token) {
@@ -286,7 +276,7 @@ export function useGoalAccessmentRouteData() {
     }
   }, [trigger]);
 
-  return { goalAssessmentData };
+  return { goalAssessment };
 }
 
 export function useGeneralPerformanceChartRouteData() {

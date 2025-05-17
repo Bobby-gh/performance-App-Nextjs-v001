@@ -43,6 +43,7 @@ export  function GoalTable() {
   const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => goalsettingcolumn, []);
 
+
   const handleClose = () => {
     setOpen(false);
     setAssignGoalInfo("");
@@ -149,10 +150,10 @@ export  function GoalTable() {
 export  function AccessGoalTable() {
   const { goalAssessmentData } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
-
-  
-  const data = useMemo(() => goalAssessmentData, [goalAssessmentData]);
+  const rawData = goalAssessmentData?.data || [];
+  const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => accessinggoalcolumn, []);
+
 
   const handleEdit = (row) => {
     console.log("Edit", row);
@@ -224,7 +225,8 @@ export  function DepartmentTable() {
   const departmentcolumn = useDepartmentColumn();
 
   
-  const data = useMemo(() => departmenttable, [departmenttable]);
+  const rawData = departmenttable?.departments || [];
+  const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => departmentcolumn, []);
 
   const handleEdit = (row) => {
