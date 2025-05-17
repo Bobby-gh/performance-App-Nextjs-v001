@@ -29,7 +29,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { MdDelete, MdEditNotifications } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { Modaltrigger } from "../contex/context-context";
-import { AssignGoal } from "./tableDetails";
+import { AssessGoal, AssignGoal } from "./tableDetails";
 
 
 
@@ -147,8 +147,15 @@ export  function GoalTable() {
 }
 
 export  function AccessGoalTable() {
+  const [open, setOpen] = useState(false);
+  const [assessGoalInfo, setAssessGoalInfo] = useState("");
   const { goalAssessment } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
+
+  const handleClose = () => {
+    setOpen(false);
+    setAssessGoalInfo("");
+  };
 
   const goalAssessmentData = goalAssessment.map((goal) => ({
       _id: goal._id,
@@ -165,17 +172,16 @@ export  function AccessGoalTable() {
   const data = useMemo(() => goalAssessment? goalAssessmentData : [], [goalAssessment]);
   const columns = useMemo(() => accessinggoalcolumn, []);
 
-  const handleEdit = (row) => {
+   const handleEdit = (row) => {
     console.log("Edit", row);
+    setAssessGoalInfo(row.original)
+    setOpen(true)
   };
 
-  const handleNotifications = (row) => {
+  const handleDelete = (row) => {
     console.log("Notifications", row);
   };
-
-
  
-
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
       sx: {
@@ -227,7 +233,17 @@ export  function AccessGoalTable() {
     ],
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+  <div>
+    <MaterialReactTable table={table} />
+    {open && assessGoalInfo && (
+        <AssessGoal
+          data={assessGoalInfo}
+          open={open}
+          onClose={handleClose}
+        />
+    )}
+  </div>);
 }
 
 export  function DepartmentTable() {
