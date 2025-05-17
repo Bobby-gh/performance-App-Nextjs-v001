@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { Box, Button, CircularProgress, IconButton, Modal, Typography } from "@mui/material";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdOutlineLocalPhone, MdOutlineMarkEmailRead } from "react-icons/md";
 import { useGoalDelete } from "../api/databook/route-data";
 import { Modaltrigger } from "../contex/context-context";
 import Select from "react-select";
+import { IoLocationOutline, IoPerson } from "react-icons/io5";
 
 export function Delete({ data, message, name }) {
     const [open, setOpen] = useState(false);
@@ -235,7 +236,7 @@ export function PersonalAccountCard() {
       <div className="flex-[1] border-r-2 border-r-[#cbd5e1] p-6 flex flex-col space-y-6">
         <div className="flex flex-col items-center">
           <Image
-            src={avatar}
+            // src={avatar}
             alt="Paris"
             className="rounded-full border-2 mb-4"
             width={156}
@@ -270,7 +271,7 @@ export function PersonalAccountCard() {
       </div>
       <div className="flex-[2]">
         <div className="grid grid-cols-2 gap-8 p-4">
-          <InputField
+          <FormInputField
             label="Last Name"
             type="text"
             id="lname"
@@ -280,7 +281,7 @@ export function PersonalAccountCard() {
             required
             // error={error && !email ? "Email is required" : ""}
           />
-          <InputField
+          <FormInputField
             label="Other Name"
             type="text"
             id="Oname"
@@ -290,7 +291,7 @@ export function PersonalAccountCard() {
             required
             // error={error && !email ? "Email is required" : ""}
           />
-          <InputField
+          <FormInputField
             label="Email"
             type="email"
             id="email"
@@ -300,7 +301,7 @@ export function PersonalAccountCard() {
             required
             // error={error && !email ? "Email is required" : ""}
           />
-          <InputField
+          <FormInputField
             label="Phone"
             type="phone"
             id="phone"
@@ -310,7 +311,7 @@ export function PersonalAccountCard() {
             required
             // error={error && !email ? "Email is required" : ""}
           />
-          <InputField
+          <FormInputField
             label="Address 1"
             type="text"
             id="address1"
@@ -320,7 +321,7 @@ export function PersonalAccountCard() {
             required
             // error={error && !email ? "Email is required" : ""}
           />
-          <InputField
+          <FormInputField
             label="Nationality"
             type="text"
             id="nationality"
@@ -330,7 +331,7 @@ export function PersonalAccountCard() {
             required
             // error={error && !email ? "Email is required" : ""}
           />
-          <InputField
+          <FormInputField
             label="DOB"
             type="text"
             id="dob"
@@ -340,21 +341,21 @@ export function PersonalAccountCard() {
             required
             // error={error && !email ? "Email is required" : ""}
           />
-          <InputField
+          <FormInputField
             label="Name"
             type="text"
             id="name"
             placeholder="Enter your email"
             required
           />
-          <InputField
+          <FormInputField
             label="Name"
             type="text"
             id="name"
             placeholder="Enter your email"
             required
           />
-          <InputField
+          <FormInputField
             label="Name"
             type="text"
             id="name"
@@ -365,7 +366,7 @@ export function PersonalAccountCard() {
             // error={error && !email ? "Email is required" : ""}
           />
         </div>
-        <div className="px-16 mt-8">
+        {/* <div className="px-16 mt-8">
           <CustomButton
             label="Submit"
             // onClick={handleSubmit}
@@ -373,7 +374,7 @@ export function PersonalAccountCard() {
             className="custom-class"
             // loading={isSubmitting}
           />
-        </div>
+        </div> */}
       </div>
     </main>
   );
