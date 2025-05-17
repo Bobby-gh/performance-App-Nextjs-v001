@@ -147,11 +147,11 @@ export  function GoalTable() {
 }
 
 export  function AccessGoalTable() {
-  const { goalAssessmentData } = useGoalAccessmentRouteData();
+  const { goalAssessment } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
 
-  console.log({goalAssessmentData:goalAssessmentData})
-  const data = useMemo(() => goalAssessmentData, [goalAssessmentData]);
+  console.log({goalAssessment:goalAssessment})
+  const data = useMemo(() => goalAssessment? goalAssessment : [], [goalAssessment]);
   const columns = useMemo(() => accessinggoalcolumn, []);
 
   const handleEdit = (row) => {

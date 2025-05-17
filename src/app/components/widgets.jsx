@@ -82,4 +82,49 @@ export function Delete({ data, message, name }) {
         </Modal>
       </div>
     );
-  }
+}
+
+export function FormInputField({
+  fieldLabel = false,
+  label,
+  disabled = false,
+  type = "text",
+  value,
+  placeholder,
+  onChange,
+  required = false,
+  error = "",
+  id,
+  borderColor,
+  backgroundColor,
+  width,
+}) {
+  return (
+    <div className="mb-1">
+      <div className="flex flex-row">
+        {label && (
+          <label
+            className={`block text-xs ${
+              (error ? "text-red-500" : "", disabled ? "text-gray-300" : "")
+            }`}>
+            {label} {required && <span className="required">*</span>}
+          </label>
+        )}
+      </div>
+      {fieldLabel && <div className="my-2.5" />}
+      <input
+        id={id}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        disabled={disabled}
+        onChange={onChange}
+        required={required}
+        autoComplete="false"
+        className={`${width} p-2 rounded-sm ${backgroundColor} ${borderColor} ${
+          (error ? "border border-red-500" : "", disabled ? "bg-gray-100" : "")
+        }`}
+      />
+    </div>
+  );
+}
