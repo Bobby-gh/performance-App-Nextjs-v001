@@ -21,7 +21,6 @@ export function Delete({ data, message, name }) {
   
       try {
         if (!name || !deleteFunctions[name]) {
-          //showToast("Invalid delete action", "error");
           return;
         }
   
