@@ -334,7 +334,7 @@ export function AccessGoal() {
         </div>
         <hr />
         <form className="w-96">
-          <div className=" px-10 py-8">
+          <div className=" px-10 py-8 space-y-4">
             <CustomSelect
               id="goal"
               label={t("goal")}

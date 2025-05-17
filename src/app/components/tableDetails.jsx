@@ -187,7 +187,8 @@ export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
-    new Date(dateString).toISOString().split("T")[0];
+  new Date(dateString).toISOString().split("T")[0];
+  console.log({data:data})
   const [assessGoal, setAssessGoal] = useState({
     goalId: data.row._id,
     goalTitle: data.row.goalTitle,
