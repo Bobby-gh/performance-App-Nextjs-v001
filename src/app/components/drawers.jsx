@@ -348,120 +348,111 @@ export function AccessGoal() {
               required
               group={false}
             />
-            <div className="grid grid-cols-2 gap-2">
-              <div className="relative mb-6" data-te-input-wrapper-init>
-                <select
-                  className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                  name="workQuality"
-                  value={assessData.workQuality}
-                  autoComplete="off"
-                  onChange={assessmentFormHandler}
-                  required>
-                  <option></option>
-                  <option value="1">{t("weak")}</option>
-                  <option value="2">{t("average")}</option>
-                  <option value="3">{t("good")}</option>
-                  <option value="4">{t("veryGood")}</option>
-                </select>
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  {t("qualityOfWork")}
-                </label>
-              </div>
-              <div className="relative mb-6" data-te-input-wrapper-init>
-                <select
-                  className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                  name="productivity"
-                  value={assessData.productivity}
-                  autoComplete="off"
-                  onChange={assessmentFormHandler}
-                  required>
-                  <option></option>
-                  <option value="1">{t("weak")}</option>
-                  <option value="2">{t("average")}</option>
-                  <option value="3">{t("good")}</option>
-                  <option value="4">{t("veryGood")}</option>
-                </select>
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  {t("productivity")}
-                </label>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="relative mb-6" data-te-input-wrapper-init>
-                <select
-                  className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                  name="communication"
-                  value={assessData.communication}
-                  autoComplete="off"
-                  onChange={assessmentFormHandler}
-                  required>
-                  <option></option>
-                  <option value="1">{t("weak")}</option>
-                  <option value="2">{t("average")}</option>
-                  <option value="3">{t("good")}</option>
-                  <option value="4">{t("veryGood")}</option>
-                </select>
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  {t("communication")}
-                </label>
-              </div>
-              <div className="relative mb-6" data-te-input-wrapper-init>
-                <select
-                  className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                  name="proceduralKnowledge"
-                  value={assessData.proceduralKnowledge}
-                  autoComplete="off"
-                  onChange={assessmentFormHandler}
-                  required>
-                  <option></option>
-                  <option value="1">{t("weak")}</option>
-                  <option value="2">{t("average")}</option>
-                  <option value="3">{t("good")}</option>
-                  <option value="4">{t("veryGood")}</option>
-                </select>
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  {t("procedure")}
-                </label>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="relative mb-6" data-te-input-wrapper-init>
-                <select
-                  className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                  name="reliability"
-                  value={assessData.reliability}
-                  autoComplete="off"
-                  onChange={assessmentFormHandler}
-                  required>
-                  <option></option>
-                  <option value="1">{t("weak")}</option>
-                  <option value="2">{t("average")}</option>
-                  <option value="3">{t("good")}</option>
-                  <option value="4">{t("veryGood")}</option>
-                </select>
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  {t("reliability")}
-                </label>
-              </div>
-              <div className="relative mb-6" data-te-input-wrapper-init>
-                <select
-                  className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                  name="teamWork"
-                  value={assessData.teamWork}
-                  autoComplete="off"
-                  onChange={assessmentFormHandler}
-                  required>
-                  <option></option>
-                  <option value="1">{t("weak")}</option>
-                  <option value="2">{t("average")}</option>
-                  <option value="3">{t("good")}</option>
-                  <option value="4">{t("veryGood")}</option>
-                </select>
-                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  {t("teamWork")}
-                </label>
-              </div>
-            </div>
+            <CustomSelect
+              id="workQuality"
+              label={t("goal")}
+              value={assessData.workQuality}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            <CustomSelect
+              id="productivity"
+              label={t("productivity")}
+              value={assessData.productivity}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            <CustomSelect
+              id="productivity"
+              label={t("productivity")}
+              value={assessData.communication}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            <CustomSelect
+              id="communication"
+              label={t("communication")}
+              value={assessData.communication}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            <CustomSelect
+              id="proceduralKnowledge"
+              label={t("procedure")}
+              value={assessData.proceduralKnowledge}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            <CustomSelect
+              id="reliability"
+              label={t("reliability")}
+              value={assessData.reliability}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
+            <CustomSelect
+              id="teamWork"
+              label={t("teamWork")}
+              value={assessData.teamWork}
+              onChange={assessmentFormHandler}
+              options={[
+                { value: "1", label: t("weak") },
+                { value: "2", label: t("average") },
+                { value: "3", label: t("good") },
+                { value: "4", label: t("veryGood") },
+              ]}
+              searchable={true}
+              required
+              group={false}
+            />
             <div className="grid grid-cols-2 gap-2">
               <div className="relative mb-6" data-te-input-wrapper-init>
                 <select
