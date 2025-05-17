@@ -177,18 +177,17 @@ export function AssessGoal({ data, open, onClose }) {
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
-  console.log({ name: data });
   const [assessGoal, setAssessGoal] = useState({
-    goalId: data._id,
-    goalTitle: data.goalTitle,
-    goalDescription: data.goalDescription,
-    goalStatus: data.status,
-    assignedTo: data.taskAssignedTo,
-    deadline: data.goalDeadline,
-    goalType: data.goalType,
-    performancePercent: data.performancePercent,
-    reviewed: data.reviewed,
-    assignedBy: data.taskAssignedBy,
+    goalId: data?.data._id,
+    goalTitle: data?.data.goalTitle,
+    goalDescription: data?.data.goalDescription,
+    goalStatus: data?.data.status,
+    assignedTo: data?.data.taskAssignedTo,
+    deadline: data?.data.goalDeadline,
+    goalType: data?.data.goalType,
+    performancePercent: data?.data.performancePercent,
+    reviewed: data?.data.reviewed,
+    assignedBy: data?.data.taskAssignedBy,
   });
 
   const [editableFields, setEditableFields] = useState({ ...assessGoal });
