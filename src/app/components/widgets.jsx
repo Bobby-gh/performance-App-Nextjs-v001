@@ -126,6 +126,95 @@ export function FormInputField({
   );
 }
 
+export function ModalFormSelect({
+  value,
+  onChange,
+  disabled = false,
+  options = [],
+  label,
+  required = false,
+  error = "",
+  id,
+}) {
+  return (
+    <div className="mt-4">
+      <div className="flex">
+        {label && (
+          <label
+            className={`block text-[12.5px] min-w-[120px] whitespace-nowrap text-[#08376B] 
+              ${error ? "text-red-500" : ""} 
+              ${disabled ? "text-gray-300" : ""}`}
+          >
+            {label} {required && <span className="required">*</span>}
+          </label>
+        )}
+      </div>
+      <select
+        id={id}
+        value={value}
+        autoComplete="off"
+        onChange={(e) => onChange(e.target.value)}
+        required={required}
+        disabled={disabled}
+        className={`w-full p-2 bg-gray-200 appearance-none
+          ${error ? "border border-red-500" : ""} 
+          ${disabled ? "bg-gray-100" : ""}`}
+      >
+        <option value="" disabled>Select ...</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+export const CustomSelect = ({
+  isMulti = false,
+  value,
+  onChange,
+  error,
+  required = false,
+  id,
+  label,
+  options = [],
+}) => {
+  
+
+  return (
+    <div>
+      {label && (
+        <label
+          htmlFor={id}
+          className={`block text-[12.5px] text-[#08376B] ${error ? "text-red-500" : ""}`}
+        >
+          {label} {required && <span className="required">*</span>}
+        </label>
+      )}
+      <Select
+        id={id}
+        required={required}
+        isSearchable={true}
+        options={options}
+        defaultValue={value} 
+        onChange={(selectedOption) => onChange(selectedOption.value)}
+        styles={{
+          control: (baseStyles) => ({
+            ...baseStyles,
+            height: "40px",
+            padding: "2px",
+            backgroundColor: "#E5E7EB",
+            border: "none",
+            borderRadius: "0",
+          }),
+        }}
+      />
+    </div>
+  );
+};
+
 export const ModalModification = {
   position: "absolute",
   top: "50%",
