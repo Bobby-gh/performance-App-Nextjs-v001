@@ -43,6 +43,9 @@ export  function GoalTable() {
   const data = useMemo(() => rawData, [rawData]);
   const columns = useMemo(() => goalsettingcolumn, []);
 
+  useEffect(()=>{
+    console.log("i am looping")
+  },[data])
 
   const handleClose = () => {
     setOpen(false);
@@ -150,10 +153,10 @@ export  function GoalTable() {
 export  function AccessGoalTable() {
   const { goalAssessmentData } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
-  const rawData = goalAssessmentData?.data || [];
-  const data = useMemo(() => rawData, [rawData]);
-  const columns = useMemo(() => accessinggoalcolumn, []);
 
+  
+  const data = useMemo(() => goalAssessmentData, [goalAssessmentData]);
+  const columns = useMemo(() => accessinggoalcolumn, []);
 
   const handleEdit = (row) => {
     console.log("Edit", row);
@@ -223,8 +226,9 @@ export  function AccessGoalTable() {
 export  function DepartmentTable() {
   const { departmenttable } = useDepartmentRouteData();
   const departmentcolumn = useDepartmentColumn();
-  const rawData = departmenttable?.departments || [];
-  const data = useMemo(() => rawData, [rawData]);
+
+  
+  const data = useMemo(() => departmenttable, [departmenttable]);
   const columns = useMemo(() => departmentcolumn, []);
 
   const handleEdit = (row) => {
@@ -285,11 +289,10 @@ export  function DepartmentTable() {
 export  function EmployeeTable() {
   const { employeetable } = useEmployeesRouteData();
   const usercolumn = useUserColumn();
-  const rawData = employeetable?.usersResponse || [];
-  const data = useMemo(() => rawData, [rawData]);
-  const columns = useMemo(() => usercolumn, []);
 
   
+  const data = useMemo(() => employeetable, [employeetable]);
+  const columns = useMemo(() => usercolumn, []);
 
   const handleEdit = (row) => {
     console.log("Edit", row);

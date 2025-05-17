@@ -141,7 +141,7 @@ export function useUnassessedGoalRouteData() {
 
 export function useEmployeesRouteData() {
   const { auth } = useContext(AuthContext);
-  const [employeetable, setEmployeetable] = useState("");
+  const [employeetable, setEmployeetable] = useState([]);
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
 
   const fetchData = async () => {
@@ -154,7 +154,7 @@ export function useEmployeesRouteData() {
         },
         withCredentials: true,
       });
-      setEmployeetable(response.data);
+      setEmployeetable(response.data.usersResponse);
     } catch (err) {
       console.log(err);
     }
@@ -189,7 +189,7 @@ export function useDepartmentRouteData() {
         },
         withCredentials: true,
       });
-      setDepartmenttable(response.data);
+      setDepartmenttable(response.data.departments);
     } catch (err) {
       console.log(err);
     }
@@ -255,7 +255,7 @@ export function useGoalAccessmentRouteData() {
         },
         withCredentials: true,
       });
-      setGoalAssessment(response);
+      setGoalAssessment(response.data);
     } catch (err) {
       console.error(
         "Error fetching goal assessments:",
