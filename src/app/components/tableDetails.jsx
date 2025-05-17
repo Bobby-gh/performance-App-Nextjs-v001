@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useDepartmentRouteData } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
-import { ModalModification } from "./widgets";
+import { FormInputField, ModalFormSelect, ModalModification } from "./widgets";
 import { FiEdit } from "react-icons/fi";
 import { IoCalendarClearOutline, IoClose } from "react-icons/io5";
 

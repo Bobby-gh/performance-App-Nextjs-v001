@@ -5,6 +5,7 @@ import { useGoalDelete } from "../api/databook/route-data";
 import { Modaltrigger } from "../contex/context-context";
 import Select from "react-select";
 import { IoLocationOutline, IoPerson } from "react-icons/io5";
+import Image from "next/image";
 
 export function Delete({ data, message, name }) {
     const [open, setOpen] = useState(false);
