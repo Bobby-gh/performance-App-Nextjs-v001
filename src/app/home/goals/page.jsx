@@ -50,8 +50,8 @@ export default function MyGoals() {
           <div
             className={`grid gap-4 cursor-pointer ${
               selectedGoal
-                ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
-                : "grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+                ? "grid-cols-1  xl:grid-cols-2 2xl:grid-cols-3"
+                : "grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4"
             }`}>
             {mygoal.map((goal, index) => (
               <div
