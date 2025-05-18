@@ -79,7 +79,8 @@ export function useMyGoalRouteData() {
   }));
 
   console.log({ "personal goals": mygoal });
-  return { mygoal };
+  
+  return { mygoal,fetchData };
 }
 
 export function useMyGoalBadgesData() {

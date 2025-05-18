@@ -26,14 +26,13 @@ import { MdOutlineMarkEmailRead } from "react-icons/md";
 import avatar from "../images/avatar.jpg";
 import { showToast } from "./notification";
 
-
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
-  const {editFunction} = useEdit()
+  const { editFunction } = useEdit();
   const formattedDate = (dateString) =>
-  new Date(dateString).toISOString().split("T")[0];
-  const [isLoading, setIsLoading] = useState(false)
+    new Date(dateString).toISOString().split("T")[0];
+  const [isLoading, setIsLoading] = useState(false);
   const [assignGoal] = useState({
     goalId: data._id,
     goalTitle: data.goalTitle,
@@ -49,8 +48,7 @@ export function AssignGoal({ data, open, onClose }) {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
   };
 
-  
-   const updateData = {
+  const updateData = {
     goalTitle: editableFields.goalTitle,
   };
 
@@ -187,18 +185,18 @@ export function AssignGoal({ data, open, onClose }) {
                       value={formattedDate(editableFields.deadline)}
                     />
                   </div>
+                  {/* Save Button */}
+                  <div className="flex justify-end mt-4">
+                    <CustomButton
+                      label="Submit"
+                      onClick={handleEditSubmit}
+                      type="submit"
+                      className="custom-class"
+                      loading={isLoading}
+                    />
+                  </div>
                 </FormControl>
               </div>
-            </div>
-            {/* Save Button */}
-            <div className="flex justify-end mt-4">
-              <CustomButton
-                label="Submit"
-                onClick={handleEditSubmit}
-                type="submit"
-                className="custom-class"
-                loading={isLoading}
-              />
             </div>
           </div>
         </Box>
@@ -231,9 +229,34 @@ export function AssessGoal({ data, open, onClose }) {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
   };
 
-  console.log({ editableFields: editableFields });
+  const updateData = {
+    goalTitle: editableFields.goalTitle,
+  };
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    console.log("Update Data:", updateData);
+    try {
+      const name = "accessGoal";
+      const id = editableFields.goalId;
+      const response = await editFunction(updateData, id, name);
+
+      if (response?.status === 200) {
+        showToast("Edit Saved successful:", "success");
+        triggerComponent();
+        onClose();
+      } else {
+        console.error("Edit Save failed:", response);
+        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+      }
+    } catch (error) {
+      console.error("Edit error:", error);
+    } finally {
+      setIsLoading(false);
+      setEditMode(false);
+    }
   };
 
   return (
@@ -411,8 +434,35 @@ export function EmployeeDetails({ data, open, onClose }) {
   };
 
   console.log({ editableFields: editableFields });
+  
+   const updateData = {
+    goalTitle: editableFields.goalTitle,
+  };
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    console.log("Update Data:", updateData);
+    try {
+      const name = "accessGoal";
+      const id = editableFields.goalId;
+      const response = await editFunction(updateData, id, name);
+
+      if (response?.status === 200) {
+        showToast("Edit Saved successful:", "success");
+        triggerComponent();
+        onClose();
+      } else {
+        console.error("Edit Save failed:", response);
+        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+      }
+    } catch (error) {
+      console.error("Edit error:", error);
+    } finally {
+      setIsLoading(false);
+      setEditMode(false);
+    }
   };
 
   return (
