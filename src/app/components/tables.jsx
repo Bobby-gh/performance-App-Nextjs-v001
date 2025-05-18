@@ -36,8 +36,8 @@ export function GoalTable() {
   const goalsettingcolumn = useGoalSettingColumn();
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   const [open, setOpen] = useState(false);
-  const [deleteRow, setDeleteRow] = useState(false)
-  const [deleteItem, setDeleteItem] = useState("")
+  const [deleteRow, setDeleteRow] = useState(false);
+  const [deleteItem, setDeleteItem] = useState("");
   const [assignGoalInfo, setAssignGoalInfo] = useState("");
   const rawData = departmentgoaltable?.data || [];
   const data = useMemo(() => rawData, [rawData]);
@@ -67,7 +67,7 @@ export function GoalTable() {
     setOpen(true);
   };
 
-   const handleCloseDelete = (row) => {
+  const handleCloseDelete = (row) => {
     setDeleteRow(false);
     setDeleteItem("");
   };
@@ -145,7 +145,7 @@ export function GoalTable() {
           message="Are you sure you want to delete Task Item?"
           name="taskItem"
           open={deleteItem}
-          onClose={handleDelete}
+          onClose={handleCloseDelete}
         />
       )}
     </div>
@@ -157,6 +157,8 @@ export function AccessGoalTable() {
   const [assessGoalInfo, setAssessGoalInfo] = useState("");
   const { goalAssessment } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
+  const [deleteRow, setDeleteRow] = useState(false);
+  const [deleteItem, setDeleteItem] = useState("");
 
   const handleClose = () => {
     setOpen(false);
@@ -187,8 +189,15 @@ export function AccessGoalTable() {
     setOpen(true);
   };
 
+  const handleCloseDelete = (row) => {
+    setDeleteRow(false);
+    setDeleteItem("");
+  };
+
   const handleDelete = (row) => {
     console.log("Notifications", row);
+    setDeleteItem(row.original);
+    setDeleteRow(true);
   };
 
   const table = useMaterialReactTable({
@@ -252,6 +261,15 @@ export function AccessGoalTable() {
       {open && assessGoalInfo && (
         <AssessGoal data={assessGoalInfo} open={open} onClose={handleClose} />
       )}
+      {deleteRow && (
+        <Delete
+          data={deleteItem}
+          message="Are you sure you want to delete Task Item?"
+          name="taskItem"
+          open={deleteItem}
+          onClose={handleCloseDelete}
+        />
+      )}
     </div>
   );
 }
@@ -259,16 +277,21 @@ export function AccessGoalTable() {
 export function DepartmentTable() {
   const { departmenttable } = useDepartmentRouteData();
   const departmentcolumn = useDepartmentColumn();
+  const [deleteRow, setDeleteRow] = useState(false);
+  const [deleteItem, setDeleteItem] = useState("");
 
   const data = useMemo(() => departmenttable, [departmenttable]);
   const columns = useMemo(() => departmentcolumn, []);
 
-  const handleEdit = (row) => {
-    console.log("Edit", row);
+  const handleCloseDelete = (row) => {
+    setDeleteRow(false);
+    setDeleteItem("");
   };
 
-  const handleNotifications = (row) => {
+  const handleDelete = (row) => {
     console.log("Notifications", row);
+    setDeleteItem(row.original);
+    setDeleteRow(true);
   };
 
   const table = useMaterialReactTable({
@@ -315,7 +338,20 @@ export function DepartmentTable() {
     ],
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+      <MaterialReactTable table={table} />
+      {deleteRow && (
+        <Delete
+          data={deleteItem}
+          message="Are you sure you want to delete Task Item?"
+          name="taskItem"
+          open={deleteItem}
+          onClose={handleCloseDelete}
+        />
+      )}
+    </>
+  );
 }
 
 export function EmployeeTable() {
@@ -323,6 +359,8 @@ export function EmployeeTable() {
   const usercolumn = useUserColumn();
   const [open, setOpen] = useState(false);
   const [employeeInfo, setEmployeeInfo] = useState("");
+  const [deleteRow, setDeleteRow] = useState(false);
+  const [deleteItem, setDeleteItem] = useState("");
 
   const data = useMemo(() => employeetable, [employeetable]);
   const columns = useMemo(() => usercolumn, []);
@@ -338,6 +376,16 @@ export function EmployeeTable() {
     setOpen(true);
   };
 
+  const handleCloseDelete = (row) => {
+    setDeleteRow(false);
+    setDeleteItem("");
+  };
+
+  const handleDelete = (row) => {
+    console.log("Notifications", row);
+    setDeleteItem(row.original);
+    setDeleteRow(true);
+  };
 
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
@@ -398,7 +446,20 @@ export function EmployeeTable() {
     <>
       <MaterialReactTable table={table} />
       {open && employeeInfo && (
-        <EmployeeDetails data={employeeInfo} open={open} onClose={handleClose} />
+        <EmployeeDetails
+          data={employeeInfo}
+          open={open}
+          onClose={handleClose}
+        />
+      )}
+      {deleteRow && (
+        <Delete
+          data={deleteItem}
+          message="Are you sure you want to delete Task Item?"
+          name="taskItem"
+          open={deleteItem}
+          onClose={handleCloseDelete}
+        />
       )}
     </>
   );
