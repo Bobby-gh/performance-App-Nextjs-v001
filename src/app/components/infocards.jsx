@@ -8,13 +8,16 @@ import {
 import { useGoalStatus } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { useContext, useState } from "react";
-import { AuthContext, GoalSelectContext, Modaltrigger } from "../contex/context-context";
+import {
+  AuthContext,
+  GoalSelectContext,
+  Modaltrigger,
+} from "../contex/context-context";
 import axios from "../api/axios";
 import { UPDATE_GOAL_PROGRESS } from "../api/routes";
 import { useTranslation } from "react-i18next";
 import { showToast } from "./notification";
-
-
+import { FormInputField } from "./widgets";
 
 export function InformationalSummary() {
   const { t } = useTranslation();
@@ -336,7 +339,7 @@ export function DataDateAccess() {
               required
             />
             <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-            {t("dateTo")}
+              {t("dateTo")}
             </label>
           </div>
         </div>
@@ -349,7 +352,7 @@ export function DataDateAccess() {
               required
             />
             <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-            {t("dateFrom")}
+              {t("dateFrom")}
             </label>
           </div>
         </div>
@@ -364,7 +367,7 @@ export function DataDateAccess() {
               <option value="GENERALMANAGER">{t("lastSelected")}</option>
             </select>
             <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-             {t("selectDate")}
+              {t("selectDate")}
             </label>
           </div>
         </div>
@@ -407,7 +410,7 @@ export function AddDepartment() {
 
 export function GoalDetails() {
   const { t } = useTranslation();
-  const {auth} = useContext(AuthContext)
+  const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
   const [isLoading, setLoading] = useState(false);
@@ -422,7 +425,6 @@ export function GoalDetails() {
     event.preventDefault(); // Prevent default form submission
     setLoading(true);
     try {
-
       const response = await axios.patch(
         UPDATE_GOAL_PROGRESS,
         JSON.stringify({
@@ -434,16 +436,15 @@ export function GoalDetails() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
           },
-
         }
       );
 
       if (response.status === 200) {
-        showToast('Progress updated successfully', "success");
-        triggerComponent()
+        showToast("Progress updated successfully", "success");
+        triggerComponent();
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       alert(`Error: ${err.message}`);
     } finally {
       setLoading(false);
@@ -462,8 +463,8 @@ export function GoalDetails() {
       {/* Notification */}
       <div className="mb-12">
         <Notification
-          typeHeader= {t("updateGoalProgress")} 
-          message={t("selectProjectToUpdateProgress")} 
+          typeHeader={t("updateGoalProgress")}
+          message={t("selectProjectToUpdateProgress")}
         />
       </div>
 
@@ -504,11 +505,11 @@ export function GoalDetails() {
         <label htmlFor="progress-input" className="text-gray-600 text-sm">
           <strong className="w-1/3 text-black">{t("enterProgress")}:</strong>
         </label>
-        <input
+        <FormInputField
           id="progress-input"
           value={progress}
           onChange={handleInputChange}
-          className="w-40 border h-8 rounded p-2 text-center"
+          required
         />
       </div>
 
@@ -516,24 +517,17 @@ export function GoalDetails() {
         className="w-full p-2 bg-blue-900 rounded-xl text-white"
         onClick={handleUpdate}
         disabled={isLoading}>
-        {isLoading ? 'Submitting...' : t("submitProgress")}
+        {isLoading ? "Submitting..." : t("submitProgress")}
       </button>
     </div>
   );
 }
 
-export function Goals({
-  goalTitle,
-  status,
-  goalDeadline,
-  onClick,
-  progress,
-}) {
+export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
   return (
     <div
       className="bg-white rounded-lg p-4 cursor-pointer flex flex-col h-full"
-      onClick={onClick}
-    >
+      onClick={onClick}>
       {/* Progress Section */}
       <div className="mb-4">
         <p className="text-blue-900 text-sm mb-2">
@@ -542,8 +536,7 @@ export function Goals({
         <div className="relative w-full h-4 bg-gray-200 rounded">
           <div
             className="absolute h-4 bg-blue-500 rounded"
-            style={{ width: `${progress}%` }}
-          ></div>
+            style={{ width: `${progress}%` }}></div>
         </div>
       </div>
 
@@ -571,8 +564,6 @@ export function Goals({
   );
 }
 
-
-
 export function Notification({ message, typeHeader }) {
   return (
     <main className="border-l-4 px-4 border-blue-900">
@@ -582,14 +573,9 @@ export function Notification({ message, typeHeader }) {
   );
 }
 
-
-
-
 export function GoalsHeader() {
   const { t } = useTranslation();
-  return (
-    <div className="text-xl font-bold text-blue-500">{t("goals")}</div>
-  );
+  return <div className="text-xl font-bold text-blue-500">{t("goals")}</div>;
 }
 export function OrganizationalEmployees() {
   const { t } = useTranslation();
@@ -597,6 +583,3 @@ export function OrganizationalEmployees() {
     <div className="text-xl font-bold ">{t("organizationalEmployees")}</div>
   );
 }
-
-
-
