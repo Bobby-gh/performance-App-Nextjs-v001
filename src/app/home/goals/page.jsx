@@ -2,7 +2,7 @@
 import { useMyGoalRouteData } from "@/app/api/databook/route-data";
 import { GoalDetails, Goals } from "@/app/components/infocards";
 import { GoalSelectContext, Modaltrigger } from "@/app/contex/context-context";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 
 export default function MyGoals() {
