@@ -5,8 +5,7 @@ import { useGoalDelete } from "../api/databook/route-data";
 import { Modaltrigger } from "../contex/context-context";
 import Select from "react-select";
 
-export function Delete({ data, message, name }) {
-    const [open, setOpen] = useState(false);
+export function Delete({ data, message, name, open, onClose }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { triggerComponent } = useContext(Modaltrigger); 
   
@@ -47,15 +46,10 @@ export function Delete({ data, message, name }) {
       }
     };
   
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
   
     return (
       <div>
-        <IconButton onClick={handleOpen}>
-          <MdDelete color="red" />
-        </IconButton>
-        <Modal open={open} onClose={handleClose}>
+        <Modal open={open} onClose={onClose}>
           <Box sx={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)", width: 450, bgcolor: "white", borderBottom: "4px solid #000", boxShadow: "40px rgba(0, 0, 0, 0.2)", borderRadius: "8px", p: 2 }}>
             <div className="flex flex row items-center justify-center mb-4">
               <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">

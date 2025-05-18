@@ -29,12 +29,15 @@ import { MdDelete, MdEditNotifications } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { Modaltrigger } from "../contex/context-context";
 import { AssessGoal, AssignGoal, EmployeeDetails } from "./tableDetails";
+import { Delete } from "./widgets";
 
 export function GoalTable() {
   const { departmentgoaltable, fetchData } = useGoalRouteData();
   const goalsettingcolumn = useGoalSettingColumn();
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   const [open, setOpen] = useState(false);
+  const [deleteRow, setDeleteRow] = useState(false)
+  const [deleteItem, setDeleteItem] = useState("")
   const [assignGoalInfo, setAssignGoalInfo] = useState("");
   const rawData = departmentgoaltable?.data || [];
   const data = useMemo(() => rawData, [rawData]);
@@ -64,8 +67,15 @@ export function GoalTable() {
     setOpen(true);
   };
 
+   const handleCloseDelete = (row) => {
+    setDeleteRow(false);
+    setDeleteItem("");
+  };
+
   const handleDelete = (row) => {
     console.log("Notifications", row);
+    setDeleteItem(row.original);
+    setDeleteRow(true);
   };
 
   const table = useMaterialReactTable({
@@ -128,6 +138,15 @@ export function GoalTable() {
       <MaterialReactTable table={table} />
       {open && assignGoalInfo && (
         <AssignGoal data={assignGoalInfo} open={open} onClose={handleClose} />
+      )}
+      {deleteRow && (
+        <Delete
+          data={deleteItem}
+          message="Are you sure you want to delete Task Item?"
+          name="taskItem"
+          open={deleteItem}
+          onClose={handleDelete}
+        />
       )}
     </div>
   );
@@ -282,17 +301,6 @@ export function DepartmentTable() {
     enableRowActions: true,
     positionActionsColumn: "last",
     renderRowActionMenuItems: ({ closeMenu, row }) => [
-      <MenuItem
-        key="edit"
-        onClick={() => {
-          handleEdit(row);
-          closeMenu();
-        }}>
-        <ListItemIcon>
-          <MdEditNotifications fontSize="small" />
-        </ListItemIcon>
-        <ListItemText>Edit</ListItemText>
-      </MenuItem>,
       <MenuItem
         key="delete"
         onClick={() => {
