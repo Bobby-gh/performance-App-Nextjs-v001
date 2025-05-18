@@ -116,24 +116,20 @@ export function AssignGoal({ data, open, onClose }) {
                       id="goalId"
                       value={assignGoal.goalId}
                     />
-                    <TextField
+                    <FormInputField
                       label={t("goalTitle")}
+                      id="goalTitle"
                       value={assignGoal.goalTitle}
-                      fullWidth
                     />
-                    <TextField
-                      label="Status"
+                    <FormInputField
+                      label={t("status")}
+                      id="goalStatus"
                       value={assignGoal.goalStatus}
-                      multiline
-                      required
-                      fullWidth
                     />
-                    <TextField
-                      label="Description"
+                    <FormInputField
+                      label={t("description")}
+                      id="goalDescription"
                       value={assignGoal.goalDescription}
-                      multiline
-                      required
-                      fullWidth
                     />
                     <ModalFormSelect
                       id="assignedTO"
@@ -145,22 +141,22 @@ export function AssignGoal({ data, open, onClose }) {
                       }))}
                       required
                     />
-                    <TextField
+                    <FormInputField
+                      label={t("date")}
+                      id="goalDescription"
                       type="date"
-                      label="Created At"
                       value={formattedDate(assignGoal.deadline)}
-                      fullWidth
                     />
                   </div>
                   {/* Save Button */}
                   <div className="flex justify-end mt-4">
-                    <button
-                      type="submit"
+                    <CustomButton
+                      label="Submit"
                       onClick={handleEditSubmit}
-                      className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300">
-                      <FaSave className="text-lg" />
-                      Save
-                    </button>
+                      type="submit"
+                      className="custom-class"
+                      loading={isLoading}
+                    />
                   </div>
                 </FormControl>
               </div>
@@ -175,20 +171,20 @@ export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
-    new Date(dateString).toISOString().split("T")[0];
+  new Date(dateString).toISOString().split("T")[0];
   const [assessGoal, setAssessGoal] = useState({
-    goalId: data?.data._id,
-    goalTitle: data?.data.goalTitle,
-    goalDescription: data?.data.goalDescription,
-    goalStatus: data?.data.status,
-    assignedTo: data?.data.taskAssignedTo,
-    deadline: data?.data.goalDeadline,
-    goalType: data?.data.goalType,
-    performancePercent: data?.data.performancePercent,
-    reviewed: data?.data.reviewed,
-    assignedBy: data?.data.taskAssignedBy,
+    goalId: data?._id,
+    goalTitle: data?.goalTitle,
+    goalDescription: data?.goalDescription,
+    goalStatus: data?.status,
+    assignedTo: data?.taskAssignedTo,
+    deadline: data?.goalDeadline,
+    goalType: data?.goalType,
+    performancePercent: data?.performancePercent,
+    reviewed: data?.reviewed,
+    assignedBy: data?.taskAssignedBy,
   });
-
+  console.log({"data coming from table": data})
   const [editableFields, setEditableFields] = useState({ ...assessGoal });
   const [editMode, setEditMode] = useState(false);
 

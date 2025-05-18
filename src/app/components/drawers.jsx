@@ -20,7 +20,7 @@ import {
 import { AuthContext, Modaltrigger } from "../contex/context-context";
 import { useTranslation } from "react-i18next";
 import { CustomButton, CustomSelect, FormInputField } from "./widgets";
-import { idID } from "@mui/material/locale";
+import { showToast } from "./notification";
 
 export function CreateGoal() {
   const { t } = useTranslation();
@@ -64,11 +64,16 @@ export function CreateGoal() {
           },
         }
       );
+      showToast("Action Item Created Successfully", "success");
       triggerComponent();
       handleClose();
       reload();
     } catch (error) {
-      alert(error);
+      if (error.response.status === 400) {
+        showToast("Kindly check Input details", "error");
+      } else if (error.response.status === 500) {
+        showToast("Server is currently down Contact your admin", "error");
+      }
       handleClose();
       reload();
     } finally {
@@ -200,27 +205,19 @@ export function CreateGoal() {
             <FormInputField
               label={t("endDate")}
               id="endDate"
+              type="date"
               onChange={handleInputChange}
               value={formData.endDate}
             />
           </div>
-
           <div className="px-10">
-            <button
-              className="inline-block w-full rounded bg-[#000c8e] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-[#2a36b8] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-              type="submit"
+             <CustomButton
+              label="Submit"
               onClick={handleSubmit}
-              disabled={isLoading} // Disable the button while loading
-            >
-              {isLoading ? (
-                <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">{t("loading")}</p>
-                  <CircularProgress size={27} thickness={6} color="primary" />
-                </div>
-              ) : (
-                t("submit")
-              )}
-            </button>
+              type="submit"
+              className="custom-class"
+              loading={isLoading}
+            />
           </div>
         </form>
       </Drawer>
@@ -281,11 +278,16 @@ export function AccessGoal() {
           withCredentials: true,
         }
       );
+      showToast("Task Assessed Successfuly", "success");
       triggerComponent();
       handleClose();
       reload();
     } catch (error) {
-      alert(error);
+      if (error.response.status === 400) {
+        showToast("Kindly check Input details", "error");
+      } else if (error.response.status === 500) {
+        showToast("Server is currently down Contact your admin", "error");
+      }
       console.log(error);
       handleClose();
       reload();
@@ -353,7 +355,12 @@ export function AccessGoal() {
               id="workQuality"
               label={t("qualityOfWork")}
               value={assessData.workQuality}
-              onChange={assessmentFormHandler}
+              onChange={(selectedOptions) => {
+                setAssessData((prev) => ({
+                  ...prev,
+                  workQuality: selectedOptions?.value,
+                }));
+              }}
               options={[
                 { value: "1", label: t("weak") },
                 { value: "2", label: t("average") },
@@ -368,7 +375,12 @@ export function AccessGoal() {
               id="productivity"
               label={t("productivity")}
               value={assessData.productivity}
-              onChange={assessmentFormHandler}
+              onChange={(selectedOptions) => {
+                setAssessData((prev) => ({
+                  ...prev,
+                  productivity: selectedOptions?.value,
+                }));
+              }}
               options={[
                 { value: "1", label: t("weak") },
                 { value: "2", label: t("average") },
@@ -383,7 +395,12 @@ export function AccessGoal() {
               id="communication"
               label={t("communication")}
               value={assessData.communication}
-              onChange={assessmentFormHandler}
+              onChange={(selectedOptions) => {
+                setAssessData((prev) => ({
+                  ...prev,
+                  communication: selectedOptions?.value,
+                }));
+              }}
               options={[
                 { value: "1", label: t("weak") },
                 { value: "2", label: t("average") },
@@ -398,7 +415,12 @@ export function AccessGoal() {
               id="proceduralKnowledge"
               label={t("procedure")}
               value={assessData.proceduralKnowledge}
-              onChange={assessmentFormHandler}
+              onChange={(selectedOptions) => {
+                setAssessData((prev) => ({
+                  ...prev,
+                  proceduralKnowledge: selectedOptions?.value,
+                }));
+              }}
               options={[
                 { value: "1", label: t("weak") },
                 { value: "2", label: t("average") },
@@ -413,7 +435,12 @@ export function AccessGoal() {
               id="reliability"
               label={t("reliability")}
               value={assessData.reliability}
-              onChange={assessmentFormHandler}
+              onChange={(selectedOptions) => {
+                setAssessData((prev) => ({
+                  ...prev,
+                  reliability: selectedOptions?.value,
+                }));
+              }}
               options={[
                 { value: "1", label: t("weak") },
                 { value: "2", label: t("average") },
@@ -428,7 +455,12 @@ export function AccessGoal() {
               id="teamWork"
               label={t("teamWork")}
               value={assessData.teamWork}
-              onChange={assessmentFormHandler}
+              onChange={(selectedOptions) => {
+                setAssessData((prev) => ({
+                  ...prev,
+                  teamWork: selectedOptions?.value,
+                }));
+              }}
               options={[
                 { value: "1", label: t("weak") },
                 { value: "2", label: t("average") },
@@ -443,7 +475,12 @@ export function AccessGoal() {
               id="creativity"
               label={t("creativity")}
               value={assessData.creativity}
-              onChange={assessmentFormHandler}
+              onChange={(selectedOptions) => {
+                setAssessData((prev) => ({
+                  ...prev,
+                  creativity: selectedOptions?.value,
+                }));
+              }}
               options={[
                 { value: "1", label: t("weak") },
                 { value: "2", label: t("average") },
@@ -458,7 +495,12 @@ export function AccessGoal() {
               id="rating"
               label={t("goalRating")}
               value={assessData.rating}
-              onChange={assessmentFormHandler}
+              onChange={(selectedOptions) => {
+                setAssessData((prev) => ({
+                  ...prev,
+                  rating: selectedOptions?.value,
+                }));
+              }}
               options={[
                 { value: "Below Expectations", label: t("belowExpectations") },
                 { value: "Meets Expectations", label: t("meetsExpectations") },
@@ -481,21 +523,13 @@ export function AccessGoal() {
             />
           </div>
           <div className="px-10">
-            <button
-              className="inline-block w-full rounded bg-[#000c8e] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-[#2a36b8] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-              type="submit"
+             <CustomButton
+              label="Submit"
               onClick={handleSubmit}
-              disabled={isLoading} // Disable the button while loading
-            >
-              {isLoading ? (
-                <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">{t("loading")} </p>
-                  <CircularProgress size={27} thickness={6} color="primary" />
-                </div>
-              ) : (
-                t("submit")
-              )}
-            </button>
+              type="submit"
+              className="custom-class"
+              loading={isLoading}
+            />
           </div>
         </form>
       </Drawer>
@@ -534,11 +568,16 @@ export function Userforms() {
           },
         }
       );
+      showToast("User Ssaved Successfully", "success");
       triggerComponent();
       handleClose();
       reload();
     } catch (error) {
-      alert(error);
+      if (error.response.status === 400) {
+        showToast("Kindly check Input details", "error");
+      } else if (error.response.status === 500) {
+        showToast("Server is currently down Contact your admin", "error");
+      }
       console.log(error);
       handleClose();
       reload();
@@ -680,11 +719,16 @@ export function Departmentforms() {
           withCredentials: true,
         }
       );
+      showToast("Department Created Successfully", "success");
       handleClose();
       triggerComponent();
       reload();
     } catch (error) {
-      alert(error);
+      if (error.response.status === 400) {
+        showToast("Kindly check Input details", "error");
+      } else if (error.response.status === 500) {
+        showToast("Server is currently down Contact your admin", "error");
+      }
       console.log(error);
       handleClose();
       reload();
@@ -725,11 +769,10 @@ export function Departmentforms() {
               label={t("departmentName")}
               id="departmentName"
               value={name}
-              onChange={setName}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
-
           <div className="px-10">
             <CustomButton
               label="Submit"
