@@ -383,7 +383,7 @@ export function EmployeeTable() {
 
   const handleDelete = (row) => {
     console.log("Notifications", row);
-    setDeleteItem(row.original);
+    setDeleteItem(row.original._id);
     setDeleteRow(true);
   };
 
@@ -455,8 +455,8 @@ export function EmployeeTable() {
       {deleteRow && (
         <Delete
           data={deleteItem}
-          message="Are you sure you want to delete Task Item?"
-          name="taskItem"
+          message="Are you sure you want to delete Goal?"
+          name="goal"
           open={deleteItem}
           onClose={handleCloseDelete}
         />

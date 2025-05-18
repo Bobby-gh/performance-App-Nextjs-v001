@@ -485,30 +485,31 @@ export function useCreateDepartment() {
 
 /****************Delete Routes*************** */
 
-export function useGoalDelete() {
+
+export function useDelete() {
   const { auth } = useContext(AuthContext);
-
-  const deleteGoals = async (id) => {
-
-    try {
-      const response = await axios.post(
-        DELETE_GOALS,
-        JSON.stringify({ id}),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
-          },
-          withCredentials: true,
-        }
-      );
-
-      return response; 
-    } catch (error) {
-      console.error("Error deleting goal:", error);
-      throw error; 
-    }
+  console.log(auth.token);
+  const routeToUrl = {
+    goal: DELETE_GOALS,
+    // taskItem: DELETE_TASK_ITEM_URL,
+    // employee: DELETE_USER_URL,
   };
 
-  return { deleteGoals }; 
+  const deleteFunction = async (id, routeName) => {
+    const endpoint = routeToUrl[routeName];
+    console.log(id, routeName);
+    if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
+
+    const response = await axios.delete(`${endpoint}${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + auth.token,
+      },
+      withCredentials: true,
+    });
+
+    return response;
+  };
+
+  return { deleteFunction };
 }
