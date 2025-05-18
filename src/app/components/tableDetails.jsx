@@ -21,7 +21,7 @@ export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
-    new Date(dateString).toISOString().split("T")[0];
+  new Date(dateString).toISOString().split("T")[0];
   const [assignGoal, setAssignedGoal] = useState({
     goalId: data._id,
     goalTitle: data.goalTitle,
@@ -155,7 +155,7 @@ export function AssignGoal({ data, open, onClose }) {
                       onClick={handleEditSubmit}
                       type="submit"
                       className="custom-class"
-                      loading={isLoading}
+                      
                     />
                   </div>
                 </FormControl>
@@ -264,13 +264,13 @@ export function AssessGoal({ data, open, onClose }) {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
                     <TextField
                       label="Goal ID"
-                      value={assessGoal.goalId}
+                      value={editableFields.goalId}
                       disabled
                       fullWidth
                     />
                     <TextField
                       label={t("goalTitle")}
-                      value={assessGoal.goalTitle}
+                      value={editableFields.goalTitle}
                       onChange={(e) =>
                         handleChange("goalTitle", e.target.value)
                       }
@@ -279,7 +279,7 @@ export function AssessGoal({ data, open, onClose }) {
                     />
                     <TextField
                       label="Status"
-                      value={assessGoal.goalStatus}
+                      value={editableFields.goalStatus}
                       onChange={(e) =>
                         handleChange("goalStatus", e.target.value)
                       }
@@ -290,7 +290,7 @@ export function AssessGoal({ data, open, onClose }) {
                     />
                     <TextField
                       label="Description"
-                      value={assessGoal.goalDescription}
+                      value={editableFields.goalDescription}
                       onChange={(e) =>
                         handleChange("goalDescription", e.target.value)
                       }
@@ -301,7 +301,7 @@ export function AssessGoal({ data, open, onClose }) {
                     />
                     <Select
                       label="Assigned To"
-                      value={assessGoal.assignedTo}
+                      value={editableFields.assignedTo}
                       onChange={(e) =>
                         handleChange("assignedTo", e.target.value)
                       }
@@ -327,7 +327,7 @@ export function AssessGoal({ data, open, onClose }) {
                     />
                     <TextField
                       label="Goal Type"
-                      value={assessGoal.goalType}
+                      value={editableFields.goalType}
                       onChange={(e) => handleChange("goalType", e.target.value)}
                       disabled={!editMode}
                       fullWidth
@@ -335,7 +335,7 @@ export function AssessGoal({ data, open, onClose }) {
                     <TextField
                       label="Performance Percent"
                       type="number"
-                      value={assessGoal.performancePercent}
+                      value={editableFields.performancePercent}
                       onChange={(e) =>
                         handleChange("performancePercent", e.target.value)
                       }
@@ -344,7 +344,7 @@ export function AssessGoal({ data, open, onClose }) {
                     />
                     <Select
                       label="Reviewed"
-                      value={assessGoal.reviewed}
+                      value={editableFields.reviewed}
                       onChange={(e) => handleChange("reviewed", e.target.value)}
                       required
                       disabled={!editMode}
@@ -355,7 +355,7 @@ export function AssessGoal({ data, open, onClose }) {
                     </Select>
                     <TextField
                       label="Assigned By"
-                      value={assessGoal.assignedBy}
+                      value={editableFields.assignedBy}
                       disabled
                       fullWidth
                     />

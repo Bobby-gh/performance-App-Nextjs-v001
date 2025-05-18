@@ -210,7 +210,7 @@ export function CreateGoal() {
               value={formData.endDate}
             />
           </div>
-          <div className="px-10">
+          <div className="px-10 my-4">
              <CustomButton
               label="Submit"
               onClick={handleSubmit}
