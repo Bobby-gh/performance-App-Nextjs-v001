@@ -10,6 +10,7 @@ import {
 import { Modaltrigger } from "../contex/context-context";
 import Select from "react-select";
 import { useDelete } from "../api/databook/route-data";
+import { showToast } from "./notification";
 
 export function Delete({ data, message, name, open, onClose }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,7 +22,7 @@ export function Delete({ data, message, name, open, onClose }) {
     setIsSubmitting(true);
 
     try {
-      if (!name || !["goal", "assignGoal", "accessGoal"].includes(name)) {
+      if (!name || !["goal", "accessGoal" , "department", "user"].includes(name)) {
         return;
       }
 

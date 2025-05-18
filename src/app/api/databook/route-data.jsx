@@ -19,7 +19,6 @@ import {
   MY_GOALS_URL,
   GOAL_CATEGORY_COUNT,
   GOAL_BADGES,
-  DELETE_GOALS,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -488,11 +487,11 @@ export function useCreateDepartment() {
 
 export function useDelete() {
   const { auth } = useContext(AuthContext);
-  console.log(auth.token);
   const routeToUrl = {
-    goal: DELETE_GOALS,
-    // taskItem: DELETE_TASK_ITEM_URL,
-    // employee: DELETE_USER_URL,
+    goal: GOALS_URL,
+    accessGoal: GOAL_ASSESSMENT_URL, 
+    department: DEPARTMENTS_URL, 
+    user: EMPLOYEES_URL,
   };
 
   const deleteFunction = async (id, routeName) => {
@@ -500,8 +499,7 @@ export function useDelete() {
     console.log({id: id, routeName: routeName});
     if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
 
-    const response = await axios.delete(endpoint, {
-      data: { id },
+    const response = await axios.delete(`${endpoint}/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + auth.token,

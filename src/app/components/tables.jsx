@@ -196,7 +196,7 @@ export function AccessGoalTable() {
 
   const handleDelete = (row) => {
     console.log("Notifications", row);
-    setDeleteItem(row.original);
+    setDeleteItem(row.original._id);
     setDeleteRow(true);
   };
 
@@ -264,8 +264,8 @@ export function AccessGoalTable() {
       {deleteRow && (
         <Delete
           data={deleteItem}
-          message="Are you sure you want to delete Task Item?"
-          name="taskItem"
+          message="Are you sure you want to delete Assessment?"
+          name="accessGoal"
           open={deleteItem}
           onClose={handleCloseDelete}
         />
@@ -290,7 +290,7 @@ export function DepartmentTable() {
 
   const handleDelete = (row) => {
     console.log("Notifications", row);
-    setDeleteItem(row.original);
+    setDeleteItem(row.original.departmentId);
     setDeleteRow(true);
   };
 
@@ -344,8 +344,8 @@ export function DepartmentTable() {
       {deleteRow && (
         <Delete
           data={deleteItem}
-          message="Are you sure you want to delete Task Item?"
-          name="taskItem"
+          message="Are you sure you want to delete Department?"
+          name="department"
           open={deleteItem}
           onClose={handleCloseDelete}
         />
@@ -383,7 +383,7 @@ export function EmployeeTable() {
 
   const handleDelete = (row) => {
     console.log("Notifications", row);
-    setDeleteItem(row.original._id);
+    setDeleteItem(row.original.userId);
     setDeleteRow(true);
   };
 
@@ -455,8 +455,8 @@ export function EmployeeTable() {
       {deleteRow && (
         <Delete
           data={deleteItem}
-          message="Are you sure you want to delete Task Item?"
-          name="taskItem"
+          message="Are you sure you want to delete User?"
+          name="user"
           open={deleteItem}
           onClose={handleCloseDelete}
         />
