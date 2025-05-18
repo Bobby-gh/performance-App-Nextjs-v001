@@ -48,7 +48,7 @@ export default function MyGoals() {
       <div className="flex-[1.7] overflow-y-auto max-h-[90vh] p-2">
         {mygoal.length > 0 ? (
           <div
-            className={`grid gap-4 cursor-pointer ${
+            className={`grid gap-4 cursor-pointer bg-white ${
               selectedGoal
                 ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
                 : "grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
@@ -59,7 +59,7 @@ export default function MyGoals() {
                 className={`transition duration-300 ${
                   selectedGoal && selectedGoal.id !== goal.id
                     ? "opacity-30"
-                    : "opacity-100 shadow-lg shadow-[0_0_0_1px_rgba(255, 255, 255, 0.5)"
+                    : "opacity-100 shadow-lg shadow-[0_0_0_1px_rgba(59,130,246,0.5)]"
                 }`}>
                 <Goals
                   id={goal.id}
