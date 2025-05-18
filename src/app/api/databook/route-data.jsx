@@ -496,7 +496,6 @@ export function useDelete() {
 
   const deleteFunction = async (id, routeName) => {
     const endpoint = routeToUrl[routeName];
-    console.log({id: id, routeName: routeName});
     if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
 
     const response = await axios.delete(`${endpoint}/${id}`, {
@@ -511,4 +510,35 @@ export function useDelete() {
   };
 
   return { deleteFunction };
+}
+
+
+/****************Patch Routes*************** */
+
+export function useEdit() {
+  const { auth } = useContext(AuthContext);
+
+  const routeToUrl = {
+    goal: GOALS_URL,
+    accessGoal: GOAL_ASSESSMENT_URL, 
+    user: EMPLOYEES_URL,
+  };
+
+  const editFunction = async (updateData, id, routeName) => {
+    const endpoint = routeToUrl[routeName];
+
+    if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
+
+    const response = await axios.put(`${endpoint}/${id}`, JSON.stringify({ updateData }), {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth.token}`,
+      },
+      withCredentials: true,
+    });
+
+    return response;
+  };
+
+  return { editFunction };
 }

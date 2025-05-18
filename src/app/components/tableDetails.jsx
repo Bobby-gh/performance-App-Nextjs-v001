@@ -11,7 +11,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useDepartmentRouteData } from "../api/databook/route-data";
+import { useDepartmentRouteData, useEdit } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
 import {
   CustomButton,
@@ -23,14 +23,18 @@ import {
 import { IoCalendarClearOutline, IoClose, IoPerson } from "react-icons/io5";
 import Image from "next/image";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import avatar from "../images/avatar.jpg"
+import avatar from "../images/avatar.jpg";
+import { showToast } from "./notification";
+
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
+  const {editFunction} = useEdit()
   const formattedDate = (dateString) =>
-    new Date(dateString).toISOString().split("T")[0];
-  const [assignGoal, setAssignedGoal] = useState({
+  new Date(dateString).toISOString().split("T")[0];
+  const [isLoading, setIsLoading] = useState(false)
+  const [assignGoal] = useState({
     goalId: data._id,
     goalTitle: data.goalTitle,
     goalDescription: data.goalDescription,
@@ -45,10 +49,37 @@ export function AssignGoal({ data, open, onClose }) {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
   };
 
-  console.log({ editableFields: editableFields });
+  
+   const updateData = {
+    goalTitle: editableFields.goalTitle,
+  };
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    console.log("Update Data:", updateData);
+    try {
+      const name = "goal";
+      const id = editableFields.goalId;
+      const response = await editFunction(updateData, id, name);
+
+      if (response?.status === 200) {
+        showToast("Edit Saved successful:", "success");
+        triggerComponent();
+        onClose();
+      } else {
+        console.error("Edit Save failed:", response);
+        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+      }
+    } catch (error) {
+      console.error("Edit error:", error);
+    } finally {
+      setIsLoading(false);
+      setEditMode(false);
+    }
   };
+
   return (
     <div>
       <Modal
@@ -156,17 +187,18 @@ export function AssignGoal({ data, open, onClose }) {
                       value={formattedDate(editableFields.deadline)}
                     />
                   </div>
-                  {/* Save Button */}
-                  <div className="flex justify-end mt-4">
-                    <CustomButton
-                      label="Submit"
-                      onClick={handleEditSubmit}
-                      type="submit"
-                      className="custom-class"
-                    />
-                  </div>
                 </FormControl>
               </div>
+            </div>
+            {/* Save Button */}
+            <div className="flex justify-end mt-4">
+              <CustomButton
+                label="Submit"
+                onClick={handleEditSubmit}
+                type="submit"
+                className="custom-class"
+                loading={isLoading}
+              />
             </div>
           </div>
         </Box>
@@ -462,7 +494,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                   // value={role}
                   // onChange={setRole}
                   options={[
-                    { value: "General Manager", label:"generalManager" },
+                    { value: "General Manager", label: "generalManager" },
                     { value: "Manager", label: "manager" },
                     { value: "Junior Staff", label: "staff" },
                   ]}

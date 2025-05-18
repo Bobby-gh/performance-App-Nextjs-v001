@@ -28,7 +28,7 @@ export function Delete({ data, message, name, open, onClose }) {
 
       const response = await deleteFunction(data, name);
 
-      if (response?.status === 201) {
+      if (response?.status === 200) {
         showToast(`${name} deleted successfuly`, "success");
         onClose();
         triggerComponent();
