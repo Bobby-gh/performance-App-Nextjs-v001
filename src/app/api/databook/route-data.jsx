@@ -497,7 +497,7 @@ export function useDelete() {
 
   const deleteFunction = async (id, routeName) => {
     const endpoint = routeToUrl[routeName];
-    console.log(id, routeName);
+    console.log({id: id, routeName: routeName});
     if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
 
     const response = await axios.delete(`${endpoint}${id}`, {
