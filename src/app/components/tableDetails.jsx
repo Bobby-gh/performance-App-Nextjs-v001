@@ -13,7 +13,12 @@ import {
 } from "@mui/material";
 import { useDepartmentRouteData } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
-import { CustomButton, FormInputField, ModalFormSelect, ModalModification } from "./widgets";
+import {
+  CustomButton,
+  FormInputField,
+  ModalFormSelect,
+  ModalModification,
+} from "./widgets";
 import { FiEdit } from "react-icons/fi";
 import { IoCalendarClearOutline, IoClose } from "react-icons/io5";
 
@@ -21,7 +26,7 @@ export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
-  new Date(dateString).toISOString().split("T")[0];
+    new Date(dateString).toISOString().split("T")[0];
   const [assignGoal, setAssignedGoal] = useState({
     goalId: data._id,
     goalTitle: data.goalTitle,
@@ -155,7 +160,6 @@ export function AssignGoal({ data, open, onClose }) {
                       onClick={handleEditSubmit}
                       type="submit"
                       className="custom-class"
-                      
                     />
                   </div>
                 </FormControl>
@@ -171,7 +175,7 @@ export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
-  new Date(dateString).toISOString().split("T")[0];
+    new Date(dateString).toISOString().split("T")[0];
   const [assessGoal, setAssessGoal] = useState({
     goalId: data?._id,
     goalTitle: data?.goalTitle,
@@ -184,7 +188,7 @@ export function AssessGoal({ data, open, onClose }) {
     reviewed: data?.reviewed,
     assignedBy: data?.taskAssignedBy,
   });
-  console.log({"data coming from table": data})
+  console.log({ "data coming from table": data });
   const [editableFields, setEditableFields] = useState({ ...assessGoal });
   const [editMode, setEditMode] = useState(false);
 
@@ -313,8 +317,8 @@ export function AssessGoal({ data, open, onClose }) {
                       label="Reviewed"
                       value={editableFields.Reviewed}
                       options={[
-                        {value: true, label: Yes},
-                        {value: false, label: No}
+                        { value: "true", label: Yes },
+                        { value: "false", label: No },
                       ]}
                       required
                     />
@@ -328,13 +332,12 @@ export function AssessGoal({ data, open, onClose }) {
                   {/* Save Button */}
                   {editMode && (
                     <div className="flex justify-end mt-4">
-                       <CustomButton
-                      label="Save"
-                      onClick={handleEditSubmit}
-                      type="submit"
-                      className="custom-class"
-                      
-                    />
+                      <CustomButton
+                        label="Save"
+                        onClick={handleEditSubmit}
+                        type="submit"
+                        className="custom-class"
+                      />
                     </div>
                   )}
                 </FormControl>
