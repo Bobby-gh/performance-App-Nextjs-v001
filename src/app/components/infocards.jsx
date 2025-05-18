@@ -8,10 +8,11 @@ import {
 import { useGoalStatus } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { useContext, useState } from "react";
-import { AuthContext, GoalSelectContext } from "../contex/context-context";
+import { AuthContext, GoalSelectContext, Modaltrigger } from "../contex/context-context";
 import axios from "../api/axios";
 import { UPDATE_GOAL_PROGRESS } from "../api/routes";
 import { useTranslation } from "react-i18next";
+import { showToast } from "./notification";
 
 
 
@@ -410,6 +411,7 @@ export function GoalDetails() {
   const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
   const [isLoading, setLoading] = useState(false);
+  const { triggerComponent } = useContext(Modaltrigger);
 
   const handleInputChange = (event) => {
     const value = Math.min(100, Math.max(0, Number(event.target.value)));
@@ -437,7 +439,8 @@ export function GoalDetails() {
       );
 
       if (response.status === 200) {
-        alert('Progress updated successfully');
+        showToast('Progress updated successfully', "success");
+        triggerComponent()
       }
     } catch (err) {
       console.log(err)

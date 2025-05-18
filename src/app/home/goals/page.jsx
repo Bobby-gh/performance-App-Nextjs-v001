@@ -45,7 +45,7 @@ export default function MyGoals() {
       )}
 
       {/* Right Panel: Goals List */}
-      <div className="flex-[1.7] overflow-y-auto max-h-[80vh] p-2">
+      <div className="flex-[1.7] overflow-y-auto max-h-[95vh] p-2">
         {mygoal.length > 0 ? (
           <div
             className={`grid gap-4 cursor-pointer ${
