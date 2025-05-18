@@ -523,25 +523,20 @@ export function FinancialTrendsReport() {
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
         <h3 className="text-lg font-bold text-black">
-          {t("generalPerformance")}
+          Financial Trends
         </h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
       </div>
       <ResponsiveContainer height={250}>
-        <LineChart data={trendsData} >
+        <BarChart data={trendsData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="average_performance"
-            stroke="#8884d8"
-          />
-        </LineChart>
+          <Bar dataKey="average_performance" fill="#08397e" />
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
