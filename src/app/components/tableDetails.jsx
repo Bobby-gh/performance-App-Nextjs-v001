@@ -315,10 +315,10 @@ export function AssessGoal({ data, open, onClose }) {
                     <ModalFormSelect
                       id="Reviewed"
                       label="Reviewed"
-                      value={editableFields.Reviewed}
+                      value={editableFields.reviewed}
                       options={[
-                        { value: "true", label: Yes },
-                        { value: "false", label: No },
+                        { value: true, label: "Yes" },
+                        { value: false, label: "No" },
                       ]}
                       required
                     />
