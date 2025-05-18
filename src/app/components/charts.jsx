@@ -12,6 +12,7 @@ import {
   YAxis,
   Legend,
   LineChart,
+  Line,
 } from "recharts";
 import { Gauge, gaugeClasses, BarChart as MuiBarchart } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
@@ -529,7 +530,7 @@ export function FinancialTrendsReport() {
         </span>
       </div>
       <ResponsiveContainer height={250}>
-        <LineChart data={data} >
+        <LineChart data={trendsData} >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
           <YAxis />
