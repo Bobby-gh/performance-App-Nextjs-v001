@@ -542,6 +542,35 @@ export function FinancialTrendsReport() {
   );
 }
 
+export function InnovationTrendsReport() {
+  const { t } = useTranslation();
+  const { trends } = useAchievedGoalsData();
+  const innovationData = trends?.innovation
+  console.log({trends:trends})
+
+  return (
+    <div className=" p-7 bg-white rounded-lg">
+      <div className="flex justify-between">
+        <h3 className="text-lg font-bold text-black">
+          Innovational Trends
+        </h3>
+        <span className="flex items-center">
+          <DataDateAccess />
+        </span>
+      </div>
+      <ResponsiveContainer height={250}>
+        <BarChart data={innovationData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="average_performance" fill="#08397e" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 export function BadgesReport() {
   const { t } = useTranslation();
   const { badges } = useMyGoalBadgesData();
