@@ -531,9 +531,9 @@ export function Goals({
 }) {
   return (
     <div
-      className="card bg-white rounded-lg p-4 cursor-pointer flex flex-col"
-      onClick={onClick}>
-      
+      className="bg-white rounded-lg p-4 cursor-pointer flex flex-col h-full"
+      onClick={onClick}
+    >
       {/* Progress Section */}
       <div className="mb-4">
         <p className="text-blue-900 text-sm mb-2">
@@ -542,33 +542,35 @@ export function Goals({
         <div className="relative w-full h-4 bg-gray-200 rounded">
           <div
             className="absolute h-4 bg-blue-500 rounded"
-            style={{ width: `${progress}%` }}></div>
+            style={{ width: `${progress}%` }}
+          ></div>
         </div>
       </div>
 
       {/* Goal Title */}
-      <div className="flex mb-2">
-        <h3>Goal:</h3>
-        <h3 className="pl-2">{goalTitle}</h3>
+      <div className="mb-2">
+        <h3 className="font-semibold">Goal:</h3>
+        <p>{goalTitle}</p>
       </div>
 
       {/* Deadline */}
-      <div className="flex mb-4">
-        <h3>Deadline:</h3>
-        <h3 className="pl-2">{goalDeadline}</h3>
+      <div className="mb-4">
+        <h3 className="font-semibold">Deadline:</h3>
+        <p>{goalDeadline}</p>
       </div>
 
-      {/* Line and Status pinned to bottom */}
+      {/* Bottom section pinned to bottom */}
       <div className="mt-auto">
-        <hr className="h-px my-2 border-0 dark:bg-gray-700" />
+        <hr className="h-px my-2 border-0 bg-gray-300" />
         <div className="flex items-center mt-2">
-          <span>Status:</span>
+          <span className="font-medium text-sm text-gray-600">Status:</span>
           <span className="ml-2 text-blue-900 text-xs">{status}</span>
         </div>
       </div>
     </div>
   );
 }
+
 
 
 export function Notification({ message, typeHeader }) {
