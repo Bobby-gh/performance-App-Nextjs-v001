@@ -19,7 +19,8 @@ import {
 } from "../api/routes";
 import { AuthContext, Modaltrigger } from "../contex/context-context";
 import { useTranslation } from "react-i18next";
-import { CustomSelect, FormInputField } from "./widgets";
+import { CustomButton, CustomSelect, FormInputField } from "./widgets";
+import { idID } from "@mui/material/locale";
 
 export function CreateGoal() {
   const { t } = useTranslation();
@@ -116,7 +117,7 @@ export function CreateGoal() {
         </div>
         <hr />
         <form className="w-96">
-          <div className="px-10 py-12">
+          <div className="px-10 py-12 space-y-2">
             {auth.refNum === "ref?1!" || auth.refNum === "ref?1!" ? (
               <CustomSelect
                 id="departmentName"
@@ -148,7 +149,7 @@ export function CreateGoal() {
             )}
             <FormInputField
               label={t("goalName")}
-              id="startDate"
+              id="title"
               onChange={handleInputChange}
               value={formData.title}
             />
@@ -172,12 +173,12 @@ export function CreateGoal() {
             />
             <FormInputField
               label={t("target")}
-              id="startDate"
+              id="target"
               onChange={handleInputChange}
               value={formData.target}
             />
             <CustomSelect
-              id="category"
+              id="priority"
               value={priority}
               label={t("priorityLevel")}
               onChange={setPriority}
@@ -192,13 +193,13 @@ export function CreateGoal() {
             />
             <FormInputField
               label={t("description")}
-              id="startDate"
+              id="description"
               onChange={handleInputChange}
               value={formData.description}
             />
             <FormInputField
               label={t("endDate")}
-              id="startDate"
+              id="endDate"
               onChange={handleInputChange}
               value={formData.endDate}
             />
@@ -246,10 +247,10 @@ export function AccessGoal() {
     category: "",
   });
   const assessmentFormHandler = (e) => {
-    const { name, value } = e.target;
+    const { id, value } = e.target;
     setAssessData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [id]: value,
     }));
   };
 
@@ -334,7 +335,7 @@ export function AccessGoal() {
         </div>
         <hr />
         <form className="w-96">
-          <div className="flex flex-col px-10 py-8 space-y-4">
+          <div className="flex flex-col px-10 py-8 space-y-2">
             <CustomSelect
               id="goal"
               label={t("goal")}
@@ -350,7 +351,7 @@ export function AccessGoal() {
             />
             <CustomSelect
               id="workQuality"
-              label={t("goal")}
+              label={t("qualityOfWork")}
               value={assessData.workQuality}
               onChange={assessmentFormHandler}
               options={[
@@ -367,21 +368,6 @@ export function AccessGoal() {
               id="productivity"
               label={t("productivity")}
               value={assessData.productivity}
-              onChange={assessmentFormHandler}
-              options={[
-                { value: "1", label: t("weak") },
-                { value: "2", label: t("average") },
-                { value: "3", label: t("good") },
-                { value: "4", label: t("veryGood") },
-              ]}
-              searchable={true}
-              required
-              group={false}
-            />
-            <CustomSelect
-              id="productivity"
-              label={t("productivity")}
-              value={assessData.communication}
               onChange={assessmentFormHandler}
               options={[
                 { value: "1", label: t("weak") },
@@ -476,14 +462,17 @@ export function AccessGoal() {
               options={[
                 { value: "Below Expectations", label: t("belowExpectations") },
                 { value: "Meets Expectations", label: t("meetsExpectations") },
-                { value: "Exceeds Expectations", label: t("exceedsExpectations") },
+                {
+                  value: "Exceeds Expectations",
+                  label: t("exceedsExpectations"),
+                },
                 { value: "Outstanding", label: t("outstanding") },
               ]}
               searchable={true}
               required
               group={false}
             />
-            
+
             <FormInputField
               label={t("comment")}
               id="comment"
@@ -567,10 +556,10 @@ export function Userforms() {
   };
 
   const handleUserFormDataChange = (e) => {
-    const { name, value } = e.target;
+    const { id, value } = e.target;
     setUserFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [id]: value,
     }));
   };
 
@@ -650,25 +639,16 @@ export function Userforms() {
               </div>
 
               <div className="px-10">
-                <button
-                  className="inline-block w-full rounded bg-[#000c8e] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-[#2a36b8] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                  type="submit"
+                <CustomButton
+                  label="Submit"
                   onClick={handleSubmit}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <div className="flex flex-row justify-center">
-                      <p className="text-sm pr-2">{t("loading")}</p>
-                      <CircularProgress size={27} thickness={6} color="primary" />
-                    </div>
-                  ) : (
-                    t("submit")
-                  )}
-                </button>
+                  type="submit"
+                  className="custom-class"
+                  loading={isLoading}
+                />
               </div>
             </form>
           </Drawer>
-
         </>
       )}
     </>
@@ -717,7 +697,6 @@ export function Departmentforms() {
     setName("");
   };
 
-
   function handleOpen() {
     setOpen(!open);
   }
@@ -742,39 +721,23 @@ export function Departmentforms() {
         <hr />
         <form className="w-96">
           <div className="px-10 py-10">
-            <div className="relative mb-6" data-te-input-wrapper-init>
-              <input
-                type="text"
-                className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                name="departmentName"
-                value={name}
-                autoComplete="off"
-                onChange={(e) => setName(e.target.value)}
-                required
-                placeholder=" " // triggers the floating label
-              />
-              <label className="before:content-[' '] after:content-[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                {t("departmentName")}
-              </label>
-            </div>
+            <FormInputField
+              label={t("departmentName")}
+              id="departmentName"
+              value={name}
+              onChange={setName}
+              required
+            />
           </div>
 
           <div className="px-10">
-            <button
-              className="inline-block w-full rounded bg-[#000c8e] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-[#2a36b8] hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-[#2a36b8] focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-[#1f2d8c] active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-              type="submit"
+            <CustomButton
+              label="Submit"
               onClick={handleSubmit}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <div className="flex flex-row justify-center items-center">
-                  <p className="text-sm pr-2">{t("loading")}</p>
-                  <CircularProgress size={20} thickness={6} color="primary" />
-                </div>
-              ) : (
-                t("submit")
-              )}
-            </button>
+              type="submit"
+              className="custom-class"
+              loading={isLoading}
+            />
           </div>
         </form>
       </Drawer>

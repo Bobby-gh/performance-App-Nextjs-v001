@@ -218,18 +218,54 @@ export const CustomSelect = ({
   );
 };
 
-export const ModalModification = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "#FFFFFF !important",
-  width: "87vw",
-  height: "90vh",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 1,
-};
+
+export function CustomButton({
+  label = "Click me",
+  onClick,
+  type = "button",
+  disabled = false,
+  loading = false,
+  className = "",
+}) {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled || loading}
+      className={`w-full p-2 bg-[#1E4D7E] rounded-xl text-white rounded-lg ${className} ${
+        disabled || loading ? "opacity-50 cursor-not-allowed" : ""
+      }`}>
+      {loading ? (
+        <span className="flex items-center justify-center">
+          {/* Spinner */}
+          <svg
+            className="animate-spin h-5 w-5 mr-2 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24">
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V4a10 10 0 00-10 10h2zm2 5.292A7.964 7.964 0 014 12H2a10 10 0 0016.292 7.292l-1.414-1.414A8.003 8.003 0 016 17.292z"
+            />
+          </svg>
+          Loading...
+        </span>
+      ) : (
+        label
+      )}
+    </button>
+  );
+}
+
 
 export function PersonalAccountCard() {
   return (
@@ -380,3 +416,16 @@ export function PersonalAccountCard() {
     </main>
   );
 }
+
+export const ModalModification = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "#FFFFFF !important",
+  width: "87vw",
+  height: "90vh",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 1,
+};

@@ -143,7 +143,6 @@ export function AssignGoal({ data, open, onClose }) {
                         value: department.departmentId,
                         label: department.departmentName,
                       }))}
-                      onChange={setResponseActivityStatus}
                       required
                     />
                     <TextField
