@@ -500,7 +500,8 @@ export function useDelete() {
     console.log({id: id, routeName: routeName});
     if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
 
-    const response = await axios.delete(`${endpoint}${id}`, {
+    const response = await axios.delete(endpoint, {
+      data: { id },
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + auth.token,
