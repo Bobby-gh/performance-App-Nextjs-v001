@@ -15,12 +15,14 @@ import { useDepartmentRouteData } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
 import {
   CustomButton,
+  CustomSelect,
   FormInputField,
   ModalFormSelect,
   ModalModification,
 } from "./widgets";
 import { IoCalendarClearOutline, IoClose, IoPerson } from "react-icons/io5";
 import Image from "next/image";
+import { MdOutlineMarkEmailRead } from "react-icons/md";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
@@ -453,15 +455,19 @@ export function EmployeeDetails({ data, open, onClose }) {
                   required
                   // error={error && !email ? "Email is required" : ""}
                 />
-                <FormInputField
-                  label="DOB"
-                  type="text"
-                  id="dob"
-                  // value="hi"
-                  // onChange={handleInputChange}
-                  placeholder="date of birth"
+                <CustomSelect
+                  id="role"
+                  label="ROle"
+                  // value={role}
+                  // onChange={setRole}
+                  options={[
+                    { value: "General Manager", label:"generalManager" },
+                    { value: "Manager", label: "manager" },
+                    { value: "Junior Staff", label: "staff" },
+                  ]}
                   required
-                  // error={error && !email ? "Email is required" : ""}
+                  searchable={true}
+                  group={false}
                 />
               </div>
               <div className="px-16 mt-8">
