@@ -527,7 +527,6 @@ export function GoalDetails() {
 
 export function Goals({
   goalTitle,
-  id,
   status,
   goalDeadline,
   onClick,

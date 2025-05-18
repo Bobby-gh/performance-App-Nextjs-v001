@@ -39,7 +39,7 @@ export default function MyGoals() {
     <main className="flex space-x-4">
       {/* Left Panel: Show Goal Details only when a goal is selected */}
       {selectedGoal && (
-        <div className="flex-[1] overflow-y-auto max-h-[80vh]">
+        <div className="flex-[1] overflow-y-auto max-h-[90vh]">
           <GoalDetails />
         </div>
       )}
@@ -63,9 +63,9 @@ export default function MyGoals() {
                 }`}>
                 <Goals
                   id={goal.id}
-                  goalTitle={goal.workStream}
-                  goalDeadline={goal.deadline}
-                  partner={goal.partner}
+                  goalTitle={goal.goalTitle}
+                  goalDeadline={goal.goalDeadline}
+                  progress={goal.actualProgressPercent}
                   status={goal.status}
                   onClick={() => handleCardClick(goal)}
                 />
