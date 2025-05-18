@@ -319,15 +319,17 @@ export function EmployeeTable() {
   const data = useMemo(() => employeetable, [employeetable]);
   const columns = useMemo(() => usercolumn, []);
 
+  const handleClose = () => {
+    setOpen(false);
+    setEmployeeInfo("");
+  };
+
   const handleEdit = (row) => {
     console.log("Edit", row);
     setEmployeeInfo(row.original);
     setOpen(true);
   };
 
-  const handleNotifications = (row) => {
-    console.log("Notifications", row);
-  };
 
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
