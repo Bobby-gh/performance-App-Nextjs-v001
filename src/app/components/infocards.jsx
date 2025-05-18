@@ -506,9 +506,6 @@ export function GoalDetails() {
         </label>
         <input
           id="progress-input"
-          type="number"
-          min="0"
-          max="100"
           value={progress}
           onChange={handleInputChange}
           className="w-40 border h-8 rounded p-2 text-center"
