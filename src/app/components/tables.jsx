@@ -48,7 +48,6 @@ export  function GoalTable() {
     setAssignGoalInfo("");
   };
  
-  console.log({data:data})
   useEffect(() => {
     const fetchAndReset = async () => {
       if (!trigger) return;
