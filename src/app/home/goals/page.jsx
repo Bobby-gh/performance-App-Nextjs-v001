@@ -1,9 +1,8 @@
 "use client";
-import axios from "@/app/api/axios";
 import { useMyGoalRouteData } from "@/app/api/databook/route-data";
 import { GoalDetails, Goals } from "@/app/components/infocards";
 import { GoalSelectContext } from "@/app/contex/context-context";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 
 export default function MyGoals() {
