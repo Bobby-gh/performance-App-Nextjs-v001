@@ -53,23 +53,23 @@ export function useMyGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [mygoals, setMygoal] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(MY_GOALS_URL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-        console.log(response.data);
-        setMygoal(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(MY_GOALS_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+      console.log(response.data);
+      setMygoal(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [auth]);
 
@@ -79,10 +79,9 @@ export function useMyGoalRouteData() {
   }));
 
   console.log({ "personal goals": mygoal });
-  
-  return { mygoal,fetchData };
-}
 
+  return { mygoal, fetchData };
+}
 export function useMyGoalBadgesData() {
   const { auth } = useContext(AuthContext);
   const [badges, setBadges] = useState([]);
