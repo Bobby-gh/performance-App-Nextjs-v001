@@ -22,5 +22,6 @@ export const TOP_GOALS = "/goal-assessments/get-top-assessment"
 export const UPDATE_GOAL_PROGRESS = "/goals/update-progress"
 export const GOAL_CATEGORY_COUNT = "/goals/goal-type-count"
 export const GOAL_BADGES = "/goal-assessments/get-ratings-summary"
+export const GET_CATEGORY_ACHIEVED = "/performance/get-monthly-average-achieved-performance"
 
 
