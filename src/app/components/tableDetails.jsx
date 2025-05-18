@@ -23,6 +23,7 @@ import {
 import { IoCalendarClearOutline, IoClose, IoPerson } from "react-icons/io5";
 import Image from "next/image";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
+import avatar from "../images/avatar.jpg"
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
@@ -403,7 +404,7 @@ export function EmployeeDetails({ data, open, onClose }) {
             <div className="flex-[1] border-r-2 border-r-[#cbd5e1] p-6 flex flex-col space-y-6">
               <div className="flex flex-col items-center">
                 <Image
-                  // src={avatar}
+                  src={avatar}
                   alt="Paris"
                   className="rounded-full border-2 mb-4"
                   width={156}
