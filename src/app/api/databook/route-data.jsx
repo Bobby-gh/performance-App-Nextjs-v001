@@ -19,6 +19,7 @@ import {
   MY_GOALS_URL,
   GOAL_CATEGORY_COUNT,
   GOAL_BADGES,
+  GET_CATEGORY_ACHIEVED,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -109,6 +110,34 @@ export function useMyGoalBadgesData() {
 
   console.log({ "badges goals": badges });
   return { badges };
+}
+
+export function useAchievedGoalsData() {
+  const { auth } = useContext(AuthContext);
+  const [trends, setTrends] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(GET_CATEGORY_ACHIEVED, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setTrends(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+
+
+  return { trends };
 }
 
 export function useUnassessedGoalRouteData() {

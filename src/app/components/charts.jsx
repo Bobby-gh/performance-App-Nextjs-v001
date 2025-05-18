@@ -11,6 +11,7 @@ import {
   XAxis,
   YAxis,
   Legend,
+  LineChart,
 } from "recharts";
 import { Gauge, gaugeClasses, BarChart as MuiBarchart } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
@@ -21,13 +22,13 @@ import {
   useOrganizationalAveragePerMonthChartRouteData,
   usePerformanceMatrixChartRouteData,
   useGoalCountRouteData,
-  useMyGoalBadgesData
+  useMyGoalBadgesData,
+  useAchievedGoalsData,
 } from "../api/databook/route-data";
 import { DataDateAccess } from "./infocards";
 import { StarOutline, StarSharp } from "@mui/icons-material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-
 
 export function OrganizationPerformanceDashboard() {
   const { t } = useTranslation();
@@ -37,7 +38,9 @@ export function OrganizationPerformanceDashboard() {
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">{t("averagePerformance")}</h3>
+        <h3 className="text-lg font-bold text-black">
+          {t("averagePerformance")}
+        </h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -67,7 +70,9 @@ export function PerformanceMatrixDashboard() {
   return (
     <div className="p-7 bg-gray-200 rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">{t("performanceMatrix")}</h3>
+        <h3 className="text-lg font-bold text-black">
+          {t("performanceMatrix")}
+        </h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -91,7 +96,7 @@ export function PerformanceMatrixDashboard() {
   );
 }
 
-export function GeneralPerformanceDashboard() { 
+export function GeneralPerformanceDashboard() {
   const { t } = useTranslation();
   const { generalPerformance } = useGeneralPerformanceChartRouteData();
 
@@ -99,7 +104,7 @@ export function GeneralPerformanceDashboard() {
     <div>
       <div className="p-7 bg-white rounded-lg">
         <div className="text-lg font-bold pb-8 text-black">
-        {t("generalPerformance")}
+          {t("generalPerformance")}
         </div>
         <div className="flex items-center justify-center">
           <Gauge
@@ -184,7 +189,7 @@ export function FinancialGoal() {
   const value = goalCateoryCount.Financial?.financial?.value;
   const valueMax = goalCateoryCount.Financial?.financial?.valueMax;
 
-console.log(goalCateoryCount)
+  console.log(goalCateoryCount);
 
   return (
     <div>
@@ -231,7 +236,9 @@ export function HumanResourceGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">{t("humanRelationship")}</div>
+        <div className="text-md font-bold text-black">
+          {t("humanRelationship")}
+        </div>
         <div>
           <Gauge
             valueMax={valueMax}
@@ -274,7 +281,7 @@ export function InternalProcessandInnovation() {
     <div>
       <div className="p-4 bg-white rounded-lg">
         <div className="text-md font-bold text-black">
-        {t("processAndInnovation")}
+          {t("processAndInnovation")}
         </div>
         <div>
           <Gauge
@@ -317,10 +324,12 @@ export function CustomerCentricGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">{t("customerCentred")}</div>
+        <div className="text-md font-bold text-black">
+          {t("customerCentred")}
+        </div>
         <div>
           <Gauge
-          valueMax={valueMax}
+            valueMax={valueMax}
             value={value}
             height={230}
             cx="50%"
@@ -352,11 +361,10 @@ export function CustomerCentricGoal() {
 
 export function AchievedGoalChart() {
   //for all the goals achieved within the system
-  
+
   const { t } = useTranslation();
   const { goalStatus } = useGoalStatus();
   const { Completed, Total } = goalStatus;
-
 
   return (
     <div>
@@ -440,7 +448,6 @@ export function NotAchievedChart() {
   const { goalStatus } = useGoalStatus();
   const { NotStarted, Total } = goalStatus;
 
-
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
@@ -485,7 +492,9 @@ export function OrganizationPerformanceReport() {
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">{t("generalPerformance")}</h3>
+        <h3 className="text-lg font-bold text-black">
+          {t("generalPerformance")}
+        </h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -503,6 +512,40 @@ export function OrganizationPerformanceReport() {
   );
 }
 
+export function FinancialTrendsReport() {
+  const { t } = useTranslation();
+  const { trends } = useAchievedGoalsData();
+  const trendsData = trends?.financial
+  console.log({trends:trends})
+
+  return (
+    <div className=" p-7 bg-white rounded-lg">
+      <div className="flex justify-between">
+        <h3 className="text-lg font-bold text-black">
+          {t("generalPerformance")}
+        </h3>
+        <span className="flex items-center">
+          <DataDateAccess />
+        </span>
+      </div>
+      <ResponsiveContainer height={250}>
+        <LineChart data={data} >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="average_performance"
+            stroke="#8884d8"
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 export function BadgesReport() {
   const { t } = useTranslation();
   const { badges } = useMyGoalBadgesData();
@@ -513,9 +556,7 @@ export function BadgesReport() {
     <div className=" p-7 bg-white rounded-lg">
       <div className="border-l-4 px-4 border-blue-500 mb-6">
         <p className="font-bold text-blue-500">{t("topPerformerAward")}</p>
-        <p>
-        {t("awardsDescription")}
-        </p>
+        <p>{t("awardsDescription")}</p>
       </div>
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2 flex items-center">
@@ -526,25 +567,33 @@ export function BadgesReport() {
           <div className="flex flex-col space-y-8">
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "gold", fontSize: "40px" }} />
-              <p className="pl-24 text-yellow-500 font-bold">{t("goldBadges")}:</p>
+              <p className="pl-24 text-yellow-500 font-bold">
+                {t("goldBadges")}:
+              </p>
               <p className="pl-4">{Outstanding}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "38px" }} />
               <StarSharp style={{ fill: "#c0c0c0", fontSize: "38px" }} />
-              <p className="pl-14 text-[#c0c0c0] font-medium">{t("silverBadges")}:</p>
+              <p className="pl-14 text-[#c0c0c0] font-medium">
+                {t("silverBadges")}:
+              </p>
               <p className="pl-4">{ExceedsExpectations}</p>
             </div>
             <div className="flex flex-rows items-center">
               <StarSharp style={{ fill: "#cd7f32", fontSize: "36px" }} />{" "}
               <StarSharp style={{ fill: "#cd7f32", fontSize: "36px" }} />
               <StarSharp style={{ fill: "#cd7f32", fontSize: "36px" }} />
-              <p className="pl-6 text-[#cd7f32] font-medium">{t("bronzeBadges")}:</p>
+              <p className="pl-6 text-[#cd7f32] font-medium">
+                {t("bronzeBadges")}:
+              </p>
               <p className="pl-2">{MeetsExpectations}</p>
             </div>
           </div>
         </div>
-        <div><EmployeePerformance /></div>
+        <div>
+          <EmployeePerformance />
+        </div>
       </div>
     </div>
   );
