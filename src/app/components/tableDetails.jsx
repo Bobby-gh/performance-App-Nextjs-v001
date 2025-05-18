@@ -19,8 +19,8 @@ import {
   ModalFormSelect,
   ModalModification,
 } from "./widgets";
-import { FiEdit } from "react-icons/fi";
-import { IoCalendarClearOutline, IoClose } from "react-icons/io5";
+import { IoCalendarClearOutline, IoClose, IoPerson } from "react-icons/io5";
+import Image from "next/image";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
@@ -344,6 +344,137 @@ export function AssessGoal({ data, open, onClose }) {
               </div>
             </div>
           </div>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
+
+export function EmployeeDetails({ data, open, onClose }) {
+  const { t } = useTranslation();
+  const { departmenttable } = useDepartmentRouteData();
+  const formattedDate = (dateString) =>
+    new Date(dateString).toISOString().split("T")[0];
+  const [assessGoal, setAssessGoal] = useState({
+    goalId: data?._id,
+    goalTitle: data?.goalTitle,
+    goalDescription: data?.goalDescription,
+    goalStatus: data?.status,
+    assignedTo: data?.taskAssignedTo,
+    deadline: data?.goalDeadline,
+    goalType: data?.goalType,
+    performancePercent: data?.performancePercent,
+    reviewed: data?.reviewed,
+    assignedBy: data?.taskAssignedBy,
+  });
+  console.log({ "data coming from table": data });
+  const [editableFields, setEditableFields] = useState({ ...assessGoal });
+  const [editMode, setEditMode] = useState(false);
+
+  const handleChange = (key, value) => {
+    setEditableFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  console.log({ editableFields: editableFields });
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={onClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={ModalModification}>
+          {/* Modal Header */}
+          <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+            <button onClick={onClose}>
+              <IoClose size={24} />
+            </button>
+          </div>
+
+          {/* Modal Body */}
+
+          <main className="flex text-black card bg-white p-4 justify-center rounded-lg">
+            <div className="flex-[1] border-r-2 border-r-[#cbd5e1] p-6 flex flex-col space-y-6">
+              <div className="flex flex-col items-center">
+                <Image
+                  // src={avatar}
+                  alt="Paris"
+                  className="rounded-full border-2 mb-4"
+                  width={156}
+                  height={156}
+                />
+                <h6 className="mb-12 text-sm">Upload Image</h6>
+              </div>
+              <div className="mb-4 flex flex-row items-center">
+                <span className="mr-4">
+                  <IoPerson color="blue" />
+                </span>
+                <span>Robert Knaihv</span>
+              </div>
+              <div className="mb-2 flex flex-row items-center">
+                <span className="mr-4">
+                  <MdOutlineMarkEmailRead color="blue" />
+                </span>
+                <span>knaihv@ymail.com</span>
+              </div>
+            </div>
+            <div className="flex-[2]">
+              <div className="grid grid-cols-2 gap-8 p-4">
+                <FormInputField
+                  label="Name"
+                  type="text"
+                  id="name"
+                  // value={formData.name}
+                  // onChange={handleInputChange}
+                  placeholder="Full name"
+                  required
+                  // error={error && !email ? "Email is required" : ""}
+                />
+                <FormInputField
+                  label="Email"
+                  type="email"
+                  id="email"
+                  // value={formData.name}
+                  // onChange={handleInputChange}
+                  placeholder="Enter your email"
+                  required
+                  // error={error && !email ? "Email is required" : ""}
+                />
+                <FormInputField
+                  label="Department"
+                  id="department"
+                  // value={formData.name}
+                  // onChange={handleInputChange}
+                  placeholder="Department"
+                  required
+                  // error={error && !email ? "Email is required" : ""}
+                />
+                <FormInputField
+                  label="DOB"
+                  type="text"
+                  id="dob"
+                  // value="hi"
+                  // onChange={handleInputChange}
+                  placeholder="date of birth"
+                  required
+                  // error={error && !email ? "Email is required" : ""}
+                />
+              </div>
+              <div className="px-16 mt-8">
+                <CustomButton
+                  label="Submit"
+                  // onClick={handleSubmit}
+                  type="submit"
+                  className="custom-class"
+                  // loading={isSubmitting}
+                />
+              </div>
+            </div>
+          </main>
         </Box>
       </Modal>
     </div>
