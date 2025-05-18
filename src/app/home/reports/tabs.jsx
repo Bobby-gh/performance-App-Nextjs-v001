@@ -6,7 +6,7 @@ export const Tabs = () => {
   return [ 
     {
       key: "balanceScorecard", 
-      title: t("balanceScorecard"), 
+      title: t("balancedScorecard"), 
     },
     {
       key: "operationalEfficiency",

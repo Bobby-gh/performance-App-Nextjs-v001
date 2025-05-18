@@ -140,7 +140,7 @@ export function ModalFormSelect({
   id,
 }) {
   return (
-    <div className="mt-4">
+    <div className="mb-1">
       <div className="flex">
         {label && (
           <label

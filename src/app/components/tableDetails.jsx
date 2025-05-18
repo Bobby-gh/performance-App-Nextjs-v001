@@ -114,27 +114,27 @@ export function AssignGoal({ data, open, onClose }) {
                     <FormInputField
                       label={t("Goal ID")}
                       id="goalId"
-                      value={assignGoal.goalId}
+                      value={editableFields.goalId}
                     />
                     <FormInputField
                       label={t("goalTitle")}
                       id="goalTitle"
-                      value={assignGoal.goalTitle}
+                      value={editableFields.goalTitle}
                     />
                     <FormInputField
                       label={t("status")}
                       id="goalStatus"
-                      value={assignGoal.goalStatus}
+                      value={editableFields.goalStatus}
                     />
                     <FormInputField
                       label={t("description")}
                       id="goalDescription"
-                      value={assignGoal.goalDescription}
+                      value={editableFields.goalDescription}
                     />
                     <ModalFormSelect
                       id="assignedTO"
                       label="Assigned To"
-                      value={assignGoal.assignedTo}
+                      value={editableFields.assignedTo}
                       options={departmenttable.map((department) => ({
                         value: department.departmentId,
                         label: department.departmentName,
@@ -145,7 +145,7 @@ export function AssignGoal({ data, open, onClose }) {
                       label={t("date")}
                       id="goalDescription"
                       type="date"
-                      value={formattedDate(assignGoal.deadline)}
+                      value={formattedDate(editableFields.deadline)}
                     />
                   </div>
                   {/* Save Button */}
@@ -262,115 +262,79 @@ export function AssessGoal({ data, open, onClose }) {
                 <FormControl fullWidth>
                   {/* Form Fields */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-                    <TextField
-                      label="Goal ID"
+                    <FormInputField
+                      label={t("goalId")}
+                      id="goalId"
                       value={editableFields.goalId}
-                      disabled
-                      fullWidth
                     />
-                    <TextField
+                    <FormInputField
                       label={t("goalTitle")}
+                      id="goalTitle"
                       value={editableFields.goalTitle}
-                      onChange={(e) =>
-                        handleChange("goalTitle", e.target.value)
-                      }
-                      disabled={!editMode}
-                      fullWidth
                     />
-                    <TextField
-                      label="Status"
+                    <FormInputField
+                      label={t("status")}
+                      id="goalStatus"
                       value={editableFields.goalStatus}
-                      onChange={(e) =>
-                        handleChange("goalStatus", e.target.value)
-                      }
-                      multiline
-                      required
-                      disabled={!editMode}
-                      fullWidth
                     />
-                    <TextField
-                      label="Description"
+                    <FormInputField
+                      label={t("description")}
+                      id="goalDescription"
                       value={editableFields.goalDescription}
-                      onChange={(e) =>
-                        handleChange("goalDescription", e.target.value)
-                      }
-                      multiline
-                      required
-                      disabled={!editMode}
-                      fullWidth
                     />
-                    <Select
+                    <ModalFormSelect
+                      id="assignedTO"
                       label="Assigned To"
                       value={editableFields.assignedTo}
-                      onChange={(e) =>
-                        handleChange("assignedTo", e.target.value)
-                      }
-                      disabled={!editMode}
+                      options={departmenttable.map((department) => ({
+                        value: department.departmentId,
+                        label: department.departmentName,
+                      }))}
                       required
-                      fullWidth
-                      displayEmpty>
-                      {departmenttable.map((department) => (
-                        <MenuItem
-                          key={department.departmentId}
-                          value={department.departmentId}>
-                          {department.departmentName}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <TextField
+                    />
+                    <FormInputField
+                      label={t("deadline")}
                       type="date"
-                      label="Created At"
-                      value={formattedDate(assessGoal.deadline)}
-                      onChange={(e) => handleChange("deadline", e.target.value)}
-                      disabled={!editMode}
-                      fullWidth
+                      id="deadline"
+                      value={formattedDate(editableFields.deadline)}
                     />
-                    <TextField
+                    <FormInputField
                       label="Goal Type"
+                      id="goalType"
                       value={editableFields.goalType}
-                      onChange={(e) => handleChange("goalType", e.target.value)}
-                      disabled={!editMode}
-                      fullWidth
                     />
-                    <TextField
+                    <FormInputField
                       label="Performance Percent"
-                      type="number"
+                      id="performancePercent"
                       value={editableFields.performancePercent}
-                      onChange={(e) =>
-                        handleChange("performancePercent", e.target.value)
-                      }
-                      disabled={!editMode}
-                      fullWidth
                     />
-                    <Select
+                    <ModalFormSelect
+                      id="Reviewed"
                       label="Reviewed"
-                      value={editableFields.reviewed}
-                      onChange={(e) => handleChange("reviewed", e.target.value)}
+                      value={editableFields.Reviewed}
+                      options={[
+                        {value: true, label: Yes},
+                        {value: false, label: No}
+                      ]}
                       required
-                      disabled={!editMode}
-                      fullWidth
-                      displayEmpty>
-                      <MenuItem value={true}>Yes</MenuItem>
-                      <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    <TextField
+                    />
+                    <FormInputField
                       label="Assigned By"
+                      id="assignedBy"
                       value={editableFields.assignedBy}
-                      disabled
-                      fullWidth
                     />
                   </div>
 
                   {/* Save Button */}
                   {editMode && (
                     <div className="flex justify-end mt-4">
-                      <button
-                        type="submit"
-                        onClick={handleEditSubmit}
-                        className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300">
-                        <FaSave className="text-lg" />
-                        Save
-                      </button>
+                       <CustomButton
+                      label="Save"
+                      onClick={handleEditSubmit}
+                      type="submit"
+                      className="custom-class"
+                      
+                    />
                     </div>
                   )}
                 </FormControl>
