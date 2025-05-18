@@ -45,7 +45,7 @@ export default function MyGoals() {
       )}
 
       {/* Right Panel: Goals List */}
-      <div className="flex-[1.7] overflow-y-auto max-h-[95vh] p-2">
+      <div className="flex-[1.7] overflow-y-auto max-h-[90vh] p-2">
         {mygoal.length > 0 ? (
           <div
             className={`grid gap-4 cursor-pointer ${
@@ -59,7 +59,7 @@ export default function MyGoals() {
                 className={`transition duration-300 ${
                   selectedGoal && selectedGoal.id !== goal.id
                     ? "opacity-30"
-                    : "opacity-100 shadow-lg shadow-[0_0_0_1px_rgba(59,130,246,0.5)]"
+                    : "opacity-100 shadow-lg shadow-[0_0_0_1px_rgba(255, 255, 255, 0.5)"
                 }`}>
                 <Goals
                   id={goal.id}
