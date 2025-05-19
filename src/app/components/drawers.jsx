@@ -368,7 +368,7 @@ export function AccessGoal() {
               onChange={(selectedOptions) => {
                 setAssessData((prev) => ({
                   ...prev,
-                  workQuality: selectedOptions?.value,
+                  workQuality: selectedOptions,
                 }));
               }}
               options={[

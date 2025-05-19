@@ -41,6 +41,7 @@ export function AssignGoal({ data, open, onClose }) {
     goalStatus: data.status,
     assignedTo: data.taskAssignedTo,
     deadline: data.goalDeadline,
+    target: data.target
   });
   const [editableFields, setEditableFields] = useState({ ...assignGoal });
   const [editMode, setEditMode] = useState(false);
@@ -53,10 +54,11 @@ export function AssignGoal({ data, open, onClose }) {
     goalTitle: editableFields.goalTitle,
     goalDescription: data.goalDescription,
     goalStatus: data.status,
-    assignedTo: data.taskAssignedTo,
-    deadline: data.goalDeadline,
+    taskAssignedTo: data.taskAssignedTo,
+    goalDeadline: data.goalDeadline,
+    target: editableFields.target
   };
-
+  
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -154,11 +156,6 @@ export function AssignGoal({ data, open, onClose }) {
                   {/* Form Fields */}
                   <div className="grid grid-cols-2 gap-6 mb-6">
                     <FormInputField
-                      label={t("goalId")}
-                      id="goalId"
-                      value={editableFields.goalId}
-                    />
-                    <FormInputField
                       label={t("goalTitle")}
                       id="goalTitle"
                       value={editableFields.goalTitle}
@@ -182,6 +179,12 @@ export function AssignGoal({ data, open, onClose }) {
                         label: department.departmentName,
                       }))}
                       required
+                    />
+                    
+                    <FormInputField
+                      label="target"
+                      id="target"
+                      value={editableFields.target}
                     />
                     <FormInputField
                       label={t("date")}
