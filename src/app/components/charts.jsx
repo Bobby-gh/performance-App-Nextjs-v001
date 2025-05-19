@@ -602,6 +602,13 @@ export function ComparativeTrendsReport() {
     return row;
   });
 
+    const colors = {
+    'financial': '#8884d8',
+    'innovation': '#82ca9d',
+    'customer centred': '#ffc658',
+    'human relationship': '#ff8042'
+  };
+  
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">

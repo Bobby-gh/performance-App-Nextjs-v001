@@ -507,11 +507,20 @@ export function GoalDetails() {
           <strong className="w-1/3 text-black">{t("enterProgress")}:</strong>
         </label>
       </div>
-      <div className="mb-12 mt-4">
+      <div className="mb-4 mt-4">
         <FormInputField
           id="progress-input"
           value={progress}
           onChange={(e) => setProgress(e.target.value)}
+          required
+        />
+      </div>
+      <div className="mb-4 mt-12">
+        <FormInputField
+          label="Comment"
+          id="comment"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
           required
         />
       </div>
