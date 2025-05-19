@@ -149,7 +149,7 @@ export function AssignGoal({ data, open, onClose }) {
                   {/* Form Fields */}
                   <div className="grid grid-cols-2 gap-6 mb-6">
                     <FormInputField
-                      label={t("Goal ID")}
+                      label={t("goalId")}
                       id="goalId"
                       value={editableFields.goalId}
                     />

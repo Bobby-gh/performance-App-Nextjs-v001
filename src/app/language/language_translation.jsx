@@ -156,6 +156,15 @@ i18n.use(initReactI18next).init({
         updateGoalProgress: "Update Goal Progress",  
         selectProjectToUpdateProgress: "Select project to update progress",  
         organizationalEmployees: "Organizational Employees",
+        highPerformingWorkers: "High Performing Workers",
+
+
+        //further reporting 
+        financialTrends: "Financial Trends",
+        innovationalTrends: "Innovational Trends",
+        addDepartmentPrompt: "Wishing to add new Department ?",
+        enterDepartmentName: "Enter the name of the Department in the field below",
+        actualProgress: "Actual progress",
 
       },
     },
@@ -306,6 +315,15 @@ i18n.use(initReactI18next).init({
         updateGoalProgress: "Mettre à jour la progression de l'objectif",
         selectProjectToUpdateProgress: "Sélectionnez un projet pour mettre à jour la progression",
         organizationalEmployees: "Employés organisationnels",
+        highPerformingWorkers: "Travailleurs très performants",
+      
+
+        //further reporting
+        financialTrends: "Tendances financières",
+        innovationalTrends: "Tendances en innovation",
+        addDepartmentPrompt: "Souhaitez-vous ajouter un nouveau département ?",
+        enterDepartmentName: "Entrez le nom du département dans le champ ci-dessous",
+        actualProgress: "Progrès réel"
       },
     },
   },
