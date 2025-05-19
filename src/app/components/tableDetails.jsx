@@ -52,10 +52,10 @@ export function AssignGoal({ data, open, onClose }) {
 
   const updateData = {
     goalTitle: editableFields.goalTitle,
-    goalDescription: data.goalDescription,
-    goalStatus: data.status,
-    taskAssignedTo: data.taskAssignedTo,
-    goalDeadline: data.goalDeadline,
+    goalDescription: editableFields.goalDescription,
+    goalStatus: editableFields.status,
+    taskAssignedTo: editableFields.assignedTo,
+    goalDeadline: editableFields.deadline,
     target: editableFields.target
   };
   
@@ -332,6 +332,11 @@ export function AssessGoal({ data, open, onClose }) {
                 <FormControl fullWidth>
                   {/* Form Fields */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+                    <FormInputField
+                      label={t("goalId")}
+                      id="goalId"
+                      value={editableFields.goalId}
+                    />
                     <FormInputField
                       label={t("goalTitle")}
                       id="goalTitle"

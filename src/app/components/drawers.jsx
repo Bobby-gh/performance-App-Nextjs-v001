@@ -388,7 +388,7 @@ export function AccessGoal() {
               onChange={(selectedOptions) => {
                 setAssessData((prev) => ({
                   ...prev,
-                  productivity: selectedOptions?.value,
+                  productivity: selectedOptions,
                 }));
               }}
               options={[
@@ -408,7 +408,7 @@ export function AccessGoal() {
               onChange={(selectedOptions) => {
                 setAssessData((prev) => ({
                   ...prev,
-                  communication: selectedOptions?.value,
+                  communication: selectedOptions,
                 }));
               }}
               options={[
@@ -428,7 +428,7 @@ export function AccessGoal() {
               onChange={(selectedOptions) => {
                 setAssessData((prev) => ({
                   ...prev,
-                  proceduralKnowledge: selectedOptions?.value,
+                  proceduralKnowledge: selectedOptions,
                 }));
               }}
               options={[
@@ -448,7 +448,7 @@ export function AccessGoal() {
               onChange={(selectedOptions) => {
                 setAssessData((prev) => ({
                   ...prev,
-                  reliability: selectedOptions?.value,
+                  reliability: selectedOptions,
                 }));
               }}
               options={[
@@ -468,7 +468,7 @@ export function AccessGoal() {
               onChange={(selectedOptions) => {
                 setAssessData((prev) => ({
                   ...prev,
-                  teamWork: selectedOptions?.value,
+                  teamWork: selectedOptions,
                 }));
               }}
               options={[
@@ -488,7 +488,7 @@ export function AccessGoal() {
               onChange={(selectedOptions) => {
                 setAssessData((prev) => ({
                   ...prev,
-                  creativity: selectedOptions?.value,
+                  creativity: selectedOptions,
                 }));
               }}
               options={[
@@ -508,7 +508,7 @@ export function AccessGoal() {
               onChange={(selectedOptions) => {
                 setAssessData((prev) => ({
                   ...prev,
-                  rating: selectedOptions?.value,
+                  rating: selectedOptions,
                 }));
               }}
               options={[
