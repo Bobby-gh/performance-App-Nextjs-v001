@@ -515,7 +515,7 @@ export function GoalDetails() {
           required
         />
       </div>
-      <div className="mb-4 mt-12">
+      <div className="mb-12">
         <FormInputField
           label="Comment"
           id="comment"
