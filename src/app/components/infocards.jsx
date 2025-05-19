@@ -511,7 +511,7 @@ export function GoalDetails() {
         <FormInputField
           id="progress-input"
           value={progress}
-          onChange={(e) => setProgress(Number(e.target.value))}
+          onChange={(e) => setProgress(e.target.value)}
           required
         />
       </div>

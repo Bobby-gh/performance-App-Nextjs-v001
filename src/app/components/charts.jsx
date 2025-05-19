@@ -522,9 +522,7 @@ export function FinancialTrendsReport() {
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">
-          {t("financialTrends")}
-        </h3>
+        <h3 className="text-lg font-bold text-black">{t("financialTrends")}</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -574,65 +572,63 @@ export function InnovationTrendsReport() {
 export function ComparativeTrendsReport() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
+  console.log({ trends: trends });
 
-  // Transform data to Recharts format
-  const transformedTrends = trends ? Object.entries(trends).flatMap(([category, data]) => 
-    data.map(item => ({
-      month: item.month,
-      [category]: item.average_performance,
-      average_performance: item.average_performance
-    }))
-  ) : [];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
-  // Get unique categories for lines
-  const categories = trends ? Object.keys(trends) : [];
-  const colors = {
-    'financial': '#8884d8',
-    'innovation': '#82ca9d',
-    'customer centred': '#ffc658',
-    'human relationship': '#ff8042'
-  };
+  const transformedTrends = months.map((month) => {
+    const row = { month };
+
+    if (trends) {
+      for (const category in trends) {
+        const found = trends[category].find((item) => item.month === month);
+        row[category] = found ? found.average_performance : 0;
+      }
+    }
+
+    return row;
+  });
 
   return (
-    <div className="p-7 bg-white rounded-lg">
+    <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">{t('innovational_trends')}</h3>
+        <h3 className="text-lg font-bold text-black">Innovational Trends</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
       </div>
-      
-      {!trends || transformedTrends.length === 0 ? (
-        <div className="flex items-center justify-center h-64">
-          <p>{t('no_data_available')}</p>
-        </div>
-      ) : (
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart 
-            data={transformedTrends}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis domain={[0, 100]} />
-            <Tooltip 
-              formatter={(value, name) => [`${value}%`, t(name)]}
-              labelFormatter={(month) => t(month)}
+      <ResponsiveContainer width="100%" height={250}>
+        <LineChart data={transformedTrends}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis domain={[0, 100]} />
+          <Tooltip />
+          <Legend />
+          {Object.keys(trends || {}).map((category) => (
+            <Line
+              key={category}
+              type="monotone"
+              dataKey={category}
+              stroke={colors[category] || "#8884d8"}
+              name={t(category)}
+              activeDot={{ r: 6 }}
             />
-            <Legend formatter={(value) => t(value)} />
-            {categories.map(category => (
-              <Line
-                key={category}
-                type="monotone"
-                dataKey={category}
-                stroke={colors[category] || '#8884d8'}
-                activeDot={{ r: 6 }}
-                name={category}
-              />
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
-      )}
+          ))}
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }
