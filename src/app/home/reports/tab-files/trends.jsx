@@ -5,9 +5,9 @@ import { BadgesReport, ComparativeTrendsReport, FinancialTrendsReport, Innovatio
 export default function Trends() {
   return (
     <div className="mt-8 mx-8 space-y-8">
+      <ComparativeTrendsReport/>
       <FinancialTrendsReport/>
       <InnovationTrendsReport/>
-      <ComparativeTrendsReport/>
     </div>
   );
 }
