@@ -415,13 +415,11 @@ export function GoalDetails() {
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
+  const [comment, setComment] = useState("")
   const [isLoading, setLoading] = useState(false);
   const { triggerComponent } = useContext(Modaltrigger);
 
-  const handleInputChange = (event) => {
-    const value = Math.min(100, Math.max(0, Number(event.target.value)));
-    setProgress(value);
-  };
+
 
   const handleUpdate = async (event) => {
     event.preventDefault(); // Prevent default form submission
@@ -432,6 +430,7 @@ export function GoalDetails() {
         JSON.stringify({
           goalId: goal.id,
           progressIncrement: progress,
+          comment,
         }),
         {
           headers: {
@@ -510,10 +509,18 @@ export function GoalDetails() {
         <FormInputField
           id="progress-input"
           value={progress}
-          onChange={handleInputChange}
+          onChange={(e) => setProgress(Number(e.target.value))}
           required
         />
       </div>
+      <FormInputField
+          id="comment"
+          label="Comment"
+          value={comment}
+          placeholder="Enter text input"
+          onChange={(e) => setComment(e.target.value)}
+          required
+        />
 
       <button
         className="w-full p-2 bg-blue-900 rounded-xl text-white"
