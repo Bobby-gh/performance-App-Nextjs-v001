@@ -502,10 +502,12 @@ export function GoalDetails() {
       </div>
 
       {/* Update Progress */}
-      <div className="flex items-center space-x-4 mt-4 mb-12">
+      <div className="flex items-center space-x-4 mt-4 mb-4">
         <label htmlFor="progress-input" className="text-gray-600 text-sm">
           <strong className="w-1/3 text-black">{t("enterProgress")}:</strong>
         </label>
+      </div>
+      <div className="mb-12 mt-4">
         <FormInputField
           id="progress-input"
           value={progress}
@@ -513,14 +515,6 @@ export function GoalDetails() {
           required
         />
       </div>
-      <FormInputField
-          id="comment"
-          label="Comment"
-          value={comment}
-          placeholder="Enter text input"
-          onChange={(e) => setComment(e.target.value)}
-          required
-        />
 
       <button
         className="w-full p-2 bg-blue-900 rounded-xl text-white"

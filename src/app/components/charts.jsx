@@ -516,8 +516,8 @@ export function OrganizationPerformanceReport() {
 export function FinancialTrendsReport() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
-  const trendsData = trends?.financial
-  console.log({trends:trends})
+  const trendsData = trends?.financial;
+  console.log({ trends: trends });
 
   return (
     <div className=" p-7 bg-white rounded-lg">
@@ -545,8 +545,8 @@ export function FinancialTrendsReport() {
 export function InnovationTrendsReport() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
-  const innovationData = trends?.innovation
-  console.log({trends:trends})
+  const innovationData = trends?.innovation;
+  console.log({ trends: trends });
 
   return (
     <div className=" p-7 bg-white rounded-lg">
@@ -567,6 +567,72 @@ export function InnovationTrendsReport() {
           <Bar dataKey="average_performance" fill="#08397e" />
         </BarChart>
       </ResponsiveContainer>
+    </div>
+  );
+}
+
+export function ComparativeTrendsReport() {
+  const { t } = useTranslation();
+  const { trends } = useAchievedGoalsData();
+
+  // Transform data to Recharts format
+  const transformedTrends = trends ? Object.entries(trends).flatMap(([category, data]) => 
+    data.map(item => ({
+      month: item.month,
+      [category]: item.average_performance,
+      average_performance: item.average_performance
+    }))
+  ) : [];
+
+  // Get unique categories for lines
+  const categories = trends ? Object.keys(trends) : [];
+  const colors = {
+    'financial': '#8884d8',
+    'innovation': '#82ca9d',
+    'customer centred': '#ffc658',
+    'human relationship': '#ff8042'
+  };
+
+  return (
+    <div className="p-7 bg-white rounded-lg">
+      <div className="flex justify-between">
+        <h3 className="text-lg font-bold text-black">{t('innovational_trends')}</h3>
+        <span className="flex items-center">
+          <DataDateAccess />
+        </span>
+      </div>
+      
+      {!trends || transformedTrends.length === 0 ? (
+        <div className="flex items-center justify-center h-64">
+          <p>{t('no_data_available')}</p>
+        </div>
+      ) : (
+        <ResponsiveContainer width="100%" height={250}>
+          <LineChart 
+            data={transformedTrends}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis domain={[0, 100]} />
+            <Tooltip 
+              formatter={(value, name) => [`${value}%`, t(name)]}
+              labelFormatter={(month) => t(month)}
+            />
+            <Legend formatter={(value) => t(value)} />
+            {categories.map(category => (
+              <Line
+                key={category}
+                type="monotone"
+                dataKey={category}
+                stroke={colors[category] || '#8884d8'}
+                activeDot={{ r: 6 }}
+                name={category}
+              />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 }
