@@ -24,5 +24,9 @@ export const Tabs = () => {
       key: "badges",
       title: t("badges"),
     },
+    {
+      key: "trends",
+      title: "Bussiness Trends",
+    },
   ];
 };

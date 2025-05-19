@@ -19,7 +19,7 @@ import {
   MY_GOALS_URL,
   GOAL_CATEGORY_COUNT,
   GOAL_BADGES,
-  DELETE_GOALS,
+  GET_CATEGORY_ACHIEVED,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -54,23 +54,23 @@ export function useMyGoalRouteData() {
   const { auth } = useContext(AuthContext);
   const [mygoals, setMygoal] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(MY_GOALS_URL, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-        console.log(response.data);
-        setMygoal(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(MY_GOALS_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+      console.log(response.data);
+      setMygoal(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [auth]);
 
@@ -80,9 +80,9 @@ export function useMyGoalRouteData() {
   }));
 
   console.log({ "personal goals": mygoal });
-  return { mygoal };
-}
 
+  return { mygoal, fetchData };
+}
 export function useMyGoalBadgesData() {
   const { auth } = useContext(AuthContext);
   const [badges, setBadges] = useState([]);
@@ -110,6 +110,34 @@ export function useMyGoalBadgesData() {
 
   console.log({ "badges goals": badges });
   return { badges };
+}
+
+export function useAchievedGoalsData() {
+  const { auth } = useContext(AuthContext);
+  const [trends, setTrends] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(GET_CATEGORY_ACHIEVED, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          withCredentials: true,
+        });
+        setTrends(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [auth]);
+
+
+
+  return { trends };
 }
 
 export function useUnassessedGoalRouteData() {
@@ -485,30 +513,61 @@ export function useCreateDepartment() {
 
 /****************Delete Routes*************** */
 
-export function useGoalDelete() {
+
+export function useDelete() {
   const { auth } = useContext(AuthContext);
-
-  const deleteGoals = async (id) => {
-
-    try {
-      const response = await axios.post(
-        DELETE_GOALS,
-        JSON.stringify({ id}),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
-          },
-          withCredentials: true,
-        }
-      );
-
-      return response; 
-    } catch (error) {
-      console.error("Error deleting goal:", error);
-      throw error; 
-    }
+  const routeToUrl = {
+    goal: GOALS_URL,
+    accessGoal: GOAL_ASSESSMENT_URL, 
+    department: DEPARTMENTS_URL, 
+    user: EMPLOYEES_URL,
   };
 
-  return { deleteGoals }; 
+  const deleteFunction = async (id, routeName) => {
+    const endpoint = routeToUrl[routeName];
+    if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
+
+    const response = await axios.delete(`${endpoint}/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + auth.token,
+      },
+      withCredentials: true,
+    });
+
+    return response;
+  };
+
+  return { deleteFunction };
+}
+
+
+/****************Patch Routes*************** */
+
+export function useEdit() {
+  const { auth } = useContext(AuthContext);
+
+  const routeToUrl = {
+    goal: GOALS_URL,
+    accessGoal: GOAL_ASSESSMENT_URL, 
+    user: EMPLOYEES_URL,
+  };
+
+  const editFunction = async (updateData, id, routeName) => {
+    const endpoint = routeToUrl[routeName];
+
+    if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
+
+    const response = await axios.put(`${endpoint}/${id}`, JSON.stringify({ updateData }), {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth.token}`,
+      },
+      withCredentials: true,
+    });
+
+    return response;
+  };
+
+  return { editFunction };
 }

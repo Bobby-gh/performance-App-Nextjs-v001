@@ -8,6 +8,7 @@ import GoalAchievemnetReport from './tab-files/goalAchievment';
 import Badges from './tab-files/badges';
 import { LoadingPopup } from '@/app/api/sessions';
 import { useTranslation } from 'react-i18next';
+import Trends from './tab-files/trends';
 
 
 export default function ReportingData() {
@@ -32,6 +33,8 @@ export default function ReportingData() {
         return <GoalAchievemnetReport />;
       case "badges":
         return <Badges />;
+      case "trends":
+        return <Trends/>;
       default:
         return <BalanceScoreCard />;
     }

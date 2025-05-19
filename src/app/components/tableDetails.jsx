@@ -11,18 +11,29 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useDepartmentRouteData } from "../api/databook/route-data";
+import { useDepartmentRouteData, useEdit } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
-import { ModalModification } from "./widgets";
-import { FiEdit } from "react-icons/fi";
-import { IoCalendarClearOutline, IoClose } from "react-icons/io5";
+import {
+  CustomButton,
+  CustomSelect,
+  FormInputField,
+  ModalFormSelect,
+  ModalModification,
+} from "./widgets";
+import { IoCalendarClearOutline, IoClose, IoPerson } from "react-icons/io5";
+import Image from "next/image";
+import { MdOutlineMarkEmailRead } from "react-icons/md";
+import avatar from "../images/avatar.jpg";
+import { showToast } from "./notification";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
+  const { editFunction } = useEdit();
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
-  const [assignGoal, setAssignedGoal] = useState({
+  const [isLoading, setIsLoading] = useState(false);
+  const [assignGoal] = useState({
     goalId: data._id,
     goalTitle: data.goalTitle,
     goalDescription: data.goalDescription,
@@ -37,10 +48,36 @@ export function AssignGoal({ data, open, onClose }) {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
   };
 
-  console.log({ editableFields: editableFields });
+  const updateData = {
+    goalTitle: editableFields.goalTitle,
+  };
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    console.log("Update Data:", updateData);
+    try {
+      const name = "goal";
+      const id = editableFields.goalId;
+      const response = await editFunction(updateData, id, name);
+
+      if (response?.status === 200) {
+        showToast("Edit Saved successful:", "success");
+        triggerComponent();
+        onClose();
+      } else {
+        console.error("Edit Save failed:", response);
+        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+      }
+    } catch (error) {
+      console.error("Edit error:", error);
+    } finally {
+      setIsLoading(false);
+      setEditMode(false);
+    }
   };
+
   return (
     <div>
       <Modal
@@ -114,54 +151,49 @@ export function AssignGoal({ data, open, onClose }) {
                     <FormInputField
                       label={t("Goal ID")}
                       id="goalId"
-                      value={assignGoal.goalId}
+                      value={editableFields.goalId}
                     />
-                    <TextField
+                    <FormInputField
                       label={t("goalTitle")}
-                      value={assignGoal.goalTitle}
-                      fullWidth
+                      id="goalTitle"
+                      value={editableFields.goalTitle}
                     />
-                    <TextField
-                      label="Status"
-                      value={assignGoal.goalStatus}
-                      multiline
-                      required
-                      fullWidth
+                    <FormInputField
+                      label={t("status")}
+                      id="goalStatus"
+                      value={editableFields.goalStatus}
                     />
-                    <TextField
-                      label="Description"
-                      value={assignGoal.goalDescription}
-                      multiline
-                      required
-                      fullWidth
+                    <FormInputField
+                      label={t("description")}
+                      id="goalDescription"
+                      value={editableFields.goalDescription}
                     />
                     <ModalFormSelect
                       id="assignedTO"
                       label="Assigned To"
-                      value={assignGoal.assignedTo}
+                      value={editableFields.assignedTo}
                       options={departmenttable.map((department) => ({
                         value: department.departmentId,
                         label: department.departmentName,
                       }))}
-                      onChange={setResponseActivityStatus}
                       required
                     />
-                    <TextField
+                    <FormInputField
+                      label={t("date")}
+                      id="goalDescription"
                       type="date"
-                      label="Created At"
-                      value={formattedDate(assignGoal.deadline)}
-                      fullWidth
+                      value={formattedDate(editableFields.deadline)}
                     />
                   </div>
                   {/* Save Button */}
                   <div className="flex justify-end mt-4">
-                    <button
-                      type="submit"
+                    <CustomButton
+                      label="Submit"
                       onClick={handleEditSubmit}
-                      className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300">
-                      <FaSave className="text-lg" />
-                      Save
-                    </button>
+                      type="submit"
+                      className="custom-class"
+                      loading={isLoading}
+                    />
                   </div>
                 </FormControl>
               </div>
@@ -178,18 +210,18 @@ export function AssessGoal({ data, open, onClose }) {
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
   const [assessGoal, setAssessGoal] = useState({
-    goalId: data?.data._id,
-    goalTitle: data?.data.goalTitle,
-    goalDescription: data?.data.goalDescription,
-    goalStatus: data?.data.status,
-    assignedTo: data?.data.taskAssignedTo,
-    deadline: data?.data.goalDeadline,
-    goalType: data?.data.goalType,
-    performancePercent: data?.data.performancePercent,
-    reviewed: data?.data.reviewed,
-    assignedBy: data?.data.taskAssignedBy,
+    goalId: data?._id,
+    goalTitle: data?.goalTitle,
+    goalDescription: data?.goalDescription,
+    goalStatus: data?.status,
+    assignedTo: data?.taskAssignedTo,
+    deadline: data?.goalDeadline,
+    goalType: data?.goalType,
+    performancePercent: data?.performancePercent,
+    reviewed: data?.reviewed,
+    assignedBy: data?.taskAssignedBy,
   });
-
+  console.log({ "data coming from table": data });
   const [editableFields, setEditableFields] = useState({ ...assessGoal });
   const [editMode, setEditMode] = useState(false);
 
@@ -197,9 +229,34 @@ export function AssessGoal({ data, open, onClose }) {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
   };
 
-  console.log({ editableFields: editableFields });
+  const updateData = {
+    goalTitle: editableFields.goalTitle,
+  };
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    console.log("Update Data:", updateData);
+    try {
+      const name = "accessGoal";
+      const id = editableFields.goalId;
+      const response = await editFunction(updateData, id, name);
+
+      if (response?.status === 200) {
+        showToast("Edit Saved successful:", "success");
+        triggerComponent();
+        onClose();
+      } else {
+        console.error("Edit Save failed:", response);
+        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+      }
+    } catch (error) {
+      console.error("Edit error:", error);
+    } finally {
+      setIsLoading(false);
+      setEditMode(false);
+    }
   };
 
   return (
@@ -267,121 +324,246 @@ export function AssessGoal({ data, open, onClose }) {
                 <FormControl fullWidth>
                   {/* Form Fields */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-                    <TextField
-                      label="Goal ID"
-                      value={assessGoal.goalId}
-                      disabled
-                      fullWidth
+                    <FormInputField
+                      label={t("goalId")}
+                      id="goalId"
+                      value={editableFields.goalId}
                     />
-                    <TextField
+                    <FormInputField
                       label={t("goalTitle")}
-                      value={assessGoal.goalTitle}
-                      onChange={(e) =>
-                        handleChange("goalTitle", e.target.value)
-                      }
-                      disabled={!editMode}
-                      fullWidth
+                      id="goalTitle"
+                      value={editableFields.goalTitle}
                     />
-                    <TextField
-                      label="Status"
-                      value={assessGoal.goalStatus}
-                      onChange={(e) =>
-                        handleChange("goalStatus", e.target.value)
-                      }
-                      multiline
-                      required
-                      disabled={!editMode}
-                      fullWidth
+                    <FormInputField
+                      label={t("status")}
+                      id="goalStatus"
+                      value={editableFields.goalStatus}
                     />
-                    <TextField
-                      label="Description"
-                      value={assessGoal.goalDescription}
-                      onChange={(e) =>
-                        handleChange("goalDescription", e.target.value)
-                      }
-                      multiline
-                      required
-                      disabled={!editMode}
-                      fullWidth
+                    <FormInputField
+                      label={t("description")}
+                      id="goalDescription"
+                      value={editableFields.goalDescription}
                     />
-                    <Select
+                    <ModalFormSelect
+                      id="assignedTO"
                       label="Assigned To"
-                      value={assessGoal.assignedTo}
-                      onChange={(e) =>
-                        handleChange("assignedTo", e.target.value)
-                      }
-                      disabled={!editMode}
+                      value={editableFields.assignedTo}
+                      options={departmenttable.map((department) => ({
+                        value: department.departmentId,
+                        label: department.departmentName,
+                      }))}
                       required
-                      fullWidth
-                      displayEmpty>
-                      {departmenttable.map((department) => (
-                        <MenuItem
-                          key={department.departmentId}
-                          value={department.departmentId}>
-                          {department.departmentName}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <TextField
+                    />
+                    <FormInputField
+                      label={t("deadline")}
                       type="date"
-                      label="Created At"
-                      value={formattedDate(assessGoal.deadline)}
-                      onChange={(e) => handleChange("deadline", e.target.value)}
-                      disabled={!editMode}
-                      fullWidth
+                      id="deadline"
+                      value={formattedDate(editableFields.deadline)}
                     />
-                    <TextField
+                    <FormInputField
                       label="Goal Type"
-                      value={assessGoal.goalType}
-                      onChange={(e) => handleChange("goalType", e.target.value)}
-                      disabled={!editMode}
-                      fullWidth
+                      id="goalType"
+                      value={editableFields.goalType}
                     />
-                    <TextField
+                    <FormInputField
                       label="Performance Percent"
-                      type="number"
-                      value={assessGoal.performancePercent}
-                      onChange={(e) =>
-                        handleChange("performancePercent", e.target.value)
-                      }
-                      disabled={!editMode}
-                      fullWidth
+                      id="performancePercent"
+                      value={editableFields.performancePercent}
                     />
-                    <Select
+                    <ModalFormSelect
+                      id="Reviewed"
                       label="Reviewed"
-                      value={assessGoal.reviewed}
-                      onChange={(e) => handleChange("reviewed", e.target.value)}
+                      value={editableFields.reviewed}
+                      options={[
+                        { value: true, label: "Yes" },
+                        { value: false, label: "No" },
+                      ]}
                       required
-                      disabled={!editMode}
-                      fullWidth
-                      displayEmpty>
-                      <MenuItem value={true}>Yes</MenuItem>
-                      <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    <TextField
+                    />
+                    <FormInputField
                       label="Assigned By"
-                      value={assessGoal.assignedBy}
-                      disabled
-                      fullWidth
+                      id="assignedBy"
+                      value={editableFields.assignedBy}
                     />
                   </div>
 
                   {/* Save Button */}
                   {editMode && (
                     <div className="flex justify-end mt-4">
-                      <button
-                        type="submit"
+                      <CustomButton
+                        label="Save"
                         onClick={handleEditSubmit}
-                        className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300">
-                        <FaSave className="text-lg" />
-                        Save
-                      </button>
+                        type="submit"
+                        className="custom-class"
+                      />
                     </div>
                   )}
                 </FormControl>
               </div>
             </div>
           </div>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
+
+export function EmployeeDetails({ data, open, onClose }) {
+  const { t } = useTranslation();
+  const { departmenttable } = useDepartmentRouteData();
+  const formattedDate = (dateString) =>
+    new Date(dateString).toISOString().split("T")[0];
+  const [assessGoal, setAssessGoal] = useState({
+    goalId: data?._id,
+    goalTitle: data?.goalTitle,
+    goalDescription: data?.goalDescription,
+    goalStatus: data?.status,
+    assignedTo: data?.taskAssignedTo,
+    deadline: data?.goalDeadline,
+    goalType: data?.goalType,
+    performancePercent: data?.performancePercent,
+    reviewed: data?.reviewed,
+    assignedBy: data?.taskAssignedBy,
+  });
+  console.log({ "data coming from table": data });
+  const [editableFields, setEditableFields] = useState({ ...assessGoal });
+  const [editMode, setEditMode] = useState(false);
+
+  const handleChange = (key, value) => {
+    setEditableFields((prev) => ({ ...prev, [key]: value }));
+  };
+
+  console.log({ editableFields: editableFields });
+  
+   const updateData = {
+    goalTitle: editableFields.goalTitle,
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    console.log("Update Data:", updateData);
+    try {
+      const name = "accessGoal";
+      const id = editableFields.goalId;
+      const response = await editFunction(updateData, id, name);
+
+      if (response?.status === 200) {
+        showToast("Edit Saved successful:", "success");
+        triggerComponent();
+        onClose();
+      } else {
+        console.error("Edit Save failed:", response);
+        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+      }
+    } catch (error) {
+      console.error("Edit error:", error);
+    } finally {
+      setIsLoading(false);
+      setEditMode(false);
+    }
+  };
+
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={onClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={ModalModification}>
+          {/* Modal Header */}
+          <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+            <button onClick={onClose}>
+              <IoClose size={24} />
+            </button>
+          </div>
+
+          {/* Modal Body */}
+
+          <main className="flex text-black card bg-white p-4 justify-center rounded-lg">
+            <div className="flex-[1] border-r-2 border-r-[#cbd5e1] p-6 flex flex-col space-y-6">
+              <div className="flex flex-col items-center">
+                <Image
+                  src={avatar}
+                  alt="Paris"
+                  className="rounded-full border-2 mb-4"
+                  width={156}
+                  height={156}
+                />
+                <h6 className="mb-12 text-sm">Upload Image</h6>
+              </div>
+              <div className="mb-4 flex flex-row items-center">
+                <span className="mr-4">
+                  <IoPerson color="blue" />
+                </span>
+                <span>Robert Knaihv</span>
+              </div>
+              <div className="mb-2 flex flex-row items-center">
+                <span className="mr-4">
+                  <MdOutlineMarkEmailRead color="blue" />
+                </span>
+                <span>knaihv@ymail.com</span>
+              </div>
+            </div>
+            <div className="flex-[2]">
+              <div className="grid grid-cols-2 gap-8 p-4">
+                <FormInputField
+                  label="Name"
+                  type="text"
+                  id="name"
+                  // value={formData.name}
+                  // onChange={handleInputChange}
+                  placeholder="Full name"
+                  required
+                  // error={error && !email ? "Email is required" : ""}
+                />
+                <FormInputField
+                  label="Email"
+                  type="email"
+                  id="email"
+                  // value={formData.name}
+                  // onChange={handleInputChange}
+                  placeholder="Enter your email"
+                  required
+                  // error={error && !email ? "Email is required" : ""}
+                />
+                <FormInputField
+                  label="Department"
+                  id="department"
+                  // value={formData.name}
+                  // onChange={handleInputChange}
+                  placeholder="Department"
+                  required
+                  // error={error && !email ? "Email is required" : ""}
+                />
+                <CustomSelect
+                  id="role"
+                  label="ROle"
+                  // value={role}
+                  // onChange={setRole}
+                  options={[
+                    { value: "General Manager", label: "generalManager" },
+                    { value: "Manager", label: "manager" },
+                    { value: "Junior Staff", label: "staff" },
+                  ]}
+                  required
+                  searchable={true}
+                  group={false}
+                />
+              </div>
+              <div className="px-16 mt-8">
+                <CustomButton
+                  label="Submit"
+                  // onClick={handleSubmit}
+                  type="submit"
+                  className="custom-class"
+                  // loading={isSubmitting}
+                />
+              </div>
+            </div>
+          </main>
         </Box>
       </Modal>
     </div>
