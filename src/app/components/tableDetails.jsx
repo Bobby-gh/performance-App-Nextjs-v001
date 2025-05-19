@@ -333,11 +333,6 @@ export function AssessGoal({ data, open, onClose }) {
                   {/* Form Fields */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
                     <FormInputField
-                      label={t("goalId")}
-                      id="goalId"
-                      value={editableFields.goalId}
-                    />
-                    <FormInputField
                       label={t("goalTitle")}
                       id="goalTitle"
                       value={editableFields.goalTitle}
