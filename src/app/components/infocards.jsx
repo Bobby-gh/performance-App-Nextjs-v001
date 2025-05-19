@@ -588,7 +588,7 @@ export function Notification({ message, typeHeader }) {
 
 export function GoalsHeader() {
   const { t } = useTranslation();
-  return <div className="text-xl font-bold text-blue-500">{t("goals")}</div>;
+  return <div className=" text-blue-500">{t("goals")}</div>;
 }
 export function OrganizationalEmployees() {
   const { t } = useTranslation();
