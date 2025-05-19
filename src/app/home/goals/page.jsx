@@ -39,13 +39,13 @@ export default function MyGoals() {
     <main className="flex space-x-4">
       {/* Left Panel: Show Goal Details only when a goal is selected */}
       {selectedGoal && (
-        <div className="flex-[1] overflow-y-auto max-h-screen">
+        <div className="flex-[1] overflow-y-auto max-h-[87vh]">
           <GoalDetails />
         </div>
       )}
 
       {/* Right Panel: Goals List */}
-      <div className="flex-[1.7] overflow-y-auto max-h-[90vh] p-2">
+      <div className="flex-[1.7] overflow-y-auto max-h-[87vh] p-2">
         {mygoal.length > 0 ? (
           <div
             className={`grid gap-4 cursor-pointer ${
