@@ -118,7 +118,7 @@ export function AssignGoal({ data, open, onClose }) {
                   <div className="flex items-center space-x-2">
                     <IoCalendarClearOutline color="red" />
                     <span className="text-red-500">
-                      Due Date:{" "}
+                      {t("dueDate")}:{" "}
                       {editMode ? (
                         <input
                           type="date"
@@ -170,7 +170,7 @@ export function AssignGoal({ data, open, onClose }) {
                     />
                     <ModalFormSelect
                       id="assignedTO"
-                      label="Assigned To"
+                      label={t("assignedTo")}
                       value={editableFields.assignedTo}
                       options={departmenttable.map((department) => ({
                         value: department.departmentId,
@@ -296,7 +296,7 @@ export function AssessGoal({ data, open, onClose }) {
                   <div className="flex items-center space-x-2">
                     <IoCalendarClearOutline color="red" />
                     <span className="text-red-500">
-                      Due Date:{" "}
+                      {t("dueDate")}:{" "}
                       {editMode ? (
                         <input
                           type="date"
@@ -346,7 +346,7 @@ export function AssessGoal({ data, open, onClose }) {
                     />
                     <ModalFormSelect
                       id="assignedTO"
-                      label="Assigned To"
+                      label={t("assignedTo")}
                       value={editableFields.assignedTo}
                       options={departmenttable.map((department) => ({
                         value: department.departmentId,
@@ -361,18 +361,18 @@ export function AssessGoal({ data, open, onClose }) {
                       value={formattedDate(editableFields.deadline)}
                     />
                     <FormInputField
-                      label="Goal Type"
+                      label={t("goalType")}
                       id="goalType"
                       value={editableFields.goalType}
                     />
                     <FormInputField
-                      label="Performance Percent"
+                      label={t("performancePercent")}
                       id="performancePercent"
                       value={editableFields.performancePercent}
                     />
                     <ModalFormSelect
                       id="Reviewed"
-                      label="Reviewed"
+                      label={t("reviewed")}
                       value={editableFields.reviewed}
                       options={[
                         { value: true, label: "Yes" },
@@ -381,7 +381,7 @@ export function AssessGoal({ data, open, onClose }) {
                       required
                     />
                     <FormInputField
-                      label="Assigned By"
+                      label={t("assignedBy")}
                       id="assignedBy"
                       value={editableFields.assignedBy}
                     />
@@ -492,7 +492,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                   width={156}
                   height={156}
                 />
-                <h6 className="mb-12 text-sm">Upload Image</h6>
+                <h6 className="mb-12 text-sm">{t("uploadImage")}</h6>
               </div>
               <div className="mb-4 flex flex-row items-center">
                 <span className="mr-4">
@@ -510,7 +510,7 @@ export function EmployeeDetails({ data, open, onClose }) {
             <div className="flex-[2]">
               <div className="grid grid-cols-2 gap-8 p-4">
                 <FormInputField
-                  label="Name"
+                  label={t("fullname")}
                   type="text"
                   id="name"
                   // value={formData.name}
@@ -520,7 +520,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                   // error={error && !email ? "Email is required" : ""}
                 />
                 <FormInputField
-                  label="Email"
+                  label={t("email")}
                   type="email"
                   id="email"
                   // value={formData.name}
@@ -530,7 +530,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                   // error={error && !email ? "Email is required" : ""}
                 />
                 <FormInputField
-                  label="Department"
+                  label={t("department")}
                   id="department"
                   // value={formData.name}
                   // onChange={handleInputChange}
@@ -540,7 +540,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                 />
                 <CustomSelect
                   id="role"
-                  label="ROle"
+                  label={t("role")}
                   // value={role}
                   // onChange={setRole}
                   options={[
@@ -555,7 +555,7 @@ export function EmployeeDetails({ data, open, onClose }) {
               </div>
               <div className="px-16 mt-8">
                 <CustomButton
-                  label="Submit"
+                  label={t("submit")}
                   // onClick={handleSubmit}
                   type="submit"
                   className="custom-class"
