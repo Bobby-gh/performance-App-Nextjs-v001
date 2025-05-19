@@ -516,15 +516,13 @@ export function OrganizationPerformanceReport() {
 export function FinancialTrendsReport() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
-  const trendsData = trends?.financial
-  console.log({trends:trends})
+  const trendsData = trends?.financial;
+  console.log({ trends: trends });
 
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">
-          Financial Trends
-        </h3>
+        <h3 className="text-lg font-bold text-black">Financial Trends</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -545,15 +543,13 @@ export function FinancialTrendsReport() {
 export function InnovationTrendsReport() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
-  const innovationData = trends?.innovation
-  console.log({trends:trends})
+  const innovationData = trends?.innovation;
+  console.log({ trends: trends });
 
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">
-          Innovational Trends
-        </h3>
+        <h3 className="text-lg font-bold text-black">Innovational Trends</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
@@ -566,6 +562,34 @@ export function InnovationTrendsReport() {
           <Tooltip />
           <Bar dataKey="average_performance" fill="#08397e" />
         </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+export function ComparativeTrendsReport() {
+  const { t } = useTranslation();
+  const { trends } = useAchievedGoalsData();
+  console.log({ trends: trends });
+
+  return (
+    <div className=" p-7 bg-white rounded-lg">
+      <div className="flex justify-between">
+        <h3 className="text-lg font-bold text-black">Innovational Trends</h3>
+        <span className="flex items-center">
+          <DataDateAccess />
+        </span>
+      </div>
+      <ResponsiveContainer height={250}>
+        <LineChart data={trends}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis  dataKey= "average_performance"/>
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="financial" stroke="#8884d8" />
+          <Line type="monotone" dataKey="innovation" stroke="#82ca9d" />
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );
