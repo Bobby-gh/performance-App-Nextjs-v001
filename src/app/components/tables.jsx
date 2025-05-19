@@ -168,6 +168,21 @@ export function AccessGoalTable() {
     setAssessGoalInfo("");
   };
 
+  const handleCloseDelete = () => {
+    setDeleteRow(false);
+    setDeleteItem("");
+  };
+
+  const handleEdit = (row) => {
+    setAssessGoalInfo(row.original);
+    setOpen(true);
+  };
+
+  const handleDelete = (row) => {
+    setDeleteItem(row.original._id);
+    setDeleteRow(true);
+  };
+
   const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
     taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
@@ -179,31 +194,22 @@ export function AccessGoalTable() {
     comment: goal.comment || "",
   }));
 
-  console.log({ goalAssessment: goalAssessment });
   const data = useMemo(
     () => (goalAssessment ? goalAssessmentData : []),
     [goalAssessment]
   );
+
   const columns = useMemo(() => accessinggoalcolumn, []);
 
-  const handleEdit = (row) => {
-    console.log("Edit", row);
-    setAssessGoalInfo(row.original);
-    setOpen(true);
-  };
-
-  const handleCloseDelete = (row) => {
-    setDeleteRow(false);
-    setDeleteItem("");
-  };
-
-  const handleDelete = (row) => {
-    console.log("Notifications", row);
-    setDeleteItem(row.original._id);
-    setDeleteRow(true);
-  };
-
   const table = useMaterialReactTable({
+    columns,
+    data,
+    enableColumnOrdering: true,
+    enableRowSelection: true,
+    enablePagination: true,
+    enableRowActions: true,
+    positionActionsColumn: "last",
+
     muiTableHeadCellProps: {
       sx: {
         fontWeight: "normal",
@@ -215,7 +221,7 @@ export function AccessGoalTable() {
     muiTablePaperProps: {
       elevation: 0,
       sx: {
-        borderRadius: "10",
+        borderRadius: "10px",
       },
     },
     muiTableBodyProps: {
@@ -225,20 +231,48 @@ export function AccessGoalTable() {
         },
       },
     },
-    columns,
-    data,
-    enableColumnOrdering: true,
-    enableRowSelection: true,
-    enablePagination: true,
-    enableRowActions: true,
-    positionActionsColumn: "last",
+
+    muiTableBodyCellProps: ({ cell }) => {
+      if (cell.column.id === "performancePercent") {
+        const value = cell.getValue();
+        let bgColor = "";
+        let color = "#fff";
+
+        if (value === "pending ...") {
+          bgColor = "#808080";
+        } else if (typeof value === "number") {
+          if (value >= 80) {
+            bgColor = "#4A7C0B"; // green (low urgency)
+          } else if (value >= 50) {
+            bgColor = "#0B37D6"; // blue (medium)
+          } else if (value >= 20) {
+            bgColor = "#F84626"; // red (very high urgency)
+          } else {
+            bgColor = "#ecbe2f"; // yellow (high urgency)
+            color = "#000"; // improve contrast
+          }
+        }
+
+        return {
+          sx: {
+            backgroundColor: bgColor,
+            color: color,
+            fontWeight: "bold",
+          },
+        };
+      }
+
+      return {};
+    },
+
     renderRowActionMenuItems: ({ closeMenu, row }) => [
       <MenuItem
         key="edit"
         onClick={() => {
           handleEdit(row);
           closeMenu();
-        }}>
+        }}
+      >
         <ListItemIcon>
           <MdEditNotifications fontSize="small" />
         </ListItemIcon>
@@ -249,7 +283,8 @@ export function AccessGoalTable() {
         onClick={() => {
           handleDelete(row);
           closeMenu();
-        }}>
+        }}
+      >
         <ListItemIcon>
           <MdDelete fontSize="small" />
         </ListItemIcon>
