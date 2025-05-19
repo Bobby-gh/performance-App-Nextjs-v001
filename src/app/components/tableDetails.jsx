@@ -28,7 +28,7 @@ import { showToast } from "./notification";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
-  const {triggerComponent} = useContext(AuthContext)
+  const { triggerComponent } = useContext(AuthContext);
   const { departmenttable } = useDepartmentRouteData();
   const { editFunction } = useEdit();
   const formattedDate = (dateString) =>
@@ -41,7 +41,7 @@ export function AssignGoal({ data, open, onClose }) {
     goalStatus: data.status,
     assignedTo: data.taskAssignedTo,
     deadline: data.goalDeadline,
-    target: data.target
+    target: data.target,
   });
   const [editableFields, setEditableFields] = useState({ ...assignGoal });
   const [editMode, setEditMode] = useState(false);
@@ -56,9 +56,9 @@ export function AssignGoal({ data, open, onClose }) {
     goalStatus: editableFields.status,
     taskAssignedTo: editableFields.assignedTo,
     goalDeadline: editableFields.deadline,
-    target: editableFields.target
+    target: editableFields.target,
   };
-  
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -159,16 +159,19 @@ export function AssignGoal({ data, open, onClose }) {
                       label={t("goalTitle")}
                       id="goalTitle"
                       value={editableFields.goalTitle}
+                      onChange={handleChange}
                     />
                     <FormInputField
                       label={t("status")}
                       id="goalStatus"
                       value={editableFields.goalStatus}
+                      onChange={handleChange}
                     />
                     <FormInputField
                       label={t("description")}
                       id="goalDescription"
                       value={editableFields.goalDescription}
+                      onChange={handleChange}
                     />
                     <ModalFormSelect
                       id="assignedTO"
@@ -178,9 +181,15 @@ export function AssignGoal({ data, open, onClose }) {
                         value: department.departmentId,
                         label: department.departmentName,
                       }))}
+                      onChange={(selectedOptions) => {
+                        setEditableFields((prev) => ({
+                          ...prev,
+                          workQuality: selectedOptions,
+                        }));
+                      }}
                       required
                     />
-                    
+
                     <FormInputField
                       label="target"
                       id="target"
@@ -331,7 +340,7 @@ export function AssessGoal({ data, open, onClose }) {
               <div className="overflow-y-auto max-h-[70vh] p-6">
                 <FormControl fullWidth>
                   {/* Form Fields */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+                  <div className="grid grid-cols-2 gap-6 mb-6">
                     <FormInputField
                       label={t("goalTitle")}
                       id="goalTitle"
@@ -417,8 +426,8 @@ export function EmployeeDetails({ data, open, onClose }) {
   };
 
   console.log({ editableFields: editableFields });
-  
-   const updateData = {
+
+  const updateData = {
     goalTitle: editableFields.goalTitle,
   };
 
