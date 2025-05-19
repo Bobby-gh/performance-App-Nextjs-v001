@@ -26,7 +26,7 @@ export const Tabs = () => {
     },
     {
       key: "trends",
-      title: "Bussiness Trends",
+      title: t("businessTrends"),
     },
   ];
 };

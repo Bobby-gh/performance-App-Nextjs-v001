@@ -30,9 +30,11 @@ import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { Modaltrigger } from "../contex/context-context";
 import { AssessGoal, AssignGoal, EmployeeDetails } from "./tableDetails";
 import { Delete } from "./widgets";
+import { useTranslation } from "react-i18next";
 
 export function GoalTable() {
   const { departmentgoaltable, fetchData } = useGoalRouteData();
+  const { t } = useTranslation();
   const goalsettingcolumn = useGoalSettingColumn();
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   const [open, setOpen] = useState(false);
@@ -117,7 +119,7 @@ export function GoalTable() {
         <ListItemIcon>
           <MdEditNotifications fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Edit</ListItemText>
+        <ListItemText>{t("edit")}</ListItemText>
       </MenuItem>,
       <MenuItem
         key="notifications"
@@ -128,7 +130,7 @@ export function GoalTable() {
         <ListItemIcon>
           <MdDelete fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Delete</ListItemText>
+        <ListItemText>{t("delete")}</ListItemText>
       </MenuItem>,
     ],
   });
@@ -154,6 +156,7 @@ export function GoalTable() {
 
 export function AccessGoalTable() {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   const [assessGoalInfo, setAssessGoalInfo] = useState("");
   const { goalAssessment } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
@@ -239,7 +242,7 @@ export function AccessGoalTable() {
         <ListItemIcon>
           <MdEditNotifications fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Edit</ListItemText>
+        <ListItemText>{t("edit")}</ListItemText>
       </MenuItem>,
       <MenuItem
         key="delete"
@@ -250,7 +253,7 @@ export function AccessGoalTable() {
         <ListItemIcon>
           <MdDelete fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Delete</ListItemText>
+        <ListItemText>{t("delete")}</ListItemText>
       </MenuItem>,
     ],
   });
@@ -276,6 +279,7 @@ export function AccessGoalTable() {
 
 export function DepartmentTable() {
   const { departmenttable } = useDepartmentRouteData();
+  const { t } = useTranslation();
   const departmentcolumn = useDepartmentColumn();
   const [deleteRow, setDeleteRow] = useState(false);
   const [deleteItem, setDeleteItem] = useState("");
@@ -333,7 +337,7 @@ export function DepartmentTable() {
         <ListItemIcon>
           <MdDelete fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Delete</ListItemText>
+        <ListItemText>{t("delete")}</ListItemText>
       </MenuItem>,
     ],
   });
@@ -356,6 +360,7 @@ export function DepartmentTable() {
 
 export function EmployeeTable() {
   const { employeetable } = useEmployeesRouteData();
+  const { t } = useTranslation();
   const usercolumn = useUserColumn();
   const [open, setOpen] = useState(false);
   const [employeeInfo, setEmployeeInfo] = useState("");
@@ -426,7 +431,7 @@ export function EmployeeTable() {
         <ListItemIcon>
           <MdEditNotifications fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Edit</ListItemText>
+        <ListItemText>{t("edit")}</ListItemText>
       </MenuItem>,
       <MenuItem
         key="delete"
@@ -437,7 +442,7 @@ export function EmployeeTable() {
         <ListItemIcon>
           <MdDelete fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Delete</ListItemText>
+        <ListItemText>{t("delete")}</ListItemText>
       </MenuItem>,
     ],
   });
