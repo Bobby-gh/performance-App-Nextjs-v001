@@ -242,21 +242,21 @@ export function AccessGoalTable() {
           bgColor = "#808080";
         } else if (typeof value === "number") {
           if (value >= 80) {
-            bgColor = "#4A7C0B"; // green (low urgency)
+            bgColor = "#4A7C0B"; 
           } else if (value >= 50) {
-            bgColor = "#0B37D6"; // blue (medium)
+            bgColor = "#0B37D6"; 
           } else if (value >= 20) {
-            bgColor = "#F84626"; // red (very high urgency)
+            bgColor = "#F84626";
           } else {
-            bgColor = "#ecbe2f"; // yellow (high urgency)
+            bgColor = "#ecbe2f"; 
             color = "#000"; // improve contrast
           }
         }
 
         return {
           sx: {
-            backgroundColor: bgColor,
-            color: color,
+            backgroundColor: `${bgColor} !important`,
+            color: `${color} !important`, 
             fontWeight: "bold",
           },
         };
