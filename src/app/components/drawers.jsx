@@ -255,6 +255,16 @@ export function AccessGoal() {
     e.preventDefault();
     setLoading(true);
 
+    console.log({goalId: goal,
+          workQuality: assessData.workQuality,
+          productivity: assessData.productivity,
+          communication: assessData.communication,
+          proceduralKnowledge: assessData.proceduralKnowledge,
+          reliability: assessData.reliability,
+          teamwork: assessData.teamWork,
+          creativity: assessData.creativity,
+          rating: assessData.rating,
+          comment: assessData.comment,})
     try {
       await axios.post(
         GOAL_ASSESSMENT_URL,

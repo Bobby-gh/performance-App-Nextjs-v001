@@ -28,6 +28,7 @@ import { showToast } from "./notification";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
+  const {triggerComponent} = useContext(AuthContext)
   const { departmenttable } = useDepartmentRouteData();
   const { editFunction } = useEdit();
   const formattedDate = (dateString) =>
@@ -50,6 +51,10 @@ export function AssignGoal({ data, open, onClose }) {
 
   const updateData = {
     goalTitle: editableFields.goalTitle,
+    goalDescription: data.goalDescription,
+    goalStatus: data.status,
+    assignedTo: data.taskAssignedTo,
+    deadline: data.goalDeadline,
   };
 
   const handleEditSubmit = async (e) => {
