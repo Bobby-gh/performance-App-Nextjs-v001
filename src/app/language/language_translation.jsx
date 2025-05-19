@@ -173,6 +173,7 @@ i18n.use(initReactI18next).init({
         performancePercent: "Performance Percent",
         reviewed: "Reviewed",
         uploadImage: "Upload image",
+        organizationalTrends: "Organizational Trends",
         date: "Date",
 
       },
@@ -341,6 +342,7 @@ i18n.use(initReactI18next).init({
         performancePercent: "Pourcentage de performance",
         reviewed: "Révisé",
         uploadImage: "Télécharger une image",
+        organizationalTrends: "Tendances organisationnelles",
         date: "Date",
       },
     },
