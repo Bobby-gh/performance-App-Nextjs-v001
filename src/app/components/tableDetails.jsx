@@ -333,24 +333,9 @@ export function AssessGoal({ data, open, onClose }) {
                   {/* Form Fields */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
                     <FormInputField
-                      label={t("goalId")}
-                      id="goalId"
-                      value={editableFields.goalId}
-                    />
-                    <FormInputField
                       label={t("goalTitle")}
                       id="goalTitle"
                       value={editableFields.goalTitle}
-                    />
-                    <FormInputField
-                      label={t("status")}
-                      id="goalStatus"
-                      value={editableFields.goalStatus}
-                    />
-                    <FormInputField
-                      label={t("description")}
-                      id="goalDescription"
-                      value={editableFields.goalDescription}
                     />
                     <ModalFormSelect
                       id="assignedTO"
@@ -369,11 +354,6 @@ export function AssessGoal({ data, open, onClose }) {
                       value={formattedDate(editableFields.deadline)}
                     />
                     <FormInputField
-                      label={t("goalType")}
-                      id="goalType"
-                      value={editableFields.goalType}
-                    />
-                    <FormInputField
                       label={t("performancePercent")}
                       id="performancePercent"
                       value={editableFields.performancePercent}
@@ -387,11 +367,6 @@ export function AssessGoal({ data, open, onClose }) {
                         { value: false, label: "No" },
                       ]}
                       required
-                    />
-                    <FormInputField
-                      label={t("assignedBy")}
-                      id="assignedBy"
-                      value={editableFields.assignedBy}
                     />
                   </div>
 
