@@ -608,11 +608,11 @@ export function ComparativeTrendsReport() {
     'customer centred': '#ffc658',
     'human relationship': '#ff8042'
   };
-  
+
   return (
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
-        <h3 className="text-lg font-bold text-black">Innovational Trends</h3>
+        <h3 className="text-lg font-bold text-black">Organizational Trends</h3>
         <span className="flex items-center">
           <DataDateAccess />
         </span>
