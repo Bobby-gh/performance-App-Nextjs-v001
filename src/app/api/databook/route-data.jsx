@@ -558,7 +558,7 @@ export function useEdit() {
 
     if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
 
-    const response = await axios.put(`${endpoint}/${id}`, JSON.stringify({ updateData }), {
+    const response = await axios.patch(`${endpoint}/${id}`, JSON.stringify({ updateData }), {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth.token}`,
