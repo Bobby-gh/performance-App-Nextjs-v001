@@ -523,7 +523,7 @@ export function FinancialTrendsReport() {
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
         <h3 className="text-lg font-bold text-black">
-          Financial Trends
+          {t("financialTrends")}
         </h3>
         <span className="flex items-center">
           <DataDateAccess />
@@ -552,7 +552,7 @@ export function InnovationTrendsReport() {
     <div className=" p-7 bg-white rounded-lg">
       <div className="flex justify-between">
         <h3 className="text-lg font-bold text-black">
-          Innovational Trends
+          {t("innovationalTrends")}
         </h3>
         <span className="flex items-center">
           <DataDateAccess />

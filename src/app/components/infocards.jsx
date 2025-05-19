@@ -80,12 +80,13 @@ export function InformationalSummary() {
 }
 
 export function UserPerformanceSummary() {
+  const { t } = useTranslation();
   return (
     <div>
       <div className="p-7 mt-5  pt-5 bg-white shadow-lg shadow-blue-200 rounded-lg ">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-bold leading-none text-gray-900 ">
-            High Performing Workers
+            {t("highPerformingWorkers")}
           </h3>
           <a
             href="#"
@@ -377,16 +378,17 @@ export function DataDateAccess() {
 }
 
 export function AddDepartment() {
+  const { t } = useTranslation();
   return (
     <main>
       <div className="mb-4 card border border-2 shadow-lg rounded-lg p-4 border-slate-400 h-44">
         <div className="flex justify-between flex-row">
           <div>
             <div className="flex flex-row items-center">
-              Wishing to add new Department ?{" "}
+              {t("addDepartmentPrompt")}{" "}
               <FaRegSmileWink className="ml-2" color="red" />
             </div>
-            <p>Enter the name of the Department in the field below</p>
+            <p>{t("enterDepartmentName")}</p>
           </div>
           <div>
             <button className="flex flex-row items-center text-blue-500 bg-blue-100 p-3 rounded-lg">
@@ -524,6 +526,7 @@ export function GoalDetails() {
 }
 
 export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
+  const { t } = useTranslation();
   return (
     <div
       className="bg-white rounded-lg p-4 cursor-pointer flex flex-col h-full"
@@ -531,7 +534,7 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
       {/* Progress Section */}
       <div className="mb-4">
         <p className="text-blue-900 text-sm mb-2">
-          <strong>Actual Progress:</strong> {progress}%
+          <strong>{t("actualProgress")}:</strong> {progress}%
         </p>
         <div className="relative w-full h-4 bg-gray-200 rounded">
           <div
@@ -542,13 +545,13 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
 
       {/* Goal Title */}
       <div className="mb-2">
-        <h3 className="font-semibold">Goal:</h3>
+        <h3 className="font-semibold">{t("goal")}:</h3>
         <p>{goalTitle}</p>
       </div>
 
       {/* Deadline */}
       <div className="mb-4">
-        <h3 className="font-semibold">Deadline:</h3>
+        <h3 className="font-semibold">{t("deadline")}:</h3>
         <p>{goalDeadline}</p>
       </div>
 
@@ -556,7 +559,7 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
       <div className="mt-auto">
         <hr className="h-px my-2 border-0 bg-gray-300" />
         <div className="flex items-center mt-2">
-          <span className="font-medium text-sm text-gray-600">Status:</span>
+          <span className="font-medium text-sm text-gray-600">{t("status")}:</span>
           <span className="ml-2 text-blue-900 text-xs">{status}</span>
         </div>
       </div>
