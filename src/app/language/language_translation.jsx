@@ -175,6 +175,7 @@ i18n.use(initReactI18next).init({
         uploadImage: "Upload image",
         organizationalTrends: "Organizational Trends",
         date: "Date",
+        actionItem: "Action item",
 
       },
     },
@@ -344,6 +345,7 @@ i18n.use(initReactI18next).init({
         uploadImage: "Télécharger une image",
         organizationalTrends: "Tendances organisationnelles",
         date: "Date",
+        actionItem: "Élément d'action"
       },
     },
   },

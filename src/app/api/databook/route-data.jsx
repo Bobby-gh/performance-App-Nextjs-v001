@@ -20,6 +20,7 @@ import {
   GOAL_CATEGORY_COUNT,
   GOAL_BADGES,
   GET_CATEGORY_ACHIEVED,
+  ACTION_ITEMS,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -479,6 +480,30 @@ export function useGoalCategoryCountRouteData() {
     fetchData();
   }, [auth]);
   return { goalCateoryCount };
+}
+
+export function useGetActionItems() {
+  const { auth } = useContext(AuthContext);
+
+  const getActionItems = async () => {
+    try {
+      const response = await axios.get(
+        ACTION_ITEMS,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          },
+          withCredentials: true,
+        }
+      );
+      return response?.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return { getActionItems };
 }
 /************************************************Post ROutes*************************************/
 

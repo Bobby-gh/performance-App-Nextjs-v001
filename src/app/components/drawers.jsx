@@ -9,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {
   useDepartmentRouteData,
   useEmployeesRouteData,
+  useGetActionItems,
   useUnassessedGoalRouteData,
 } from "../api/databook/route-data";
 import {
@@ -33,6 +34,7 @@ export function CreateGoal() {
   const [isLoading, setLoading] = useState(false);
   const [priority, setPriority] = useState("");
   const [category, setCategory] = useState("");
+  const {getActionItems} = useGetActionItems();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -40,6 +42,7 @@ export function CreateGoal() {
     target: "",
     endDate: "",
     department: "",
+    mainGoal: "",
   });
 
   const handleSubmit = async (e) => {
@@ -56,6 +59,7 @@ export function CreateGoal() {
           target: formData.target,
           priority: priority,
           goalType: category,
+          mainGoal: formData.mainGoal,
         }),
         {
           headers: {
@@ -123,7 +127,7 @@ export function CreateGoal() {
         <hr />
         <form className="w-96">
           <div className="px-10 py-12 space-y-2">
-            {auth.refNum === "ref?1!" || auth.refNum === "ref?1!" ? (
+            {auth.refNum === "ref?1!" ? (
               <CustomSelect
                 id="departmentName"
                 label={t("department")}
@@ -147,6 +151,23 @@ export function CreateGoal() {
                   value: department.userId,
                   label: department.name,
                 }))}
+                searchable={true}
+                required
+                group={false}
+              />
+            )}
+            {auth.refNum === "ref?2!" && (
+            <CustomSelect
+                id="mainGoal"
+                label={t("actionItem")}
+                value={formData.mainGoal}
+                onChange = {(selectOption)=>{
+                  setFormData((prev)=>({
+                    ...prev, 
+                    mainGoal: selectOption.value
+                  }))
+                }}
+                options={getActionItems}
                 searchable={true}
                 required
                 group={false}

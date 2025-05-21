@@ -36,6 +36,7 @@
     "react-select": "^5.10.1",
     "react-toastify": "^11.0.5",
     "recharts": "^2.12.7",
+    "sharp": "^0.34.1",
     "styled-components": "^6.1.11"
   },
   "devDependencies": {
