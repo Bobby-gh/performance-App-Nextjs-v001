@@ -593,6 +593,6 @@ export function GoalsHeader() {
 export function OrganizationalEmployees() {
   const { t } = useTranslation();
   return (
-    <div className="text-xl font-bold ">{t("organizational")}</div>
+    <div className="text-xl ">{t("organizational")}</div>
   );
 }
