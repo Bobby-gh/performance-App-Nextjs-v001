@@ -16,13 +16,13 @@ export function Sidebar() {
 
 
    const filteredMenuItems = MenuItems.filter((item) => {
-    if (auth.refNum === "ref?1!" || auth.role === "ref?1!") {
+    if (auth.refNum === "ref?1!") {
       return !["/home/goals"].includes(item.path);
     }
     if (auth.refNum === "ref?2!") {
       return !["/home/department"].includes(item.path);
     }
-    if (auth.refNum === "ref?3!") {
+    if (auth.refNum === "ref3!") {
       return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
     }
     return ![""].includes(item.path);

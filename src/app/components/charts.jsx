@@ -643,6 +643,7 @@ export function ComparativeTrendsReport() {
 export function BadgesReport() {
   const { t } = useTranslation();
   const { badges } = useMyGoalBadgesData();
+  console.log({badges:badges})
   const Outstanding = badges.ratingsSummary?.Outstanding;
   const ExceedsExpectations = badges.ratingsSummary?.ExceedsExpectations;
   const MeetsExpectations = badges.ratingsSummary?.MeetsExpectations;
@@ -666,7 +667,7 @@ export function BadgesReport() {
               <p className="pl-4">{Outstanding}</p>
             </div>
             <div className="flex flex-rows items-center">
-              <p className="pl-14 text-[#c0c0c0] font-medium">
+              <p className="pl-2 text-[#c0c0c0] font-medium">
                 {t("silverBadges")}:
               </p>
               <p className="pl-4">{ExceedsExpectations}</p>

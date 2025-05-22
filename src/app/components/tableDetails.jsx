@@ -531,7 +531,7 @@ export function EmployeeDetails({ data, open, onClose }) {
           </div>
 
           {/* Right Section */}
-          <div className="flex-[1] bg-gray-50 p-6 rounded shadow flex flex-col space-y-6">
+          <div className="flex-[1] bg-gray-50 p-6 rounded shadow flex flex-col space-y-6 overflow-y-auto max-h-[78vh]">
             <div>
               <h4 className="mb-4 text-lg font-semibold">Goal Status</h4>
               <ResponsiveContainer width="100%" height={300}>
