@@ -491,6 +491,7 @@ export function useGetActionItems() {
         withCredentials: true,
       });
       setActionItem(response.data);
+      console.log({response:response})
     } catch (error) {
       console.error(error);
     }

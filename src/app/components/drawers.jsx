@@ -34,7 +34,9 @@ export function CreateGoal() {
   const [isLoading, setLoading] = useState(false);
   const [priority, setPriority] = useState("");
   const [category, setCategory] = useState("");
-  const {getActionItems} = useGetActionItems();
+  const {actionItem} = useGetActionItems();
+  
+  console.log({actionItem:actionItem})
 
   const [formData, setFormData] = useState({
     title: "",
@@ -176,7 +178,7 @@ export function CreateGoal() {
                     mainGoal: selectOption
                   }))
                 }}
-                options={getActionItems}
+                options={actionItem}
                 searchable={true}
                 required
                 group={false}
