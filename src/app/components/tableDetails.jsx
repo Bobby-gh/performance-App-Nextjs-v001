@@ -17,7 +17,10 @@ import {
   Cell,
   Tooltip,
   Legend,
-  ResponsiveContainer,
+  ResponsiveContainer, 
+  BarChart,
+  Bar,
+  XAxis,
 } from "recharts";
 import { useDepartmentRouteData, useEdit } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
@@ -597,17 +600,31 @@ export const EmployeeRating = ({
               </ResponsiveContainer>
             </div>
 
-            {/* Current Rating */}
+            {/* KPI Chart */}
             <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              <h5 className="text-lg font-semibold text-gray-700 mb-3">
-                Current Rating
-              </h5>
+              {/* KPI Chart */}
+              <h5 className="text-sm font-semibold text-gray-600 mb-1">KPI Performance</h5>
+              <div className="text-xl font-bold text-gray-900">90.75%</div>
+              <div className="text-green-600 text-sm mb-2">+20% vs last month</div>
+              <ResponsiveContainer width="100%" height={100}>
+                <BarChart data={[
+                  { name: "Jan", value: 50 },
+                  { name: "Feb", value: 70 },
+                  { name: "Mar", value: 90 },
+                  { name: "Apr", value: 90 },
+                  { name: "May", value: 70 },
+                  { name: "Jun", value: 50 },
+                ]}>
+                  <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+
+              {/* Current Rating */}
+              <h5 className="text-lg font-semibold text-gray-700 mt-4 mb-2">Current Rating</h5>
               <div className="flex items-center space-x-4">
                 <div className="text-yellow-400 text-3xl">{starIcon}</div>
                 <div>
-                  <p className="text-sm font-medium text-gray-800">
-                    {ratingLabel}
-                  </p>
+                  <p className="text-sm font-medium text-gray-800">{ratingLabel}</p>
                   <p className="text-xs text-gray-500">{ratingMessage}</p>
                 </div>
               </div>
