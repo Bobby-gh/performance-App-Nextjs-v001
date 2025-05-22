@@ -11,6 +11,14 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { useDepartmentRouteData, useEdit } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
 import {
@@ -400,11 +408,13 @@ export function AssessGoal({ data, open, onClose }) {
   );
 }
 
+
 export function EmployeeDetails({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
+
   const [assessGoal, setAssessGoal] = useState({
     goalId: data?._id,
     goalTitle: data?.goalTitle,
@@ -417,15 +427,14 @@ export function EmployeeDetails({ data, open, onClose }) {
     reviewed: data?.reviewed,
     assignedBy: data?.taskAssignedBy,
   });
-  console.log({ "data coming from table": data });
+
   const [editableFields, setEditableFields] = useState({ ...assessGoal });
   const [editMode, setEditMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (key, value) => {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
   };
-
-  console.log({ editableFields: editableFields });
 
   const updateData = {
     goalTitle: editableFields.goalTitle,
@@ -434,19 +443,15 @@ export function EmployeeDetails({ data, open, onClose }) {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    console.log("Update Data:", updateData);
     try {
       const name = "accessGoal";
       const id = editableFields.goalId;
       const response = await editFunction(updateData, id, name);
-
       if (response?.status === 200) {
         showToast("Edit Saved successful:", "success");
         triggerComponent();
         onClose();
       } else {
-        console.error("Edit Save failed:", response);
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
     } catch (error) {
@@ -457,107 +462,134 @@ export function EmployeeDetails({ data, open, onClose }) {
     }
   };
 
+  const dummyChartData = [
+    { name: "Completed", value: 8 },
+    { name: "In Progress", value: 5 },
+    { name: "Not Started", value: 3 },
+  ];
+
+  const COLORS = ["#22c55e", "#facc15", "#ef4444"];
+
   return (
-    <div>
-      <Modal
-        open={open}
-        onClose={onClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <Box sx={ModalModification}>
-          {/* Modal Header */}
-          <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
-            <button onClick={onClose}>
-              <IoClose size={24} />
-            </button>
+    <Modal
+      open={open}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={ModalModification}>
+        {/* Close Button */}
+        <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+          <button onClick={onClose}>
+            <IoClose size={24} />
+          </button>
+        </div>
+
+        {/* Top Section - Avatar Info */}
+        <div className="flex flex-col items-center text-black p-4 bg-white rounded-lg">
+          <Image
+            src={avatar}
+            alt="User Avatar"
+            className="rounded-full border-2 mb-4"
+            width={120}
+            height={120}
+          />
+          <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
+          <div className="text-sm mb-1 flex items-center space-x-2">
+            <IoPerson color="blue" />
+            <span>Robert Knaihv</span>
           </div>
-
-          {/* Modal Body */}
-
-          <main className="flex text-black card bg-white p-4 justify-center rounded-lg">
-            <div className="flex-[1] border-r-2 border-r-[#cbd5e1] p-6 flex flex-col space-y-6">
-              <div className="flex flex-col items-center">
-                <Image
-                  src={avatar}
-                  alt="Paris"
-                  className="rounded-full border-2 mb-4"
-                  width={156}
-                  height={156}
-                />
-                <h6 className="mb-12 text-sm">{t("uploadImage")}</h6>
-              </div>
-              <div className="mb-4 flex flex-row items-center">
-                <span className="mr-4">
-                  <IoPerson color="blue" />
-                </span>
-                <span>Robert Knaihv</span>
-              </div>
-              <div className="mb-2 flex flex-row items-center">
-                <span className="mr-4">
-                  <MdOutlineMarkEmailRead color="blue" />
-                </span>
-                <span>knaihv@ymail.com</span>
-              </div>
+          <div className="text-sm flex items-center space-x-2">
+            <MdOutlineMarkEmailRead color="blue" />
+            <span>knaihv@ymail.com</span>
+          </div>
+        </div>
+        <main className="flex flex-row gap-6 mt-4 text-black px-4 pb-6">
+          {/* Form Fields Left */}
+          <form
+            onSubmit={handleEditSubmit}
+            className="flex-[2] bg-white p-6 rounded-lg shadow"
+          >
+            <div className="grid grid-cols-2 gap-6">
+              <FormInputField
+                label={t("fullname")}
+                type="text"
+                id="name"
+                value={editableFields.goalTitle || ""}
+                onChange={(e) => handleChange("goalTitle", e.target.value)}
+                placeholder="Full name"
+                required
+              />
+              <FormInputField
+                label={t("email")}
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+              />
+              <FormInputField
+                label={t("department")}
+                id="department"
+                placeholder="Department"
+                required
+              />
+              <CustomSelect
+                id="role"
+                label={t("role")}
+                options={[
+                  { value: "General Manager", label: "generalManager" },
+                  { value: "Manager", label: "manager" },
+                  { value: "Junior Staff", label: "staff" },
+                ]}
+                required
+                searchable={true}
+              />
             </div>
-            <div className="flex-[2]">
-              <div className="grid grid-cols-2 gap-8 p-4">
-                <FormInputField
-                  label={t("fullname")}
-                  type="text"
-                  id="name"
-                  // value={formData.name}
-                  // onChange={handleInputChange}
-                  placeholder="Full name"
-                  required
-                  // error={error && !email ? "Email is required" : ""}
-                />
-                <FormInputField
-                  label={t("email")}
-                  type="email"
-                  id="email"
-                  // value={formData.name}
-                  // onChange={handleInputChange}
-                  placeholder="Enter your email"
-                  required
-                  // error={error && !email ? "Email is required" : ""}
-                />
-                <FormInputField
-                  label={t("department")}
-                  id="department"
-                  // value={formData.name}
-                  // onChange={handleInputChange}
-                  placeholder="Department"
-                  required
-                  // error={error && !email ? "Email is required" : ""}
-                />
-                <CustomSelect
-                  id="role"
-                  label={t("role")}
-                  // value={role}
-                  // onChange={setRole}
-                  options={[
-                    { value: "General Manager", label: "generalManager" },
-                    { value: "Manager", label: "manager" },
-                    { value: "Junior Staff", label: "staff" },
-                  ]}
-                  required
-                  searchable={true}
-                  group={false}
-                />
-              </div>
-              <div className="px-16 mt-8">
-                <CustomButton
-                  label={t("submit")}
-                  // onClick={handleSubmit}
-                  type="submit"
-                  className="custom-class"
-                  // loading={isSubmitting}
-                />
-              </div>
+            <div className="mt-6 text-center">
+              <CustomButton
+                label={t("submit")}
+                type="submit"
+                className="custom-class"
+                loading={isLoading}
+              />
             </div>
-          </main>
-        </Box>
-      </Modal>
-    </div>
+          </form>
+
+          {/* Chart  Appraisal Right */}
+          <div className="flex-[1] bg-white p-6 rounded-lg shadow flex flex-col items-center">
+            <h4 className="mb-4 text-lg font-semibold">Goal Status</h4>
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie
+                  data={dummyChartData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  dataKey="value"
+                  nameKey="name"
+                  label
+                >
+                  {dummyChartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend verticalAlign="bottom" height={36} />
+              </PieChart>
+            </ResponsiveContainer>
+
+            <div className="w-full mt-6">
+              <label className="block mb-2 font-medium">Appraisal</label>
+              <textarea
+                rows={4}
+                className="w-full p-2 border border-gray-300 rounded"
+                placeholder="Enter appraisal"
+              />
+            </div>
+          </div>
+        </main>
+      </Box>
+    </Modal>
   );
 }
+
