@@ -45,6 +45,15 @@ export function CreateGoal() {
     mainGoal: "",
   });
 
+  console.log({
+    goalTitle: formData.title,
+          goalDescription: formData.description,
+          goalDeadline: formData.endDate,
+          taskAssignedTo: departments,
+          target: formData.target,
+          priority: priority,
+          goalType: category,
+          mainGoal: formData.mainGoal,})
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -167,7 +176,7 @@ export function CreateGoal() {
                 onChange = {(selectOption)=>{
                   setFormData((prev)=>({
                     ...prev, 
-                    mainGoal: selectOption.value
+                    mainGoal: selectOption
                   }))
                 }}
                 options={getActionItems}
