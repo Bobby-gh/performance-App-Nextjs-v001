@@ -472,10 +472,6 @@ export function GoalDetails() {
       {/* Goal Details */}
       <div className="text-black text-sm mb-4">
         <div className="flex mb-4">
-          <strong className="w-1/3">{t("goalId")}:</strong>
-          <p className="w-2/3 text-blue-900">{goal.id}</p>
-        </div>
-        <div className="flex mb-4">
           <strong className="w-1/3">{t("goalName")}:</strong>
           <p className="w-2/3 text-blue-900">{goal.goalTitle}</p>
         </div>
