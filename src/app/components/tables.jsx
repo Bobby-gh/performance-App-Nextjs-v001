@@ -25,12 +25,13 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { MdDelete, MdEditNotifications } from "react-icons/md";
+import { MdDelete, MdEditNotifications, MdOutlineGeneratingTokens } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { Modaltrigger } from "../contex/context-context";
 import { AssessGoal, AssignGoal, EmployeeDetails, EmployeeRating } from "./tableDetails";
 import { Delete } from "./widgets";
 import { useTranslation } from "react-i18next";
+import { FaRegEdit } from "react-icons/fa";
 
 export function GoalTable() {
   const { departmentgoaltable, fetchData } = useGoalRouteData();
@@ -472,7 +473,7 @@ export function EmployeeTable() {
           closeMenu();
         }}>
         <ListItemIcon>
-          <MdEditNotifications fontSize="small" />
+          <FaRegEdit fontSize="small" />
         </ListItemIcon>
         <ListItemText>{t("edit")}</ListItemText>
       </MenuItem>,
@@ -483,7 +484,7 @@ export function EmployeeTable() {
           closeMenu();
         }}>
         <ListItemIcon>
-          <MdEditNotifications fontSize="small" />
+          <MdOutlineGeneratingTokens fontSize="small" />
         </ListItemIcon>
         <ListItemText>Ratings</ListItemText>
       </MenuItem>,

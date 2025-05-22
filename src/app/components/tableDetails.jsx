@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../contex/context-context";
-import { FaEye, FaSave, FaSitemap } from "react-icons/fa";
+import { FaEye, FaSave, FaSitemap, FaUser } from "react-icons/fa";
 import {
   Box,
   FormControl,
@@ -28,7 +28,7 @@ import {
   ModalFormSelect,
   ModalModification,
 } from "./widgets";
-import { IoCalendarClearOutline, IoClose, IoPerson } from "react-icons/io5";
+import { IoCalendarClearOutline, IoClose, IoPerson, IoTrophy } from "react-icons/io5";
 import Image from "next/image";
 import { MdOutlineMarkEmailRead, MdVerifiedUser } from "react-icons/md";
 import avatar from "../images/avatar.jpg";
@@ -623,7 +623,7 @@ export const EmployeeRating = ({
           {/* Header */}
           <div className="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow">
             <div className="flex items-center gap-4 border-b pb-4 mb-4">
-              <User className="w-12 h-12 text-blue-500" />
+              <FaUser className="w-12 h-12 text-blue-500" />
               <div>
                 <h2 className="text-2xl font-bold">Jane Smith</h2>
                 <p className="text-sm text-gray-500">Software Engineer</p>
@@ -633,7 +633,7 @@ export const EmployeeRating = ({
             {/* Achievements */}
             <section className="mb-6">
               <h3 className="text-lg font-semibold flex items-center gap-2 mb-3">
-                <Trophy className="w-5 h-5 text-yellow-500" />
+                <IoTrophy className="w-5 h-5 text-yellow-500" />
                 Achievements
               </h3>
               <ul className="list-disc list-inside space-y-2 text-gray-700">
