@@ -569,68 +569,76 @@ export const EmployeeRating = ({
           <h4 className="text-xl font-bold text-gray-800">
             Employee Appraisal Summary
           </h4>
-
-          {/* Top Section: Pie Chart & Rating */}
+          {/* Top Section: KPI (left) and Goal+Rating (right) */}
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* Goal Chart */}
+            {/* KPI Performance - LEFT SIDE */}
             <div className="flex-1 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              <h5 className="text-lg font-semibold text-gray-700 mb-4">
-                Goal Status Overview
-              </h5>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={dummyChartData}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={90}
-                    dataKey="value"
-                    nameKey="name"
-                    label>
-                    {dummyChartData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend verticalAlign="bottom" height={36} />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-
-            {/* KPI Chart */}
-            <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              {/* KPI Chart */}
               <h5 className="text-sm font-semibold text-gray-600 mb-1">KPI Performance</h5>
               <div className="text-xl font-bold text-gray-900">90.75%</div>
-              <div className="text-green-600 text-sm mb-2">+20% vs last month</div>
-              <ResponsiveContainer width="100%" height={100}>
-                <BarChart data={[
-                  { name: "Jan", value: 50 },
-                  { name: "Feb", value: 70 },
-                  { name: "Mar", value: 90 },
-                  { name: "Apr", value: 90 },
-                  { name: "May", value: 70 },
-                  { name: "Jun", value: 50 },
-                ]}>
+              <div className="text-green-600 text-sm mb-4">+20% vs last month</div>
+              <ResponsiveContainer width="100%" height={120}>
+                <BarChart
+                  data={[
+                    { name: "Jan", value: 50 },
+                    { name: "Feb", value: 70 },
+                    { name: "Mar", value: 90 },
+                    { name: "Apr", value: 90 },
+                    { name: "May", value: 70 },
+                    { name: "Jun", value: 50 },
+                  ]}
+                  margin={{ top: 5, right: 0, left: -20, bottom: 0 }}
+                >
                   <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
+            </div>
+
+            {/* RIGHT SIDE: Goal Status + Rating */}
+            <div className="w-full lg:w-1/3 flex flex-col gap-6">
+              {/* Goal Status */}
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h5 className="text-lg font-semibold text-gray-700 mb-4">
+                  Goal Status Overview
+                </h5>
+                <ResponsiveContainer width="100%" height={200}>
+                  <PieChart>
+                    <Pie
+                      data={dummyChartData}
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={70}
+                      dataKey="value"
+                      nameKey="name"
+                      label
+                    >
+                      {dummyChartData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend verticalAlign="bottom" height={36} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
 
               {/* Current Rating */}
-              <h5 className="text-lg font-semibold text-gray-700 mt-4 mb-2">Current Rating</h5>
-              <div className="flex items-center space-x-4">
-                <div className="text-yellow-400 text-3xl">{starIcon}</div>
-                <div>
-                  <p className="text-sm font-medium text-gray-800">{ratingLabel}</p>
-                  <p className="text-xs text-gray-500">{ratingMessage}</p>
+              <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h5 className="text-lg font-semibold text-gray-700 mb-2">
+                  Current Rating
+                </h5>
+                <div className="flex items-center space-x-4">
+                  <div className="text-yellow-400 text-3xl">{starIcon}</div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-800">{ratingLabel}</p>
+                    <p className="text-xs text-gray-500">{ratingMessage}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
           {/* Appraisal Selector */}
           <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             <label
