@@ -33,6 +33,7 @@ import Image from "next/image";
 import { MdOutlineMarkEmailRead, MdVerifiedUser } from "react-icons/md";
 import avatar from "../images/avatar.jpg";
 import { showToast } from "./notification";
+import { Star } from "@mui/icons-material";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
