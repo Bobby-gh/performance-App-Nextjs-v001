@@ -408,7 +408,6 @@ export function AssessGoal({ data, open, onClose }) {
   );
 }
 
-
 export function EmployeeDetails({ data, open, onClose }) {
   const { t } = useTranslation();
   const formattedDate = (dateString) =>
@@ -436,7 +435,11 @@ export function EmployeeDetails({ data, open, onClose }) {
     try {
       const name = "accessGoal";
       const id = editableFields.goalId;
-      const response = await editFunction({ goalTitle: editableFields.goalTitle }, id, name);
+      const response = await editFunction(
+        { goalTitle: editableFields.goalTitle },
+        id,
+        name
+      );
       if (response?.status === 200) {
         showToast("Edit Saved successful:", "success");
         triggerComponent();
@@ -471,11 +474,13 @@ export function EmployeeDetails({ data, open, onClose }) {
     starIcon = "🥇";
   } else if (currentRating === "silver") {
     ratingLabel = "Silver Star";
-    ratingMessage = "Awarded a Silver Star for great performance and strong consistency.";
+    ratingMessage =
+      "Awarded a Silver Star for great performance and strong consistency.";
     starIcon = "🥈";
   } else {
     ratingLabel = "Bronze Star";
-    ratingMessage = "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
+    ratingMessage =
+      "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
     starIcon = "🥉";
   }
 
@@ -511,11 +516,11 @@ export function EmployeeDetails({ data, open, onClose }) {
                 <span>{data?.email}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <FaSitemap color= "blue" />
+                <FaSitemap color="blue" />
                 <span>{data?.department}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <MdVerifiedUser color = "blue"/>
+                <MdVerifiedUser color="blue" />
                 <span>{data?.role}</span>
               </div>
               <div className="pt-4">
@@ -543,8 +548,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                     outerRadius={80}
                     dataKey="value"
                     nameKey="name"
-                    label
-                  >
+                    label>
                     {dummyChartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index]} />
                     ))}
@@ -557,7 +561,9 @@ export function EmployeeDetails({ data, open, onClose }) {
 
             {/* Current Rating Section */}
             <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
-              <h5 className="font-semibold mb-2 text-gray-700">Current Rating</h5>
+              <h5 className="font-semibold mb-2 text-gray-700">
+                Current Rating
+              </h5>
               <div className="flex items-center space-x-3">
                 <span className="text-2xl">{starIcon}</span>
                 <div>
@@ -582,4 +588,50 @@ export function EmployeeDetails({ data, open, onClose }) {
   );
 }
 
+export const EmployeeRating = ({ employeeName = "John Doe", onRate , open, onClose}) => {
+  const [hovered, setHovered] = useState(0);
+  const [selected, setSelected] = useState(0);
 
+  const handleClick = (rating) => {
+    setSelected(rating);
+    if (onRate) onRate(rating);
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <Box sx={ModalModification}>
+        <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+          <button onClick={onClose}>
+            <IoClose size={24} />
+          </button>
+        </div>
+        <div className="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-6">
+          <h2 className="text-xl font-semibold mb-4 text-center">
+            Rate {employeeName}
+          </h2>
+          <div className="flex justify-center gap-2 mb-4">
+            {[1, 2, 3, 4, 5].map((index) => (
+              <Star
+                key={index}
+                size={32}
+                className={`cursor-pointer transition-colors duration-200 ${
+                  (hovered || selected) >= index
+                    ? "text-yellow-400"
+                    : "text-gray-300"
+                }`}
+                onMouseEnter={() => setHovered(index)}
+                onMouseLeave={() => setHovered(0)}
+                onClick={() => handleClick(index)}
+              />
+            ))}
+          </div>
+          {selected > 0 && (
+            <p className="text-center text-gray-600">
+              You rated <strong>{employeeName}</strong> {selected} out of 5.
+            </p>
+          )}
+        </div>
+      </Box>
+    </Modal>
+  );
+};

@@ -28,7 +28,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { MdDelete, MdEditNotifications } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { Modaltrigger } from "../contex/context-context";
-import { AssessGoal, AssignGoal, EmployeeDetails } from "./tableDetails";
+import { AssessGoal, AssignGoal, EmployeeDetails, EmployeeRating } from "./tableDetails";
 import { Delete } from "./widgets";
 import { useTranslation } from "react-i18next";
 
@@ -399,7 +399,9 @@ export function EmployeeTable() {
   const usercolumn = useUserColumn();
   const [open, setOpen] = useState(false);
   const [employeeInfo, setEmployeeInfo] = useState("");
+  const [employeeRating, setEmployeeRating] = useState("");
   const [deleteRow, setDeleteRow] = useState(false);
+  const [ratingRow, setRatingRow] = useState(false);
   const [deleteItem, setDeleteItem] = useState("");
 
   const data = useMemo(() => employeetable, [employeetable]);
@@ -414,6 +416,12 @@ export function EmployeeTable() {
     console.log("Edit", row);
     setEmployeeInfo(row.original);
     setOpen(true);
+  };
+
+  const handleRating = (row) => {
+    console.log("row", row);
+    setEmployeeRating(row.original);
+    setRatingRow(true);
   };
 
   const handleCloseDelete = (row) => {
@@ -469,6 +477,17 @@ export function EmployeeTable() {
         <ListItemText>{t("edit")}</ListItemText>
       </MenuItem>,
       <MenuItem
+        key="rating"
+        onClick={() => {
+          handleRating(row);
+          closeMenu();
+        }}>
+        <ListItemIcon>
+          <MdEditNotifications fontSize="small" />
+        </ListItemIcon>
+        <ListItemText>Ratings</ListItemText>
+      </MenuItem>,
+      <MenuItem
         key="delete"
         onClick={() => {
           handleDelete(row);
@@ -499,6 +518,13 @@ export function EmployeeTable() {
           name="user"
           open={deleteItem}
           onClose={handleCloseDelete}
+        />
+      )}
+      
+      {deleteRow && (
+        <EmployeeRating
+          open={ratingRow}
+          onClose={()=>setRatingRow(false)}
         />
       )}
     </>
