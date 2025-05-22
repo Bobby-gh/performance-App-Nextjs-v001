@@ -24,12 +24,17 @@ export function LoginForm() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const { auth, setAuth } = React.useContext(AuthContext);
-  const [success, setLogin] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [success, setLogin] = useState(false);
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
 
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -95,7 +100,7 @@ export function LoginForm() {
           <div className="flex flex-col">
             <label>{t("email")}</label>
             <input
-              placeholder= {t("typeEmailHere")}
+              placeholder={t("typeEmailHere")}
               autoComplete="off"
               type="email"
               value={userDetails.email}
@@ -113,7 +118,7 @@ export function LoginForm() {
             <input
               placeholder={t("enterPassword")}
               autoComplete="off"
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={userDetails.password}
               onChange={(e) =>
                 setUserDetails((prevDetails) => ({
@@ -125,7 +130,12 @@ export function LoginForm() {
             />
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-between">
+            <div onClick={toggleShowPassword}>
+              <h4 className="text-blue italic text-sm text-[#08376B] cursor-pointer">
+                {showPassword ? "hide password" : "show password"}
+              </h4>
+            </div>
             <Link href="/forget-password" prefetch={false}>
               <h4 className="text-blue italic text-sm text-blue-700">
                 {t("forgotPassword")}
@@ -158,7 +168,7 @@ export function LoginForm() {
             <span className="text-sm text-black">{t("dontHaveAccount")}</span>
             <span className="text-blue-700 text-sm">
               <Link href="/signup" prefetch={false}>
-              {t("signUp")}
+                {t("signUp")}
               </Link>
             </span>
           </div>
@@ -213,7 +223,7 @@ export function ForgetPassword() {
     <main className="w-[430px]">
       <div>
         <div className="flex  mt-[17%] mb-[20%] text-xl font-bold">
-        {t("enterEmailForVerification")}
+          {t("enterEmailForVerification")}
         </div>
         <form autoComplete="off">
           <div className="flex flex-col">
@@ -258,7 +268,7 @@ export function ForgetPassword() {
             <span className="text-sm text-black">{t("return")}?</span>
             <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
-              {t("home")}
+                {t("home")}
               </Link>
             </span>
           </div>
@@ -383,7 +393,7 @@ export function ResetPassword() {
             <span className="text-sm text-black">{t("return")}?</span>
             <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
-              {t("home")}
+                {t("home")}
               </Link>
             </span>
           </div>
@@ -583,11 +593,11 @@ export function SignUpForm() {
           {/* sign up */}
           <div className="flex justify-center items-center space-x-1">
             <span className="text-sm text-black">
-            {t("alreadyHaveAccount")}
+              {t("alreadyHaveAccount")}
             </span>
             <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
-              {t("loginIn")}
+                {t("loginIn")}
               </Link>
             </span>
           </div>
@@ -641,9 +651,7 @@ export function VerifyEmailForm() {
     <main className="w-[430px]">
       <div>
         <div className="mb-4 text-xl">{t("activateAccount")}</div>
-        <div className="mb-[30%] text-sm">
-        {t("enterVerificationToken")}
-        </div>
+        <div className="mb-[30%] text-sm">{t("enterVerificationToken")}</div>
         <form autoComplete="off ">
           <div className="flex flex-col">
             <label className="italic text-xs">{t("token")}</label>
@@ -686,7 +694,7 @@ export function VerifyEmailForm() {
             <span className="text-sm text-black">{t("doYouWantToReturn")}</span>
             <span className="text-blue-700 text-sm">
               <Link href="/" prefetch={false}>
-              {t("home")}?
+                {t("home")}?
               </Link>
             </span>
           </div>
