@@ -174,7 +174,7 @@ export function CreateGoal() {
                 onChange = {(selectOption)=>{
                   setFormData((prev)=>({
                     ...prev, 
-                    mainGoal: selectOption.value
+                    mainGoal: selectOption
                   }))
                 }}
                 options={actionItem}
