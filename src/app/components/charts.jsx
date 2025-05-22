@@ -643,6 +643,7 @@ export function ComparativeTrendsReport() {
 export function BadgesReport() {
   const { t } = useTranslation();
   const { badges } = useMyGoalBadgesData();
+  console.log({badges:badges})
   const Outstanding = badges.ratingsSummary?.Outstanding;
   const ExceedsExpectations = badges.ratingsSummary?.ExceedsExpectations;
   const MeetsExpectations = badges.ratingsSummary?.MeetsExpectations;
