@@ -519,12 +519,15 @@ export function EmployeeDetails({ data, open, onClose }) {
   );
 }
 
+
 export const EmployeeRating = ({
-  employeeName = "John Doe",
+  data,
   onRate,
   open,
   onClose,
 }) => {
+  const { t } = useTranslation();
+
   const dummyChartData = [
     { name: "Completed", value: 100 },
     { name: "In Progress", value: 5 },
@@ -532,8 +535,7 @@ export const EmployeeRating = ({
   ];
 
   const COLORS = ["#015720", "#3300d9", "#800101"];
-
-  const currentRating = "gold"; // "silver", "bronze"
+  const currentRating = "gold"; // Ideally dynamic in future
 
   let ratingLabel = "";
   let ratingMessage = "";
@@ -555,37 +557,57 @@ export const EmployeeRating = ({
     starIcon = "🥉";
   }
 
+  const kpiData = [
+    { name: "Jan", value: 40 },
+    { name: "Feb", value: 55 },
+    { name: "Mar", value: 85 },
+    { name: "Apr", value: 95 },
+    { name: "May", value: 70 },
+    { name: "Jun", value: 50 },
+  ];
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
+        {/* Close Button */}
         <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
           <button onClick={onClose}>
             <IoClose size={24} />
           </button>
         </div>
-        {/* Right Section */}
+
+        {/* Modal Content */}
         <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-6">
-          {/* Page Title */}
-          <h4 className="text-xl font-bold text-gray-800">
-            Employee Appraisal Summary
-          </h4>
-          {/* Top Section: KPI (left) and Goal+Rating (right) */}
+          {/* Header with employee info */}
+          <div className="space-y-1">
+            <h4 className="text-xl font-bold text-gray-800">
+              Employee Appraisal Summary
+            </h4>
+            <p className="text-sm text-gray-600">
+              <span className="font-medium">{t("name")}:</span> {data?.name}
+            </p>
+            <p className="text-sm text-gray-600">
+              <span className="font-medium">{t("department")}:</span> {data?.department}
+            </p>
+            <p className="text-sm text-gray-600">
+              <span className="font-medium">{t("role")}:</span> {data?.role}
+            </p>
+          </div>
+
+          {/* Layout */}
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* KPI Performance - LEFT SIDE */}
+            {/* KPI Card */}
             <div className="flex-1 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-              <h5 className="text-sm font-semibold text-gray-600 mb-1">KPI Performance</h5>
+              <h5 className="text-sm font-semibold text-gray-600 mb-1">
+                KPI Performance
+              </h5>
               <div className="text-xl font-bold text-gray-900">90.75%</div>
-              <div className="text-green-600 text-sm mb-4">+20% vs last month</div>
-              <ResponsiveContainer width="100%" height={160}>
+              <div className="text-green-600 text-sm mb-4">
+                +20% vs last month
+              </div>
+              <ResponsiveContainer width="100%" height={200}>
                 <BarChart
-                  data={[
-                    { name: "Jan", value: 50 },
-                    { name: "Feb", value: 70 },
-                    { name: "Mar", value: 90 },
-                    { name: "Apr", value: 90 },
-                    { name: "May", value: 70 },
-                    { name: "Jun", value: 50 },
-                  ]}
+                  data={kpiData}
                   margin={{ top: 10, right: 20, left: -10, bottom: 20 }}
                 >
                   <XAxis
@@ -598,12 +620,17 @@ export const EmployeeRating = ({
                     cursor={{ fill: "rgba(99, 102, 241, 0.1)" }}
                     formatter={(value) => [`${value}%`, "Performance"]}
                   />
-                  <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                  <Bar
+                    dataKey="value"
+                    fill="#6366f1"
+                    radius={[6, 6, 0, 0]}
+                    barSize={30}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
 
-            {/* RIGHT SIDE: Goal Status + Rating */}
+            {/* Right Side */}
             <div className="w-full lg:w-1/3 flex flex-col gap-6">
               {/* Goal Status */}
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
@@ -634,7 +661,7 @@ export const EmployeeRating = ({
                 </ResponsiveContainer>
               </div>
 
-              {/* Current Rating */}
+              {/* Rating */}
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h5 className="text-lg font-semibold text-gray-700 mb-2">
                   Current Rating
@@ -642,24 +669,29 @@ export const EmployeeRating = ({
                 <div className="flex items-center space-x-4">
                   <div className="text-yellow-400 text-3xl">{starIcon}</div>
                   <div>
-                    <p className="text-sm font-medium text-gray-800">{ratingLabel}</p>
+                    <p className="text-sm font-medium text-gray-800">
+                      {ratingLabel}
+                    </p>
                     <p className="text-xs text-gray-500">{ratingMessage}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           {/* Appraisal Selector */}
           <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             <label
               htmlFor="appraisal"
-              className="block mb-2 text-sm font-medium text-gray-700">
+              className="block mb-2 text-sm font-medium text-gray-700"
+            >
               Appraisal Category
             </label>
             <select
               id="appraisal"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
-              defaultValue="">
+              defaultValue=""
+            >
               <option value="" disabled>
                 Select appraisal level
               </option>
@@ -673,3 +705,4 @@ export const EmployeeRating = ({
     </Modal>
   );
 };
+
