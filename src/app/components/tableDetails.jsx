@@ -569,11 +569,15 @@ export function EmployeeDetails({ data, open, onClose }) {
 
             <div className="w-full">
               <label className="block mb-2 font-medium">Appraisal</label>
-              <textarea
-                rows={4}
+              <select
                 className="w-full p-2 border border-gray-300 rounded"
-                placeholder="Enter appraisal"
-              />
+                defaultValue=""
+              >
+                <option value="" disabled>Select appraisal</option>
+                <option value="gold">Rate Gold</option>
+                <option value="silver">Rate Silver</option>
+                <option value="bronze">Rate Bronze</option>
+              </select>
             </div>
           </div>
         </main>
