@@ -237,7 +237,7 @@ i18n.use(initReactI18next).init({
         operationalEfficiency: "Efficacité Opérationnelle",
         strategicPerformance: "Performance Stratégique",
         enterpriseWideGoals: "Objectifs à l’échelle de l’entreprise.",
-        badges: "Table de mérite", 
+        badges: "Tableau de mérite", 
         systemGoals: "Objectifs De Entreprise",
         financial: "Financier",
         humanRelationship: "Relations Humaines",

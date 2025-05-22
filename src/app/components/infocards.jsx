@@ -519,16 +519,18 @@ export function GoalDetails() {
             />
           </div>
 
-          <div className="mb-12">
-            <FormInputField
-              label="Comment"
+          <div className="mb-12 w-full">
+            <label htmlFor="comment" className="block mb-2 font-medium">Comment</label>
+            <textarea
               id="comment"
+              rows={4}
+              className="w-full p-2 border border-gray-300 rounded"
+              placeholder="Enter comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               required
             />
           </div>
-
           <button
             className="w-full p-2 bg-blue-900 rounded-xl text-white"
             onClick={handleUpdate}
