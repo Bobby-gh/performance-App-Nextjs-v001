@@ -1,5 +1,5 @@
 import React from "react";
-import { TopGoalTable } from "@/app/components/tables";
+import { EmployeeBadgeTable } from "@/app/components/tables";
 import { BadgesReport } from "@/app/components/charts";
 
 export default function Badges() {
@@ -7,7 +7,7 @@ export default function Badges() {
     <div className="mt-8 mx-8">
       <BadgesReport/>
       <div className="mt-8 card bg-white rounded-lg">
-        <TopGoalTable/>
+        <EmployeeBadgeTable/>
       </div>
     </div>
   );
