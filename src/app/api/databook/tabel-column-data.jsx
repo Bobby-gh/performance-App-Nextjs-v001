@@ -29,6 +29,30 @@ export const useGoalSettingColumn = () => {
   ];
 };
 
+
+export const useEmployeeRatingColumn = () => {
+  const { t } = useTranslation();
+
+  return [
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      accessorKey: "department",
+      header: "Department",
+    },
+    {
+      accessorKey: "performanceScore",
+      header: "Performance Score",
+    },
+    {
+      accessorKey: "badge",
+      header: "Badges",
+    },
+  ];
+};
+
 export const useBalanceScoreCardColumn = () => {
   const { t } = useTranslation();
 

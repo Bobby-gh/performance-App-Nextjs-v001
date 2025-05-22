@@ -11,6 +11,7 @@ import {
   useTopGoalColumn,
   useUserColumn,
   useDepartmentColumn,
+  useEmployeeRatingColumn,
 } from "../api/databook/tabel-column-data";
 import {
   useDepartmentRouteData,
@@ -151,6 +152,63 @@ export function GoalTable() {
           onClose={handleCloseDelete}
         />
       )}
+    </div>
+  );
+}
+
+export function EmployeeBadgeTable() {
+  const employeeRating = useEmployeeRatingColumn();
+  const data = useMemo(() => []);
+  const columns = useMemo(() => employeeRating, []);
+
+  useEffect(() => {
+    const fetchAndReset = async () => {
+      if (!trigger) return;
+      try {
+        await fetchData();
+      } finally {
+        resettriggerComponent();
+      }
+    };
+
+    fetchAndReset();
+  }, [trigger]);
+
+
+  
+
+  const table = useMaterialReactTable({
+    muiTableHeadCellProps: {
+      sx: {
+        fontWeight: "normal",
+        fontSize: "14px",
+        background: "#08376B",
+        color: "white",
+      },
+    },
+    muiTablePaperProps: {
+      elevation: 0,
+      sx: {
+        borderRadius: "10",
+      },
+    },
+    muiTableBodyProps: {
+      sx: {
+        "& tr:nth-of-type(even) > td": {
+          backgroundColor: "#f5f5f5",
+        },
+      },
+    },
+    columns,
+    data,
+    enableColumnOrdering: true,
+    enableRowSelection: true,
+    enablePagination: true,
+  });
+
+  return (
+    <div>
+      <MaterialReactTable table={table} />
     </div>
   );
 }
