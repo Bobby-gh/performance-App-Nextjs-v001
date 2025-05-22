@@ -178,7 +178,7 @@ export function CreateGoal() {
                     mainGoal: selectOption
                   }))
                 }}
-                options={getActionItems}
+                options={actionItem}
                 searchable={true}
                 required
                 group={false}
