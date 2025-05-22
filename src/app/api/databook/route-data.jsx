@@ -47,7 +47,7 @@ export function useGoalRouteData() {
   useEffect(() => {
     fetchData();
   }, [auth]);
-  
+
   return { departmentgoaltable, fetchData };
 }
 
@@ -107,8 +107,6 @@ export function useMyGoalBadgesData() {
     fetchData();
   }, [auth]);
 
-
-
   console.log({ "badges goals": badges });
   return { badges };
 }
@@ -135,8 +133,6 @@ export function useAchievedGoalsData() {
 
     fetchData();
   }, [auth]);
-
-
 
   return { trends };
 }
@@ -269,8 +265,6 @@ export function useGoalAccessmentRouteData() {
   const { auth } = useContext(AuthContext);
   const [goalAssessment, setGoalAssessment] = useState([]);
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
-
-
 
   const fetchData = async () => {
     if (!auth?.token) {
@@ -470,7 +464,7 @@ export function useGoalCategoryCountRouteData() {
           Human: HumanValue,
           Financial: financialValue,
           Customer: customerValue,
-          Inovation: inovationValue, 
+          Inovation: inovationValue,
         });
       } catch (err) {
         console.log(err);
@@ -484,26 +478,29 @@ export function useGoalCategoryCountRouteData() {
 
 export function useGetActionItems() {
   const { auth } = useContext(AuthContext);
+  const [actionItem, setActionItem] = useState("");
+  const token = auth.token?.trim();
 
   const getActionItems = async () => {
     try {
-      const response = await axios.get(
-        ACTION_ITEMS,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
-          },
-          withCredentials: true,
-        }
-      );
-      return response?.data;
-    } catch (err) {
-      console.log(err);
+      const response = await axios.get(ACTION_ITEMS, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        withCredentials: true,
+      });
+      setActionItem(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  return { getActionItems };
+  useEffect(() => {
+    getActionItems();
+  }, [auth]);
+
+  return { actionItem };
 }
 /************************************************Post ROutes*************************************/
 
@@ -535,16 +532,14 @@ export function useCreateDepartment() {
   return { createDepartment };
 }
 
-
 /****************Delete Routes*************** */
-
 
 export function useDelete() {
   const { auth } = useContext(AuthContext);
   const routeToUrl = {
     goal: GOALS_URL,
-    accessGoal: GOAL_ASSESSMENT_URL, 
-    department: DEPARTMENTS_URL, 
+    accessGoal: GOAL_ASSESSMENT_URL,
+    department: DEPARTMENTS_URL,
     user: EMPLOYEES_URL,
   };
 
@@ -566,7 +561,6 @@ export function useDelete() {
   return { deleteFunction };
 }
 
-
 /****************Patch Routes*************** */
 
 export function useEdit() {
@@ -574,7 +568,7 @@ export function useEdit() {
 
   const routeToUrl = {
     goal: GOALS_URL,
-    accessGoal: GOAL_ASSESSMENT_URL, 
+    accessGoal: GOAL_ASSESSMENT_URL,
     user: EMPLOYEES_URL,
   };
 
@@ -583,13 +577,17 @@ export function useEdit() {
 
     if (!endpoint) throw new Error(`Invalid routeName: ${routeName}`);
 
-    const response = await axios.patch(`${endpoint}/${id}`, JSON.stringify({ updateData }), {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${auth.token}`,
-      },
-      withCredentials: true,
-    });
+    const response = await axios.patch(
+      `${endpoint}/${id}`,
+      JSON.stringify({ updateData }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     return response;
   };
