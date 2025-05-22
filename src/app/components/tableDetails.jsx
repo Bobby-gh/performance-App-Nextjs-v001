@@ -411,7 +411,6 @@ export function AssessGoal({ data, open, onClose }) {
 
 export function EmployeeDetails({ data, open, onClose }) {
   const { t } = useTranslation();
-  const { departmenttable } = useDepartmentRouteData();
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
 
@@ -429,16 +428,7 @@ export function EmployeeDetails({ data, open, onClose }) {
   });
 
   const [editableFields, setEditableFields] = useState({ ...assessGoal });
-  const [editMode, setEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleChange = (key, value) => {
-    setEditableFields((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const updateData = {
-    goalTitle: editableFields.goalTitle,
-  };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -446,7 +436,7 @@ export function EmployeeDetails({ data, open, onClose }) {
     try {
       const name = "accessGoal";
       const id = editableFields.goalId;
-      const response = await editFunction(updateData, id, name);
+      const response = await editFunction({ goalTitle: editableFields.goalTitle }, id, name);
       if (response?.status === 200) {
         showToast("Edit Saved successful:", "success");
         triggerComponent();
@@ -458,25 +448,19 @@ export function EmployeeDetails({ data, open, onClose }) {
       console.error("Edit error:", error);
     } finally {
       setIsLoading(false);
-      setEditMode(false);
     }
   };
 
   const dummyChartData = [
-    { name: "Completed", value: 8 },
+    { name: "Completed", value: 100 },
     { name: "In Progress", value: 5 },
-    { name: "Not Started", value: 3 },
+    { name: "Not Started", value: 20 },
   ];
 
-  const COLORS = ["#22c55e", "#facc15", "#ef4444"];
+  const COLORS = ["#015720", "#3300d9", "#800101"];
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
         {/* Close Button */}
         <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
@@ -485,80 +469,52 @@ export function EmployeeDetails({ data, open, onClose }) {
           </button>
         </div>
 
-        {/* Top Section - Avatar Info */}
-        <div className="flex flex-col items-center text-black p-4 bg-white rounded-lg">
-          <Image
-            src={avatar}
-            alt="User Avatar"
-            className="rounded-full border-2 mb-4"
-            width={120}
-            height={120}
-          />
-          <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
-          <div className="text-sm mb-1 flex items-center space-x-2">
-            <IoPerson color="blue" />
-            <span>Robert Knaihv</span>
-          </div>
-          <div className="text-sm flex items-center space-x-2">
-            <MdOutlineMarkEmailRead color="blue" />
-            <span>knaihv@ymail.com</span>
-          </div>
-        </div>
-        <main className="flex flex-row gap-6 mt-4 text-black px-4 pb-6">
-          {/* Form Fields Left */}
-          <form
-            onSubmit={handleEditSubmit}
-            className="flex-[2] bg-white p-6 rounded-lg shadow"
-          >
-            <div className="grid grid-cols-2 gap-6">
-              <FormInputField
-                label={t("fullname")}
-                type="text"
-                id="name"
-                value={editableFields.goalTitle || ""}
-                onChange={(e) => handleChange("goalTitle", e.target.value)}
-                placeholder="Full name"
-                required
+        <main className="flex flex-row gap-6 text-black p-6 bg-white rounded-lg">
+          {/* Left Section */}
+          <div className="flex-[1] bg-gray-50 p-6 rounded shadow space-y-4">
+            <div className="flex flex-col items-center">
+              <Image
+                src={avatar}
+                alt="User Avatar"
+                className="rounded-full border-2 mb-4"
+                width={120}
+                height={120}
               />
-              <FormInputField
-                label={t("email")}
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                required
-              />
-              <FormInputField
-                label={t("department")}
-                id="department"
-                placeholder="Department"
-                required
-              />
-              <CustomSelect
-                id="role"
-                label={t("role")}
-                options={[
-                  { value: "General Manager", label: "generalManager" },
-                  { value: "Manager", label: "manager" },
-                  { value: "Junior Staff", label: "staff" },
-                ]}
-                required
-                searchable={true}
-              />
+              <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
             </div>
-            <div className="mt-6 text-center">
-              <CustomButton
-                label={t("submit")}
-                type="submit"
-                className="custom-class"
-                loading={isLoading}
-              />
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <IoPerson color="blue" />
+                <span className="font-medium">Robert Knaihv</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MdOutlineMarkEmailRead color="blue" />
+                <span>knaihv@ymail.com</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold">Department:</span>
+                <span>finance</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold">Role:</span>
+                <span>Junior Staff</span>
+              </div>
+              <div className="pt-4">
+                <CustomButton
+                  label={t("submit")}
+                  type="submit"
+                  className="custom-class"
+                  loading={isLoading}
+                  onClick={handleEditSubmit}
+                />
+              </div>
             </div>
-          </form>
+          </div>
 
-          {/* Chart  Appraisal Right */}
-          <div className="flex-[1] bg-white p-6 rounded-lg shadow flex flex-col items-center">
+          {/* Right Section */}
+          <div className="flex-[1] bg-gray-50 p-6 rounded shadow flex flex-col items-center">
             <h4 className="mb-4 text-lg font-semibold">Goal Status</h4>
-            <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
                   data={dummyChartData}
