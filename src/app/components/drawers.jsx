@@ -35,6 +35,7 @@ export function CreateGoal() {
   const [priority, setPriority] = useState("");
   const [category, setCategory] = useState("");
   const {getActionItems} = useGetActionItems();
+  console.log({getActionItems:getActionItems})
 
   const [formData, setFormData] = useState({
     title: "",
