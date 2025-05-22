@@ -34,8 +34,7 @@ export function CreateGoal() {
   const [isLoading, setLoading] = useState(false);
   const [priority, setPriority] = useState("");
   const [category, setCategory] = useState("");
-  const {actionItem} = useGetActionItems();
-  console.log({actionItem:actionItem})
+  const {getActionItems} = useGetActionItems();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -111,6 +110,9 @@ export function CreateGoal() {
     setFormData((prevData) => ({ ...prevData, [id]: value }));
     // setError((prevError) => ({ ...prevError, [id]: "" }));
   };
+
+                label={t("actionItem")}
+
   return (
     <>
       <Button
@@ -168,7 +170,7 @@ export function CreateGoal() {
                     mainGoal: selectOption.value
                   }))
                 }}
-                options={actionItem}
+                options={getActionItems}
                 searchable={true}
                 required
                 group={false}
