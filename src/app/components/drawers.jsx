@@ -119,9 +119,6 @@ export function CreateGoal() {
     setFormData((prevData) => ({ ...prevData, [id]: value }));
     // setError((prevError) => ({ ...prevError, [id]: "" }));
   };
-
-                label={t("actionItem")}
-
   return (
     <>
       <Button
