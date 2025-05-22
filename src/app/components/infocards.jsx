@@ -415,14 +415,12 @@ export function GoalDetails() {
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
   const [progress, setProgress] = useState(goal.actualProgress);
-  const [comment, setComment] = useState("")
+  const [comment, setComment] = useState("");
   const [isLoading, setLoading] = useState(false);
   const { triggerComponent } = useContext(Modaltrigger);
 
-
-
   const handleUpdate = async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     setLoading(true);
     try {
       const response = await axios.patch(
@@ -458,7 +456,8 @@ export function GoalDetails() {
       <div className="relative w-full h-8 mb-6 bg-gray-200">
         <div
           className="absolute h-8 bg-blue-500 rounded"
-          style={{ width: `${goal.actualProgressPercent}%` }}></div>
+          style={{ width: `${goal.actualProgressPercent}%` }}
+        ></div>
       </div>
 
       {/* Notification */}
@@ -501,39 +500,48 @@ export function GoalDetails() {
         </div>
       </div>
 
-      {/* Update Progress */}
-      <div className="flex items-center space-x-4 mt-4 mb-4">
-        <label htmlFor="progress-input" className="text-gray-600 text-sm">
-          <strong className="w-1/3 text-black">{t("enterProgress")}:</strong>
-        </label>
-      </div>
-      <div className="mb-4 mt-4">
-        <FormInputField
-          id="progress-input"
-          value={progress}
-          onChange={(e) => setProgress(e.target.value)}
-          required
-        />
-      </div>
-      <div className="mb-12">
-        <FormInputField
-          label="Comment"
-          id="comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          required
-        />
-      </div>
+      {/* Update Progress - hidden for ref?2! */}
+      {auth.refNum !== "ref?2!" && (
+        <>
+          <div className="flex items-center space-x-4 mt-4 mb-4">
+            <label htmlFor="progress-input" className="text-gray-600 text-sm">
+              <strong className="w-1/3 text-black">{t("enterProgress")}:</strong>
+            </label>
+          </div>
 
-      <button
-        className="w-full p-2 bg-blue-900 rounded-xl text-white"
-        onClick={handleUpdate}
-        disabled={isLoading}>
-        {isLoading ? "Submitting..." : t("submitProgress")}
-      </button>
+          <div className="mb-4 mt-4">
+            <FormInputField
+              id="progress-input"
+              value={progress}
+              onChange={(e) => setProgress(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-12">
+            <FormInputField
+              label="Comment"
+              id="comment"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
+            />
+          </div>
+
+          <button
+            className="w-full p-2 bg-blue-900 rounded-xl text-white"
+            onClick={handleUpdate}
+            disabled={isLoading}
+          >
+            {isLoading ? "Submitting..." : t("submitProgress")}
+          </button>
+        </>
+      )}
+
     </div>
   );
 }
+
 
 export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
   const { t } = useTranslation();
