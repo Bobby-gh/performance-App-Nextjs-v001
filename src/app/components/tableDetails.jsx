@@ -459,10 +459,29 @@ export function EmployeeDetails({ data, open, onClose }) {
 
   const COLORS = ["#015720", "#3300d9", "#800101"];
 
+  const currentRating = "gold"; // "silver", "bronze"
+
+  let ratingLabel = "";
+  let ratingMessage = "";
+  let starIcon = "";
+
+  if (currentRating === "gold") {
+    ratingLabel = "Gold Star";
+    ratingMessage = "Awarded a Gold Star for outstanding performance.";
+    starIcon = "🥇";
+  } else if (currentRating === "silver") {
+    ratingLabel = "Silver Star";
+    ratingMessage = "Awarded a Silver Star for great performance and strong consistency.";
+    starIcon = "🥈";
+  } else {
+    ratingLabel = "Bronze Star";
+    ratingMessage = "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
+    starIcon = "🥉";
+  }
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
-        {/* Close Button */}
         <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
           <button onClick={onClose}>
             <IoClose size={24} />
@@ -512,29 +531,43 @@ export function EmployeeDetails({ data, open, onClose }) {
           </div>
 
           {/* Right Section */}
-          <div className="flex-[1] bg-gray-50 p-6 rounded shadow flex flex-col items-center">
-            <h4 className="mb-4 text-lg font-semibold">Goal Status</h4>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={dummyChartData}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  dataKey="value"
-                  nameKey="name"
-                  label
-                >
-                  {dummyChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend verticalAlign="bottom" height={36} />
-              </PieChart>
-            </ResponsiveContainer>
+          <div className="flex-[1] bg-gray-50 p-6 rounded shadow flex flex-col space-y-6">
+            <div>
+              <h4 className="mb-4 text-lg font-semibold">Goal Status</h4>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={dummyChartData}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    dataKey="value"
+                    nameKey="name"
+                    label
+                  >
+                    {dummyChartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend verticalAlign="bottom" height={36} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
 
-            <div className="w-full mt-6">
+            {/* Current Rating Section */}
+            <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
+              <h5 className="font-semibold mb-2 text-gray-700">Current Rating</h5>
+              <div className="flex items-center space-x-3">
+                <span className="text-2xl">{starIcon}</span>
+                <div>
+                  <p className="text-sm font-medium">{ratingLabel}</p>
+                  <p className="text-xs text-gray-600">{ratingMessage}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full">
               <label className="block mb-2 font-medium">Appraisal</label>
               <textarea
                 rows={4}
@@ -548,4 +581,5 @@ export function EmployeeDetails({ data, open, onClose }) {
     </Modal>
   );
 }
+
 
