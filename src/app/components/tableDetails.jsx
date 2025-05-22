@@ -578,9 +578,10 @@ export function EmployeeDetails({ data, open, onClose }) {
               <label className="block mb-2 font-medium">Appraisal</label>
               <select
                 className="w-full p-2 border border-gray-300 rounded"
-                defaultValue=""
-              >
-                <option value="" disabled>Select appraisal</option>
+                defaultValue="">
+                <option value="" disabled>
+                  Select appraisal
+                </option>
                 <option value="gold">Rate Gold</option>
                 <option value="silver">Rate Silver</option>
                 <option value="bronze">Rate Bronze</option>
@@ -593,14 +594,22 @@ export function EmployeeDetails({ data, open, onClose }) {
   );
 }
 
-export const EmployeeRating = ({ employeeName = "John Doe", onRate , open, onClose}) => {
+export const EmployeeRating = ({
+  employeeName = "John Doe",
+  onRate,
+  open,
+  onClose,
+}) => {
+  const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
-  const [selected, setSelected] = useState(0);
 
-  const handleClick = (rating) => {
-    setSelected(rating);
-    if (onRate) onRate(rating);
-  };
+  const achievements = [
+    "Completed Cybersecurity Audit 2 weeks early",
+    "Led migration to cloud infrastructure",
+    "Organized 3 internal team training workshops",
+  ];
+
+ 
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -610,31 +619,55 @@ export const EmployeeRating = ({ employeeName = "John Doe", onRate , open, onClo
             <IoClose size={24} />
           </button>
         </div>
-        <div className="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-6">
-          <h2 className="text-xl font-semibold mb-4 text-center">
-            Rate {employeeName}
-          </h2>
-          <div className="flex justify-center gap-2 mb-4">
-            {[1, 2, 3, 4, 5].map((index) => (
-              <Star
-                key={index}
-                size={32}
-                className={`cursor-pointer transition-colors duration-200 ${
-                  (hovered || selected) >= index
-                    ? "text-yellow-400"
-                    : "text-gray-300"
-                }`}
-                onMouseEnter={() => setHovered(index)}
-                onMouseLeave={() => setHovered(0)}
-                onClick={() => handleClick(index)}
-              />
-            ))}
+        <div className="min-h-screen bg-gray-100 p-6">
+          {/* Header */}
+          <div className="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow">
+            <div className="flex items-center gap-4 border-b pb-4 mb-4">
+              <User className="w-12 h-12 text-blue-500" />
+              <div>
+                <h2 className="text-2xl font-bold">Jane Smith</h2>
+                <p className="text-sm text-gray-500">Software Engineer</p>
+              </div>
+            </div>
+
+            {/* Achievements */}
+            <section className="mb-6">
+              <h3 className="text-lg font-semibold flex items-center gap-2 mb-3">
+                <Trophy className="w-5 h-5 text-yellow-500" />
+                Achievements
+              </h3>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                {achievements.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </section>
+
+            {/* Appraisal Rating */}
+            <section>
+              <h3 className="text-lg font-semibold mb-3">Performance Rating</h3>
+              <div className="flex items-center gap-2">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star
+                    key={i}
+                    className={`w-8 h-8 cursor-pointer transition-colors ${
+                      (hovered || rating) >= i
+                        ? "text-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                    onMouseEnter={() => setHovered(i)}
+                    onMouseLeave={() => setHovered(0)}
+                    onClick={() => setRating(i)}
+                  />
+                ))}
+              </div>
+              {rating > 0 && (
+                <p className="mt-2 text-gray-600">
+                  You rated this employee <strong>{rating} out of 5</strong>.
+                </p>
+              )}
+            </section>
           </div>
-          {selected > 0 && (
-            <p className="text-center text-gray-600">
-              You rated <strong>{employeeName}</strong> {selected} out of 5.
-            </p>
-          )}
         </div>
       </Box>
     </Modal>

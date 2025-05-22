@@ -521,7 +521,7 @@ export function EmployeeTable() {
         />
       )}
       
-      {deleteRow && (
+      {ratingRow && (
         <EmployeeRating
           open={ratingRow}
           onClose={()=>setRatingRow(false)}
