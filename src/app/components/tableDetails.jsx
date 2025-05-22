@@ -460,35 +460,7 @@ export function EmployeeDetails({ data, open, onClose }) {
     }
   };
 
-  const dummyChartData = [
-    { name: "Completed", value: 100 },
-    { name: "In Progress", value: 5 },
-    { name: "Not Started", value: 20 },
-  ];
-
-  const COLORS = ["#015720", "#3300d9", "#800101"];
-
-  const currentRating = "gold"; // "silver", "bronze"
-
-  let ratingLabel = "";
-  let ratingMessage = "";
-  let starIcon = "";
-
-  if (currentRating === "gold") {
-    ratingLabel = "Gold Star";
-    ratingMessage = "Awarded a Gold Star for outstanding performance.";
-    starIcon = "🥇";
-  } else if (currentRating === "silver") {
-    ratingLabel = "Silver Star";
-    ratingMessage =
-      "Awarded a Silver Star for great performance and strong consistency.";
-    starIcon = "🥈";
-  } else {
-    ratingLabel = "Bronze Star";
-    ratingMessage =
-      "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
-    starIcon = "🥉";
-  }
+  
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -552,14 +524,35 @@ export const EmployeeRating = ({
   open,
   onClose,
 }) => {
-  const [rating, setRating] = useState(0);
-  const [hovered, setHovered] = useState(0);
-
-  const achievements = [
-    "Completed Cybersecurity Audit 2 weeks early",
-    "Led migration to cloud infrastructure",
-    "Organized 3 internal team training workshops",
+  const dummyChartData = [
+    { name: "Completed", value: 100 },
+    { name: "In Progress", value: 5 },
+    { name: "Not Started", value: 20 },
   ];
+
+  const COLORS = ["#015720", "#3300d9", "#800101"];
+
+  const currentRating = "gold"; // "silver", "bronze"
+
+  let ratingLabel = "";
+  let ratingMessage = "";
+  let starIcon = "";
+
+  if (currentRating === "gold") {
+    ratingLabel = "Gold Star";
+    ratingMessage = "Awarded a Gold Star for outstanding performance.";
+    starIcon = "🥇";
+  } else if (currentRating === "silver") {
+    ratingLabel = "Silver Star";
+    ratingMessage =
+      "Awarded a Silver Star for great performance and strong consistency.";
+    starIcon = "🥈";
+  } else {
+    ratingLabel = "Bronze Star";
+    ratingMessage =
+      "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
+    starIcon = "🥉";
+  }
 
   return (
     <Modal open={open} onClose={onClose}>
