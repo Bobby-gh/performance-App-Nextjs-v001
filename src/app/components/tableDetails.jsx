@@ -28,7 +28,12 @@ import {
   ModalFormSelect,
   ModalModification,
 } from "./widgets";
-import { IoCalendarClearOutline, IoClose, IoPerson, IoTrophy } from "react-icons/io5";
+import {
+  IoCalendarClearOutline,
+  IoClose,
+  IoPerson,
+  IoTrophy,
+} from "react-icons/io5";
 import Image from "next/image";
 import { MdOutlineMarkEmailRead, MdVerifiedUser } from "react-icons/md";
 import avatar from "../images/avatar.jpg";
@@ -535,59 +540,6 @@ export function EmployeeDetails({ data, open, onClose }) {
               </div>
             </div>
           </div>
-
-          {/* Right Section */}
-          <div className="flex-[1] bg-gray-50 p-6 rounded shadow flex flex-col space-y-6 overflow-y-auto max-h-[78vh]">
-            <div>
-              <h4 className="mb-4 text-lg font-semibold">Goal Status</h4>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={dummyChartData}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                    dataKey="value"
-                    nameKey="name"
-                    label>
-                    {dummyChartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend verticalAlign="bottom" height={36} />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-
-            {/* Current Rating Section */}
-            <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
-              <h5 className="font-semibold mb-2 text-gray-700">
-                Current Rating
-              </h5>
-              <div className="flex items-center space-x-3">
-                <span className="text-2xl">{starIcon}</span>
-                <div>
-                  <p className="text-sm font-medium">{ratingLabel}</p>
-                  <p className="text-xs text-gray-600">{ratingMessage}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full">
-              <label className="block mb-2 font-medium">Appraisal</label>
-              <select
-                className="w-full p-2 border border-gray-300 rounded"
-                defaultValue="">
-                <option value="" disabled>
-                  Select appraisal
-                </option>
-                <option value="gold">Rate Gold</option>
-                <option value="silver">Rate Silver</option>
-                <option value="bronze">Rate Bronze</option>
-              </select>
-            </div>
-          </div>
         </main>
       </Box>
     </Modal>
@@ -609,8 +561,6 @@ export const EmployeeRating = ({
     "Organized 3 internal team training workshops",
   ];
 
- 
-
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
@@ -619,54 +569,54 @@ export const EmployeeRating = ({
             <IoClose size={24} />
           </button>
         </div>
-        <div className="min-h-screen bg-gray-100 p-6">
-          {/* Header */}
-          <div className="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow">
-            <div className="flex items-center gap-4 border-b pb-4 mb-4">
-              <FaUser className="w-12 h-12 text-blue-500" />
+        {/* Right Section */}
+        <div className="bg-gray-50 p-6 rounded shadow flex space-y-6 overflow-y-auto max-h-[78vh]">
+          <div className="flex flex-cols">
+            <h4 className="mb-4 text-lg font-semibold">Goal Status</h4>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={dummyChartData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  dataKey="value"
+                  nameKey="name"
+                  label>
+                  {dummyChartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend verticalAlign="bottom" height={36} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Current Rating Section */}
+          <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
+            <h5 className="font-semibold mb-2 text-gray-700">Current Rating</h5>
+            <div className="flex items-center space-x-3">
+              <span className="text-2xl">{starIcon}</span>
               <div>
-                <h2 className="text-2xl font-bold">Jane Smith</h2>
-                <p className="text-sm text-gray-500">Software Engineer</p>
+                <p className="text-sm font-medium">{ratingLabel}</p>
+                <p className="text-xs text-gray-600">{ratingMessage}</p>
               </div>
             </div>
+          </div>
 
-            {/* Achievements */}
-            <section className="mb-6">
-              <h3 className="text-lg font-semibold flex items-center gap-2 mb-3">
-                <IoTrophy className="w-5 h-5 text-yellow-500" />
-                Achievements
-              </h3>
-              <ul className="list-disc list-inside space-y-2 text-gray-700">
-                {achievements.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </section>
-
-            {/* Appraisal Rating */}
-            <section>
-              <h3 className="text-lg font-semibold mb-3">Performance Rating</h3>
-              <div className="flex items-center gap-2">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <Star
-                    key={i}
-                    className={`w-8 h-8 cursor-pointer transition-colors ${
-                      (hovered || rating) >= i
-                        ? "text-yellow-400"
-                        : "text-gray-300"
-                    }`}
-                    onMouseEnter={() => setHovered(i)}
-                    onMouseLeave={() => setHovered(0)}
-                    onClick={() => setRating(i)}
-                  />
-                ))}
-              </div>
-              {rating > 0 && (
-                <p className="mt-2 text-gray-600">
-                  You rated this employee <strong>{rating} out of 5</strong>.
-                </p>
-              )}
-            </section>
+          <div className="w-full">
+            <label className="block mb-2 font-medium">Appraisal</label>
+            <select
+              className="w-full p-2 border border-gray-300 rounded"
+              defaultValue="">
+              <option value="" disabled>
+                Select appraisal
+              </option>
+              <option value="gold">Rate Gold</option>
+              <option value="silver">Rate Silver</option>
+              <option value="bronze">Rate Bronze</option>
+            </select>
           </div>
         </div>
       </Box>
