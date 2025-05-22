@@ -576,7 +576,7 @@ export const EmployeeRating = ({
               <h5 className="text-sm font-semibold text-gray-600 mb-1">KPI Performance</h5>
               <div className="text-xl font-bold text-gray-900">90.75%</div>
               <div className="text-green-600 text-sm mb-4">+20% vs last month</div>
-              <ResponsiveContainer width="100%" height={120}>
+              <ResponsiveContainer width="100%" height={160}>
                 <BarChart
                   data={[
                     { name: "Jan", value: 50 },
@@ -586,8 +586,18 @@ export const EmployeeRating = ({
                     { name: "May", value: 70 },
                     { name: "Jun", value: 50 },
                   ]}
-                  margin={{ top: 5, right: 0, left: -20, bottom: 0 }}
+                  margin={{ top: 10, right: 20, left: -10, bottom: 20 }}
                 >
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fontSize: 12 }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip
+                    cursor={{ fill: "rgba(99, 102, 241, 0.1)" }}
+                    formatter={(value) => [`${value}%`, "Performance"]}
+                  />
                   <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
