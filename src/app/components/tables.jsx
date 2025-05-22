@@ -161,18 +161,7 @@ export function EmployeeBadgeTable() {
   const data = useMemo(() => []);
   const columns = useMemo(() => employeeRating, []);
 
-  useEffect(() => {
-    const fetchAndReset = async () => {
-      if (!trigger) return;
-      try {
-        await fetchData();
-      } finally {
-        resettriggerComponent();
-      }
-    };
-
-    fetchAndReset();
-  }, [trigger]);
+  
 
 
   
