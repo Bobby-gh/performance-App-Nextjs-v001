@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../contex/context-context";
-import { FaEye, FaSave } from "react-icons/fa";
+import { FaEye, FaSave, FaSitemap } from "react-icons/fa";
 import {
   Box,
   FormControl,
@@ -30,7 +30,7 @@ import {
 } from "./widgets";
 import { IoCalendarClearOutline, IoClose, IoPerson } from "react-icons/io5";
 import Image from "next/image";
-import { MdOutlineMarkEmailRead } from "react-icons/md";
+import { MdOutlineMarkEmailRead, MdVerifiedUser } from "react-icons/md";
 import avatar from "../images/avatar.jpg";
 import { showToast } from "./notification";
 
@@ -504,19 +504,19 @@ export function EmployeeDetails({ data, open, onClose }) {
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <IoPerson color="blue" />
-                <span className="font-medium">Robert Knaihv</span>
+                <span className="font-medium">{data?.name}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MdOutlineMarkEmailRead color="blue" />
-                <span>knaihv@ymail.com</span>
+                <span>{data?.email}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="font-semibold">Department:</span>
-                <span>finance</span>
+                <FaSitemap color= "blue" />
+                <span>{data?.department}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="font-semibold">Role:</span>
-                <span>Junior Staff</span>
+                <MdVerifiedUser color = "blue"/>
+                <span>{data?.role}</span>
               </div>
               <div className="pt-4">
                 <CustomButton
