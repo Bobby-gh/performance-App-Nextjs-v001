@@ -461,11 +461,16 @@ export function GoalDetails() {
       </div>
 
       {/* Notification */}
+      {/* Notification or Title */}
       <div className="mb-12">
-        <Notification
-          typeHeader={t("updateGoalProgress")}
-          message={t("selectProjectToUpdateProgress")}
-        />
+        {auth.refNum === "ref?2!" ? (
+          <h2 className="text-lg font-semibold text-black">{t("goalDetails")}</h2>
+        ) : (
+          <Notification
+            typeHeader={t("updateGoalProgress")}
+            message={t("selectProjectToUpdateProgress")}
+          />
+        )}
       </div>
 
       {/* Goal Details */}
