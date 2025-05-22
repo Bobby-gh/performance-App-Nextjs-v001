@@ -460,8 +460,6 @@ export function EmployeeDetails({ data, open, onClose }) {
     }
   };
 
-  
-
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
@@ -563,52 +561,76 @@ export const EmployeeRating = ({
           </button>
         </div>
         {/* Right Section */}
-        <div className="bg-gray-50 p-6 rounded shadow flex space-y-6 overflow-y-auto max-h-[78vh]">
-          <div className="flex flex-cols">
-            <h4 className="mb-4 text-lg font-semibold">Goal Status</h4>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={dummyChartData}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  dataKey="value"
-                  nameKey="name"
-                  label>
-                  {dummyChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend verticalAlign="bottom" height={36} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
+        <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-6">
+          {/* Page Title */}
+          <h4 className="text-xl font-bold text-gray-800">
+            Employee Appraisal Summary
+          </h4>
 
-          {/* Current Rating Section */}
-          <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
-            <h5 className="font-semibold mb-2 text-gray-700">Current Rating</h5>
-            <div className="flex items-center space-x-3">
-              <span className="text-2xl">{starIcon}</span>
-              <div>
-                <p className="text-sm font-medium">{ratingLabel}</p>
-                <p className="text-xs text-gray-600">{ratingMessage}</p>
+          {/* Top Section: Pie Chart & Rating */}
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Goal Chart */}
+            <div className="flex-1 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+              <h5 className="text-lg font-semibold text-gray-700 mb-4">
+                Goal Status Overview
+              </h5>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={dummyChartData}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={90}
+                    dataKey="value"
+                    nameKey="name"
+                    label>
+                    {dummyChartData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend verticalAlign="bottom" height={36} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Current Rating */}
+            <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+              <h5 className="text-lg font-semibold text-gray-700 mb-3">
+                Current Rating
+              </h5>
+              <div className="flex items-center space-x-4">
+                <div className="text-yellow-400 text-3xl">{starIcon}</div>
+                <div>
+                  <p className="text-sm font-medium text-gray-800">
+                    {ratingLabel}
+                  </p>
+                  <p className="text-xs text-gray-500">{ratingMessage}</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="w-full">
-            <label className="block mb-2 font-medium">Appraisal</label>
+          {/* Appraisal Selector */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <label
+              htmlFor="appraisal"
+              className="block mb-2 text-sm font-medium text-gray-700">
+              Appraisal Category
+            </label>
             <select
-              className="w-full p-2 border border-gray-300 rounded"
+              id="appraisal"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
               defaultValue="">
               <option value="" disabled>
-                Select appraisal
+                Select appraisal level
               </option>
-              <option value="gold">Rate Gold</option>
-              <option value="silver">Rate Silver</option>
-              <option value="bronze">Rate Bronze</option>
+              <option value="gold">Gold - Exceptional Performance</option>
+              <option value="silver">Silver - Above Expectations</option>
+              <option value="bronze">Bronze - Meets Expectations</option>
             </select>
           </div>
         </div>
