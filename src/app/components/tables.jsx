@@ -212,18 +212,18 @@ export function EmployeeBadgeTable() {
 
         if (typeof value === "string") {
           switch (value.toLowerCase()) {
-            case "outstanding":
+            case "Exceptionnel":
               bgColor = "#FFD700"; // Gold
               color = "#000"; // good contrast
               break;
-            case "exceeds expectations":
+            case "DEPASSE LES ATTENTES":
               bgColor = "#CD7F32"; // Bronze
               break;
-            case "meets expectations":
+            case "Atteint les objectifs":
               bgColor = "#C0C0C0"; // Silver
               color = "#000";
               break;
-            case "below expectations":
+            case "En dessous des attentes":
               bgColor = "#F84626"; // Red
               break;
             case "pending ...":

@@ -298,7 +298,24 @@ export const useDepartmentColumn = () => {
   ];
 };
 
+export const useBadgesTable = () => {
+  const { t } = useTranslation();
 
+  return [
+    {
+      accessorKey: "departmentName",
+      header: t("departmentName"),
+    },
+    {
+      accessorKey: "manager",
+      header: t("departmentManager"),
+    },
+    {
+      accessorKey: "numberOfStaff",
+      header: t("numberOfStaff"),
+    },
+  ];
+};
 
 
 export const BadgesTable = [
@@ -306,30 +323,36 @@ export const BadgesTable = [
     name: "Emmanuel",
     department: "Finance",
     performanceScore: 87,
-    badge: "Outstanding"
+    badge: "Exceptionnel"
   },
   {
     name: "Bob",
     department: "Finance",
     performanceScore: 75,
-    badge: "Exceeds Expectation"
+    badge: "DEPASSE LES ATTENTES"
   },
   {
     name: "Alexader",
     department: "Finance",
     performanceScore: 92,
-    badge: "Outstanding"
+    badge: "Exceptionnel"
   },
   {
     name: "Ishmael",
     department: "Finance",
     performanceScore: 68,
-    badge: "Meets Expectation"
+    badge: "Atteint les objectifs"
   },
   {
     name: "Edmond",
     department: "Finance",
     performanceScore: 81,
-    badge: "Outstanding"
+    badge: "Exceptionnel"
+  },
+  {
+    name: "Luis",
+    department: "Finance",
+    performanceScore: 54,
+    badge: "En dessous des attentes"
   }
 ]
