@@ -531,6 +531,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
   const [rating, setRating] = useState("");
   const [pieData, setPieData] = useState("")
   const [barData, setBarData] = useState([])
+  const [recentRating, setCurrentRating] = useState("")
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -540,6 +541,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
       console.log({ res : res});
       setPieData(res?.data.goalStatus)
       setBarData(res?.data.performance)
+      setCurrentRating(res?.data.ratings)
     } catch (error) {
       console.error("Failed to fetch user rating:", error);
     }
@@ -570,41 +572,28 @@ export const EmployeeRating = ({ open, onClose, data }) => {
   ];
 
   const COLORS = ["#015720", "#3300d9", "#800101"];
-  const currentRating = "gold"; 
+  const currentRating = recentRating; 
 
   let ratingLabel = "";
   let ratingMessage = "";
   let starIcon = "";
 
-  if (currentRating === "gold") {
+  if (currentRating === "Outstanding") {
     ratingLabel = t("outstanding");
     ratingMessage = t("messageOutstanding");
     starIcon = "🥇";
-  } else if (currentRating === "silver") {
+  } else if (currentRating === "Exceeds Expectations") {
     ratingLabel = t("exceedsExpectations");
     ratingMessage =
       t("messageExceedExpectation");
-  } else {
+  } else if (currentRating === "Meets Expectations"){
     ratingLabel = t("meetsExpectations");
     ratingMessage =
       t("messageMeetExpectation");
     starIcon = "🥉";
   }
 
-  const kpiData = [
-    { name: "Jan", value: 40 },
-    { name: "Feb", value: 55 },
-    { name: "Mar", value: 85 },
-    { name: "Apr", value: 95 },
-    { name: "May", value: 70 },
-    { name: "Jun", value: 50 },
-    { name: "July", value: 55 },
-    { name: "Aug", value: 85 },
-    { name: "Sept", value: 95 },
-    { name: "Oct", value: 70 },
-    { name: "Nov", value: 50 },
-    { name: "Dec", value: 50 },
-  ];
+
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -634,14 +623,13 @@ export const EmployeeRating = ({ open, onClose, data }) => {
               <h5 className="text-sm font-semibold text-gray-600 mb-1">
                 {t("kpiPerformance")}
               </h5>
-              <div className="text-xl font-bold text-gray-900">90.75%</div>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart
                   data={barData}
-                  margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
+                  margin={{ top: 10, right: 20, left: -10, bottom: 5 }}>
                   <XAxis
                     dataKey="name"
-                    tick={{ fontSize: 12 }}
+                    tick={{ fontSize: 15 }}
                     axisLine={false}
                     tickLine={false}
                   />
@@ -667,21 +655,6 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                   {t("goalStatusOverview")}
                 </h5>
                 <div className="flex">
-                  {/* Legend Summary */}
-                  <div className="flex flex-col space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-md w-full max-w-xs">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">✅ Completed Goals</span>
-                      <span className="font-semibold text-green-700">34</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">🔄 In Progress Goals</span>
-                      <span className="font-semibold text-blue-700">15</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">❌ Not Started</span>
-                      <span className="font-semibold text-red-700">20</span>
-                    </div>
-                  </div>
                   <ResponsiveContainer width="100%" height={200}>
                     <PieChart>
                       <Pie
