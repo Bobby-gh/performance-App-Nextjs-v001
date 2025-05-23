@@ -672,8 +672,8 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                             fill={COLORS[index % COLORS.length]}
                           />
                         ))}
-                        <Tooltip/>
                       </Pie>
+                      <Tooltip/>
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
