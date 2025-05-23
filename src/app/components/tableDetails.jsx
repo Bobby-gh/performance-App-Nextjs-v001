@@ -529,6 +529,8 @@ export const EmployeeRating = ({ open, onClose, data }) => {
   const {getUserRatingById} = useUserGoalRatingByID()
   const [isLoading, setLoading] = useState(false);
   const [rating, setRating] = useState("");
+  const [pieData, setPieData] = useState("")
+  const [barData, setBarData] = useState([])
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -536,6 +538,8 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     try {
       const res = await getUserRatingById(data?.userId);
       console.log({ res : res});
+      setPieData(res?.data.goalStatus)
+      setBarData(res?.data.performance)
     } catch (error) {
       console.error("Failed to fetch user rating:", error);
     }
@@ -559,10 +563,10 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     }
   };
 
-  const dummyChartData = [
-    { name: "Completed", value: 100 },
-    { name: "In Progress", value: 5 },
-    { name: "Not Started", value: 20 },
+  const pieChartData = [
+    { name: "Completed", value: pieData.completed },
+    { name: "In Progress", value: pieData.inProgress },
+    { name: "Not Started", value: pieData.notStarted },
   ];
 
   const COLORS = ["#015720", "#3300d9", "#800101"];
@@ -633,7 +637,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
               <div className="text-xl font-bold text-gray-900">90.75%</div>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart
-                  data={kpiData}
+                  data={barData}
                   margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
                   <XAxis
                     dataKey="name"
@@ -646,7 +650,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                     formatter={(value) => [`${value}%`, "Performance"]}
                   />
                   <Bar
-                    dataKey="value"
+                    dataKey="performance"
                     fill="#6366f1"
                     radius={[6, 6, 0, 0]}
                     barSize={30}
@@ -681,14 +685,14 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                   <ResponsiveContainer width="100%" height={200}>
                     <PieChart>
                       <Pie
-                        data={dummyChartData}
+                        data={pieChartData}
                         cx="50%"
                         cy="50%"
                         outerRadius={70}
                         dataKey="value"
                         nameKey="name"
                         label>
-                        {dummyChartData.map((entry, index) => (
+                        {pieChartData.map((entry, index) => (
                           <Cell
                             key={`cell-${index}`}
                             fill={COLORS[index % COLORS.length]}
@@ -697,21 +701,6 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                       </Pie>
                     </PieChart>
                   </ResponsiveContainer>
-                  {/* Legend Summary */}
-                  <div className="flex flex-col space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-md w-full max-w-xs">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">✅ {t("completed")} {t("goals")}</span>
-                      <span className="font-semibold text-green-700">34</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">🔄 {t("inProgress")} {t("goals")}</span>
-                      <span className="font-semibold text-blue-700">15</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">❌ {t("notStarted")}</span>
-                      <span className="font-semibold text-red-700">20</span>
-                    </div>
-                  </div>
                 </div>
               </div>
 
