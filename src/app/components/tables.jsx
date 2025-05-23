@@ -533,7 +533,7 @@ export function EmployeeTable() {
         <ListItemIcon>
           <MdOutlineGeneratingTokens fontSize="small" />
         </ListItemIcon>
-        <ListItemText>Ratings</ListItemText>
+        <ListItemText>{t("ratings")}</ListItemText>
       </MenuItem>,
       <MenuItem
         key="delete"

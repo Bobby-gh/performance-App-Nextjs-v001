@@ -36,19 +36,19 @@ export const useEmployeeRatingColumn = () => {
   return [
     {
       accessorKey: "name",
-      header: "Name",
+      header: t("fullName"),
     },
     {
       accessorKey: "department",
-      header: "Department",
+      header: t("department"),
     },
     {
       accessorKey: "performanceScore",
-      header: "Performance Score",
+      header: t("performanceScore"),
     },
     {
       accessorKey: "badge",
-      header: "Badges",
+      header: t("badges"),
     },
   ];
 };
