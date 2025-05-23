@@ -187,6 +187,8 @@ i18n.use(initReactI18next).init({
         messageOutstanding: "Awarded a Gold Star for outstanding performance.",
         messageExceedExpectation: "Awarded a Silver Star for great performance and strong consistency.",
         messageMeetExpectation: "Awarded a Bronze Star. Improvement is needed, but potential is visible.",
+        ratings: "Ratings",
+        performanceScore: "Performance Score",
       },
     },
     fr: {
@@ -367,6 +369,8 @@ i18n.use(initReactI18next).init({
         messageOutstanding: "Récompensé par une étoile d'or pour des performances exceptionnelles.",
         messageExceedExpectation: "Récompensé par une étoile d'argent pour de grandes performances et une forte constance.",
         messageMeetExpectation: "Récompensé par une étoile de bronze. Une amélioration est nécessaire, mais le potentiel est visible.",
+        ratings: "Évaluations",
+        performanceScore: "Score de performance"
       },
     },
   },
