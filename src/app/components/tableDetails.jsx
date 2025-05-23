@@ -556,16 +556,16 @@ export const EmployeeRating = ({ open, onClose, data }) => {
   let starIcon = "";
 
   if (currentRating === "gold") {
-    ratingLabel = "Gold Star";
+    ratingLabel = "Outstanding";
     ratingMessage = "Awarded a Gold Star for outstanding performance.";
     starIcon = "🥇";
   } else if (currentRating === "silver") {
-    ratingLabel = "Silver Star";
+    ratingLabel = "Exceed Expectation";
     ratingMessage =
       "Awarded a Silver Star for great performance and strong consistency.";
     starIcon = "🥈";
   } else {
-    ratingLabel = "Bronze Star";
+    ratingLabel = "Meet Expectation";
     ratingMessage =
       "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
     starIcon = "🥉";
@@ -578,6 +578,12 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     { name: "Apr", value: 95 },
     { name: "May", value: 70 },
     { name: "Jun", value: 50 },
+    { name: "July", value: 55},
+    { name: "Aug", value: 85 },
+    { name: "Sept", value: 95 },
+    { name: "Oct", value: 70 },
+    { name: "Nov", value: 50 },
+    { name: "Dec", value: 50 },
   ];
 
   return (
@@ -593,7 +599,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
         {/* Modal Content */}
         <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-2">
           {/* Employee Info Section (formatted like EmployeeDetails) */}
-          <div>
+          <div className="space-y-1">
             <h4 className="text-xl font-bold text-gray-800">
               {t("Employee Appraisal Summary")}
             </h4>
@@ -602,16 +608,13 @@ export const EmployeeRating = ({ open, onClose, data }) => {
           </div>
 
           {/* KPI Performance & Rating */}
-          <div className="flex flex-col lg:flex-row gap-6">
+          <div className="flex flex-col lg:flex-row gap-2">
             {/* KPI Performance */}
             <div className="flex-1 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <h5 className="text-sm font-semibold text-gray-600 mb-1">
                 KPI Performance
               </h5>
               <div className="text-xl font-bold text-gray-900">90.75%</div>
-              <div className="text-green-600 text-sm mb-4">
-                +20% vs last month
-              </div>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart
                   data={kpiData}
@@ -637,7 +640,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
             </div>
 
             {/* Right Panel */}
-            <div className="w-full lg:w-1/3 flex flex-col gap-6">
+            <div className="w-full lg:w-1/3 flex flex-col gap-2">
               {/* Goal Status Overview */}
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h5 className="text-lg font-semibold text-gray-700 mb-4">
@@ -660,8 +663,6 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                         />
                       ))}
                     </Pie>
-                    <Tooltip />
-                    <Legend verticalAlign="bottom" height={36} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -706,7 +707,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
             </select>
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-3">
           <Button type="text" onClick={handleSubmit} disabled={isLoading}>
             {isLoading ? "Saving..." : "Save"}
           </Button>
