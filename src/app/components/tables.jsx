@@ -175,7 +175,6 @@ export function EmployeeBadgeTable() {
   // const data = useMemo(() => rawData, [rawData]);
 
   const data = useMemo(() => BadgesTable, [BadgesTable]);
-  console.log({ rawData: rawData });
 
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
