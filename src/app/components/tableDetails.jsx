@@ -556,18 +556,17 @@ export const EmployeeRating = ({ open, onClose, data }) => {
   let starIcon = "";
 
   if (currentRating === "gold") {
-    ratingLabel = "Outstanding";
-    ratingMessage = "Awarded a Gold Star for outstanding performance.";
+    ratingLabel = t("outstanding");
+    ratingMessage = t("messageOutstanding");
     starIcon = "🥇";
   } else if (currentRating === "silver") {
-    ratingLabel = "Exceed Expectation";
+    ratingLabel = t("exceedsExpectations");
     ratingMessage =
-      "Awarded a Silver Star for great performance and strong consistency.";
-    starIcon = "🥈";
+      t("messageExceedExpectation");
   } else {
-    ratingLabel = "Meet Expectation";
+    ratingLabel = t("meetsExpectations");
     ratingMessage =
-      "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
+      t("messageMeetExpectation");
     starIcon = "🥉";
   }
 

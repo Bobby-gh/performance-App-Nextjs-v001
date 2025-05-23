@@ -183,8 +183,10 @@ i18n.use(initReactI18next).init({
         appraisalCategory: "Appraisal Category",
         selectAppraisalLevel: "Select appraisal level",
         save: "Save",
-        saving: "Saving..."
-
+        saving: "Saving...",
+        messageOutstanding: "Awarded a Gold Star for outstanding performance.",
+        messageExceedExpectation: "Awarded a Silver Star for great performance and strong consistency.",
+        messageMeetExpectation: "Awarded a Bronze Star. Improvement is needed, but potential is visible.",
       },
     },
     fr: {
@@ -362,6 +364,9 @@ i18n.use(initReactI18next).init({
         selectAppraisalLevel: "Sélectionner un niveau d'évaluation",
         save: "Enregistrer",
         saving: "Enregistrement...",
+        messageOutstanding: "Récompensé par une étoile d'or pour des performances exceptionnelles.",
+        messageExceedExpectation: "Récompensé par une étoile d'argent pour de grandes performances et une forte constance.",
+        messageMeetExpectation: "Récompensé par une étoile de bronze. Une amélioration est nécessaire, mais le potentiel est visible.",
       },
     },
   },
