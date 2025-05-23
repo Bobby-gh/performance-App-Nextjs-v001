@@ -19,6 +19,7 @@ import {
   useGoalAccessmentRouteData,
   useGoalRouteData,
   useTopGoalsRouteData,
+  useUserGoalBadgesTableData,
 } from "../api/databook/route-data";
 
 import {

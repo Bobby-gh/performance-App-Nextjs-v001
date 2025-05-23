@@ -667,16 +667,16 @@ export function BadgesReport() {
               <p className="pl-4">{Outstanding}</p>
             </div>
             <div className="flex flex-rows items-center">
-              <p className="pl-2 text-[#c0c0c0] font-medium">
+              <p className="pl-24 text-[#c0c0c0] font-medium">
                 {t("silverBadges")}:
               </p>
               <p className="pl-4">{ExceedsExpectations}</p>
             </div>
             <div className="flex flex-rows items-center">
-              <p className="pl-6 text-[#cd7f32] font-medium">
+              <p className="pl-24 text-[#cd7f32] font-medium">
                 {t("bronzeBadges")}:
               </p>
-              <p className="pl-2">{MeetsExpectations}</p>
+              <p className="pl-4">{MeetsExpectations}</p>
             </div>
           </div>
         </div>
