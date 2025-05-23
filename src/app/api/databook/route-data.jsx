@@ -22,6 +22,7 @@ import {
   GET_CATEGORY_ACHIEVED,
   ACTION_ITEMS,
   USER_RATING,
+  USER_RATING_BY_ID,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -504,6 +505,34 @@ export function useGetActionItems() {
 
   return { actionItem };
 }
+
+
+export function useUserGoalRatingByID() {
+  const { auth } = useContext(AuthContext);
+
+  const getUserRatingById = async (userId) => {
+    try {
+      const response = await axios.get(
+        `${USER_RATING_BY_ID}/${userId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          },
+          withCredentials: true,
+        }
+      );
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return { getUserRatingById };
+
+}
+
+
 /************************************************Post ROutes*************************************/
 
 export function useCreateDepartment() {

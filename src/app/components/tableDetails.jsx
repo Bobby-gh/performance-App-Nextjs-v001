@@ -26,6 +26,7 @@ import {
 import {
   useDepartmentRouteData,
   useEdit,
+  useUserGoalRatingByID,
   useUserRating,
 } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
@@ -525,9 +526,11 @@ export function EmployeeDetails({ data, open, onClose }) {
 
 export const EmployeeRating = ({ open, onClose, data }) => {
   const { createUserRating } = useUserRating();
+  const {getUserRatingById} = useUserGoalRatingByID(data?.userId)
   const [isLoading, setLoading] = useState(false);
   const [rating, setRating] = useState("");
   const { t } = useTranslation();
+  console.log({getUserRatingById:getUserRatingById})
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -647,6 +650,21 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                   Goal Status Overview
                 </h5>
                 <div className="flex">
+                  {/* Legend Summary */}
+                  <div className="flex flex-col space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-md w-full max-w-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">✅ Completed Goals</span>
+                      <span className="font-semibold text-green-700">34</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">🔄 In Progress Goals</span>
+                      <span className="font-semibold text-blue-700">15</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">❌ Not Started</span>
+                      <span className="font-semibold text-red-700">20</span>
+                    </div>
+                  </div>
                   <ResponsiveContainer width="100%" height={200}>
                     <PieChart>
                       <Pie
@@ -666,21 +684,6 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                       </Pie>
                     </PieChart>
                   </ResponsiveContainer>
-                  {/* Legend Summary */}
-                  <div className="flex flex-col space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-md w-full max-w-xs">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">✅ Completed Goals</span>
-                      <span className="font-semibold text-green-700">34</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">🔄 In Progress Goals</span>
-                      <span className="font-semibold text-blue-700">15</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">❌ Not Started</span>
-                      <span className="font-semibold text-red-700">20</span>
-                    </div>
-                  </div>
                 </div>
               </div>
 
