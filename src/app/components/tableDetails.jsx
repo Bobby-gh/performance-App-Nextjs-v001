@@ -578,7 +578,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     { name: "Apr", value: 95 },
     { name: "May", value: 70 },
     { name: "Jun", value: 50 },
-    { name: "July", value: 55},
+    { name: "July", value: 55 },
     { name: "Aug", value: 85 },
     { name: "Sept", value: 95 },
     { name: "Oct", value: 70 },
@@ -646,25 +646,42 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                 <h5 className="text-lg font-semibold text-gray-700 mb-4">
                   Goal Status Overview
                 </h5>
-                <ResponsiveContainer width="100%" height={200}>
-                  <PieChart>
-                    <Pie
-                      data={dummyChartData}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={70}
-                      dataKey="value"
-                      nameKey="name"
-                      label>
-                      {dummyChartData.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={COLORS[index % COLORS.length]}
-                        />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
+                <div className="flex">
+                  <ResponsiveContainer width="100%" height={200}>
+                    <PieChart>
+                      <Pie
+                        data={dummyChartData}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={70}
+                        dataKey="value"
+                        nameKey="name"
+                        label>
+                        {dummyChartData.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
+                  {/* Legend Summary */}
+                  <div className="flex flex-col space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-md w-full max-w-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">✅ Completed Goals</span>
+                      <span className="font-semibold text-green-700">34</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">🔄 In Progress Goals</span>
+                      <span className="font-semibold text-blue-700">15</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">❌ Not Started</span>
+                      <span className="font-semibold text-red-700">20</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Current Rating */}
