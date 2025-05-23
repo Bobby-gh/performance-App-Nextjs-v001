@@ -41,7 +41,6 @@ import Image from "next/image";
 import { MdOutlineMarkEmailRead, MdVerifiedUser } from "react-icons/md";
 import avatar from "../images/avatar.jpg";
 import { showToast } from "./notification";
-import { Star } from "@mui/icons-material";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
@@ -91,11 +90,11 @@ export function AssignGoal({ data, open, onClose }) {
         triggerComponent();
         onClose();
       } else {
-        console.error("Edit Save failed:", response);
+        console.log("Edit Save failed:", response);
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
     } catch (error) {
-      console.error("Edit error:", error);
+      console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
       setEditMode(false);
@@ -282,11 +281,11 @@ export function AssessGoal({ data, open, onClose }) {
         triggerComponent();
         onClose();
       } else {
-        console.error("Edit Save failed:", response);
+        console.log("Edit Save failed:", response);
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
     } catch (error) {
-      console.error("Edit error:", error);
+      console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
       setEditMode(false);
@@ -457,7 +456,7 @@ export function EmployeeDetails({ data, open, onClose }) {
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
     } catch (error) {
-      console.error("Edit error:", error);
+      console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -520,23 +519,7 @@ export function EmployeeDetails({ data, open, onClose }) {
 }
 
 
-import { Modal } from "@mui/material";
-import { Box } from "@mui/system";
-import { IoClose, IoPerson } from "react-icons/io5";
-import { MdOutlineMarkEmailRead, MdVerifiedUser } from "react-icons/md";
-import { FaSitemap } from "react-icons/fa6";
-import { useTranslation } from "react-i18next";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  BarChart,
-  Bar,
-  XAxis,
-  ResponsiveContainer,
-} from "recharts";
+
 
 export const EmployeeRating = ({ data, onRate, open, onClose }) => {
   const { t } = useTranslation();
