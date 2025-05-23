@@ -4,6 +4,7 @@ import { AuthContext } from "../contex/context-context";
 import { FaEye, FaSave, FaSitemap, FaUser } from "react-icons/fa";
 import {
   Box,
+  Button,
   FormControl,
   IconButton,
   MenuItem,
@@ -17,12 +18,16 @@ import {
   Cell,
   Tooltip,
   Legend,
-  ResponsiveContainer, 
+  ResponsiveContainer,
   BarChart,
   Bar,
   XAxis,
 } from "recharts";
-import { useDepartmentRouteData, useEdit } from "../api/databook/route-data";
+import {
+  useDepartmentRouteData,
+  useEdit,
+  useUserRating,
+} from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
 import {
   CustomButton,
@@ -41,7 +46,6 @@ import Image from "next/image";
 import { MdOutlineMarkEmailRead, MdVerifiedUser } from "react-icons/md";
 import avatar from "../images/avatar.jpg";
 import { showToast } from "./notification";
-import { Star } from "@mui/icons-material";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
@@ -91,11 +95,11 @@ export function AssignGoal({ data, open, onClose }) {
         triggerComponent();
         onClose();
       } else {
-        console.error("Edit Save failed:", response);
+        console.log("Edit Save failed:", response);
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
     } catch (error) {
-      console.error("Edit error:", error);
+      console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
       setEditMode(false);
@@ -282,11 +286,11 @@ export function AssessGoal({ data, open, onClose }) {
         triggerComponent();
         onClose();
       } else {
-        console.error("Edit Save failed:", response);
+        console.log("Edit Save failed:", response);
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
     } catch (error) {
-      console.error("Edit error:", error);
+      console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
       setEditMode(false);
@@ -457,7 +461,7 @@ export function EmployeeDetails({ data, open, onClose }) {
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
     } catch (error) {
-      console.error("Edit error:", error);
+      console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -519,14 +523,24 @@ export function EmployeeDetails({ data, open, onClose }) {
   );
 }
 
-
-export const EmployeeRating = ({
-  data,
-  onRate,
-  open,
-  onClose,
-}) => {
+export const EmployeeRating = ({ open, onClose, data }) => {
+  const { createUserRating } = useUserRating();
+  const [isLoading, setLoading] = useState(false);
+  const [rating, setRating] = useState("");
   const { t } = useTranslation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await createUserRating(data?.userId, rating);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const dummyChartData = [
     { name: "Completed", value: 100 },
@@ -542,16 +556,16 @@ export const EmployeeRating = ({
   let starIcon = "";
 
   if (currentRating === "gold") {
-    ratingLabel = "Gold Star";
+    ratingLabel = "Outstanding";
     ratingMessage = "Awarded a Gold Star for outstanding performance.";
     starIcon = "🥇";
   } else if (currentRating === "silver") {
-    ratingLabel = "Silver Star";
+    ratingLabel = "Exceed Expectation";
     ratingMessage =
       "Awarded a Silver Star for great performance and strong consistency.";
     starIcon = "🥈";
   } else {
-    ratingLabel = "Bronze Star";
+    ratingLabel = "Meet Expectation";
     ratingMessage =
       "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
     starIcon = "🥉";
@@ -564,6 +578,12 @@ export const EmployeeRating = ({
     { name: "Apr", value: 95 },
     { name: "May", value: 70 },
     { name: "Jun", value: 50 },
+    { name: "July", value: 55},
+    { name: "Aug", value: 85 },
+    { name: "Sept", value: 95 },
+    { name: "Oct", value: 70 },
+    { name: "Nov", value: 50 },
+    { name: "Dec", value: 50 },
   ];
 
   return (
@@ -577,36 +597,28 @@ export const EmployeeRating = ({
         </div>
 
         {/* Modal Content */}
-        <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-6">
-          {/* Header with employee info */}
+        <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-2">
+          {/* Employee Info Section (formatted like EmployeeDetails) */}
           <div className="space-y-1">
             <h4 className="text-xl font-bold text-gray-800">
               Employee Appraisal Summary
             </h4>
-            <p className="text-sm text-gray-600">
-              <span className="font-medium">{t("fullName")}:</span> {data?.name}
-            </p>
-            <p className="text-sm text-gray-600">
-              <span className="font-medium">{t("department")}:</span> {data?.department}
-            </p>
+            <div className="text-sm">{data?.name}</div>
+            <div className="text-sm">{data?.department}</div>
           </div>
 
-          {/* Layout */}
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* KPI Card */}
+          {/* KPI Performance & Rating */}
+          <div className="flex flex-col lg:flex-row gap-2">
+            {/* KPI Performance */}
             <div className="flex-1 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <h5 className="text-sm font-semibold text-gray-600 mb-1">
                 KPI Performance
               </h5>
               <div className="text-xl font-bold text-gray-900">90.75%</div>
-              <div className="text-green-600 text-sm mb-4">
-                +20% vs last month
-              </div>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart
                   data={kpiData}
-                  margin={{ top: 10, right: 20, left: -10, bottom: 20 }}
-                >
+                  margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
                   <XAxis
                     dataKey="name"
                     tick={{ fontSize: 12 }}
@@ -627,9 +639,9 @@ export const EmployeeRating = ({
               </ResponsiveContainer>
             </div>
 
-            {/* Right Side */}
-            <div className="w-full lg:w-1/3 flex flex-col gap-6">
-              {/* Goal Status */}
+            {/* Right Panel */}
+            <div className="w-full lg:w-1/3 flex flex-col gap-2">
+              {/* Goal Status Overview */}
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h5 className="text-lg font-semibold text-gray-700 mb-4">
                   Goal Status Overview
@@ -643,8 +655,7 @@ export const EmployeeRating = ({
                       outerRadius={70}
                       dataKey="value"
                       nameKey="name"
-                      label
-                    >
+                      label>
                       {dummyChartData.map((entry, index) => (
                         <Cell
                           key={`cell-${index}`}
@@ -652,8 +663,6 @@ export const EmployeeRating = ({
                         />
                       ))}
                     </Pie>
-                    <Tooltip />
-                    <Legend verticalAlign="bottom" height={36} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -680,26 +689,30 @@ export const EmployeeRating = ({
           <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             <label
               htmlFor="appraisal"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
+              className="block mb-2 text-sm font-medium text-gray-700">
               Appraisal Category
             </label>
             <select
               id="appraisal"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
-              defaultValue=""
-            >
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}>
               <option value="" disabled>
                 Select appraisal level
               </option>
-              <option value="gold">Gold - Exceptional Performance</option>
-              <option value="silver">Silver - Above Expectations</option>
-              <option value="bronze">Bronze - Meets Expectations</option>
+              <option value="outstanding">Outstanding Performance</option>
+              <option value="Exceeds Expectations">Above Expectations</option>
+              <option value="Meets Expectations">Meets Expectations</option>
+              <option value="Below Expectations">Below Expectations</option>
             </select>
           </div>
+        </div>
+        <div className="flex justify-end mt-3">
+          <Button type="text" onClick={handleSubmit} disabled={isLoading}>
+            {isLoading ? "Saving..." : "Save"}
+          </Button>
         </div>
       </Box>
     </Modal>
   );
 };
-

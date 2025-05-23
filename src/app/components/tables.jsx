@@ -573,6 +573,7 @@ export function EmployeeTable() {
         <EmployeeRating
           open={ratingRow}
           onClose={()=>setRatingRow(false)}
+          data ={employeeRating}
         />
       )}
     </>

@@ -24,5 +24,6 @@ export const GOAL_CATEGORY_COUNT = "/goals/goal-type-count"
 export const GOAL_BADGES = "/goal-assessments/get-ratings-summary"
 export const GET_CATEGORY_ACHIEVED = "/performance/get-monthly-average-achieved-performance"
 export const ACTION_ITEMS = "/goals/dept"
+export const USER_RATING = "/users/update-rating"
 
 
