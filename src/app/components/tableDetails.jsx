@@ -524,26 +524,22 @@ export function EmployeeDetails({ data, open, onClose }) {
 
 export const EmployeeRating = ({ open, onClose, data }) => {
   const { createUserRating } = useUserRating;
-  const [isLoading, setLoading] = useState(false)
-  const [rating, setRating] = useState("")
+  const [isLoading, setLoading] = useState(false);
+  const [rating, setRating] = useState("");
   const { t } = useTranslation();
 
-
-
-  const handleSubmit = async(e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try{
-      const response = await createUserRating(data?.id, rating)
-      console.log(response)
-    }catch(error){
-      console.log(error)
+    try {
+      const response = await createUserRating(data?.id, rating);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-    finally{
-      setLoading(false)
-    }
-
-  }
+  };
 
   const dummyChartData = [
     { name: "Completed", value: 100 },
@@ -596,29 +592,13 @@ export const EmployeeRating = ({ open, onClose, data }) => {
         {/* Modal Content */}
         <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-6">
           {/* Employee Info Section (formatted like EmployeeDetails) */}
-          <div className="space-y-4 p-4 rounded border border-gray-200 bg-white">
-            <h4 className="text-xl font-bold text-gray-800">
-              {t("Employee Appraisal Summary")}
-            </h4>
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <IoPerson color="blue" />
-                <span className="font-medium">{data?.name}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <FaSitemap color="blue" />
-                <span>{data?.department}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <MdVerifiedUser color="blue" />
-                <span>{data?.role}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <MdOutlineMarkEmailRead color="blue" />
-                <span>{data?.email}</span>
-              </div>
-            </div>
-          </div>
+          <h4 className="text-xl font-bold text-gray-800">
+            {t("Employee Appraisal Summary")}
+          </h4>
+          <h4 className="text-xl font-bold text-gray-800">{data?.name}</h4>
+          <h4 className="text-xl font-bold text-gray-800">
+            {data?.department}
+          </h4>
 
           {/* KPI Performance & Rating */}
           <div className="flex flex-col lg:flex-row gap-6">
@@ -714,8 +694,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
               id="appraisal"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
               value={rating}
-              onChange={setRating}
-              >
+              onChange={(e) => setRating(e.target.value)}>
               <option value="" disabled>
                 Select appraisal level
               </option>
@@ -727,13 +706,12 @@ export const EmployeeRating = ({ open, onClose, data }) => {
           </div>
         </div>
         <div className="flex justify-end">
-          <CustomButton
-            label="Submit"
+          <button
+            className="w-1/3 p-2 bg-blue-900 rounded-xl mt-4 text-white"
             onClick={handleSubmit}
-            type="submit"
-            className="custom-class"
-            loading={isLoading}
-          />
+            disabled={isLoading}>
+            {isLoading ? "Saving..." : "Save"}
+          </button>
         </div>
       </Box>
     </Modal>
