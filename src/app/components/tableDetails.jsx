@@ -17,12 +17,16 @@ import {
   Cell,
   Tooltip,
   Legend,
-  ResponsiveContainer, 
+  ResponsiveContainer,
   BarChart,
   Bar,
   XAxis,
 } from "recharts";
-import { useDepartmentRouteData, useEdit } from "../api/databook/route-data";
+import {
+  useDepartmentRouteData,
+  useEdit,
+  useUserRating,
+} from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
 import {
   CustomButton,
@@ -518,11 +522,28 @@ export function EmployeeDetails({ data, open, onClose }) {
   );
 }
 
-
-
-
-export const EmployeeRating = ({ data, onRate, open, onClose }) => {
+export const EmployeeRating = ({ open, onClose, data }) => {
+  const { createUserRating } = useUserRating;
+  const [loading, setLoading] = useState(false)
+  const [rating, setRating] = useState("")
   const { t } = useTranslation();
+
+
+
+  const handleSubmit = async(e) =>{
+    e.preventDefault();
+    setLoading(true);
+    try{
+      const response = await createUserRating(data?.id, rating)
+      console.log(response)
+    }catch(error){
+      console.log(error)
+    }
+    finally{
+      setLoading(false)
+    }
+
+  }
 
   const dummyChartData = [
     { name: "Completed", value: 100 },
@@ -543,11 +564,13 @@ export const EmployeeRating = ({ data, onRate, open, onClose }) => {
     starIcon = "🥇";
   } else if (currentRating === "silver") {
     ratingLabel = "Silver Star";
-    ratingMessage = "Awarded a Silver Star for great performance and strong consistency.";
+    ratingMessage =
+      "Awarded a Silver Star for great performance and strong consistency.";
     starIcon = "🥈";
   } else {
     ratingLabel = "Bronze Star";
-    ratingMessage = "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
+    ratingMessage =
+      "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
     starIcon = "🥉";
   }
 
@@ -609,7 +632,9 @@ export const EmployeeRating = ({ data, onRate, open, onClose }) => {
                 +20% vs last month
               </div>
               <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={kpiData} margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
+                <BarChart
+                  data={kpiData}
+                  margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
                   <XAxis
                     dataKey="name"
                     tick={{ fontSize: 12 }}
@@ -620,7 +645,12 @@ export const EmployeeRating = ({ data, onRate, open, onClose }) => {
                     cursor={{ fill: "rgba(99, 102, 241, 0.1)" }}
                     formatter={(value) => [`${value}%`, "Performance"]}
                   />
-                  <Bar dataKey="value" fill="#6366f1" radius={[6, 6, 0, 0]} barSize={30} />
+                  <Bar
+                    dataKey="value"
+                    fill="#6366f1"
+                    radius={[6, 6, 0, 0]}
+                    barSize={30}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -641,10 +671,12 @@ export const EmployeeRating = ({ data, onRate, open, onClose }) => {
                       outerRadius={70}
                       dataKey="value"
                       nameKey="name"
-                      label
-                    >
+                      label>
                       {dummyChartData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <Tooltip />
@@ -675,27 +707,35 @@ export const EmployeeRating = ({ data, onRate, open, onClose }) => {
           <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
             <label
               htmlFor="appraisal"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
+              className="block mb-2 text-sm font-medium text-gray-700">
               Appraisal Category
             </label>
             <select
               id="appraisal"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
-              defaultValue=""
-            >
+              value={rating}
+              onChange={setRating}
+              >
               <option value="" disabled>
                 Select appraisal level
               </option>
-              <option value="gold">Gold - Exceptional Performance</option>
-              <option value="silver">Silver - Above Expectations</option>
-              <option value="bronze">Bronze - Meets Expectations</option>
+              <option value="outstanding">Outstanding Performance</option>
+              <option value="Exceeds Expectations">Above Expectations</option>
+              <option value="Meets Expectations">Meets Expectations</option>
+              <option value="Below Expectations">Below Expectations</option>
             </select>
           </div>
+        </div>
+        <div className="flex justify-end">
+          <CustomButton
+            label="Submit"
+            onClick={handleSubmit}
+            type="submit"
+            className="custom-class"
+            loading={isLoading}
+          />
         </div>
       </Box>
     </Modal>
   );
 };
-
-

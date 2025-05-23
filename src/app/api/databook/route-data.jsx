@@ -21,6 +21,7 @@ import {
   GOAL_BADGES,
   GET_CATEGORY_ACHIEVED,
   ACTION_ITEMS,
+  USER_RATING,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -531,7 +532,40 @@ export function useCreateDepartment() {
   };
 
   return { createDepartment };
+
+
 }
+
+
+export function useUserRating() {
+  const { auth } = useContext(AuthContext);
+
+  const createUserRating = async (userId,rating) => {
+    try {
+      const response = await axios.patch(
+        USER_RATING,
+        JSON.stringify({
+          userId,
+          rating
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          },
+          withCredentials: true,
+        }
+      );
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return { createUserRating };
+
+}
+
 
 /****************Delete Routes*************** */
 
