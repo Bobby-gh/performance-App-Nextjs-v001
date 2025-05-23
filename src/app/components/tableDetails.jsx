@@ -596,10 +596,10 @@ export const EmployeeRating = ({ open, onClose, data }) => {
           <h4 className="text-xl font-bold text-gray-800">
             {t("Employee Appraisal Summary")}
           </h4>
-          <h4 className="text-sm">{data?.name}</h4>
-          <h4 className="text-sm">
+          <div className="text-sm">{data?.name}</div>
+          <div className="text-sm">
             {data?.department}
-          </h4>
+          </div>
 
           {/* KPI Performance & Rating */}
           <div className="flex flex-col lg:flex-row gap-6">
