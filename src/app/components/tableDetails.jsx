@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contex/context-context";
 import { FaEye, FaSave, FaSitemap, FaUser } from "react-icons/fa";
 import {
@@ -526,11 +526,25 @@ export function EmployeeDetails({ data, open, onClose }) {
 
 export const EmployeeRating = ({ open, onClose, data }) => {
   const { createUserRating } = useUserRating();
-  const {getUserRatingById} = useUserGoalRatingByID(data?.userId)
+  const {getUserRatingById} = useUserGoalRatingByID()
   const [isLoading, setLoading] = useState(false);
   const [rating, setRating] = useState("");
   const { t } = useTranslation();
-  console.log({getUserRatingById:getUserRatingById})
+
+  useEffect(() => {
+  const fetchUserRating = async () => {
+    try {
+      const res = await getUserRatingById(data?.userId);
+      console.log({ res : res});
+    } catch (error) {
+      console.error("Failed to fetch user rating:", error);
+    }
+  };
+
+  if (data?.userId) {
+    fetchUserRating();
+  }
+}, [data?.userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
