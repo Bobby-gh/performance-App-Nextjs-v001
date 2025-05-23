@@ -4,6 +4,7 @@ import { AuthContext } from "../contex/context-context";
 import { FaEye, FaSave, FaSitemap, FaUser } from "react-icons/fa";
 import {
   Box,
+  Button,
   FormControl,
   IconButton,
   MenuItem,
@@ -595,8 +596,8 @@ export const EmployeeRating = ({ open, onClose, data }) => {
           <h4 className="text-xl font-bold text-gray-800">
             {t("Employee Appraisal Summary")}
           </h4>
-          <h4 className="text-xl font-bold text-gray-800">{data?.name}</h4>
-          <h4 className="text-xl font-bold text-gray-800">
+          <h4 className="text-sm">{data?.name}</h4>
+          <h4 className="text-sm">
             {data?.department}
           </h4>
 
@@ -706,12 +707,12 @@ export const EmployeeRating = ({ open, onClose, data }) => {
           </div>
         </div>
         <div className="flex justify-end">
-          <button
-            className="w-1/3 p-2 bg-blue-900 rounded-xl mt-4 text-white"
+          <Button
+            type="text"
             onClick={handleSubmit}
             disabled={isLoading}>
             {isLoading ? "Saving..." : "Save"}
-          </button>
+          </Button>
         </div>
       </Box>
     </Modal>
