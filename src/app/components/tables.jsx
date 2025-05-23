@@ -12,6 +12,7 @@ import {
   useUserColumn,
   useDepartmentColumn,
   useEmployeeRatingColumn,
+  BadgesTable,
 } from "../api/databook/tabel-column-data";
 import {
   useDepartmentRouteData,
@@ -27,10 +28,19 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { MdDelete, MdEditNotifications, MdOutlineGeneratingTokens } from "react-icons/md";
+import {
+  MdDelete,
+  MdEditNotifications,
+  MdOutlineGeneratingTokens,
+} from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { Modaltrigger } from "../contex/context-context";
-import { AssessGoal, AssignGoal, EmployeeDetails, EmployeeRating } from "./tableDetails";
+import {
+  AssessGoal,
+  AssignGoal,
+  EmployeeDetails,
+  EmployeeRating,
+} from "./tableDetails";
 import { Delete } from "./widgets";
 import { useTranslation } from "react-i18next";
 import { FaRegEdit } from "react-icons/fa";
@@ -160,13 +170,12 @@ export function GoalTable() {
 export function EmployeeBadgeTable() {
   const employeeRating = useEmployeeRatingColumn();
   const columns = useMemo(() => employeeRating, []);
-  const {getallUserBadges} = useUserGoalBadgesTableData()
-  const rawData = getallUserBadges?.data || [];
-  const data = useMemo(() => rawData, [rawData]);
+  // const {getallUserBadges} = useUserGoalBadgesTableData()
+  // const rawData = getallUserBadges?.data || [];
+  // const data = useMemo(() => rawData, [rawData]);
 
-  console.log({rawData:rawData})
-  
-
+  const data = useMemo(() => BadgesTable, [BadgesTable]);
+  console.log({ rawData: rawData });
 
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
@@ -195,6 +204,49 @@ export function EmployeeBadgeTable() {
     enableColumnOrdering: true,
     enableRowSelection: true,
     enablePagination: true,
+
+    muiTableBodyCellProps: ({ cell }) => {
+      if (cell.column.id === "badge") {
+        const value = cell.getValue();
+        let bgColor = "";
+        let color = "#fff";
+
+        if (typeof value === "string") {
+          switch (value.toLowerCase()) {
+            case "outstanding":
+              bgColor = "#FFD700"; // Gold
+              color = "#000"; // good contrast
+              break;
+            case "exceeds expectations":
+              bgColor = "#CD7F32"; // Bronze
+              break;
+            case "meets expectations":
+              bgColor = "#C0C0C0"; // Silver
+              color = "#000";
+              break;
+            case "below expectations":
+              bgColor = "#F84626"; // Red
+              break;
+            case "pending ...":
+              bgColor = "#808080"; // Gray
+              break;
+            default:
+              bgColor = "#e0e0e0"; // Neutral fallback
+              color = "#000";
+          }
+        }
+
+        return {
+          sx: {
+            backgroundColor: `${bgColor} !important`,
+            color: `${color} !important`,
+            fontWeight: "bold",
+          },
+        };
+      }
+
+      return {};
+    },
   });
 
   return (
@@ -292,13 +344,13 @@ export function AccessGoalTable() {
           bgColor = "#808080";
         } else if (typeof value === "number") {
           if (value >= 80) {
-            bgColor = "#4A7C0B"; 
+            bgColor = "#4A7C0B";
           } else if (value >= 50) {
-            bgColor = "#0B37D6"; 
+            bgColor = "#0B37D6";
           } else if (value >= 20) {
             bgColor = "#F84626";
           } else {
-            bgColor = "#ecbe2f"; 
+            bgColor = "#ecbe2f";
             color = "#000"; // improve contrast
           }
         }
@@ -306,7 +358,7 @@ export function AccessGoalTable() {
         return {
           sx: {
             backgroundColor: `${bgColor} !important`,
-            color: `${color} !important`, 
+            color: `${color} !important`,
             fontWeight: "bold",
           },
         };
@@ -321,8 +373,7 @@ export function AccessGoalTable() {
         onClick={() => {
           handleEdit(row);
           closeMenu();
-        }}
-      >
+        }}>
         <ListItemIcon>
           <MdEditNotifications fontSize="small" />
         </ListItemIcon>
@@ -333,8 +384,7 @@ export function AccessGoalTable() {
         onClick={() => {
           handleDelete(row);
           closeMenu();
-        }}
-      >
+        }}>
         <ListItemIcon>
           <MdDelete fontSize="small" />
         </ListItemIcon>
@@ -570,12 +620,12 @@ export function EmployeeTable() {
           onClose={handleCloseDelete}
         />
       )}
-      
+
       {ratingRow && (
         <EmployeeRating
           open={ratingRow}
-          onClose={()=>setRatingRow(false)}
-          data ={employeeRating}
+          onClose={() => setRatingRow(false)}
+          data={employeeRating}
         />
       )}
     </>

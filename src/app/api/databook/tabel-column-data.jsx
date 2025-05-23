@@ -297,3 +297,39 @@ export const useDepartmentColumn = () => {
     },
   ];
 };
+
+
+
+
+export const BadgesTable = [
+  {
+    name: "Emmanuel",
+    department: "Finance",
+    performanceScore: 87,
+    badge: "Outstanding"
+  },
+  {
+    name: "Bob",
+    department: "Finance",
+    performanceScore: 75,
+    badge: "Exceeds Expectation"
+  },
+  {
+    name: "Alexader",
+    department: "Finance",
+    performanceScore: 92,
+    badge: "Outstanding"
+  },
+  {
+    name: "Ishmael",
+    department: "Finance",
+    performanceScore: 68,
+    badge: "Meets Expectation"
+  },
+  {
+    name: "Edmond",
+    department: "Finance",
+    performanceScore: 81,
+    badge: "Outstanding"
+  }
+]
