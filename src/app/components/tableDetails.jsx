@@ -601,7 +601,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
           {/* Employee Info Section (formatted like EmployeeDetails) */}
           <div className="space-y-1">
             <h4 className="text-xl font-bold text-gray-800">
-              Employee Appraisal Summary
+              {t("employeeAppraisalSummary")}
             </h4>
             <div className="text-sm">{data?.name}</div>
             <div className="text-sm">{data?.department}</div>
@@ -612,7 +612,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
             {/* KPI Performance */}
             <div className="flex-1 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <h5 className="text-sm font-semibold text-gray-600 mb-1">
-                KPI Performance
+                {t("kpiPerformance")}
               </h5>
               <div className="text-xl font-bold text-gray-900">90.75%</div>
               <ResponsiveContainer width="100%" height={200}>
@@ -644,7 +644,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
               {/* Goal Status Overview */}
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h5 className="text-lg font-semibold text-gray-700 mb-4">
-                  Goal Status Overview
+                  {t("goalStatusOverview")}
                 </h5>
                 <ResponsiveContainer width="100%" height={200}>
                   <PieChart>
@@ -670,7 +670,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
               {/* Rating */}
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h5 className="text-lg font-semibold text-gray-700 mb-2">
-                  Current Rating
+                  {t("currentRating")}
                 </h5>
                 <div className="flex items-center space-x-4">
                   <div className="text-yellow-400 text-3xl">{starIcon}</div>
@@ -690,7 +690,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
             <label
               htmlFor="appraisal"
               className="block mb-2 text-sm font-medium text-gray-700">
-              Appraisal Category
+              {t("appraisalCategory")}
             </label>
             <select
               id="appraisal"
@@ -698,18 +698,18 @@ export const EmployeeRating = ({ open, onClose, data }) => {
               value={rating}
               onChange={(e) => setRating(e.target.value)}>
               <option value="" disabled>
-                Select appraisal level
+                {t("selectAppraisalLevel")}
               </option>
-              <option value="outstanding">Outstanding Performance</option>
-              <option value="Exceeds Expectations">Above Expectations</option>
-              <option value="Meets Expectations">Meets Expectations</option>
-              <option value="Below Expectations">Below Expectations</option>
+              <option value="outstanding">{t("outstanding")}</option>
+              <option value="Exceeds Expectations">{t("exceedsExpectations")}</option>
+              <option value="Meets Expectations">{t("meetsExpectations")}</option>
+              <option value="Below Expectations">{t("belowExpectations")}</option>
             </select>
           </div>
         </div>
         <div className="flex justify-end mt-3">
           <Button type="text" onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? "Saving..." : "Save"}
+            {isLoading ? t("saving") : t("save")}
           </Button>
         </div>
       </Box>
