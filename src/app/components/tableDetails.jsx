@@ -669,15 +669,15 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                   {/* Legend Summary */}
                   <div className="flex flex-col space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-md w-full max-w-xs">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">✅ Completed Goals</span>
+                      <span className="font-medium">✅ {t("completed")} {t("goals")}</span>
                       <span className="font-semibold text-green-700">34</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">🔄 In Progress Goals</span>
+                      <span className="font-medium">🔄 {t("inProgress")} {t("goals")}</span>
                       <span className="font-semibold text-blue-700">15</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">❌ Not Started</span>
+                      <span className="font-medium">❌ {t("notStarted")}</span>
                       <span className="font-semibold text-red-700">20</span>
                     </div>
                   </div>
