@@ -39,7 +39,6 @@ export function InformationalSummary() {
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="flex">
-          <span className="text-blue-900">+55%</span>
           <span className="ml-2">{t("thanLastMonth")}</span>
         </div>
       </div>
@@ -55,7 +54,6 @@ export function InformationalSummary() {
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="flex">
-          <span className="text-blue-900">+55%</span>
           <span className="ml-2">{t("thanLastMonth")}</span>
         </div>
       </div>
@@ -71,7 +69,6 @@ export function InformationalSummary() {
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="flex">
-          <span className="text-blue-900">+55%</span>
           <span className="ml-2">{t("thanLastMonth")}</span>
         </div>
       </div>
