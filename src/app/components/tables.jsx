@@ -160,11 +160,13 @@ export function EmployeeBadgeTable() {
   const employeeRating = useEmployeeRatingColumn();
   const data = useMemo(() => []);
   const columns = useMemo(() => employeeRating, []);
+  const {getallUserBadges} = useUserGoalBadgesTableData()
+  const rawData = getallUserBadges?.data || [];
+  const data = useMemo(() => rawData, [rawData]);
 
+  console.log({rawData:rawData})
   
 
-
-  
 
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {

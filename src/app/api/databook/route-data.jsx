@@ -23,6 +23,7 @@ import {
   ACTION_ITEMS,
   USER_RATING,
   USER_RATING_BY_ID,
+  USER_BADGES_TABLE,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
@@ -529,6 +530,31 @@ export function useUserGoalRatingByID() {
   };
 
   return { getUserRatingById };
+
+}
+
+export function useUserGoalBadgesTableData() {
+  const { auth } = useContext(AuthContext);
+
+  const getallUserBadges = async () => {
+    try {
+      const response = await axios.get(
+        USER_BADGES_TABLE,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          },
+          withCredentials: true,
+        }
+      );
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return { getallUserBadges };
 
 }
 

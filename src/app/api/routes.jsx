@@ -25,6 +25,7 @@ export const GOAL_BADGES = "/goal-assessments/get-ratings-summary"
 export const GET_CATEGORY_ACHIEVED = "/performance/get-monthly-average-achieved-performance"
 export const ACTION_ITEMS = "/goals/dept"
 export const USER_RATING = "/users/update-rating" 
-export const USER_RATING_BY_ID = "/goal-assessments/get-employee-summary"
+export const USER_RATING_BY_ID = "/goal-assessments/get-employee-summary" 
+export const USER_BADGES_TABLE = "/goal-assessments/get-all-users-badge"
 
 

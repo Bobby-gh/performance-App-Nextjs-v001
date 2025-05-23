@@ -586,6 +586,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     ratingLabel = t("exceedsExpectations");
     ratingMessage =
       t("messageExceedExpectation");
+      
   } else if (currentRating === "Meets Expectations"){
     ratingLabel = t("meetsExpectations");
     ratingMessage =
@@ -664,13 +665,14 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                         outerRadius={70}
                         dataKey="value"
                         nameKey="name"
-                        label>
+                        >
                         {pieChartData.map((entry, index) => (
                           <Cell
                             key={`cell-${index}`}
                             fill={COLORS[index % COLORS.length]}
                           />
                         ))}
+                        <Tooltip/>
                       </Pie>
                     </PieChart>
                   </ResponsiveContainer>
