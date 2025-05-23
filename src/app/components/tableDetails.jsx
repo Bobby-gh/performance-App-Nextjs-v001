@@ -533,7 +533,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await createUserRating(data?.id, rating);
+      const response = await createUserRating(data?.userId, rating);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -591,14 +591,14 @@ export const EmployeeRating = ({ open, onClose, data }) => {
         </div>
 
         {/* Modal Content */}
-        <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-6">
+        <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-2">
           {/* Employee Info Section (formatted like EmployeeDetails) */}
-          <h4 className="text-xl font-bold text-gray-800">
-            {t("Employee Appraisal Summary")}
-          </h4>
-          <div className="text-sm">{data?.name}</div>
-          <div className="text-sm">
-            {data?.department}
+          <div>
+            <h4 className="text-xl font-bold text-gray-800">
+              {t("Employee Appraisal Summary")}
+            </h4>
+            <div className="text-sm">{data?.name}</div>
+            <div className="text-sm">{data?.department}</div>
           </div>
 
           {/* KPI Performance & Rating */}
@@ -707,10 +707,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
           </div>
         </div>
         <div className="flex justify-end">
-          <Button
-            type="text"
-            onClick={handleSubmit}
-            disabled={isLoading}>
+          <Button type="text" onClick={handleSubmit} disabled={isLoading}>
             {isLoading ? "Saving..." : "Save"}
           </Button>
         </div>
