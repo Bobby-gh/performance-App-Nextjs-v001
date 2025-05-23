@@ -524,7 +524,7 @@ export function EmployeeDetails({ data, open, onClose }) {
 
 export const EmployeeRating = ({ open, onClose, data }) => {
   const { createUserRating } = useUserRating;
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false)
   const [rating, setRating] = useState("")
   const { t } = useTranslation();
 
