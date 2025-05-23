@@ -520,12 +520,25 @@ export function EmployeeDetails({ data, open, onClose }) {
 }
 
 
-export const EmployeeRating = ({
-  data,
-  onRate,
-  open,
-  onClose,
-}) => {
+import { Modal } from "@mui/material";
+import { Box } from "@mui/system";
+import { IoClose, IoPerson } from "react-icons/io5";
+import { MdOutlineMarkEmailRead, MdVerifiedUser } from "react-icons/md";
+import { FaSitemap } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  BarChart,
+  Bar,
+  XAxis,
+  ResponsiveContainer,
+} from "recharts";
+
+export const EmployeeRating = ({ data, onRate, open, onClose }) => {
   const { t } = useTranslation();
 
   const dummyChartData = [
@@ -535,7 +548,7 @@ export const EmployeeRating = ({
   ];
 
   const COLORS = ["#015720", "#3300d9", "#800101"];
-  const currentRating = "gold"; // Ideally dynamic in future
+  const currentRating = "gold";
 
   let ratingLabel = "";
   let ratingMessage = "";
@@ -547,13 +560,11 @@ export const EmployeeRating = ({
     starIcon = "🥇";
   } else if (currentRating === "silver") {
     ratingLabel = "Silver Star";
-    ratingMessage =
-      "Awarded a Silver Star for great performance and strong consistency.";
+    ratingMessage = "Awarded a Silver Star for great performance and strong consistency.";
     starIcon = "🥈";
   } else {
     ratingLabel = "Bronze Star";
-    ratingMessage =
-      "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
+    ratingMessage = "Awarded a Bronze Star. Improvement is needed, but potential is visible.";
     starIcon = "🥉";
   }
 
@@ -578,25 +589,34 @@ export const EmployeeRating = ({
 
         {/* Modal Content */}
         <div className="bg-gray-50 p-6 rounded-xl shadow max-h-[78vh] overflow-y-auto space-y-6">
-          {/* Header with employee info */}
-          <div className="space-y-1">
+          {/* Employee Info Section (formatted like EmployeeDetails) */}
+          <div className="space-y-4 p-4 rounded border border-gray-200 bg-white">
             <h4 className="text-xl font-bold text-gray-800">
-              Employee Appraisal Summary
+              {t("Employee Appraisal Summary")}
             </h4>
-            <p className="text-sm text-gray-600">
-              <span className="font-medium">{t("name")}:</span> {data?.name}
-            </p>
-            <p className="text-sm text-gray-600">
-              <span className="font-medium">{t("department")}:</span> {data?.department}
-            </p>
-            <p className="text-sm text-gray-600">
-              <span className="font-medium">{t("role")}:</span> {data?.role}
-            </p>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <IoPerson color="blue" />
+                <span className="font-medium">{data?.name}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <FaSitemap color="blue" />
+                <span>{data?.department}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MdVerifiedUser color="blue" />
+                <span>{data?.role}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MdOutlineMarkEmailRead color="blue" />
+                <span>{data?.email}</span>
+              </div>
+            </div>
           </div>
 
-          {/* Layout */}
+          {/* KPI Performance & Rating */}
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* KPI Card */}
+            {/* KPI Performance */}
             <div className="flex-1 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <h5 className="text-sm font-semibold text-gray-600 mb-1">
                 KPI Performance
@@ -606,10 +626,7 @@ export const EmployeeRating = ({
                 +20% vs last month
               </div>
               <ResponsiveContainer width="100%" height={200}>
-                <BarChart
-                  data={kpiData}
-                  margin={{ top: 10, right: 20, left: -10, bottom: 20 }}
-                >
+                <BarChart data={kpiData} margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
                   <XAxis
                     dataKey="name"
                     tick={{ fontSize: 12 }}
@@ -620,19 +637,14 @@ export const EmployeeRating = ({
                     cursor={{ fill: "rgba(99, 102, 241, 0.1)" }}
                     formatter={(value) => [`${value}%`, "Performance"]}
                   />
-                  <Bar
-                    dataKey="value"
-                    fill="#6366f1"
-                    radius={[6, 6, 0, 0]}
-                    barSize={30}
-                  />
+                  <Bar dataKey="value" fill="#6366f1" radius={[6, 6, 0, 0]} barSize={30} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
 
-            {/* Right Side */}
+            {/* Right Panel */}
             <div className="w-full lg:w-1/3 flex flex-col gap-6">
-              {/* Goal Status */}
+              {/* Goal Status Overview */}
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h5 className="text-lg font-semibold text-gray-700 mb-4">
                   Goal Status Overview
@@ -649,10 +661,7 @@ export const EmployeeRating = ({
                       label
                     >
                       {dummyChartData.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={COLORS[index % COLORS.length]}
-                        />
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
                     <Tooltip />
@@ -661,7 +670,7 @@ export const EmployeeRating = ({
                 </ResponsiveContainer>
               </div>
 
-              {/* Rating */}
+              {/* Current Rating */}
               <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                 <h5 className="text-lg font-semibold text-gray-700 mb-2">
                   Current Rating
@@ -705,4 +714,5 @@ export const EmployeeRating = ({
     </Modal>
   );
 };
+
 
