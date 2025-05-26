@@ -5,6 +5,7 @@ import { FaEye, FaSave, FaSitemap, FaUser } from "react-icons/fa";
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   IconButton,
   MenuItem,
@@ -31,6 +32,7 @@ import {
 } from "../api/databook/route-data";
 import { useTranslation } from "react-i18next";
 import {
+  CategoryType,
   CustomButton,
   CustomSelect,
   FormInputField,
@@ -64,6 +66,7 @@ export function AssignGoal({ data, open, onClose }) {
     assignedTo: data.taskAssignedTo,
     deadline: data.goalDeadline,
     target: data.target,
+    goalType: data.goalType
   });
   const [editableFields, setEditableFields] = useState({ ...assignGoal });
   const [editMode, setEditMode] = useState(false);
@@ -79,6 +82,8 @@ export function AssignGoal({ data, open, onClose }) {
     taskAssignedTo: editableFields.assignedTo,
     goalDeadline: editableFields.deadline,
     target: editableFields.target,
+    priority: showRowDragColumn,
+    goalType: editableFields.goalType
   };
 
   const handleEditSubmit = async (e) => {
@@ -213,6 +218,41 @@ export function AssignGoal({ data, open, onClose }) {
                     />
 
                     <FormInputField
+                      label="assignedy"
+                      id="assignedBy"
+                      value={editableFields.taskAssignedBy}
+                      onChange={handleChange}
+                    />
+
+                    <ModalFormSelect
+                      id="goalType"
+                      label="Goal Type"
+                      value={editableFields.goalType}
+                      options={[
+                        {
+                          value: "human relationship",
+                          label: t("humanRelationship"),
+                        },
+                        { value: "financial", label: t("financial") },
+                        {
+                          value: "customer centred",
+                          label: t("customerCentred"),
+                        },
+                        {
+                          value: "innovation",
+                          label: t("internalProcessingAndInnovation"),
+                        },
+                      ]}
+                      onChange={(selectedOptions) => {
+                        setEditableFields((prev) => ({
+                          ...prev,
+                          goalType: selectedOptions,
+                        }));
+                      }}
+                      required
+                    />
+
+                    <FormInputField
                       label="target"
                       id="target"
                       value={editableFields.target}
@@ -224,19 +264,22 @@ export function AssignGoal({ data, open, onClose }) {
                       value={formattedDate(editableFields.deadline)}
                     />
                   </div>
-                  {/* Save Button */}
-                  <div className="flex justify-end mt-4">
-                    <CustomButton
-                      label="Submit"
-                      onClick={handleEditSubmit}
-                      type="submit"
-                      className="custom-class"
-                      loading={isLoading}
-                    />
-                  </div>
                 </FormControl>
               </div>
             </div>
+            <button
+              onClick={handleEditSubmit}
+              className="text-sm text-blue-500 hover:text-blue-700 px-4 py-1 rounded"
+              disabled={isLoading}>
+              {isLoading ? (
+                <div className="flex flex-row justify-center items-center">
+                  <p className="text-sm pr-2">loading...</p>
+                  <CircularProgress size={27} thickness={6} color="primary" />
+                </div>
+              ) : (
+                "Save"
+              )}
+            </button>
           </div>
         </Box>
       </Modal>
@@ -526,31 +569,31 @@ export function EmployeeDetails({ data, open, onClose }) {
 
 export const EmployeeRating = ({ open, onClose, data }) => {
   const { createUserRating } = useUserRating();
-  const {getUserRatingById} = useUserGoalRatingByID()
+  const { getUserRatingById } = useUserGoalRatingByID();
   const [isLoading, setLoading] = useState(false);
   const [rating, setRating] = useState("");
-  const [pieData, setPieData] = useState("")
-  const [barData, setBarData] = useState([])
-  const [recentRating, setCurrentRating] = useState("")
+  const [pieData, setPieData] = useState("");
+  const [barData, setBarData] = useState([]);
+  const [recentRating, setCurrentRating] = useState("");
   const { t } = useTranslation();
 
   useEffect(() => {
-  const fetchUserRating = async () => {
-    try {
-      const res = await getUserRatingById(data?.userId);
-      console.log({ res : res});
-      setPieData(res?.data.goalStatus)
-      setBarData(res?.data.performance)
-      setCurrentRating(res?.data.ratings)
-    } catch (error) {
-      console.error("Failed to fetch user rating:", error);
-    }
-  };
+    const fetchUserRating = async () => {
+      try {
+        const res = await getUserRatingById(data?.userId);
+        console.log({ res: res });
+        setPieData(res?.data.goalStatus);
+        setBarData(res?.data.performance);
+        setCurrentRating(res?.data.ratings);
+      } catch (error) {
+        console.error("Failed to fetch user rating:", error);
+      }
+    };
 
-  if (data?.userId) {
-    fetchUserRating();
-  }
-}, [data?.userId]);
+    if (data?.userId) {
+      fetchUserRating();
+    }
+  }, [data?.userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -572,7 +615,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
   ];
 
   const COLORS = ["#015720", "#3300d9", "#800101"];
-  const currentRating = recentRating; 
+  const currentRating = recentRating;
 
   let ratingLabel = "";
   let ratingMessage = "";
@@ -584,17 +627,12 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     starIcon = "🥇";
   } else if (currentRating === "Exceeds Expectations") {
     ratingLabel = t("exceedsExpectations");
-    ratingMessage =
-      t("messageExceedExpectation");
-      
-  } else if (currentRating === "Meets Expectations"){
+    ratingMessage = t("messageExceedExpectation");
+  } else if (currentRating === "Meets Expectations") {
     ratingLabel = t("meetsExpectations");
-    ratingMessage =
-      t("messageMeetExpectation");
+    ratingMessage = t("messageMeetExpectation");
     starIcon = "🥉";
   }
-
-
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -664,8 +702,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                         cy="50%"
                         outerRadius={70}
                         dataKey="value"
-                        nameKey="name"
-                        >
+                        nameKey="name">
                         {pieChartData.map((entry, index) => (
                           <Cell
                             key={`cell-${index}`}
@@ -673,7 +710,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                           />
                         ))}
                       </Pie>
-                      <Tooltip/>
+                      <Tooltip />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
@@ -713,9 +750,15 @@ export const EmployeeRating = ({ open, onClose, data }) => {
                 {t("selectAppraisalLevel")}
               </option>
               <option value="outstanding">{t("outstanding")}</option>
-              <option value="Exceeds Expectations">{t("exceedsExpectations")}</option>
-              <option value="Meets Expectations">{t("meetsExpectations")}</option>
-              <option value="Below Expectations">{t("belowExpectations")}</option>
+              <option value="Exceeds Expectations">
+                {t("exceedsExpectations")}
+              </option>
+              <option value="Meets Expectations">
+                {t("meetsExpectations")}
+              </option>
+              <option value="Below Expectations">
+                {t("belowExpectations")}
+              </option>
             </select>
           </div>
         </div>

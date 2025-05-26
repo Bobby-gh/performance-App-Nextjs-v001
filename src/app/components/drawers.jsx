@@ -170,7 +170,7 @@ export function CreateGoal() {
             {auth.refNum === "ref?2!" && (
             <CustomSelect
                 id="mainGoal"
-                label={t("actionItem")}
+                label="Department Goal"
                 value={formData.mainGoal}
                 onChange = {(selectOption)=>{
                   setFormData((prev)=>({

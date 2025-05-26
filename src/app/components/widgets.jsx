@@ -22,7 +22,10 @@ export function Delete({ data, message, name, open, onClose }) {
     setIsSubmitting(true);
 
     try {
-      if (!name || !["goal", "accessGoal" , "department", "user"].includes(name)) {
+      if (
+        !name ||
+        !["goal", "accessGoal", "department", "user"].includes(name)
+      ) {
         return;
       }
 
@@ -290,3 +293,13 @@ export const ModalModification = {
   p: 4,
   borderRadius: 1,
 };
+
+export const CategoryType = [
+  { value: "human relationship", label: t("humanRelationship") },
+  { value: "financial", label: t("financial") },
+  { value: "customer centred", label: t("customerCentred") },
+  {
+    value: "innovation",
+    label: t("internalProcessingAndInnovation"),
+  },
+];

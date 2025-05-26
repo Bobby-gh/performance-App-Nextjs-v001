@@ -234,6 +234,10 @@ export const useAccessingGoalColumn = () => {
 
   return [
     {
+      accessorKey: "mainGoal",
+      header: "Department Goal",
+    },
+    {
       accessorKey: "taskAssignedTo",
       header: t("department"),
     },

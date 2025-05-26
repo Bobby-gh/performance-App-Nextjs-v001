@@ -300,7 +300,18 @@ export function AccessGoalTable() {
     [goalAssessment]
   );
 
-  const columns = useMemo(() => accessinggoalcolumn, []);
+ 
+
+  // Inject MRN column override
+const columns = useMemo(() => {
+  return accessinggoalcolumn.filter((col) => {
+    if (isManager) {
+      return col.accessorKey !== "taskAssignedTo"; // hide taskAssignedTo for managers
+    } else {
+      return col.accessorKey !== "mainGoal"; // hide mainGoal for non-managers
+    }
+  });
+}, [accessinggoalcolumn, isManager]);
 
   const table = useMaterialReactTable({
     columns,
