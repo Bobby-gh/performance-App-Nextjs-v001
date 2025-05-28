@@ -543,7 +543,7 @@ export function ProjectCard() {
 }
 
 
-export default function GoalDetails() {
+export function GoalDetails() {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
@@ -649,10 +649,10 @@ export default function GoalDetails() {
       </div>
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="font-semibold text-gray-700">{t("currentProgress")} ({goal.actualProgress}%)</h3>
+          <h3 className="font-semibold text-gray-700">{t("currentProgress")} ({goal.actualProgressPercent}%)</h3>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-          <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${goal.actualProgress}%` }}></div>
+          <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${goal.actualProgressPercent}%` }}></div>
         </div>
         <ul className="space-y-2">
           {checklistItems.map((item, index) => (
