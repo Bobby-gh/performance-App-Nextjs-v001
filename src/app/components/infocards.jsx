@@ -407,7 +407,7 @@ export function AddDepartment() {
   );
 }
 
-export function GoalDetails() {
+export function ProjectCard() {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
@@ -541,6 +541,171 @@ export function GoalDetails() {
     </div>
   );
 }
+
+
+export default function GoalDetails() {
+  const { t } = useTranslation();
+  const { auth } = useContext(AuthContext);
+  const { goal } = useContext(GoalSelectContext);
+  const [progress, setProgress] = useState(goal.actualProgress);
+  const [comment, setComment] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const { triggerComponent } = useContext(Modaltrigger);
+
+  const checklistItems = [
+    { label: 'Create wireframes to understand', done: true },
+    { label: 'UI/UX design development', done: true },
+    { label: 'Layout design', done: true },
+    { label: 'Backend devs', done: false },
+    { label: 'Testing for possible errors', done: false },
+    { label: 'Final works on projects', done: false },
+  ];
+
+  const employees = [
+    { name: 'Jacob', img: 'https://randomuser.me/api/portraits/men/1.jpg' },
+    { name: 'Regina', img: 'https://randomuser.me/api/portraits/women/2.jpg' },
+    { name: 'Jane', img: 'https://randomuser.me/api/portraits/women/3.jpg' },
+    { name: 'Ronald', img: 'https://randomuser.me/api/portraits/men/4.jpg' },
+    { name: 'Dustin', img: 'https://randomuser.me/api/portraits/men/5.jpg' },
+    { name: 'Robert', img: 'https://randomuser.me/api/portraits/men/6.jpg' },
+  ];
+
+
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.patch(
+        UPDATE_GOAL_PROGRESS,
+        JSON.stringify({
+          goalId: goal.id,
+          progressIncrement: progress,
+          comment,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        showToast("Progress updated successfully", "success");
+        triggerComponent();
+      }
+    } catch (err) {
+      console.log(err);
+      alert(`Error: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto p-4 bg-white shadow-xl rounded-2xl">
+      <div className="flex items-center mb-4">
+        <div>
+          <h2 className="text-xl font-bold">{goal.goalTitle}</h2>
+          <p className="text-gray-500 text-sm">{goal.goalTitle}</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="bg-blue-50 p-2 rounded-xl text-center">
+          <p className="text-blue-700 text-sm">{t("target")}</p>
+          <p className="text-lg font-semibold">{goal.target}</p>
+        </div>
+        <div className="bg-blue-50 p-2 rounded-xl text-center">
+          <p className="text-blue-700 text-sm">Start Date</p>
+          <p className="text-lg font-semibold">17 Jun, 2020</p>
+        </div>
+        <div className="bg-blue-50 p-2 rounded-xl text-center">
+          <p className="text-blue-700 text-sm">{t("deadline")}</p>
+          <p className="text-lg font-semibold">{goal.goalDeadline}</p>
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <h3 className="font-semibold text-gray-700 mb-2">{t("description")}</h3>
+        <p className="text-sm text-gray-600">
+          {goal.goalDescription}        
+        </p>
+      </div>
+      <div className="mb-6">
+        <h3 className="font-semibold text-gray-700 mb-2">{t("employees")}</h3>
+        <div className="flex space-x-4 overflow-x-auto">
+          {employees.map((member, idx) => (
+            <div key={idx} className="flex flex-col items-center">
+              <img
+                src={member.img}
+                alt={member.name}
+                className="h-12 w-12 rounded-full object-cover"
+              />
+              <p className="text-xs mt-1 text-gray-700 font-medium">{member.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="font-semibold text-gray-700">{t("currentProgress")} ({goal.actualProgress}%)</h3>
+        </div>
+        <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+          <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${goal.actualProgress}%` }}></div>
+        </div>
+        <ul className="space-y-2">
+          {checklistItems.map((item, index) => (
+            <li key={index} className="flex items-center space-x-2">
+              <input type="checkbox" checked={item.done} readOnly className="form-checkbox text-blue-500" />
+              <span className={item.done ? 'line-through text-gray-500' : ''}>{item.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {auth.refNum !== "ref?2!" && (
+        <>
+          <div className="flex items-center space-x-4 mt-4 mb-4">
+            <label htmlFor="progress-input" className="text-gray-600 text-sm">
+              <strong className="w-1/3 text-black">{t("enterProgress")}</strong>
+            </label>
+          </div>
+
+          <div className="mb-4 mt-4">
+            <FormInputField
+              id="progress-input"
+              value={progress}
+              onChange={(e) => setProgress(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-12 w-full">
+            <label htmlFor="comment" className="block mb-2 font-medium">{t("comment")}</label>
+            <textarea
+              id="comment"
+              rows={4}
+              className="w-full p-2 border border-gray-300 rounded"
+              placeholder="Enter comment"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            className="w-full p-2 bg-blue-900 rounded-xl text-white"
+            onClick={handleUpdate}
+            disabled={isLoading}
+          >
+            {isLoading ? "Submitting..." : t("submitProgress")}
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
+
 
 
 export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
