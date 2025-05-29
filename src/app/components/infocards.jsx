@@ -561,14 +561,7 @@ export function GoalDetails() {
     { label: 'Final works on projects', done: false },
   ];
 
-  const employees = [
-    { name: 'Jacob', img: 'https://randomuser.me/api/portraits/men/1.jpg' },
-    { name: 'Regina', img: 'https://randomuser.me/api/portraits/women/2.jpg' },
-    { name: 'Jane', img: 'https://randomuser.me/api/portraits/women/3.jpg' },
-    { name: 'Ronald', img: 'https://randomuser.me/api/portraits/men/4.jpg' },
-    { name: 'Dustin', img: 'https://randomuser.me/api/portraits/men/5.jpg' },
-    { name: 'Robert', img: 'https://randomuser.me/api/portraits/men/6.jpg' },
-  ];
+  const employees = ['Jacob', 'Regina', 'Jane', 'Ronald', 'Dustin', 'Robert'];
 
 
   const handleUpdate = async (event) => {
@@ -634,15 +627,15 @@ export function GoalDetails() {
       </div>
       <div className="mb-6">
         <h3 className="font-semibold text-gray-700 mb-2">{t("employees")}</h3>
-        <div className="flex space-x-4 overflow-x-auto">
-          {employees.map((member, idx) => (
-            <div key={idx} className="flex flex-col items-center">
+        <div className="flex gap-4 overflow-x-auto py-4">
+          {employees.map((name) => (
+            <div key={name} className="flex flex-col items-center">
               <img
-                src={member.img}
-                alt={member.name}
-                className="h-12 w-12 rounded-full object-cover"
+                src={`https://api.dicebear.com/7.x/initials/svg?seed=${name}&radius=50&backgroundColor=lightgray`}
+                alt={name}
+                className="w-10 h-10 rounded-full object-cover"
               />
-              <p className="text-xs mt-1 text-gray-700 font-medium">{member.name}</p>
+              <p className="text-xs mt-1">{name}</p>
             </div>
           ))}
         </div>
