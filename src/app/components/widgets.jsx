@@ -295,11 +295,11 @@ export const ModalModification = {
 };
 
 export const CategoryType = [
-  { value: "human relationship", label: t("humanRelationship") },
-  { value: "financial", label: t("financial") },
-  { value: "customer centred", label: t("customerCentred") },
+  { value: "human relationship", label: "humanRelationship"},
+  { value: "financial", label: "financial" },
+  { value: "customer centred", label: "customerCentred" },
   {
     value: "innovation",
-    label: t("internalProcessingAndInnovation"),
+    label: "internalProcessingAndInnovation",
   },
 ];
