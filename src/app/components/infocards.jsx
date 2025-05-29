@@ -659,13 +659,13 @@ export function GoalDetails() {
 
       {auth.refNum !== "ref?2!" && (
         <>
-          <div className="flex items-center space-x-4 mt-4 mb-4">
+          <div className="flex items-center space-x-4 mt-2 mb-2">
             <label htmlFor="progress-input" className="text-gray-600 text-sm">
               <strong className="w-1/3 text-black">{t("enterProgress")}</strong>
             </label>
           </div>
 
-          <div className="mb-4 mt-4">
+          <div className="mb-2">
             <FormInputField
               id="progress-input"
               value={progress}
@@ -674,8 +674,8 @@ export function GoalDetails() {
             />
           </div>
 
-          <div className="mb-12 w-full">
-            <label htmlFor="comment" className="block mb-2 font-medium">{t("comment")}</label>
+          <div className="mb-4 w-full">
+            <label htmlFor="comment" className="block mb-1 font-medium">{t("comment")}</label>
             <textarea
               id="comment"
               rows={4}
@@ -686,6 +686,7 @@ export function GoalDetails() {
               required
             />
           </div>
+
           <button
             className="w-full p-2 bg-blue-900 rounded-xl text-white"
             onClick={handleUpdate}
@@ -694,6 +695,7 @@ export function GoalDetails() {
             {isLoading ? "Submitting..." : t("submitProgress")}
           </button>
         </>
+
       )}
     </div>
   );
