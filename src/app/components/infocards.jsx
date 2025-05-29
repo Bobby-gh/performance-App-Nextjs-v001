@@ -631,7 +631,7 @@ export function GoalDetails() {
           {employees.map((name) => (
             <div key={name} className="flex flex-col items-center">
               <img
-                src={`https://api.dicebear.com/7.x/fun-emoji/svg?seed=${name}`}
+                src={`https://api.dicebear.com/7.x/initials/svg?seed=${name}`}
                 alt={name}
                 className="w-10 h-10 rounded-full object-cover"
               />
