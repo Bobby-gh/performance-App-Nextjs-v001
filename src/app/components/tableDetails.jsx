@@ -82,7 +82,7 @@ export function AssignGoal({ data, open, onClose }) {
     taskAssignedTo: editableFields.assignedTo,
     goalDeadline: editableFields.deadline,
     target: editableFields.target,
-    priority: showRowDragColumn,
+    priority: "",
     goalType: editableFields.goalType
   };
 
