@@ -547,6 +547,9 @@ export function GoalDetails() {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
+
+  console.log("Goal data:", goal);
+
   const [progress, setProgress] = useState(goal.actualProgress);
   const [comment, setComment] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -562,7 +565,6 @@ export function GoalDetails() {
   ];
 
   const employees = ['Jacob', 'Regina', 'Jane', 'Ronald', 'Dustin', 'Robert'];
-
 
   const handleUpdate = async (event) => {
     event.preventDefault();
@@ -625,6 +627,7 @@ export function GoalDetails() {
           {goal.goalDescription}        
         </p>
       </div>
+
       <div className="mb-6">
         <h3 className="font-semibold text-gray-700 mb-2">{t("employees")}</h3>
         <div className="flex gap-4 overflow-x-auto py-4">
@@ -640,6 +643,7 @@ export function GoalDetails() {
           ))}
         </div>
       </div>
+
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
           <h3 className="font-semibold text-gray-700">{t("currentProgress")} ({goal.actualProgressPercent}%)</h3>
@@ -695,11 +699,11 @@ export function GoalDetails() {
             {isLoading ? "Submitting..." : t("submitProgress")}
           </button>
         </>
-
       )}
     </div>
   );
 }
+
 
 
 
