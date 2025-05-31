@@ -203,7 +203,7 @@ export function AssignGoal({ data, open, onClose }) {
                     <ModalFormSelect
                       id="assignedTO"
                       label={t("assignedTo")}
-                      value={editableFields.assignedTo}
+                      value={editableFields.taskAssignedTo}
                       options={departmenttable.map((department) => ({
                         value: department.departmentId,
                         label: department.departmentName,
@@ -218,7 +218,7 @@ export function AssignGoal({ data, open, onClose }) {
                     />
 
                     <FormInputField
-                      label="assignedy"
+                      label={t("assignedBy")}
                       id="assignedBy"
                       value={editableFields.taskAssignedBy}
                       onChange={handleChange}
