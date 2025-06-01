@@ -9,7 +9,7 @@ export default function MyGoals() {
   const { setGoal } = useContext(GoalSelectContext);
   const { mygoal, fetchData } = useMyGoalRouteData();
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
-  console.log(mygoal);
+  console.log({"my assigned goal": mygoal});
   useEffect(() => {
     const fetchAndReset = async () => {
       if (!trigger) return;
