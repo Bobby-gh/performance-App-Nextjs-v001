@@ -610,7 +610,7 @@ export function GoalDetails() {
         </div>
         <div className="bg-blue-50 p-2 rounded-xl text-center">
           <p className="text-blue-700 text-sm">{t("startDate")}</p>
-          <p className="text-lg font-semibold">{goal.dateAssigned}</p>
+          <p className="text-lg font-semibold">{new Date(goal.dateAssigned).toISOString().split("T")[0]}</p>
         </div>
         <div className="bg-blue-50 p-2 rounded-xl text-center">
           <p className="text-blue-700 text-sm">{t("deadline")}</p>
