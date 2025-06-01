@@ -555,16 +555,13 @@ export function GoalDetails() {
   const [isLoading, setLoading] = useState(false);
   const { triggerComponent } = useContext(Modaltrigger);
 
-  const checklistItems = [
-    { label: 'Create wireframes to understand', done: true },
-    { label: 'UI/UX design development', done: true },
-    { label: 'Layout design', done: true },
-    { label: 'Backend devs', done: false },
-    { label: 'Testing for possible errors', done: false },
-    { label: 'Final works on projects', done: false },
-  ];
+  const employeeGoals = goal.employeeGoals || [];
 
-  const employees = ['Jacob', 'Regina', 'Jane', 'Ronald', 'Dustin', 'Robert'];
+  const checklistItems = employeeGoals.map((empGoal) => ({
+    label: empGoal.goalTitle,
+    done: empGoal.status === "Completed",
+    employeeName: empGoal.employeeName,
+  }));
 
   const handleUpdate = async (event) => {
     event.preventDefault();
@@ -612,8 +609,8 @@ export function GoalDetails() {
           <p className="text-lg font-semibold">{goal.target}</p>
         </div>
         <div className="bg-blue-50 p-2 rounded-xl text-center">
-          <p className="text-blue-700 text-sm">Start Date</p>
-          <p className="text-lg font-semibold">17 Jun, 2020</p>
+          <p className="text-blue-700 text-sm">{t("startDate")}</p>
+          <p className="text-lg font-semibold">{goal.dateAssigned}</p>
         </div>
         <div className="bg-blue-50 p-2 rounded-xl text-center">
           <p className="text-blue-700 text-sm">{t("deadline")}</p>
@@ -623,44 +620,58 @@ export function GoalDetails() {
 
       <div className="mb-6">
         <h3 className="font-semibold text-gray-700 mb-2">{t("description")}</h3>
-        <p className="text-sm text-gray-600">
-          {goal.goalDescription}        
-        </p>
+        <p className="text-sm text-gray-600">{goal.goalDescription}</p>
       </div>
 
+      {/*Show employees from goal.employeeGoals */}
       <div className="mb-6">
         <h3 className="font-semibold text-gray-700 mb-2">{t("employees")}</h3>
         <div className="flex gap-4 overflow-x-auto py-4">
-          {employees.map((name) => (
-            <div key={name} className="flex flex-col items-center">
+          {employeeGoals.map((emp) => (
+            <div key={emp.employeeName} className="flex flex-col items-center">
               <img
-                src={`https://api.dicebear.com/7.x/initials/svg?seed=${name}`}
-                alt={name}
+                src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
+                alt={emp.employeeName}
                 className="w-10 h-10 rounded-full object-cover"
               />
-              <p className="text-xs mt-1">{name}</p>
+              <p className="text-xs mt-1">{emp.employeeName}</p>
             </div>
           ))}
         </div>
       </div>
 
+      {/* Checklist built from employeeGoals */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="font-semibold text-gray-700">{t("currentProgress")} ({goal.actualProgressPercent}%)</h3>
+          <h3 className="font-semibold text-gray-700">
+            {t("currentProgress")} ({goal.actualProgressPercent}%)
+          </h3>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-          <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${goal.actualProgressPercent}%` }}></div>
+          <div
+            className="bg-blue-500 h-2 rounded-full"
+            style={{ width: `${goal.actualProgressPercent}%` }}
+          ></div>
         </div>
+
         <ul className="space-y-2">
           {checklistItems.map((item, index) => (
             <li key={index} className="flex items-center space-x-2">
-              <input type="checkbox" checked={item.done} readOnly className="form-checkbox text-blue-500" />
-              <span className={item.done ? 'line-through text-gray-500' : ''}>{item.label}</span>
+              <input
+                type="checkbox"
+                checked={item.done}
+                readOnly
+                className="form-checkbox text-blue-500"
+              />
+              <span className={item.done ? 'line-through text-gray-500' : ''}>
+                {item.label} — <span className="text-xs text-gray-500">{item.employeeName}</span>
+              </span>
             </li>
           ))}
         </ul>
       </div>
 
+      {/* Submit progress UI */}
       {auth.refNum !== "ref?2!" && (
         <>
           <div className="flex items-center space-x-4 mt-2 mb-2">
@@ -679,7 +690,9 @@ export function GoalDetails() {
           </div>
 
           <div className="mb-4 w-full">
-            <label htmlFor="comment" className="block mb-1 font-medium">{t("comment")}</label>
+            <label htmlFor="comment" className="block mb-1 font-medium">
+              {t("comment")}
+            </label>
             <textarea
               id="comment"
               rows={4}
@@ -703,6 +716,7 @@ export function GoalDetails() {
     </div>
   );
 }
+
 
 
 
