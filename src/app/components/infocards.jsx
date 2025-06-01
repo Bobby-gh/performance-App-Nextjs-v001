@@ -663,7 +663,7 @@ export function GoalDetails() {
                 readOnly
                 className="form-checkbox text-blue-500"
               />
-              <span className={item.done ? 'line-through text-gray-500' : ''}>
+              <span className={item.done ? 'text-gray-400' : 'text-gray-700'}>
                 {item.label} — <span className="text-xs text-gray-500">{item.employeeName}</span>
               </span>
             </li>
