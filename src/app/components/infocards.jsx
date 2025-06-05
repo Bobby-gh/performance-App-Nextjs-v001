@@ -547,21 +547,28 @@ export function GoalDetails() {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
-
-  console.log("Goal data:", goal);
+  const { triggerComponent } = useContext(Modaltrigger);
 
   const [progress, setProgress] = useState(goal.actualProgress);
   const [comment, setComment] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const { triggerComponent } = useContext(Modaltrigger);
 
   const employeeGoals = goal.employeeGoals || [];
+  const isManager = auth.refNum === "ref?2!";
 
   const checklistItems = employeeGoals.map((empGoal) => ({
     label: empGoal.goalTitle,
     done: empGoal.status === "Completed",
     employeeName: empGoal.employeeName,
   }));
+
+  // Calculate department progress if manager
+  const departmentProgressPercent = isManager
+    ? Math.round(
+        employeeGoals.reduce((sum, emp) => sum + emp.actualProgress, 0) /
+          employeeGoals.length
+      )
+    : null;
 
   const handleUpdate = async (event) => {
     event.preventDefault();
@@ -610,11 +617,15 @@ export function GoalDetails() {
         </div>
         <div className="bg-blue-50 p-2 rounded-xl text-center">
           <p className="text-blue-700 text-sm">{t("startDate")}</p>
-          <p className="text-lg font-semibold">{new Date(goal.dateAssigned).toISOString().split("T")[0]}</p>
+          <p className="text-lg font-semibold">
+            {new Date(goal.dateAssigned).toISOString().split("T")[0]}
+          </p>
         </div>
         <div className="bg-blue-50 p-2 rounded-xl text-center">
           <p className="text-blue-700 text-sm">{t("deadline")}</p>
-          <p className="text-lg font-semibold">  {new Date(goal.goalDeadline).toISOString().split("T")[0]}</p>
+          <p className="text-lg font-semibold">
+            {new Date(goal.goalDeadline).toISOString().split("T")[0]}
+          </p>
         </div>
       </div>
 
@@ -623,7 +634,7 @@ export function GoalDetails() {
         <p className="text-sm text-gray-600">{goal.goalDescription}</p>
       </div>
 
-      {/*Show employees from goal.employeeGoals */}
+      {/* Show employees */}
       <div className="mb-6">
         <h3 className="font-semibold text-gray-700 mb-2">{t("employees")}</h3>
         <div className="flex gap-4 overflow-x-auto py-4">
@@ -640,13 +651,14 @@ export function GoalDetails() {
         </div>
       </div>
 
-      {/* Checklist built from employeeGoals */}
+      {/* Progress Overview */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="font-semibold text-gray-700">
+          <h3 className="font-semibold text-gray-700 mb-1">
             {t("currentProgress")} ({goal.actualProgressPercent}%)
           </h3>
         </div>
+
         <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
           <div
             className="bg-blue-500 h-2 rounded-full"
@@ -654,29 +666,71 @@ export function GoalDetails() {
           ></div>
         </div>
 
-        <ul className="space-y-2">
+        {/* Department Progress (only for managers) */}
+        {isManager && (
+          <div className="mb-4">
+            <p className="text-gray-600 text-sm mb-1 font-medium">
+              Department Progress ({departmentProgressPercent}%)
+            </p>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-green-600 h-2 rounded-full"
+                style={{ width: `${departmentProgressPercent}%` }}
+              ></div>
+            </div>
+          </div>
+        )}
+
+        {/* Checklist */}
+        <ul className="space-y-4 mt-4">
           {checklistItems.map((item, index) => (
-            <li key={index} className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={item.done}
-                readOnly
-                className="form-checkbox text-blue-500"
-              />
-              <span className={item.done ? 'text-gray-400' : 'text-gray-700'}>
-                {item.label} — <span className="text-xs text-gray-500">{item.employeeName}</span>
-              </span>
+            <li key={index} className="flex flex-col space-y-1">
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={item.done}
+                  readOnly
+                  className="form-checkbox text-blue-500"
+                />
+                <span
+                  className={
+                    item.done ? "text-gray-400" : "text-gray-700"
+                  }
+                >
+                  {item.label} —{" "}
+                  <span className="text-xs text-gray-500">
+                    {item.employeeName}
+                  </span>
+                </span>
+              </div>
+
+              {/* Show individual progress if manager */}
+              {isManager && (
+                <div className="w-full bg-gray-200 rounded-full h-1">
+                  <div
+                    className="bg-blue-500 h-1 rounded-full"
+                    style={{
+                      width: `${employeeGoals[index]?.actualProgress || 0}%`,
+                    }}
+                  ></div>
+                </div>
+              )}
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Submit progress UI */}
+      {/* Submit progress section (not shown to manager) */}
       {auth.refNum !== "ref?2!" && (
         <>
           <div className="flex items-center space-x-4 mt-2 mb-2">
-            <label htmlFor="progress-input" className="text-gray-600 text-sm">
-              <strong className="w-1/3 text-black">{t("enterProgress")}</strong>
+            <label
+              htmlFor="progress-input"
+              className="text-gray-600 text-sm"
+            >
+              <strong className="w-1/3 text-black">
+                {t("enterProgress")}
+              </strong>
             </label>
           </div>
 
@@ -716,9 +770,6 @@ export function GoalDetails() {
     </div>
   );
 }
-
-
-
 
 
 export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
