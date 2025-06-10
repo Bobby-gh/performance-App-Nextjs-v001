@@ -58,7 +58,7 @@ export function AssignGoal({ data, open, onClose }) {
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
   const [isLoading, setIsLoading] = useState(false);
-  const [assignGoal] = useState({
+  const [editableFields, setEditableFields] = useState({ 
     goalId: data._id,
     goalTitle: data.goalTitle,
     goalDescription: data.goalDescription,
@@ -67,8 +67,7 @@ export function AssignGoal({ data, open, onClose }) {
     deadline: data.goalDeadline,
     target: data.target,
     goalType: data.goalType
-  });
-  const [editableFields, setEditableFields] = useState({ ...assignGoal });
+   });
   const [editMode, setEditMode] = useState(false);
 
   const handleChange = (key, value) => {
