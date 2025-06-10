@@ -71,7 +71,7 @@ export function Sidebar() {
     //   </div>
     // </main>
 
-    <main className="w-24 h-full bg-[#04B1C4] rounded-lg">
+    <main className="w-24 h-full rounded-lg">
       <div className="flex justify-center p-4 mb-6">
         {/* Logo image */}
         <img
