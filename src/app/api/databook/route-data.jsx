@@ -533,30 +533,32 @@ export function useUserGoalRatingByID() {
 
 }
 
+
+
 export function useUserGoalBadgesTableData() {
   const { auth } = useContext(AuthContext);
+  const [getallUserBadges, setUserBadgesTable] = useState("");
 
-  const getallUserBadges = async () => {
+  const fetchData = async () => {
     try {
-      const response = await axios.get(
-        USER_BADGES_TABLE,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
-          },
-          withCredentials: true,
-        }
-      );
-      console.log({"response":response})
-      return response;
+      const response = await axios.get(USER_BADGES_TABLE, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+      setUserBadgesTable(response);
     } catch (err) {
       console.log(err);
     }
   };
 
-  return { getallUserBadges };
+  useEffect(() => {
+    fetchData();
+  }, [auth]);
 
+  return { getallUserBadges, fetchData };
 }
 
 
