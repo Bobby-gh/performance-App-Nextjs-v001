@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contex/context-context";
-import { FaEye, FaSave, FaSitemap, FaUser } from "react-icons/fa";
+import { FaEye, FaRegEdit, FaSave, FaSitemap, FaUser } from "react-icons/fa";
 import {
   Box,
   Button,
