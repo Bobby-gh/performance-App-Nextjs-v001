@@ -170,11 +170,11 @@ export function GoalTable() {
 export function EmployeeBadgeTable() {
   const employeeRating = useEmployeeRatingColumn();
   const columns = useMemo(() => employeeRating, []);
-  // const {getallUserBadges} = useUserGoalBadgesTableData()
-  // const rawData = getallUserBadges?.data || [];
-  // const data = useMemo(() => rawData, [rawData]);
+  const {getallUserBadges} = useUserGoalBadgesTableData()
+  const rawData = getallUserBadges?.data || [];
+  const data = useMemo(() => rawData, [rawData]);
 
-  const data = useMemo(() => BadgesTable, [BadgesTable]);
+  //const data = useMemo(() => BadgesTable, [BadgesTable]);
 
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
