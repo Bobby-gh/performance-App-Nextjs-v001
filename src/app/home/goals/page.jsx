@@ -8,6 +8,7 @@ export default function MyGoals() {
   const [selectedGoal, setSelectedGoal] = useState(null);
   const { setGoal } = useContext(GoalSelectContext);
   const { mygoal, fetchData } = useMyGoalRouteData();
+  const { open, setOpen } = useState(false);
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   console.log({"my assigned goal": mygoal});
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function MyGoals() {
     } else {
       setSelectedGoal(goal);
       setGoal(goal);
+      setOpen(true);
     }
   };
 
@@ -40,7 +42,9 @@ export default function MyGoals() {
       {/* Left Panel: Show Goal Details only when a goal is selected */}
       {selectedGoal && (
         <div className="flex-[1] overflow-y-auto max-h-[87vh]">
-          <GoalDetails />
+          <GoalDetails open = {open}
+            onClose = {()=> {setOpen(false)}}
+          />
         </div>
       )}
 
