@@ -30,6 +30,7 @@ export default function MyGoals() {
     if (selectedGoal?.id === goal.id) {
       setSelectedGoal(null);
       setGoal(null);
+      setOpen(true);
     } else {
       setSelectedGoal(goal);
       setGoal(goal);
