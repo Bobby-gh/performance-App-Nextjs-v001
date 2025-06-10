@@ -98,7 +98,7 @@ export function GoalTable() {
       sx: {
         fontWeight: "normal",
         fontSize: "14px",
-        background: "#04B1C4",
+        background: "#08376B",
         color: "white",
       },
     },
@@ -170,11 +170,11 @@ export function GoalTable() {
 export function EmployeeBadgeTable() {
   const employeeRating = useEmployeeRatingColumn();
   const columns = useMemo(() => employeeRating, []);
-  const {getallUserBadges} = useUserGoalBadgesTableData()
-  const rawData = getallUserBadges?.data || [];
-  const data = useMemo(() => rawData, [rawData]);
+  // const {getallUserBadges} = useUserGoalBadgesTableData()
+  // const rawData = getallUserBadges?.data || [];
+  // const data = useMemo(() => rawData, [rawData]);
 
-  //const data = useMemo(() => BadgesTable, [BadgesTable]);
+  const data = useMemo(() => BadgesTable, [BadgesTable]);
 
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
@@ -328,7 +328,7 @@ const columns = useMemo(() => {
       sx: {
         fontWeight: "normal",
         fontSize: "14px",
-        background: "#04B1C4",
+        background: "#08376B",
         color: "white",
       },
     },
@@ -450,7 +450,7 @@ export function DepartmentTable() {
       sx: {
         fontWeight: "normal",
         fontSize: "14px",
-        background: "#04B1C4",
+        background: "#08376B",
         color: "white",
       },
     },
@@ -552,7 +552,7 @@ export function EmployeeTable() {
       sx: {
         fontWeight: "normal",
         fontSize: "14px",
-        background: "#04B1C4",
+        background: "#08376B",
         color: "white",
       },
     },
