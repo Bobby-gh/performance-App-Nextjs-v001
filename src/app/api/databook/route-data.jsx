@@ -548,7 +548,7 @@ export function useUserGoalBadgesTableData() {
           withCredentials: true,
         }
       );
-      console.log({response:response})
+      console.log({"response":response})
       return response;
     } catch (err) {
       console.log(err);
