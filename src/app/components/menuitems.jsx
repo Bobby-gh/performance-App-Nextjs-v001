@@ -1,7 +1,7 @@
 import { FaHome } from "react-icons/fa";
 import { GoGoal } from "react-icons/go";
-import { MdOutlineAssessment, MdGroups2, MdOutlineAssignment } from "react-icons/md";
-import { PiChartDonut } from "react-icons/pi";
+import { MdAssessment, MdGroups2, MdAssignment } from "react-icons/md";
+import { PiChartDonutFill } from "react-icons/pi";
 import { IoPerson } from "react-icons/io5";
 
 
@@ -19,12 +19,12 @@ export const MenuItems = [
     {
         title: "assignGoals",
         path: "/home/goal-setting",
-        icon: <MdOutlineAssignment/>
+        icon: <MdAssignment/>
     },
     {
         title: "goalAssessment",
         path: "/home/goal-assessment",
-        icon: <MdOutlineAssessment/>
+        icon: <MdAssessment/>
     },
     {
         title: "department",
@@ -39,6 +39,6 @@ export const MenuItems = [
     {
         title: "reports",
         path: "/home/reports",
-        icon: <PiChartDonut/>
+        icon: <PiChartDonutFill/>
     }
 ]
