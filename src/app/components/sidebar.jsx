@@ -81,7 +81,7 @@ export function Sidebar() {
       </div>
 
       {/* Menu Items */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center justify-center text-center">
         <ul className="w-full">
           {filteredMenuItems.map((item) => (
             <li key={item.title} className="flex flex-col items-center mb-2">
