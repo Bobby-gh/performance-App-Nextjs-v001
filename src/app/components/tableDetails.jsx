@@ -484,40 +484,36 @@ export function AssessGoal({ data, open, onClose }) {
 
 export function EmployeeDetails({ data, open, onClose }) {
   const { t } = useTranslation();
-  const { triggerComponent } = useContext(AuthContext);
-  const { editFunction } = useEdit();
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
 
-  const [editableFields, setEditableFields] = useState({
-    employeeId: data?._id,
-    name: data?.name,
-    email: data?.email,
-    department: data?.department,
-    role: data?.role,
+  const [assessGoal, setAssessGoal] = useState({
+    goalId: data?._id,
+    goalTitle: data?.goalTitle,
+    goalDescription: data?.goalDescription,
+    goalStatus: data?.status,
+    assignedTo: data?.taskAssignedTo,
+    deadline: data?.goalDeadline,
+    goalType: data?.goalType,
+    performancePercent: data?.performancePercent,
+    reviewed: data?.reviewed,
+    assignedBy: data?.taskAssignedBy,
   });
 
-  const [editMode, setEditMode] = useState(false);
+  const [editableFields, setEditableFields] = useState({ ...assessGoal });
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleChange = (key, value) => {
-    setEditableFields((prev) => ({ ...prev, [key]: value }));
-  };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const name = "user";
-      const id = editableFields.employeeId;
-      const updateData = {
-        name: editableFields.name,
-        email: editableFields.email,
-        department: editableFields.department,
-        role: editableFields.role,
-      };
-      const response = await editFunction(updateData, id, name);
-
+      const name = "accessGoal";
+      const id = editableFields.goalId;
+      const response = await editFunction(
+        { goalTitle: editableFields.goalTitle },
+        id,
+        name
+      );
       if (response?.status === 200) {
         showToast("Edit Saved successful:", "success");
         triggerComponent();
@@ -529,7 +525,6 @@ export function EmployeeDetails({ data, open, onClose }) {
       console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
-      setEditMode(false);
     }
   };
 
@@ -555,77 +550,32 @@ export function EmployeeDetails({ data, open, onClose }) {
               />
               <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
             </div>
-
-            <div className="flex justify-end mb-2">
-              <button onClick={() => setEditMode(!editMode)}>
-                <FaRegEdit className="text-blue-500" size={20} />
-              </button>
-            </div>
-
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <IoPerson color="blue" />
-                {editMode ? (
-                  <input
-                    className="border rounded px-2 py-1 w-full"
-                    value={editableFields.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                  />
-                ) : (
-                  <span className="font-medium">{data?.name}</span>
-                )}
+                <span className="font-medium">{data?.name}</span>
               </div>
-
               <div className="flex items-center space-x-2">
                 <MdOutlineMarkEmailRead color="blue" />
-                {editMode ? (
-                  <input
-                    className="border rounded px-2 py-1 w-full"
-                    value={editableFields.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                  />
-                ) : (
-                  <span>{data?.email}</span>
-                )}
+                <span>{data?.email}</span>
               </div>
-
               <div className="flex items-center space-x-2">
                 <FaSitemap color="blue" />
-                {editMode ? (
-                  <input
-                    className="border rounded px-2 py-1 w-full"
-                    value={editableFields.department}
-                    onChange={(e) => handleChange("department", e.target.value)}
-                  />
-                ) : (
-                  <span>{data?.department}</span>
-                )}
+                <span>{data?.department}</span>
               </div>
-
               <div className="flex items-center space-x-2">
                 <MdVerifiedUser color="blue" />
-                {editMode ? (
-                  <input
-                    className="border rounded px-2 py-1 w-full"
-                    value={editableFields.role}
-                    onChange={(e) => handleChange("role", e.target.value)}
-                  />
-                ) : (
-                  <span>{data?.role}</span>
-                )}
+                <span>{data?.role}</span>
               </div>
-
-              {editMode && (
-                <div className="pt-4">
-                  <CustomButton
-                    label={t("submit")}
-                    type="submit"
-                    className="custom-class"
-                    loading={isLoading}
-                    onClick={handleEditSubmit}
-                  />
-                </div>
-              )}
+              <div className="pt-4">
+                <CustomButton
+                  label={t("submit")}
+                  type="submit"
+                  className="custom-class"
+                  loading={isLoading}
+                  onClick={handleEditSubmit}
+                />
+              </div>
             </div>
           </div>
         </main>
