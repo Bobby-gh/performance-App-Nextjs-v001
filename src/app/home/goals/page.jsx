@@ -8,7 +8,7 @@ export default function MyGoals() {
   const [selectedGoal, setSelectedGoal] = useState(null);
   const { setGoal } = useContext(GoalSelectContext);
   const { mygoal, fetchData } = useMyGoalRouteData();
-  const { open, setOpen } = useState(false);
+  const [open, setOpen] = useState(false);
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
   console.log({"my assigned goal": mygoal});
   useEffect(() => {
