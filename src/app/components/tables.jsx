@@ -170,7 +170,7 @@ export function GoalTable() {
 export function EmployeeBadgeTable() {
   const employeeRating = useEmployeeRatingColumn();
   const columns = useMemo(() => employeeRating, []);
-  const {getallUserBadges} = useUserGoalBadgesTableData()
+  const {getallUserBadges} =  useUserGoalBadgesTableData();
   const rawData = getallUserBadges?.data?.usersResponse || [];
   const data = useMemo(() => rawData, [rawData]);
 console.log("EmployeeBadgeTable", data, getallUserBadges?.data);
