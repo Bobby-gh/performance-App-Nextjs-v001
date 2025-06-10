@@ -98,7 +98,7 @@ export function GoalTable() {
       sx: {
         fontWeight: "normal",
         fontSize: "14px",
-        background: "#08376B",
+        background: "#04B1C4",
         color: "white",
       },
     },
@@ -328,7 +328,7 @@ const columns = useMemo(() => {
       sx: {
         fontWeight: "normal",
         fontSize: "14px",
-        background: "#08376B",
+        background: "#04B1C4",
         color: "white",
       },
     },
@@ -450,7 +450,7 @@ export function DepartmentTable() {
       sx: {
         fontWeight: "normal",
         fontSize: "14px",
-        background: "#08376B",
+        background: "#04B1C4",
         color: "white",
       },
     },
@@ -552,7 +552,7 @@ export function EmployeeTable() {
       sx: {
         fontWeight: "normal",
         fontSize: "14px",
-        background: "#08376B",
+        background: "#04B1C4",
         color: "white",
       },
     },
