@@ -43,7 +43,7 @@ export const useEmployeeRatingColumn = () => {
       header: t("department"),
     },
     {
-      accessorKey: "performanceScore",
+      accessorKey: "performance",
       header: t("performanceScore"),
     },
     {
