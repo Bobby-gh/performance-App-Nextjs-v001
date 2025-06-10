@@ -60,6 +60,7 @@ export function AssignGoal({ data, open, onClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [editableFields, setEditableFields] = useState({ 
     goalId: data._id,
+    taskAssignedToId: data.taskAssignedToId,
     goalTitle: data.goalTitle,
     goalDescription: data.goalDescription,
     goalStatus: data.status,
@@ -199,10 +200,32 @@ export function AssignGoal({ data, open, onClose }) {
                       value={editableFields.goalDescription}
                       onChange={handleChange}
                     />
-                    <ModalFormSelect
-                      id="assignedTO"
+                    {/*<ModalFormSelect
+                      id="assignedTo"
                       label={t("assignedTo")}
                       value={editableFields.assignedTo}
+                      options={auth.refNum === "ref?1!"
+                        ? departmenttable.map((department) => ({
+                            value: department.departmentId,
+                            label: department.departmentName,
+                          }))
+                        : employeetable.map((employee) => ({
+                            value: employee.employeeId,
+                            label: employee.employeeName,
+                          }))
+                      }
+                      onChange={(selectedOptions) => {
+                        setEditableFields((prev) => ({
+                          ...prev,
+                          workQuality: selectedOptions,
+                        }));
+                      }}
+                      required
+                    />*/}
+                    <ModalFormSelect
+                      id="assignedTo"
+                      label={t("assignedTo")}
+                      value={data.taskAssignedToId}
                       options={departmenttable.map((department) => ({
                         value: department.departmentId,
                         label: department.departmentName,
@@ -215,7 +238,6 @@ export function AssignGoal({ data, open, onClose }) {
                       }}
                       required
                     />
-
                     <FormInputField
                       label={t("assignedBy")}
                       id="assignedBy"
