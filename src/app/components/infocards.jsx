@@ -411,143 +411,8 @@ export function AddDepartment() {
   );
 }
 
-export function ProjectCard() {
-  const { t } = useTranslation();
-  const { auth } = useContext(AuthContext);
-  const { goal } = useContext(GoalSelectContext);
-  const [progress, setProgress] = useState(goal.actualProgress);
-  const [comment, setComment] = useState("");
-  const [isLoading, setLoading] = useState(false);
-  const { triggerComponent } = useContext(Modaltrigger);
 
-  const handleUpdate = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-    try {
-      const response = await axios.patch(
-        UPDATE_GOAL_PROGRESS,
-        JSON.stringify({
-          goalId: goal.id,
-          progressIncrement: progress,
-          comment,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        showToast("Progress updated successfully", "success");
-        triggerComponent();
-      }
-    } catch (err) {
-      console.log(err);
-      alert(`Error: ${err.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="p-4 border-r-2 h-screen border-gray-400">
-      {/* Progress Bar */}
-      <div className="relative w-full h-8 mb-6 bg-gray-200">
-        <div
-          className="absolute h-8 bg-blue-500 rounded"
-          style={{ width: `${goal.actualProgressPercent}%` }}
-        ></div>
-      </div>
-
-      {/* Notification */}
-      {/* Notification or Title */}
-      <div className="mb-12">
-        {auth.refNum === "ref?2!" ? (
-          <h2 className="text-lg font-semibold text-black">{t("goalDetails")}</h2>
-        ) : (
-          <Notification
-            typeHeader={t("updateGoalProgress")}
-            message={t("selectProjectToUpdateProgress")}
-          />
-        )}
-      </div>
-
-      {/* Goal Details */}
-      <div className="text-black text-sm mb-4">
-        <div className="flex mb-4">
-          <strong className="w-1/3">{t("goalName")}:</strong>
-          <p className="w-2/3 text-blue-900">{goal.goalTitle}</p>
-        </div>
-        <div className="flex mb-4">
-          <strong className="w-1/3">{t("description")}:</strong>
-          <p className="w-2/3 text-blue-900">{goal.goalDescription}</p>
-        </div>
-        <div className="flex mb-4">
-          <strong className="w-1/3">{t("deadline")}:</strong>
-          <p className="w-2/3 text-blue-900">{goal.goalDeadline}</p>
-        </div>
-        <div className="flex mb-4">
-          <strong className="w-1/3">{t("status")}:</strong>
-          <p className="w-2/3 text-blue-900">{goal.status}</p>
-        </div>
-        <div className="flex mb-4">
-          <strong className="w-1/3">{t("currentProgress")}:</strong>
-          <p className="w-2/3 text-blue-900">{goal.actualProgress}</p>
-        </div>
-        <div className="flex mb-4">
-          <strong className="w-1/3">{t("target")}:</strong>
-          <p className="w-2/3 text-blue-900">{goal.target}</p>
-        </div>
-      </div>
-
-      {/* Update Progress - hidden for ref?2! */}
-      {auth.refNum !== "ref?2!" && (
-        <>
-          <div className="flex items-center space-x-4 mt-4 mb-4">
-            <label htmlFor="progress-input" className="text-gray-600 text-sm">
-              <strong className="w-1/3 text-black">{t("enterProgress")}:</strong>
-            </label>
-          </div>
-
-          <div className="mb-4 mt-4">
-            <FormInputField
-              id="progress-input"
-              value={progress}
-              onChange={(e) => setProgress(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="mb-12 w-full">
-            <label htmlFor="comment" className="block mb-2 font-medium">Comment</label>
-            <textarea
-              id="comment"
-              rows={4}
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Enter comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            className="w-full p-2 bg-blue-900 rounded-xl text-white"
-            onClick={handleUpdate}
-            disabled={isLoading}
-          >
-            {isLoading ? "Submitting..." : t("submitProgress")}
-          </button>
-        </>
-      )}
-
-    </div>
-  );
-}
-
-
-export function GoalDetails({open, onClose}) {
+export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
@@ -558,18 +423,10 @@ export function GoalDetails({open, onClose}) {
   const [isLoading, setLoading] = useState(false);
 
   const employeeGoals = goal.employeeGoals || [];
+
   const isManager = auth.refNum === "ref?2!";
+  const isStaff = auth.refNum === "ref?3!";
 
-
-
-  const checklistItems = employeeGoals.map((empGoal) => ({
-    label: empGoal.goalTitle,
-    done: empGoal.status === "Completed",
-    employeeName: empGoal.employeeName,
-    progress: empGoal.actualProgress,
-  }));
-
-  // Department progress for managers
   const departmentProgressPercent = isManager
     ? Math.round(
         employeeGoals.reduce((sum, emp) => sum + emp.actualProgress, 0) /
@@ -610,178 +467,221 @@ export function GoalDetails({open, onClose}) {
 
   return (
     <Modal
-            open={open}
-            onClose={onClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description">
-            <Box sx={ModalModification}>
-              {/* Modal Header */}
-              <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
-                <button onClick={onClose}>
-                  <IoClose size={24} />
-                </button>
-              </div>
-              {/* Header */}
-              <div className="mb-6">
-                <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
-                <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
-              </div>
+      open={open}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={ModalModification}>
+        {/* Modal Close */}
+        <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+          <button onClick={onClose}>
+            <IoClose size={24} />
+          </button>
+        </div>
 
-              {/* Goal Info Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                {[
-                  { label: t("target"), value: goal.target },
-                  {
-                    label: t("startDate"),
-                    value: new Date(goal.dateAssigned).toLocaleDateString(),
-                  },
-                  {
-                    label: t("deadline"),
-                    value: new Date(goal.goalDeadline).toLocaleDateString(),
-                  },
-                ].map(({ label, value }) => (
-                  <div
-                    key={label}
-                    className="p-4 bg-blue-50 rounded-xl text-center shadow-sm"
-                  >
-                    <p className="text-blue-700 font-semibold">{label}</p>
-                    <p className="mt-2 text-xl font-bold">{value}</p>
-                  </div>
-                ))}
+        {/* Header */}
+        <div className="mb-6">
+          <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
+          <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
+        </div>
+
+        {/* Goal Info */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+          {[
+            { label: t("target"), value: goal.target },
+            {
+              label: t("startDate"),
+              value: new Date(goal.dateAssigned).toLocaleDateString(),
+            },
+            {
+              label: t("deadline"),
+              value: new Date(goal.goalDeadline).toLocaleDateString(),
+            },
+          ].map(({ label, value }) => (
+            <div
+              key={label}
+              className="p-4 bg-blue-50 rounded-xl text-center shadow-sm"
+            >
+              <p className="text-blue-700 font-semibold">{label}</p>
+              <p className="mt-2 text-xl font-bold">{value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Progress Overview */}
+        <div className="mb-10">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">
+            {t("currentProgress")} ({goal.actualProgressPercent}%)
+          </h3>
+
+          <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
+            <div
+              className="bg-blue-600 h-full transition-all duration-700"
+              style={{ width: `${goal.actualProgressPercent}%` }}
+            />
+          </div>
+
+          {/* Manager-only Department Progress */}
+          {isManager && (
+            <>
+              <h4 className="text-lg font-semibold text-gray-700 mb-3">
+                Department Progress ({departmentProgressPercent}%)
+              </h4>
+              <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-8">
+                <div
+                  className="bg-green-600 h-full transition-all duration-700"
+                  style={{ width: `${departmentProgressPercent}%` }}
+                />
               </div>
+            </>
+          )}
 
-              {/* Progress Overview */}
-              <div className="mb-10">
-                <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                  {t("currentProgress")} ({goal.actualProgressPercent}%)
-                </h3>
-
-                {/* Main progress bar */}
-                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
-                  <div
-                    className="bg-blue-600 h-full transition-all duration-700"
-                    style={{ width: `${goal.actualProgressPercent}%` }}
+          {/* Employee Goals */}
+          <h4 className="text-lg font-semibold text-gray-700 mb-4">
+            {t("employees")}
+          </h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {employeeGoals.map((emp) => (
+              <div
+                key={emp.employeeName}
+                className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
+              >
+                <img
+                  src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
+                  alt={emp.employeeName}
+                  className="w-16 h-16 rounded-full mb-3"
+                />
+                <p className="text-sm font-medium text-gray-800 mb-2 text-center">
+                  {emp.employeeName}
+                </p>
+                <div className="w-16 h-16">
+                  <CircularProgressbar
+                    value={emp.actualProgress}
+                    text={`${emp.actualProgress}%`}
+                    styles={buildStyles({
+                      pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
+                      textColor: "#374151",
+                      trailColor: "#e5e7eb",
+                      textSize: "28px",
+                    })}
                   />
                 </div>
+                <p
+                  className={`mt-2 text-center text-sm ${
+                    emp.status === "Completed"
+                      ? "line-through text-gray-400"
+                      : "text-gray-700"
+                  }`}
+                >
+                  {emp.goalTitle}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
 
-                {/* Department Progress (for managers) */}
-                {isManager && (
-                  <>
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">
-                      Department Progress ({departmentProgressPercent}%)
-                    </h4>
-                    <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-8">
-                      <div
-                        className="bg-green-600 h-full transition-all duration-700"
-                        style={{ width: `${departmentProgressPercent}%` }}
-                      />
-                    </div>
-                  </>
-                )}
-
-                {/* Employee Goals Grid */}
-                <h4 className="text-lg font-semibold text-gray-700 mb-4">
-                  {t("employees")}
-                </h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {employeeGoals.map((emp) => (
-                    <div
-                      key={emp.employeeName}
-                      className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
-                    >
-                      <img
-                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
-                        alt={emp.employeeName}
-                        className="w-16 h-16 rounded-full mb-3"
-                      />
-                      <p className="text-sm font-medium text-gray-800 mb-2 text-center">
-                        {emp.employeeName}
-                      </p>
-
-                      {/* Circular progress for each employee */}
-                      <div className="w-16 h-16">
-                        <CircularProgressbar
-                          value={emp.actualProgress}
-                          text={`${emp.actualProgress}%`}
-                          styles={buildStyles({
-                            pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
-                            textColor: "#374151",
-                            trailColor: "#e5e7eb",
-                            textSize: "28px",
-                          })}
-                        />
-                      </div>
-
-                      {/* Goal Title below */}
-                      <p
-                        className={`mt-2 text-center text-sm ${
-                          emp.status === "Completed" ? "line-through text-gray-400" : "text-gray-700"
-                        }`}
-                      >
-                        {emp.goalTitle}
-                      </p>
-                    </div>
-                  ))}
+        {/* Bottom Layout: Left & Right Columns */}
+        <div className="flex flex-col lg:flex-row gap-10 mt-10">
+          {/* Left Side */}
+          <div className="flex-1">
+            <form onSubmit={handleUpdate} className="space-y-6">
+              {/* Staff-only: Current Progress below bar */}
+              {isStaff && (
+                <div className="mb-6">
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    {t("currentProgress")}
+                  </label>
+                  <div className="p-4 bg-gray-100 rounded-lg shadow text-lg font-bold text-blue-700">
+                    {goal.actualProgressPercent}%
+                  </div>
                 </div>
+              )}
+
+              {/* Enter Progress */}
+              <div>
+                <label
+                  htmlFor="progress-input"
+                  className="block text-gray-700 font-semibold mb-2"
+                >
+                  {t("enterProgress")}
+                </label>
+                <input
+                  id="progress-input"
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={progress}
+                  onChange={(e) => setProgress(Number(e.target.value))}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
               </div>
 
-              {/* Progress submission for non-managers */}
-              {!isManager && (
-                <form onSubmit={handleUpdate} className="space-y-6">
-                  <div>
-                    <label
-                      htmlFor="progress-input"
-                      className="block text-gray-700 font-semibold mb-2"
-                    >
-                      {t("enterProgress")}
-                    </label>
-                    <input
-                      id="progress-input"
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={progress}
-                      onChange={(e) => setProgress(Number(e.target.value))}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
+              {/* Comment */}
+              <div>
+                <label
+                  htmlFor="comment"
+                  className="block text-gray-700 font-semibold mb-2"
+                >
+                  {t("comment")}
+                </label>
+                <textarea
+                  id="comment"
+                  rows={4}
+                  placeholder={t("enterComment")}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
 
-                  <div>
-                    <label
-                      htmlFor="comment"
-                      className="block text-gray-700 font-semibold mb-2"
-                    >
-                      {t("comment")}
-                    </label>
-                    <textarea
-                      id="comment"
-                      rows={4}
-                      placeholder="Enter comment"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`w-full py-3 rounded-xl text-white font-bold transition ${
+                  isLoading
+                    ? "bg-blue-700 cursor-not-allowed"
+                    : "bg-blue-900 hover:bg-blue-800"
+                }`}
+              >
+                {isLoading ? "Submitting..." : t("submitProgress")}
+              </button>
+            </form>
+          </div>
 
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full py-3 rounded-xl text-white font-bold transition ${
-                      isLoading
-                        ? "bg-blue-700 cursor-not-allowed"
-                        : "bg-blue-900 hover:bg-blue-800"
-                    }`}
-                  >
-                    {isLoading ? "Submitting..." : t("submitProgress")}
-                  </button>
-                </form>
-              )}
-            </Box>
+          {/* Divider + Right Side: Manager-only */}
+          {isManager && (
+            <>
+              <div className="hidden lg:block w-px bg-gray-300" />
+              <div className="w-full lg:w-[300px] space-y-6">
+                <h4 className="text-lg font-semibold text-gray-700">
+                  {t("assignEmployee")}
+                </h4>
+
+                <ModalFormSelect
+                  id="assignedTo"
+                  label={t("assignedTo")}
+                  value={goal.assignedTo}
+                  options={employeeGoals.map((employee) => ({
+                    value: employee.employeeId,
+                    label: employee.employeeName,
+                  }))}
+                  onChange={(selectedOptions) => {
+                    // handle change
+                  }}
+                  required
+                />
+              </div>
+            </>
+          )}
+        </div>
+      </Box>
     </Modal>
   );
 }
+
 
 
 export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
