@@ -220,7 +220,7 @@ export function AssignGoal({ data, open, onClose }) {
                           workQuality: selectedOptions,
                         }));
                       }}
-                      required
+                      
                     />*/}
                     <ModalFormSelect
                       id="assignedTo"
