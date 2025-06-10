@@ -39,7 +39,7 @@ export default function Layout({ children }) {
           <div>
             <Sidebar />
           </div>
-          <div className="flex-1 overflow-auto px-4 space-y-4">
+          <div className="flex-1 overflow-auto px-4 bg-white space-y-4">
             <div>
               <Navbar />
             </div>
