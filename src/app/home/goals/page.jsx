@@ -40,7 +40,7 @@ export default function MyGoals() {
 
   return (
     <main className="flex space-x-4">
-      {/* Left Panel: Show Goal Details only when a goal is selected */}
+      {/* Left Panel:: Show Goal Details only when a goal is selected */}
       {selectedGoal && (
         <div className="flex-[1] overflow-y-auto max-h-[87vh]">
           <GoalDetails open = {open}
