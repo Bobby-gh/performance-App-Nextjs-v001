@@ -72,7 +72,7 @@ export function Sidebar() {
     // </main>
 
     <main className="w-24 h-full bg-[#04B1C4] rounded-lg">
-      <div className="flex justify-center my-4 p-2">
+      <div className="flex justify-center p-2">
         <img
           src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
           alt="Paris"
