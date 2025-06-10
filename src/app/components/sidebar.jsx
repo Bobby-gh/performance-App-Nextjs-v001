@@ -71,7 +71,7 @@ export function Sidebar() {
     //   </div>
     // </main>
 
-    <main className="w-24 bg-[#04B1C4] rounded-lg">
+    <main className="w-24 h-screen bg-[#04B1C4] rounded-lg">
       <div className="flex justify-center my-4 p-2">
         <img
           src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
