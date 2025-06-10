@@ -18,6 +18,8 @@ import { UPDATE_GOAL_PROGRESS } from "../api/routes";
 import { useTranslation } from "react-i18next";
 import { showToast } from "./notification";
 import { FormInputField } from "./widgets";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export function InformationalSummary() {
   const { t } = useTranslation();
@@ -547,24 +549,29 @@ export function GoalDetails() {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
-
-  console.log("Goal data:", goal);
+  const { triggerComponent } = useContext(Modaltrigger);
 
   const [progress, setProgress] = useState(goal.actualProgress);
   const [comment, setComment] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const { triggerComponent } = useContext(Modaltrigger);
 
-  const checklistItems = [
-    { label: 'Create wireframes to understand', done: true },
-    { label: 'UI/UX design development', done: true },
-    { label: 'Layout design', done: true },
-    { label: 'Backend devs', done: false },
-    { label: 'Testing for possible errors', done: false },
-    { label: 'Final works on projects', done: false },
-  ];
+  const employeeGoals = goal.employeeGoals || [];
+  const isManager = auth.refNum === "ref?2!";
 
-  const employees = ['Jacob', 'Regina', 'Jane', 'Ronald', 'Dustin', 'Robert'];
+  const checklistItems = employeeGoals.map((empGoal) => ({
+    label: empGoal.goalTitle,
+    done: empGoal.status === "Completed",
+    employeeName: empGoal.employeeName,
+    progress: empGoal.actualProgress,
+  }));
+
+  // Department progress for managers
+  const departmentProgressPercent = isManager
+    ? Math.round(
+        employeeGoals.reduce((sum, emp) => sum + emp.actualProgress, 0) /
+          (employeeGoals.length || 1)
+      )
+    : null;
 
   const handleUpdate = async (event) => {
     event.preventDefault();
@@ -590,7 +597,7 @@ export function GoalDetails() {
         triggerComponent();
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       alert(`Error: ${err.message}`);
     } finally {
       setLoading(false);
@@ -598,113 +605,167 @@ export function GoalDetails() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-white shadow-xl rounded-2xl">
-      <div className="flex items-center mb-4">
-        <div>
-          <h2 className="text-xl font-bold">{goal.goalTitle}</h2>
-          <p className="text-gray-500 text-sm">{goal.goalTitle}</p>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-blue-50 p-2 rounded-xl text-center">
-          <p className="text-blue-700 text-sm">{t("target")}</p>
-          <p className="text-lg font-semibold">{goal.target}</p>
-        </div>
-        <div className="bg-blue-50 p-2 rounded-xl text-center">
-          <p className="text-blue-700 text-sm">Start Date</p>
-          <p className="text-lg font-semibold">17 Jun, 2020</p>
-        </div>
-        <div className="bg-blue-50 p-2 rounded-xl text-center">
-          <p className="text-blue-700 text-sm">{t("deadline")}</p>
-          <p className="text-lg font-semibold">{goal.goalDeadline}</p>
-        </div>
-      </div>
-
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-3xl">
+      {/* Header */}
       <div className="mb-6">
-        <h3 className="font-semibold text-gray-700 mb-2">{t("description")}</h3>
-        <p className="text-sm text-gray-600">
-          {goal.goalDescription}        
-        </p>
+        <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
+        <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
       </div>
 
-      <div className="mb-6">
-        <h3 className="font-semibold text-gray-700 mb-2">{t("employees")}</h3>
-        <div className="flex gap-4 overflow-x-auto py-4">
-          {employees.map((name) => (
-            <div key={name} className="flex flex-col items-center">
-              <img
-                src={`https://api.dicebear.com/7.x/initials/svg?seed=${name}`}
-                alt={name}
-                className="w-10 h-10 rounded-full object-cover"
+      {/* Goal Info Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+        {[
+          { label: t("target"), value: goal.target },
+          {
+            label: t("startDate"),
+            value: new Date(goal.dateAssigned).toLocaleDateString(),
+          },
+          {
+            label: t("deadline"),
+            value: new Date(goal.goalDeadline).toLocaleDateString(),
+          },
+        ].map(({ label, value }) => (
+          <div
+            key={label}
+            className="p-4 bg-blue-50 rounded-xl text-center shadow-sm"
+          >
+            <p className="text-blue-700 font-semibold">{label}</p>
+            <p className="mt-2 text-xl font-bold">{value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Progress Overview */}
+      <div className="mb-10">
+        <h3 className="text-xl font-semibold text-gray-700 mb-4">
+          {t("currentProgress")} ({goal.actualProgressPercent}%)
+        </h3>
+
+        {/* Main progress bar */}
+        <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
+          <div
+            className="bg-blue-600 h-full transition-all duration-700"
+            style={{ width: `${goal.actualProgressPercent}%` }}
+          />
+        </div>
+
+        {/* Department Progress (for managers) */}
+        {isManager && (
+          <>
+            <h4 className="text-lg font-semibold text-gray-700 mb-3">
+              Department Progress ({departmentProgressPercent}%)
+            </h4>
+            <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-8">
+              <div
+                className="bg-green-600 h-full transition-all duration-700"
+                style={{ width: `${departmentProgressPercent}%` }}
               />
-              <p className="text-xs mt-1">{name}</p>
+            </div>
+          </>
+        )}
+
+        {/* Employee Goals Grid */}
+        <h4 className="text-lg font-semibold text-gray-700 mb-4">
+          {t("employees")}
+        </h4>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {employeeGoals.map((emp) => (
+            <div
+              key={emp.employeeName}
+              className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
+            >
+              <img
+                src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
+                alt={emp.employeeName}
+                className="w-16 h-16 rounded-full mb-3"
+              />
+              <p className="text-sm font-medium text-gray-800 mb-2 text-center">
+                {emp.employeeName}
+              </p>
+
+              {/* Circular progress for each employee */}
+              <div className="w-16 h-16">
+                <CircularProgressbar
+                  value={emp.actualProgress}
+                  text={`${emp.actualProgress}%`}
+                  styles={buildStyles({
+                    pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
+                    textColor: "#374151",
+                    trailColor: "#e5e7eb",
+                    textSize: "28px",
+                  })}
+                />
+              </div>
+
+              {/* Goal Title below */}
+              <p
+                className={`mt-2 text-center text-sm ${
+                  emp.status === "Completed" ? "line-through text-gray-400" : "text-gray-700"
+                }`}
+              >
+                {emp.goalTitle}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="font-semibold text-gray-700">{t("currentProgress")} ({goal.actualProgressPercent}%)</h3>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-          <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${goal.actualProgressPercent}%` }}></div>
-        </div>
-        <ul className="space-y-2">
-          {checklistItems.map((item, index) => (
-            <li key={index} className="flex items-center space-x-2">
-              <input type="checkbox" checked={item.done} readOnly className="form-checkbox text-blue-500" />
-              <span className={item.done ? 'line-through text-gray-500' : ''}>{item.label}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {auth.refNum !== "ref?2!" && (
-        <>
-          <div className="flex items-center space-x-4 mt-2 mb-2">
-            <label htmlFor="progress-input" className="text-gray-600 text-sm">
-              <strong className="w-1/3 text-black">{t("enterProgress")}</strong>
+      {/* Progress submission for non-managers */}
+      {!isManager && (
+        <form onSubmit={handleUpdate} className="space-y-6">
+          <div>
+            <label
+              htmlFor="progress-input"
+              className="block text-gray-700 font-semibold mb-2"
+            >
+              {t("enterProgress")}
             </label>
-          </div>
-
-          <div className="mb-2">
-            <FormInputField
+            <input
               id="progress-input"
+              type="number"
+              min="0"
+              max="100"
               value={progress}
-              onChange={(e) => setProgress(e.target.value)}
+              onChange={(e) => setProgress(Number(e.target.value))}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
-          <div className="mb-4 w-full">
-            <label htmlFor="comment" className="block mb-1 font-medium">{t("comment")}</label>
+          <div>
+            <label
+              htmlFor="comment"
+              className="block text-gray-700 font-semibold mb-2"
+            >
+              {t("comment")}
+            </label>
             <textarea
               id="comment"
               rows={4}
-              className="w-full p-2 border border-gray-300 rounded"
               placeholder="Enter comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           <button
-            className="w-full p-2 bg-blue-900 rounded-xl text-white"
-            onClick={handleUpdate}
+            type="submit"
             disabled={isLoading}
+            className={`w-full py-3 rounded-xl text-white font-bold transition ${
+              isLoading
+                ? "bg-blue-700 cursor-not-allowed"
+                : "bg-blue-900 hover:bg-blue-800"
+            }`}
           >
             {isLoading ? "Submitting..." : t("submitProgress")}
           </button>
-        </>
+        </form>
       )}
     </div>
   );
 }
-
-
 
 
 export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {

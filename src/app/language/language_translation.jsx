@@ -157,6 +157,7 @@ i18n.use(initReactI18next).init({
         selectProjectToUpdateProgress: "Select project to update progress",  
         organizationalEmployees: "Organizational Employees",
         highPerformingWorkers: "High Performing Workers",
+        startDate: "Start Date",
 
 
         //further reporting 
@@ -339,6 +340,7 @@ i18n.use(initReactI18next).init({
         selectProjectToUpdateProgress: "Sélectionnez un projet pour mettre à jour la progression",
         organizationalEmployees: "Employés organisationnels",
         highPerformingWorkers: "Travailleurs très performants",
+        startDate: "Date de début",
       
 
         //further reporting
