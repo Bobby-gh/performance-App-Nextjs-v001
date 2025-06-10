@@ -71,7 +71,7 @@ export function Sidebar() {
     //   </div>
     // </main>
 
-    <main className="w-24 h-full bg-[#04B1C4] rounded-lg">
+    <main className="w-24 h-full rounded-lg">
       <div className="flex justify-center p-4 mb-6">
         {/* Logo image */}
         <img
@@ -102,7 +102,7 @@ export function Sidebar() {
                 </div>
 
                 {/* Title (beneath icon, unaffected by focus or hover) */}
-                <span className="text-xs mt-1 text-white font-bold">{t(item.title)}</span>
+                <span className="text-xs mt-1 font-bold">{t(item.title)}</span>
               </Link>
             </li>
           ))}
