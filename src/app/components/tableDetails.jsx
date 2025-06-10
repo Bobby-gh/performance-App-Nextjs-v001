@@ -748,7 +748,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
               <option value="" disabled>
                 {t("selectAppraisalLevel")}
               </option>
-              <option value="outstanding">{t("outstanding")}</option>
+              <option value="Outstanding">{t("outstanding")}</option>
               <option value="Exceeds Expectations">
                 {t("exceedsExpectations")}
               </option>
