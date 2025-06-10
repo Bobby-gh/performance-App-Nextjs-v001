@@ -173,8 +173,7 @@ export function EmployeeBadgeTable() {
   const {getallUserBadges} = useUserGoalBadgesTableData()
   const rawData = getallUserBadges?.data?.usersResponse || [];
   const data = useMemo(() => rawData, [rawData]);
-
-
+console.log("EmployeeBadgeTable", data, getallUserBadges?.data);
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
       sx: {
