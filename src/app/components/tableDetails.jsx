@@ -241,7 +241,7 @@ export function AssignGoal({ data, open, onClose }) {
                     <FormInputField
                       label={t("assignedBy")}
                       id="assignedBy"
-                      value={editableFields.assignedBy}
+                      value={data.taskAssignedById}
                       onChange={handleChange}
                     />
 
