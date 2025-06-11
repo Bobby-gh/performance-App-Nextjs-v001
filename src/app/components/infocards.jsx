@@ -587,7 +587,7 @@ export function GoalDetails({ open, onClose }) {
                   >
                     <XAxis dataKey="employeeName" tick={{ fontSize: 12 }} />
                     <Tooltip />
-                    <Bar dataKey="actualProgress" barSize={20} fill="#3b82f6">
+                    <Bar dataKey="actualProgress" barSize={80} fill="#3b82f6">
                       {employeeGoals.map((e, idx) => (
                         <Cell key={idx} fill={e.actualProgress > 80 ? "#10b981" : "#3b82f6"} />
                       ))}
