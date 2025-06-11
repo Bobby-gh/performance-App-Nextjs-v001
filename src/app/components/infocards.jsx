@@ -579,7 +579,12 @@ export function GoalDetails({ open, onClose }) {
               <div className="mb-8">
                 <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("teamProgressChart")}</h4>
                 <ResponsiveContainer width="100%" height={180}>
-                  <BarChart data={employeeGoals} barGap={16} barCategoryGap="20%" margin={{ left: 0, right: 0, top: 0 }}>
+                  <BarChart
+                    data={employeeGoals}
+                    barCategoryGap="10%"
+                    barGap={2}
+                    margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+                  >
                     <XAxis dataKey="employeeName" tick={{ fontSize: 12 }} />
                     <Tooltip />
                     <Bar dataKey="actualProgress" barSize={20} fill="#3b82f6">
