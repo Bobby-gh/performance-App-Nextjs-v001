@@ -34,7 +34,7 @@ export default function Layout({ children }) {
   return (
     <div>
       {validated ? (
-        <main className="flex h-screen bg-[#d9e0fd] p-4">
+        <main className="flex h-screen bg-[#edf0ff] p-4">
           <ToastProvider />
           <div>
             <Sidebar />
