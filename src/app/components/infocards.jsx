@@ -22,6 +22,8 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { IoClose } from "react-icons/io5";
 import { Box, Modal } from "@mui/material";
+import { ResponsiveContainer, BarChart, Bar, XAxis, Tooltip } from "recharts";
+
 
 export function InformationalSummary() {
   const { t } = useTranslation();
@@ -429,30 +431,20 @@ export function GoalDetails({ open, onClose }) {
   const departmentProgressPercent = isManager
     ? Math.round(
         employeeGoals.reduce((sum, emp) => sum + emp.actualProgress, 0) /
-          (employeeGoals.length || 1)
+        (employeeGoals.length || 1)
       )
     : null;
 
-  const handleUpdate = async (event) => {
-    event.preventDefault();
+  const handleUpdate = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.patch(
+      const res = await axios.patch(
         UPDATE_GOAL_PROGRESS,
-        JSON.stringify({
-          goalId: goal.id,
-          progressIncrement: progress,
-          comment,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
+        JSON.stringify({ goalId: goal.id, progressIncrement: progress, comment }),
+        { headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.token}` } }
       );
-
-      if (response.status === 200) {
+      if (res.status === 200) {
         showToast("Progress updated successfully", "success");
         triggerComponent();
       }
@@ -467,53 +459,38 @@ export function GoalDetails({ open, onClose }) {
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={{ ...ModalModification, maxHeight: '90vh', overflowY: 'auto' }}>
-        {/* Close Button */}
-        <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+        <div className="flex absolute top-2 right-2">
           <button onClick={onClose}>
             <IoClose size={24} />
           </button>
         </div>
 
-        {/* Header */}
         <div className="mb-6">
           <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
           <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
         </div>
 
-        {/* Goal Info Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
           {[
             { label: t("target"), value: goal.target },
-            {
-              label: t("startDate"),
-              value: new Date(goal.dateAssigned).toLocaleDateString(),
-            },
-            {
-              label: t("deadline"),
-              value: new Date(goal.goalDeadline).toLocaleDateString(),
-            },
+            { label: t("startDate"), value: new Date(goal.dateAssigned).toLocaleDateString() },
+            { label: t("deadline"), value: new Date(goal.goalDeadline).toLocaleDateString() },
           ].map(({ label, value }) => (
-            <div
-              key={label}
-              className="p-4 bg-blue-50 rounded-xl text-center shadow-sm"
-            >
+            <div key={label} className="p-4 bg-blue-50 rounded-xl text-center shadow-sm">
               <p className="text-blue-700 font-semibold">{label}</p>
               <p className="mt-2 text-xl font-bold">{value}</p>
             </div>
           ))}
         </div>
 
-        {/* Main Content Layout */}
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Left Section */}
           <div className="flex-1">
-            {/* Staff Progress Section */}
             {!isManager && (
               <>
                 <h3 className="text-xl font-semibold text-gray-700 mb-4">
                   {t("currentProgress")} ({goal.actualProgressPercent}%)
                 </h3>
-                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
+                <div className="relative w-full h-6 bg-gray-200 rounded-full shadow-inner mb-6">
                   <div
                     className="bg-blue-600 h-full transition-all duration-700"
                     style={{ width: `${goal.actualProgressPercent}%` }}
@@ -522,13 +499,12 @@ export function GoalDetails({ open, onClose }) {
               </>
             )}
 
-            {/* Department Progress for Managers */}
             {isManager && (
               <>
                 <h4 className="text-lg font-semibold text-gray-700 mb-3">
-                  Department Progress ({departmentProgressPercent}%)
+                  {t("departmentProgress")} ({departmentProgressPercent}%)
                 </h4>
-                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-8">
+                <div className="relative w-full h-6 bg-gray-200 rounded-full shadow-inner mb-8">
                   <div
                     className="bg-green-600 h-full transition-all duration-700"
                     style={{ width: `${departmentProgressPercent}%` }}
@@ -537,75 +513,92 @@ export function GoalDetails({ open, onClose }) {
               </>
             )}
 
-            {/* Staff Form */}
             {!isManager && (
               <form onSubmit={handleUpdate} className="space-y-6">
                 <div>
-                  <label htmlFor="progress-input" className="block text-gray-700 font-semibold mb-2">
+                  <label className="block mb-2 font-semibold text-gray-700">
                     {t("enterProgress")}
                   </label>
                   <input
-                    id="progress-input"
                     type="number"
                     min="0"
                     max="100"
                     value={progress}
                     onChange={(e) => setProgress(Number(e.target.value))}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
-
                 <div>
-                  <label htmlFor="comment" className="block text-gray-700 font-semibold mb-2">
+                  <label className="block mb-2 font-semibold text-gray-700">
                     {t("comment")}
                   </label>
                   <textarea
-                    id="comment"
-                    rows={4}
+                    rows="4"
                     placeholder="Enter comment"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
-
                 <button
                   type="submit"
                   disabled={isLoading}
                   className={`w-full py-3 rounded-xl text-white font-bold transition ${
-                    isLoading
-                      ? "bg-blue-700 cursor-not-allowed"
-                      : "bg-blue-900 hover:bg-blue-800"
+                    isLoading ? "bg-blue-700" : "bg-blue-900 hover:bg-blue-800"
                   }`}
                 >
-                  {isLoading ? "Submitting..." : t("submitProgress")}
+                  {isLoading ? t("submitting") : t("submitProgress")}
                 </button>
               </form>
             )}
+
+            {goal.progressUpdates?.length > 0 && (
+              <div className="mb-8">
+                <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("recentUpdates")}</h4>
+                <ul className="space-y-3 max-h-[150px] overflow-y-auto">
+                  {goal.progressUpdates.map((u, i) => (
+                    <li key={i} className="bg-gray-50 p-3 rounded-lg shadow-sm">
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <span>{u.employeeName}</span>
+                        <span>{new Date(u.date).toLocaleString()}</span>
+                      </div>
+                      <p className="mt-2 text-gray-800">{u.comment}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {isManager && employeeGoals.length > 0 && (
+              <div className="mb-8">
+                <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("teamProgressChart")}</h4>
+                <ResponsiveContainer width="100%" height={200}>
+                  <BarChart data={employeeGoals}>
+                    <XAxis dataKey="employeeName" tick={{ fontSize: 12 }} />
+                    <Tooltip />
+                    <Bar dataKey="actualProgress" fill="#3b82f6" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
           </div>
 
-          {/* Right Divider & Employee Cards for Managers */}
           {isManager && (
             <>
-              <div className="hidden md:block border-l border-gray-300"></div>
+              <div className="hidden md:block border-l border-gray-300" />
               <div className="w-full md:w-1/3">
                 <h4 className="text-lg font-semibold text-gray-700 mb-4">{t("employees")}</h4>
                 <div className="grid grid-cols-2 gap-6">
                   {employeeGoals.map((emp) => (
-                    <div
-                      key={emp.employeeName}
-                      className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
-                    >
+                    <div key={emp.employeeName} className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center">
                       <img
                         src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
                         alt={emp.employeeName}
                         className="w-16 h-16 rounded-full mb-3"
                       />
-                      <p className="text-sm font-medium text-gray-800 mb-2 text-center">
-                        {emp.employeeName}
-                      </p>
+                      <p className="text-sm font-medium mb-1">{emp.employeeName}</p>
                       <div className="w-16 h-16">
                         <CircularProgressbar
                           value={emp.actualProgress}
@@ -618,15 +611,17 @@ export function GoalDetails({ open, onClose }) {
                           })}
                         />
                       </div>
-                      <p
-                        className={`mt-2 text-center text-sm ${
+                      <span
+                        className={`mt-2 text-xs font-semibold px-2 py-1 rounded-full ${
                           emp.status === "Completed"
-                            ? "line-through text-gray-400"
-                            : "text-gray-700"
+                            ? "bg-green-100 text-green-700"
+                            : emp.actualProgress > 0
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
                         }`}
                       >
-                        {emp.goalTitle}
-                      </p>
+                        {emp.status}
+                      </span>
                     </div>
                   ))}
                 </div>
