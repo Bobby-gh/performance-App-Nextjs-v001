@@ -648,18 +648,25 @@ export function GoalDetails({ open, onClose }) {
 
 
 
-export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
+export function Goals({ goalTitle, status, goalDeadline, onClick, progress, employeeGoals = [] }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
 
   const isManager = auth.refNum === "ref?2!";
 
-  const displayedProgress = isManager ? 100 : progress;
+  const departmentProgress = isManager
+    ? Math.round(
+        employeeGoals.reduce((sum, emp) => sum + (emp.actualProgress || 0), 0) /
+          (employeeGoals.length || 1)
+      )
+    : null;
+
+  const displayedProgress = isManager ? departmentProgress : progress;
   const progressLabel = isManager ? t("departmentProgress") : t("actualProgress");
 
   return (
     <div
-      className="bg-white rounded-lg p-4 cursor-pointer flex flex-col h-full"
+      className="bg-white rounded-lg p-4 cursor-pointer flex flex-col h-full shadow-sm border hover:shadow-md transition"
       onClick={onClick}
     >
       {/* Progress Section */}
@@ -671,7 +678,7 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
           <div
             className={`absolute h-4 ${
               isManager ? "bg-green-500" : "bg-blue-500"
-            } rounded`}
+            } rounded transition-all duration-500`}
             style={{ width: `${displayedProgress}%` }}
           ></div>
         </div>
