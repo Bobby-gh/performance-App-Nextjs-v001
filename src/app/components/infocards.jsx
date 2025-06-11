@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { useGoalStatus } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import {
   AuthContext,
   GoalSelectContext,
@@ -412,7 +412,8 @@ export function AddDepartment() {
 }
 
 
-export function GoalDetails({open, onClose}) {
+
+export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
@@ -425,16 +426,6 @@ export function GoalDetails({open, onClose}) {
   const employeeGoals = goal.employeeGoals || [];
   const isManager = auth.refNum === "ref?2!";
 
-
-
-  const checklistItems = employeeGoals.map((empGoal) => ({
-    label: empGoal.goalTitle,
-    done: empGoal.status === "Completed",
-    employeeName: empGoal.employeeName,
-    progress: empGoal.actualProgress,
-  }));
-
-  // Department progress for managers
   const departmentProgressPercent = isManager
     ? Math.round(
         employeeGoals.reduce((sum, emp) => sum + emp.actualProgress, 0) /
@@ -475,138 +466,179 @@ export function GoalDetails({open, onClose}) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{ ...ModalModification, maxHeight: "90vh", overflowY: "auto" }}>
-        <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+      <Box sx={{ ...ModalModification, maxHeight: '90vh', overflowY: 'auto' }}>
+        {/* Close Button */}
+        <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700">
           <button onClick={onClose}>
             <IoClose size={24} />
           </button>
         </div>
 
-        {/* Two-column layout */}
-        <div className="flex flex-col lg:flex-row gap-6">
-          
-          {/* Left side: always visible */}
-          <div className="flex-1 overflow-y-auto pr-4 border-r border-gray-300">
-            {/* Goal header */}
-            <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
-            <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
+        {/* Header */}
+        <div className="mb-6">
+          <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
+          <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
+        </div>
 
-            {/* Info Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 my-6">
-              {[/* target, startDate, deadline */].map(({ label, value }) => (
-                <div key={label} className="p-4 bg-blue-50 rounded-xl text-center shadow-sm">
-                  <p className="text-blue-700 font-semibold">{label}</p>
-                  <p className="mt-2 text-xl font-bold">{value}</p>
+        {/* Goal Info Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+          {[
+            { label: t("target"), value: goal.target },
+            {
+              label: t("startDate"),
+              value: new Date(goal.dateAssigned).toLocaleDateString(),
+            },
+            {
+              label: t("deadline"),
+              value: new Date(goal.goalDeadline).toLocaleDateString(),
+            },
+          ].map(({ label, value }) => (
+            <div
+              key={label}
+              className="p-4 bg-blue-50 rounded-xl text-center shadow-sm"
+            >
+              <p className="text-blue-700 font-semibold">{label}</p>
+              <p className="mt-2 text-xl font-bold">{value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Main Content Layout */}
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Left Section */}
+          <div className="flex-1">
+            {/* Staff Progress Section */}
+            {!isManager && (
+              <>
+                <h3 className="text-xl font-semibold text-gray-700 mb-4">
+                  {t("currentProgress")} ({goal.actualProgressPercent}%)
+                </h3>
+                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
+                  <div
+                    className="bg-blue-600 h-full transition-all duration-700"
+                    style={{ width: `${goal.actualProgressPercent}%` }}
+                  />
                 </div>
-              ))}
-            </div>
+              </>
+            )}
 
-            {/* Progress section */}
-            <div className="mb-10">
-              <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                {t("currentProgress")} ({goal.actualProgressPercent}%)
-              </h3>
-              <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
-                <div
-                  className="bg-blue-600 h-full transition-all duration-700"
-                  style={{ width: `${goal.actualProgressPercent}%` }}
-                />
-              </div>
+            {/* Department Progress for Managers */}
+            {isManager && (
+              <>
+                <h4 className="text-lg font-semibold text-gray-700 mb-3">
+                  Department Progress ({departmentProgressPercent}%)
+                </h4>
+                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-8">
+                  <div
+                    className="bg-green-600 h-full transition-all duration-700"
+                    style={{ width: `${departmentProgressPercent}%` }}
+                  />
+                </div>
+              </>
+            )}
 
-              {/* Staff-only Progress input */}
-              {auth.refNum === "ref?3!" && (
-                <form onSubmit={handleUpdate} className="space-y-6">
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
-                      {t("enterProgress")}
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={progress}
-                      onChange={(e) => setProgress(Number(e.target.value))}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
+            {/* Staff Form */}
+            {!isManager && (
+              <form onSubmit={handleUpdate} className="space-y-6">
+                <div>
+                  <label htmlFor="progress-input" className="block text-gray-700 font-semibold mb-2">
+                    {t("enterProgress")}
+                  </label>
+                  <input
+                    id="progress-input"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={progress}
+                    onChange={(e) => setProgress(Number(e.target.value))}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
 
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
-                      {t("comment")}
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Enter comment"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="comment" className="block text-gray-700 font-semibold mb-2">
+                    {t("comment")}
+                  </label>
+                  <textarea
+                    id="comment"
+                    rows={4}
+                    placeholder="Enter comment"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
 
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full py-3 rounded-xl text-white font-bold transition ${
-                      isLoading ? "bg-blue-700 cursor-not-allowed" : "bg-blue-900 hover:bg-blue-800"
-                    }`}
-                  >
-                    {isLoading ? "Submitting..." : t("submitProgress")}
-                  </button>
-                </form>
-              )}
-            </div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`w-full py-3 rounded-xl text-white font-bold transition ${
+                    isLoading
+                      ? "bg-blue-700 cursor-not-allowed"
+                      : "bg-blue-900 hover:bg-blue-800"
+                  }`}
+                >
+                  {isLoading ? "Submitting..." : t("submitProgress")}
+                </button>
+              </form>
+            )}
           </div>
 
-          {/* Right side: visible only to managers */}
+          {/* Right Divider & Employee Cards for Managers */}
           {isManager && (
-            <div className="flex-[0.9] overflow-y-auto pl-4">
-              <h4 className="text-lg font-semibold text-gray-700 mb-4">{t("employees")}</h4>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                {employeeGoals.map((emp) => (
-                  <div
-                    key={emp.employeeName}
-                    className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
-                  >
-                    <img
-                      src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
-                      alt={emp.employeeName}
-                      className="w-16 h-16 rounded-full mb-3"
-                    />
-                    <p className="text-sm font-medium text-gray-800 mb-2 text-center">
-                      {emp.employeeName}
-                    </p>
-                    <div className="w-16 h-16">
-                      <CircularProgressbar
-                        value={emp.actualProgress}
-                        text={`${emp.actualProgress}%`}
-                        styles={buildStyles({
-                          pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
-                          textColor: "#374151",
-                          trailColor: "#e5e7eb",
-                          textSize: "28px",
-                        })}
-                      />
-                    </div>
-                    <p
-                      className={`mt-2 text-center text-sm ${
-                        emp.status === "Completed" ? "line-through text-gray-400" : "text-gray-700"
-                      }`}
+            <>
+              <div className="hidden md:block border-l border-gray-300"></div>
+              <div className="w-full md:w-1/3">
+                <h4 className="text-lg font-semibold text-gray-700 mb-4">{t("employees")}</h4>
+                <div className="grid grid-cols-2 gap-6">
+                  {employeeGoals.map((emp) => (
+                    <div
+                      key={emp.employeeName}
+                      className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
                     >
-                      {emp.goalTitle}
-                    </p>
-                  </div>
-                ))}
+                      <img
+                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
+                        alt={emp.employeeName}
+                        className="w-16 h-16 rounded-full mb-3"
+                      />
+                      <p className="text-sm font-medium text-gray-800 mb-2 text-center">
+                        {emp.employeeName}
+                      </p>
+                      <div className="w-16 h-16">
+                        <CircularProgressbar
+                          value={emp.actualProgress}
+                          text={`${emp.actualProgress}%`}
+                          styles={buildStyles({
+                            pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
+                            textColor: "#374151",
+                            trailColor: "#e5e7eb",
+                            textSize: "28px",
+                          })}
+                        />
+                      </div>
+                      <p
+                        className={`mt-2 text-center text-sm ${
+                          emp.status === "Completed"
+                            ? "line-through text-gray-400"
+                            : "text-gray-700"
+                        }`}
+                      >
+                        {emp.goalTitle}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </Box>
-</Modal>
-
+    </Modal>
   );
 }
+
 
 
 export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
