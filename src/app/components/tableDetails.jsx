@@ -382,7 +382,6 @@ export function AssessGoal({ data, open, onClose }) {
     }
   };
 
-  // Options for dropdowns, same as create, with translation keys
   const ratingOptions = [
     { value: "Below Expectations", label: t("belowExpectations") },
     { value: "Meets Expectations", label: t("meetsExpectations") },
