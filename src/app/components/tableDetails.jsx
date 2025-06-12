@@ -490,7 +490,7 @@ export function EmployeeDetails({ data, open, onClose }) {
     new Date(dateString).toISOString().split("T")[0];
 
   const [editableFields, setEditableFields] = useState({
-    employeeId: data?._id,
+    employeeId: data?.userId,
     name: data?.name,
     email: data?.email,
     department: data?.department,
