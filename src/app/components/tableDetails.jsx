@@ -381,13 +381,7 @@ export function AssessGoal({ data, open, onClose }) {
     }
   };
 
-  const ratingOptions = [
-    { value: "Below Expectations", label: t("belowExpectations") },
-    { value: "Meets Expectations", label: t("meetsExpectations") },
-    { value: "Exceeds Expectations", label: t("exceedsExpectations") },
-    { value: "Outstanding", label: t("outstanding") },
-  ];
-
+  // Options for dropdowns
   const performanceOptions = [
     { value: "1", label: t("weak") },
     { value: "2", label: t("average") },
@@ -395,13 +389,14 @@ export function AssessGoal({ data, open, onClose }) {
     { value: "4", label: t("veryGood") },
   ];
 
-  // Helper to find label from value in options array
-  const getLabelFromValue = (options, val) => {
-    const found = options.find((opt) => opt.value === val);
-    return found ? found.label : "";
-  };
+  const ratingOptions = [
+    { value: "Below Expectations", label: t("belowExpectations") },
+    { value: "Meets Expectations", label: t("meetsExpectations") },
+    { value: "Exceeds Expectations", label: t("exceedsExpectations") },
+    { value: "Outstanding", label: t("outstanding") },
+  ];
 
-  // Find assignedTo label from departmenttable
+  // Find assignedTo label for display
   const assignedToLabel =
     departmenttable.find((d) => d.departmentId === editableFields.assignedTo)
       ?.departmentName || "";
@@ -416,125 +411,115 @@ export function AssessGoal({ data, open, onClose }) {
           </button>
         </div>
 
-        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-          <div className="text-lg font-semibold flex-1 min-w-[150px]">
-            {editableFields.goalTitle}
-          </div>
-
-          <div className="min-w-[140px]">
-            <label className="block text-sm font-medium text-gray-700">
-              {t("assignedTo")}
-            </label>
-            <div className="border rounded px-3 py-1 bg-gray-100">{assignedToLabel}</div>
-          </div>
-
-          <div className="min-w-[140px]">
-            <label className="block text-sm font-medium text-gray-700">
-              {t("performancePercent")}
-            </label>
-            <div className="border rounded px-3 py-1 bg-gray-100">
-              {editableFields.performancePercent}%
+        {/* Top section: read-only display */}
+        <div className="mb-6 p-4 bg-[#D7E7FA] rounded">
+          <h2 className="text-xl font-semibold mb-2">{editableFields.goalTitle}</h2>
+          <div className="flex flex-wrap gap-6 text-sm text-gray-700">
+            <div>
+              <span className="font-semibold">{t("assignedTo")}: </span>
+              <span>{assignedToLabel}</span>
             </div>
-          </div>
-
-          <div className="min-w-[140px] flex items-center space-x-1 text-red-600">
-            <IoCalendarClearOutline />
-            <div className="border rounded px-3 py-1 bg-gray-100">
-              {formattedDate(editableFields.deadline)}
+            <div>
+              <span className="font-semibold">{t("performancePercent")}: </span>
+              <span>{editableFields.performancePercent}%</span>
+            </div>
+            <div className="flex items-center text-red-600">
+              <IoCalendarClearOutline className="mr-1" />
+              <span>
+                {t("dueDate")}: {formattedDate(editableFields.deadline)}
+              </span>
+            </div>
+            <div className="text-blue-600 font-semibold ml-auto">
+              {editableFields.goalStatus}
             </div>
           </div>
         </div>
 
-        {/* Goal Status */}
-        <div className="mb-6 text-blue-600 font-semibold">{editableFields.goalStatus}</div>
-
-        {/* Editable dropdowns and comment */}
+        {/* Editable form in 3 columns grid */}
         <form onSubmit={handleEditSubmit}>
           <FormControl fullWidth>
-            <div className="flex flex-col space-y-4 max-h-[65vh] overflow-y-auto">
-              <CustomSelect
+            <div className="grid grid-cols-3 gap-6 max-h-[65vh] overflow-y-auto">
+              <ModalFormSelect
                 id="workQuality"
                 label={t("qualityOfWork")}
                 value={editableFields.workQuality}
-                onChange={(val) => handleChange("workQuality", val)}
                 options={performanceOptions}
+                onChange={(option) => handleChange("workQuality", option)}
                 required
               />
-
-              <CustomSelect
+              <ModalFormSelect
                 id="productivity"
                 label={t("productivity")}
                 value={editableFields.productivity}
-                onChange={(val) => handleChange("productivity", val)}
                 options={performanceOptions}
+                onChange={(option) => handleChange("productivity", option)}
                 required
               />
-
-              <CustomSelect
+              <ModalFormSelect
                 id="communication"
                 label={t("communication")}
                 value={editableFields.communication}
-                onChange={(val) => handleChange("communication", val)}
                 options={performanceOptions}
+                onChange={(option) => handleChange("communication", option)}
                 required
               />
-
-              <CustomSelect
+              <ModalFormSelect
                 id="proceduralKnowledge"
                 label={t("procedure")}
                 value={editableFields.proceduralKnowledge}
-                onChange={(val) => handleChange("proceduralKnowledge", val)}
                 options={performanceOptions}
+                onChange={(option) => handleChange("proceduralKnowledge", option)}
                 required
               />
-
-              <CustomSelect
+              <ModalFormSelect
                 id="reliability"
                 label={t("reliability")}
                 value={editableFields.reliability}
-                onChange={(val) => handleChange("reliability", val)}
                 options={performanceOptions}
+                onChange={(option) => handleChange("reliability", option)}
                 required
               />
-
-              <CustomSelect
+              <ModalFormSelect
                 id="teamwork"
                 label={t("teamWork")}
                 value={editableFields.teamwork}
-                onChange={(val) => handleChange("teamwork", val)}
                 options={performanceOptions}
+                onChange={(option) => handleChange("teamwork", option)}
                 required
               />
-
-              <CustomSelect
+              <ModalFormSelect
                 id="creativity"
                 label={t("creativity")}
                 value={editableFields.creativity}
-                onChange={(val) => handleChange("creativity", val)}
                 options={performanceOptions}
+                onChange={(option) => handleChange("creativity", option)}
                 required
               />
-
-              <CustomSelect
+              <ModalFormSelect
                 id="rating"
                 label={t("goalRating")}
                 value={editableFields.rating}
-                onChange={(val) => handleChange("rating", val)}
                 options={ratingOptions}
+                onChange={(option) => handleChange("rating", option)}
                 required
               />
 
-              <TextField
-                id="comment"
-                label={t("comment")}
-                multiline
-                minRows={3}
-                value={editableFields.comment}
-                onChange={(e) => handleChange("comment", e.target.value)}
-              />
+              {/* Comment TextArea spans all 3 columns */}
+              <div className="col-span-3">
+                <label htmlFor="comment" className="block mb-1 font-medium text-gray-700">
+                  {t("comment")}
+                </label>
+                <textarea
+                  id="comment"
+                  rows={4}
+                  value={editableFields.comment || ""}
+                  onChange={(e) => handleChange("comment", e.target.value)}
+                  className="w-full rounded border border-gray-300 p-2 resize-y"
+                />
+              </div>
             </div>
 
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-end mt-6">
               <CustomButton
                 label={isLoading ? t("saving") : t("save")}
                 type="submit"
@@ -548,6 +533,7 @@ export function AssessGoal({ data, open, onClose }) {
     </Modal>
   );
 }
+
 
 
 export function EmployeeDetails({ data, open, onClose }) {
