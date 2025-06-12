@@ -307,6 +307,7 @@ export function AssignGoal({ data, open, onClose }) {
     </div>
   );
 }
+
 export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
@@ -314,22 +315,27 @@ export function AssessGoal({ data, open, onClose }) {
   const { triggerComponent } = useContext(AuthContext);
 
   const formattedDate = (dateString) =>
-    new Date(dateString).toISOString().split("T")[0];
+    dateString ? new Date(dateString).toISOString().split("T")[0] : "";
 
   const [isLoading, setIsLoading] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(true); 
 
   const [editableFields, setEditableFields] = useState({
-    goalId: data?._id,
-    goalTitle: data?.goalTitle,
-    goalDescription: data?.goalDescription,
-    goalStatus: data?.status,
-    assignedTo: data?.taskAssignedTo,
-    deadline: data?.goalDeadline,
-    goalType: data?.goalType,
-    performancePercent: data?.performancePercent,
-    reviewed: data?.reviewed,
-    assignedBy: data?.taskAssignedBy,
+    goalId: data?._id || "",
+    goalTitle: data?.goalTitle || "",
+    goalStatus: data?.status || "",
+    assignedTo: data?.taskAssignedTo || "",
+    deadline: data?.goalDeadline || "",
+    performancePercent: data?.performancePercent || "",
+    workQuality: data?.workQuality || "",
+    productivity: data?.productivity || "",
+    communication: data?.communication || "",
+    proceduralKnowledge: data?.proceduralKnowledge || "",
+    reliability: data?.reliability || "",
+    teamwork: data?.teamwork || "",
+    creativity: data?.creativity || "",
+    comment: data?.comment || "",
+    rating: data?.rating || "",
   });
 
   const handleChange = (key, value) => {
@@ -338,14 +344,19 @@ export function AssessGoal({ data, open, onClose }) {
 
   const updateData = {
     goalTitle: editableFields.goalTitle,
-    goalDescription: editableFields.goalDescription,
     goalStatus: editableFields.goalStatus,
     taskAssignedTo: editableFields.assignedTo,
     goalDeadline: editableFields.deadline,
-    goalType: editableFields.goalType,
     performancePercent: editableFields.performancePercent,
-    reviewed: editableFields.reviewed,
-    taskAssignedBy: editableFields.assignedBy,
+    workQuality: editableFields.workQuality,
+    productivity: editableFields.productivity,
+    communication: editableFields.communication,
+    proceduralKnowledge: editableFields.proceduralKnowledge,
+    reliability: editableFields.reliability,
+    teamwork: editableFields.teamwork,
+    creativity: editableFields.creativity,
+    comment: editableFields.comment,
+    rating: editableFields.rating,
   };
 
   const handleEditSubmit = async (e) => {
@@ -357,125 +368,203 @@ export function AssessGoal({ data, open, onClose }) {
       const response = await editFunction(updateData, id, name);
 
       if (response?.status === 200) {
-        showToast("Edit Saved successful:", "success");
+        showToast(t("editSavedSuccess"), "success");
         triggerComponent();
         onClose();
       } else {
-        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+        showToast(t("editFailedSave"), "error");
       }
     } catch (error) {
       console.error("Edit error:", error);
+      showToast(t("editFailedSave"), "error");
     } finally {
       setIsLoading(false);
-      setEditMode(false);
     }
   };
+
+  // Options for dropdowns, same as create, with translation keys
+  const ratingOptions = [
+    { value: "Below Expectations", label: t("belowExpectations") },
+    { value: "Meets Expectations", label: t("meetsExpectations") },
+    { value: "Exceeds Expectations", label: t("exceedsExpectations") },
+    { value: "Outstanding", label: t("outstanding") },
+  ];
+
+  const performanceOptions = [
+    { value: "1", label: t("weak") },
+    { value: "2", label: t("average") },
+    { value: "3", label: t("good") },
+    { value: "4", label: t("veryGood") },
+  ];
 
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
+        {/* Close button */}
         <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
           <button onClick={onClose}>
             <IoClose size={24} />
           </button>
         </div>
 
-        <div className="p-6 space-y-2 mt-2 bg-[#D7E7FA] max-h-[90vh] rounded-lg">
-          <div className="flex justify-between mb-6">
-            <div className="gap-4">
-              <div className="font-semibold text-lg mb-2">
-                {editMode ? (
-                  <input
-                    className="w-full bg-transparent outline-none"
-                    value={editableFields.goalTitle || ""}
-                    onChange={(e) => handleChange("goalTitle", e.target.value)}
-                  />
-                ) : (
-                  editableFields.goalTitle
-                )}
-              </div>
-
-              <div className="flex items-center space-x-2 text-sm">
-                <IoCalendarClearOutline color="red" />
-                <span className="text-red-500">
-                  {t("dueDate")}:{" "}
-                  {editMode ? (
-                    <input
-                      type="date"
-                      className="border px-2 py-1 rounded"
-                      value={formattedDate(editableFields.deadline)}
-                      onChange={(e) => handleChange("deadline", e.target.value)}
-                    />
-                  ) : (
-                    formattedDate(editableFields.deadline)
-                  )}
-                </span>
-              </div>
-            </div>
-
-            <div className="text-blue-500 font-semibold text-sm">
-              {editableFields.goalStatus}
-            </div>
+        {/* Top details bar */}
+        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+          {/* Goal Title */}
+          <div className="text-lg font-semibold flex-1 min-w-[150px]">
+            {editableFields.goalTitle}
           </div>
 
-          <div className="bg-white p-4 rounded-lg max-h-[65vh] overflow-y-auto">
-            <FormControl fullWidth>
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <FormInputField
-                  label={t("goalTitle")}
-                  id="goalTitle"
-                  value={editableFields.goalTitle}
-                  onChange={handleChange}
-                />
-                <ModalFormSelect
-                  id="assignedTo"
-                  label={t("assignedTo")}
-                  value={editableFields.assignedTo}
-                  options={departmenttable.map((d) => ({
-                    value: d.departmentId,
-                    label: d.departmentName,
-                  }))}
-                  onChange={(option) => handleChange("assignedTo", option)}
-                  required
-                />
-                <FormInputField
-                  label={t("deadline")}
-                  type="date"
-                  id="deadline"
-                  value={formattedDate(editableFields.deadline)}
-                  onChange={handleChange}
-                />
-                <FormInputField
-                  label={t("performancePercent")}
-                  id="performancePercent"
-                  value={editableFields.performancePercent}
-                  onChange={handleChange}
-                />
-                <ModalFormSelect
-                  id="reviewed"
-                  label={t("reviewed")}
-                  value={editableFields.reviewed}
-                  options={[
-                    { value: true, label: "Yes" },
-                    { value: false, label: "No" },
-                  ]}
-                  onChange={(option) => handleChange("reviewed", option)}
-                  required
-                />
-              </div>
+          {/* Assigned To */}
+          <div className="min-w-[140px]">
+            <label className="block text-sm font-medium text-gray-700">
+              {t("assignedTo")}
+            </label>
+            <CustomSelect
+              id="assignedTo"
+              value={editableFields.assignedTo}
+              onChange={(val) => handleChange("assignedTo", val)}
+              options={departmenttable.map((d) => ({
+                value: d.departmentId,
+                label: d.departmentName,
+              }))}
+              placeholder={t("selectAssignedTo")}
+              required
+            />
+          </div>
 
-              <div className="flex justify-end mt-4">
-                <CustomButton
-                  label={isLoading ? "Saving..." : "Save"}
-                  onClick={handleEditSubmit}
-                  type="submit"
-                  className="custom-class"
-                  disabled={isLoading}
-                />
-              </div>
-            </FormControl>
+          {/* Performance Percent */}
+          <div className="min-w-[140px]">
+            <label className="block text-sm font-medium text-gray-700">
+              {t("performancePercent")}
+            </label>
+            <input
+              type="number"
+              min="0"
+              max="100"
+              className="border rounded px-2 py-1 w-full"
+              value={editableFields.performancePercent || ""}
+              onChange={(e) =>
+                handleChange("performancePercent", e.target.value)
+              }
+              placeholder="0-100"
+            />
+          </div>
+
+          {/* Due Date */}
+          <div className="min-w-[140px] flex items-center space-x-1 text-red-600">
+            <IoCalendarClearOutline />
+            <input
+              type="date"
+              className="border rounded px-2 py-1"
+              value={formattedDate(editableFields.deadline)}
+              onChange={(e) => handleChange("deadline", e.target.value)}
+              required
+            />
           </div>
         </div>
+
+        {/* Goal Status */}
+        <div className="mb-6 text-blue-600 font-semibold">{editableFields.goalStatus}</div>
+
+        {/* Editable form fields for assessment */}
+        <form onSubmit={handleEditSubmit}>
+          <FormControl fullWidth>
+            <div className="flex flex-col space-y-4 max-h-[65vh] overflow-y-auto">
+              {/* Dropdowns */}
+              <CustomSelect
+                id="workQuality"
+                label={t("qualityOfWork")}
+                value={editableFields.workQuality}
+                onChange={(val) => handleChange("workQuality", val)}
+                options={performanceOptions}
+                required
+              />
+
+              <CustomSelect
+                id="productivity"
+                label={t("productivity")}
+                value={editableFields.productivity}
+                onChange={(val) => handleChange("productivity", val)}
+                options={performanceOptions}
+                required
+              />
+
+              <CustomSelect
+                id="communication"
+                label={t("communication")}
+                value={editableFields.communication}
+                onChange={(val) => handleChange("communication", val)}
+                options={performanceOptions}
+                required
+              />
+
+              <CustomSelect
+                id="proceduralKnowledge"
+                label={t("procedure")}
+                value={editableFields.proceduralKnowledge}
+                onChange={(val) => handleChange("proceduralKnowledge", val)}
+                options={performanceOptions}
+                required
+              />
+
+              <CustomSelect
+                id="reliability"
+                label={t("reliability")}
+                value={editableFields.reliability}
+                onChange={(val) => handleChange("reliability", val)}
+                options={performanceOptions}
+                required
+              />
+
+              <CustomSelect
+                id="teamwork"
+                label={t("teamWork")}
+                value={editableFields.teamwork}
+                onChange={(val) => handleChange("teamwork", val)}
+                options={performanceOptions}
+                required
+              />
+
+              <CustomSelect
+                id="creativity"
+                label={t("creativity")}
+                value={editableFields.creativity}
+                onChange={(val) => handleChange("creativity", val)}
+                options={performanceOptions}
+                required
+              />
+
+              <CustomSelect
+                id="rating"
+                label={t("goalRating")}
+                value={editableFields.rating}
+                onChange={(val) => handleChange("rating", val)}
+                options={ratingOptions}
+                required
+              />
+
+              {/* Comment field */}
+              <TextField
+                id="comment"
+                label={t("comment")}
+                multiline
+                minRows={3}
+                value={editableFields.comment}
+                onChange={(e) => handleChange("comment", e.target.value)}
+              />
+            </div>
+
+            {/* Save button */}
+            <div className="flex justify-end mt-4">
+              <CustomButton
+                label={isLoading ? t("saving") : t("save")}
+                type="submit"
+                disabled={isLoading}
+                className="custom-class"
+              />
+            </div>
+          </FormControl>
+        </form>
       </Box>
     </Modal>
   );
