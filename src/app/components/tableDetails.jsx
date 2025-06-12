@@ -318,7 +318,6 @@ export function AssessGoal({ data, open, onClose }) {
     dateString ? new Date(dateString).toISOString().split("T")[0] : "";
 
   const [isLoading, setIsLoading] = useState(false);
-  const [editMode, setEditMode] = useState(true); 
 
   const [editableFields, setEditableFields] = useState({
     goalId: data?._id || "",
@@ -396,6 +395,17 @@ export function AssessGoal({ data, open, onClose }) {
     { value: "4", label: t("veryGood") },
   ];
 
+  // Helper to find label from value in options array
+  const getLabelFromValue = (options, val) => {
+    const found = options.find((opt) => opt.value === val);
+    return found ? found.label : "";
+  };
+
+  // Find assignedTo label from departmenttable
+  const assignedToLabel =
+    departmenttable.find((d) => d.departmentId === editableFields.assignedTo)
+      ?.departmentName || "";
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
@@ -406,70 +416,42 @@ export function AssessGoal({ data, open, onClose }) {
           </button>
         </div>
 
-        {/* Top details bar */}
         <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-          {/* Goal Title */}
           <div className="text-lg font-semibold flex-1 min-w-[150px]">
             {editableFields.goalTitle}
           </div>
 
-          {/* Assigned To */}
           <div className="min-w-[140px]">
             <label className="block text-sm font-medium text-gray-700">
               {t("assignedTo")}
             </label>
-            <CustomSelect
-              id="assignedTo"
-              value={editableFields.assignedTo}
-              onChange={(val) => handleChange("assignedTo", val)}
-              options={departmenttable.map((d) => ({
-                value: d.departmentId,
-                label: d.departmentName,
-              }))}
-              placeholder={t("selectAssignedTo")}
-              required
-            />
+            <div className="border rounded px-3 py-1 bg-gray-100">{assignedToLabel}</div>
           </div>
 
-          {/* Performance Percent */}
           <div className="min-w-[140px]">
             <label className="block text-sm font-medium text-gray-700">
               {t("performancePercent")}
             </label>
-            <input
-              type="number"
-              min="0"
-              max="100"
-              className="border rounded px-2 py-1 w-full"
-              value={editableFields.performancePercent || ""}
-              onChange={(e) =>
-                handleChange("performancePercent", e.target.value)
-              }
-              placeholder="0-100"
-            />
+            <div className="border rounded px-3 py-1 bg-gray-100">
+              {editableFields.performancePercent}%
+            </div>
           </div>
 
-          {/* Due Date */}
           <div className="min-w-[140px] flex items-center space-x-1 text-red-600">
             <IoCalendarClearOutline />
-            <input
-              type="date"
-              className="border rounded px-2 py-1"
-              value={formattedDate(editableFields.deadline)}
-              onChange={(e) => handleChange("deadline", e.target.value)}
-              required
-            />
+            <div className="border rounded px-3 py-1 bg-gray-100">
+              {formattedDate(editableFields.deadline)}
+            </div>
           </div>
         </div>
 
         {/* Goal Status */}
         <div className="mb-6 text-blue-600 font-semibold">{editableFields.goalStatus}</div>
 
-        {/* Editable form fields for assessment */}
+        {/* Editable dropdowns and comment */}
         <form onSubmit={handleEditSubmit}>
           <FormControl fullWidth>
             <div className="flex flex-col space-y-4 max-h-[65vh] overflow-y-auto">
-              {/* Dropdowns */}
               <CustomSelect
                 id="workQuality"
                 label={t("qualityOfWork")}
@@ -542,7 +524,6 @@ export function AssessGoal({ data, open, onClose }) {
                 required
               />
 
-              {/* Comment field */}
               <TextField
                 id="comment"
                 label={t("comment")}
@@ -553,7 +534,6 @@ export function AssessGoal({ data, open, onClose }) {
               />
             </div>
 
-            {/* Save button */}
             <div className="flex justify-end mt-4">
               <CustomButton
                 label={isLoading ? t("saving") : t("save")}
