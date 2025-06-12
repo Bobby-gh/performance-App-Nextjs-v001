@@ -320,21 +320,21 @@ export function AssessGoal({ data, open, onClose }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [editableFields, setEditableFields] = useState({
-    goalId: data?._id || "",
-    goalTitle: data?.goalTitle || "",
-    goalStatus: data?.status || "",
-    assignedTo: data?.taskAssignedTo || "",
-    deadline: data?.goalDeadline || "",
-    performancePercent: data?.performancePercent || "",
-    workQuality: data?.workQuality || "",
-    productivity: data?.productivity || "",
-    communication: data?.communication || "",
-    proceduralKnowledge: data?.proceduralKnowledge || "",
-    reliability: data?.reliability || "",
-    teamwork: data?.teamwork || "",
-    creativity: data?.creativity || "",
-    comment: data?.comment || "",
-    rating: data?.rating || "",
+    goalId: data?._id,
+    goalTitle: data?.goalTitle,
+    goalStatus: data?.status,
+    assignedTo: data?.taskAssignedTo,
+    deadline: data?.goalDeadline,
+    performancePercent: data?.performancePercent,
+    workQuality: data?.workQuality,
+    productivity: data?.productivity,
+    communication: data?.communication,
+    proceduralKnowledge: data?.proceduralKnowledge,
+    reliability: data?.reliability,
+    teamwork: data?.teamwork,
+    creativity: data?.creativity,
+    comment: data?.comment,
+    rating: data?.rating,
   });
 
   const handleChange = (key, value) => {
