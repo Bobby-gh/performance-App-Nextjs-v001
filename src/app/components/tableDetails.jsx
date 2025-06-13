@@ -516,9 +516,21 @@ export function EmployeeDetails({ data, open, onClose }) {
           </button>
         </div>
 
-        <main className="flex justify-between text-black p-6 bg-white rounded-lg">
-          {/* Left: Form Fields */}
-          <div className="flex-1 pr-6">
+        <main className="flex text-black p-6 bg-white rounded-lg">
+          {/* Left: Avatar (1/3 width) */}
+          <div className="w-1/3 flex flex-col items-center pr-6 border-r border-gray-300">
+            <Image
+              src={avatar}
+              alt="User Avatar"
+              className="rounded-full border-2 mb-4"
+              width={120}
+              height={120}
+            />
+            <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
+          </div>
+
+          {/* Right: Form Fields (2/3 width) */}
+          <div className="w-2/3 pl-6">
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <IoPerson color="blue" />
@@ -586,21 +598,6 @@ export function EmployeeDetails({ data, open, onClose }) {
                 </div>
               )}
             </div>
-          </div>
-
-          {/* Divider */}
-          <div className="w-px bg-gray-300 mx-4"></div>
-
-          {/* Right: Avatar */}
-          <div className="flex flex-col items-center">
-            <Image
-              src={avatar}
-              alt="User Avatar"
-              className="rounded-full border-2 mb-4"
-              width={120}
-              height={120}
-            />
-            <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
           </div>
         </main>
       </Box>
