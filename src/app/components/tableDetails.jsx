@@ -302,6 +302,7 @@ export function AssessGoal({ data, open, onClose }) {
     performancePercent: data?.performancePercent,
     reviewed: data?.reviewed,
     assignedBy: data?.taskAssignedBy,
+    workQuality: data?.workQuality,
   });
 
   const handleChange = (key, value) => {
@@ -318,6 +319,7 @@ export function AssessGoal({ data, open, onClose }) {
     performancePercent: editableFields.performancePercent,
     reviewed: editableFields.reviewed,
     taskAssignedBy: editableFields.assignedBy,
+    workQuality: editableFields.workQuality,
   };
 
   const handleEditSubmit = async (e) => {
@@ -399,6 +401,15 @@ export function AssessGoal({ data, open, onClose }) {
                   value={editableFields.goalTitle}
                   onChange={handleChange}
                 />
+
+                //test field for work Quality
+                <FormInputField
+                  label={t("qualityOfWork")}
+                  id="workQuality"
+                  value={editableFields.workQuality}
+                  onChange={handleChange}
+                />
+
                 <ModalFormSelect
                   id="assignedTo"
                   label={t("assignedTo")}
