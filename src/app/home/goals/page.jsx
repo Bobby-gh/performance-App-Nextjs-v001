@@ -32,7 +32,7 @@ export default function MyGoals() {
       setGoal(null);
       setOpen(true);
     } else {
-      // setSelectedGoal(goal);
+      setSelectedGoal(goal);
       setGoal(goal);
       setOpen(true);
     }
@@ -42,7 +42,7 @@ export default function MyGoals() {
     <main className="flex space-x-4">
       {/* Left Panel:: Show Goal Details only when a goal is selected */}
       {selectedGoal && (
-        <div className="flex-[1] overflow-y-auto max-h-[87vh]">
+        <div>
           <GoalDetails open = {open}
             onClose = {()=> {setOpen(false)}}
           />
@@ -50,7 +50,7 @@ export default function MyGoals() {
       )}
 
       {/* Right Panel: Goals List */}
-      <div className="flex-[1.7] overflow-y-auto max-h-[87vh] p-2">
+      <div className="overflow-y-auto max-h-[87vh] p-2">
         {mygoal.length > 0 ? (
           <div
             className={`grid gap-4 cursor-pointer ${
