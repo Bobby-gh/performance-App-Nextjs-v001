@@ -420,6 +420,7 @@ export function GoalDetails({ open, onClose }) {
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
   const { triggerComponent } = useContext(Modaltrigger);
+
   const [progress, setProgress] = useState(goal.actualProgress);
   const [comment, setComment] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -428,8 +429,7 @@ export function GoalDetails({ open, onClose }) {
   const isManager = auth.refNum === "ref?2!";
   const departmentProgressPercent = isManager
     ? Math.round(
-        employeeGoals.reduce((sum, e) => sum + e.actualProgress, 0) /
-          (employeeGoals.length || 1)
+        employeeGoals.reduce((sum, e) => sum + e.actualProgress, 0) / (employeeGoals.length || 1)
       )
     : null;
 
@@ -440,7 +440,12 @@ export function GoalDetails({ open, onClose }) {
       const res = await axios.patch(
         UPDATE_GOAL_PROGRESS,
         JSON.stringify({ goalId: goal.id, progressIncrement: progress, comment }),
-        { headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.token}` } }
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
       );
       if (res.status === 200) {
         showToast("Progress updated successfully", "success");
@@ -463,6 +468,7 @@ export function GoalDetails({ open, onClose }) {
           </button>
         </div>
 
+        {/* Header */}
         <div className="mb-6">
           <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
           <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
@@ -502,7 +508,7 @@ export function GoalDetails({ open, onClose }) {
               </div>
             )}
 
-            {/* Manager Department Bar */}
+            {/* Manager Department Progress */}
             {isManager && (
               <div className="mb-6">
                 <h4 className="text-lg font-semibold text-gray-700 mb-3">
@@ -520,7 +526,7 @@ export function GoalDetails({ open, onClose }) {
               </div>
             )}
 
-            {/* Staff Submission Form */}
+            {/* Staff Update Form */}
             {!isManager && (
               <form onSubmit={handleUpdate} className="space-y-6">
                 <div>
@@ -549,14 +555,16 @@ export function GoalDetails({ open, onClose }) {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full py-3 rounded-xl text-white font-bold transition ${isLoading ? "bg-blue-700" : "bg-blue-900 hover:bg-blue-800"}`}
+                  className={`w-full py-3 rounded-xl text-white font-bold transition ${
+                    isLoading ? "bg-blue-700" : "bg-blue-900 hover:bg-blue-800"
+                  }`}
                 >
                   {isLoading ? t("submitting") : t("submitProgress")}
                 </button>
               </form>
             )}
 
-            {/* Recent Activity Feed */}
+            {/* Recent Updates */}
             {goal.progressUpdates?.length > 0 && (
               <div className="mb-8">
                 <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("recentUpdates")}</h4>
@@ -609,30 +617,46 @@ export function GoalDetails({ open, onClose }) {
                   {employeeGoals.map((e, i) => (
                     <div key={i} className="flex justify-between mb-2 items-center">
                       <p className="text-sm text-gray-800">{e.goalTitle}</p>
-                      <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                        e.status === "Completed" ? "bg-green-100 text-green-800" :
-                        e.status === "In Progress" ? "bg-yellow-100 text-yellow-800" :
-                        "bg-red-100 text-red-800"
-                      }`}>
+                      <span
+                        className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                          e.status === "Completed"
+                            ? "bg-green-100 text-green-800"
+                            : e.status === "In Progress"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
                         {t(e.status.toLowerCase().replace(" ", "")) || e.status}
                       </span>
                     </div>
                   ))}
                 </div>
 
+                {/* Employees */}
                 <h4 className="text-lg font-semibold text-gray-700">{t("employees")}</h4>
                 <div className="grid grid-cols-2 gap-6">
                   {employeeGoals.map((emp) => (
-                    <div key={emp.employeeName} className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center">
-                      <img src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`} alt={emp.employeeName} className="w-16 h-16 rounded-full mb-3" />
+                    <div
+                      key={emp.employeeName}
+                      className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
+                    >
+                      <img
+                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
+                        alt={emp.employeeName}
+                        className="w-16 h-16 rounded-full mb-3"
+                      />
                       <p className="text-sm font-medium mb-1">{emp.employeeName}</p>
                       <div className="w-16 h-16">
-                        <CircularProgressbar value={emp.actualProgress} text={`${emp.actualProgress}%`} styles={buildStyles({
-                          pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
-                          textColor: "#374151",
-                          trailColor: "#e5e7eb",
-                          textSize: "28px",
-                        })} />
+                        <CircularProgressbar
+                          value={emp.actualProgress}
+                          text={`${emp.actualProgress}%`}
+                          styles={buildStyles({
+                            pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
+                            textColor: "#374151",
+                            trailColor: "#e5e7eb",
+                            textSize: "28px",
+                          })}
+                        />
                       </div>
                     </div>
                   ))}
