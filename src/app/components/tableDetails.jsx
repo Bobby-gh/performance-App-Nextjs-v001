@@ -279,7 +279,6 @@ export function AssignGoal({ data, open, onClose }) {
   );
 }
 
-
 export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
@@ -454,8 +453,6 @@ export function AssessGoal({ data, open, onClose }) {
   );
 }
 
-
-
 export function EmployeeDetails({ data, open, onClose }) {
   const { t } = useTranslation();
   const { triggerComponent } = useContext(AuthContext);
@@ -511,29 +508,19 @@ export function EmployeeDetails({ data, open, onClose }) {
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
         <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
+          <div className="flex justify-end mb-2">
+            <button onClick={() => setEditMode(!editMode)}>
+              <FaRegEdit className="text-blue-500" size={20} />
+            </button>
+          </div>
           <button onClick={onClose}>
             <IoClose size={24} />
           </button>
         </div>
 
-        <main className="flex flex-row gap-6 text-black p-6 bg-white rounded-lg">
-            <div className="flex flex-col items-center">
-              <Image
-                src={avatar}
-                alt="User Avatar"
-                className="rounded-full border-2 mb-4"
-                width={120}
-                height={120}
-              />
-              <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
-            </div>
-
-            <div className="flex justify-end mb-2">
-              <button onClick={() => setEditMode(!editMode)}>
-                <FaRegEdit className="text-blue-500" size={20} />
-              </button>
-            </div>
-
+        <main className="flex justify-between text-black p-6 bg-white rounded-lg">
+          {/* Left: Form Fields */}
+          <div className="flex-1 pr-6">
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <IoPerson color="blue" />
@@ -601,13 +588,27 @@ export function EmployeeDetails({ data, open, onClose }) {
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Divider */}
+          <div className="w-px bg-gray-300 mx-4"></div>
+
+          {/* Right: Avatar */}
+          <div className="flex flex-col items-center">
+            <Image
+              src={avatar}
+              alt="User Avatar"
+              className="rounded-full border-2 mb-4"
+              width={120}
+              height={120}
+            />
+            <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
+          </div>
         </main>
       </Box>
     </Modal>
   );
 }
-
-
 
 export const EmployeeRating = ({ open, onClose, data }) => {
   const { createUserRating } = useUserRating();
