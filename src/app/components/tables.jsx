@@ -169,6 +169,7 @@ export function GoalTable() {
 
 export function EmployeeBadgeTable() {
   const employeeRating = useEmployeeRatingColumn();
+  const { t } = useTranslation();
   const columns = useMemo(() => employeeRating, []);
   const {getallUserBadges} =  useUserGoalBadgesTableData();
   const rawData = getallUserBadges?.data?.usersResponse || [];
@@ -210,18 +211,18 @@ console.log("EmployeeBadgeTable", data, getallUserBadges?.data);
 
         if (typeof value === "string") {
           switch (value.toLowerCase()) {
-            case "exceptionnel":
+            case t("outstanding"):
               bgColor = "#FFD700"; // Gold
               color = "#000";
               break;
-            case "depasse les attentes":
+            case t("exceedsExpectations"):
               bgColor = "#CD7F32"; // Bronze
               break;
-            case "atteint les objectifs":
+            case t("meetsExpectations"):
               bgColor = "#C0C0C0"; // Silver
               color = "#000";
               break;
-            case "en dessous des attentes":
+            case t("belowExpectations"):
               bgColor = "#F84626"; // Red
               break;
             case "pending ...":
