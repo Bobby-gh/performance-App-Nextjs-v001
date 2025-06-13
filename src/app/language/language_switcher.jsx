@@ -60,12 +60,8 @@ export function InnerLanguageButton() {
     <div className="relative inline-block text-left">
       <button
         onClick={toggleDropdown}
-        className="flex items-center space-x-2 border border-blue-500 rounded px-2 py-1 hover:bg-blue-50 transition"
       >
-        <HiGlobeEuropeAfrica className="text-blue-500" />
-        <span className="text-sm text-blue-500 capitalize">
-          {i18n.language}
-        </span>
+        <HiGlobeEuropeAfrica />
       </button>
 
       {open && (

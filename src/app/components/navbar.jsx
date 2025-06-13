@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { IoNotifications } from "react-icons/io5";
 import { LogOut } from "./modals";
@@ -8,21 +8,22 @@ import { MdAccountCircle } from "react-icons/md";
 import { CgMenuGridR } from "react-icons/cg";
 import { InnerLanguageButton } from "../language/language_switcher";
 
-
 export function Navbar() {
   const { t } = useTranslation();
-  const {auth} = React.useContext(AuthContext)
+  const { auth } = React.useContext(AuthContext);
   return (
-     <nav className="flex justify-end">
+    <nav className="flex justify-end">
       {/* <div className="flex flex-row items-center"><span className="text-lg font-bold">{t("welcomeBack")}</span ><span className="ml-2 text-lg font-bold text-blue-900">{auth.name}</span></div> */}
       <div className="flex cursor-pointer space-x-4 item-center">
-        <InnerLanguageButton/>
-        <LogOut/>
+        <LogOut />
         <div className="flex text-2xl cursor-pointer">
-          <MdAccountCircle/>
+          <InnerLanguageButton />
         </div>
         <div className="flex text-2xl cursor-pointer">
-          <CgMenuGridR/>
+          <MdAccountCircle />
+        </div>
+        <div className="flex text-2xl cursor-pointer">
+          <CgMenuGridR />
         </div>
       </div>
     </nav>
