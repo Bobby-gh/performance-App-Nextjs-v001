@@ -167,14 +167,57 @@ export function GoalTable() {
   );
 }
 
+
 export function EmployeeBadgeTable() {
-  const employeeRating = useEmployeeRatingColumn();
   const { t } = useTranslation();
-  const columns = useMemo(() => employeeRating, []);
-  const {getallUserBadges} =  useUserGoalBadgesTableData();
+  const { getallUserBadges } = useUserGoalBadgesTableData();
   const rawData = getallUserBadges?.data?.usersResponse || [];
   const data = useMemo(() => rawData, [rawData]);
-console.log("EmployeeBadgeTable", data, getallUserBadges?.data);
+
+  const columns = useMemo(() => {
+    return [
+      {
+        accessorKey: "name",
+        header: t("name"),
+      },
+      {
+        accessorKey: "department",
+        header: t("department"),
+      },
+      {
+        accessorKey: "performance",
+        header: t("performance"),
+      },
+      {
+        accessorKey: "badge",
+        header: t("badge"),
+        Cell: ({ cell }) => {
+          const rawValue = cell.getValue();
+          const lower = typeof rawValue === "string" ? rawValue.toLowerCase() : "";
+
+          const translatedValue = (() => {
+            switch (lower) {
+              case "outstanding":
+                return t("outstanding");
+              case "exceeds expectations":
+                return t("exceedsExpectations");
+              case "meets expectations":
+                return t("meetsExpectations");
+              case "below expectations":
+                return t("belowExpectations");
+              case "pending ...":
+                return t("pending");
+              default:
+                return rawValue || "-";
+            }
+          })();
+
+          return <span>{translatedValue}</span>;
+        },
+      },
+    ];
+  }, [t]);
+
   const table = useMaterialReactTable({
     muiTableHeadCellProps: {
       sx: {
@@ -205,33 +248,32 @@ console.log("EmployeeBadgeTable", data, getallUserBadges?.data);
 
     muiTableBodyCellProps: ({ cell }) => {
       if (cell.column.id === "badge") {
-        const value = cell.getValue();
+        const rawValue = cell.getValue();
+        const value = typeof rawValue === "string" ? rawValue.toLowerCase() : "";
         let bgColor = "";
         let color = "#fff";
 
-        if (typeof value === "string") {
-          switch (value.toLowerCase()) {
-            case t("outstanding"):
-              bgColor = "#FFD700"; // Gold
-              color = "#000";
-              break;
-            case t("exceedsExpectations"):
-              bgColor = "#CD7F32"; // Bronze
-              break;
-            case t("meetsExpectations"):
-              bgColor = "#C0C0C0"; // Silver
-              color = "#000";
-              break;
-            case t("belowExpectations"):
-              bgColor = "#F84626"; // Red
-              break;
-            case "pending ...":
-              bgColor = "#808080"; // Gray
-              break;
-            default:
-              bgColor = "#e0e0e0"; // Neutral fallback
-              color = "#000";
-          }
+        switch (value) {
+          case "outstanding":
+            bgColor = "#FFD700"; // Gold
+            color = "#000";
+            break;
+          case "exceeds expectations":
+            bgColor = "#CD7F32"; // Bronze
+            break;
+          case "meets expectations":
+            bgColor = "#C0C0C0"; // Silver
+            color = "#000";
+            break;
+          case "below expectations":
+            bgColor = "#F84626"; // Red
+            break;
+          case "pending ...":
+            bgColor = "#808080"; // Gray
+            break;
+          default:
+            bgColor = "#e0e0e0"; // Fallback
+            color = "#000";
         }
 
         return {
@@ -239,6 +281,7 @@ console.log("EmployeeBadgeTable", data, getallUserBadges?.data);
             backgroundColor: `${bgColor} !important`,
             color: `${color} !important`,
             fontWeight: "bold",
+            textTransform: "capitalize",
           },
         };
       }
@@ -253,6 +296,7 @@ console.log("EmployeeBadgeTable", data, getallUserBadges?.data);
     </div>
   );
 }
+
 
 export function AccessGoalTable() {
   const [open, setOpen] = useState(false);
