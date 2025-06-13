@@ -39,7 +39,7 @@ export default function Layout({ children }) {
           <div>
             <Sidebar />
           </div>
-          <div className="flex-1 overflow-auto p-2 bg-white rounded-lg space-y-4">
+          <div className="flex-1 overflow-auto p-2 bg-[#f3f3ff] rounded-lg space-y-4">
             <div>
               <Navbar />
             </div>
