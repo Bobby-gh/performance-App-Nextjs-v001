@@ -36,3 +36,51 @@ export function LanguageButton() {
   );
 }
 
+
+export function InnerLanguageButton() {
+  const [open, setOpen] = useState(false);
+
+  const languages = [
+    { code: "en", label: "English", flag: "🇬🇧" },
+    { code: "fr", label: "French", flag: "🇫🇷" },
+  ];
+
+  const toggleDropdown = () => setOpen(!open);
+
+  const changeLanguage = (langCode) => {
+    i18n.changeLanguage(langCode);
+    setOpen(false);
+  };
+
+  
+
+  return (
+    <div className="relative inline-block text-left">
+      <button
+        onClick={toggleDropdown}
+        className="flex items-center space-x-2 border border-blue-500 rounded px-2 py-1 hover:bg-blue-50 transition"
+      >
+        <FiGlobe className="text-blue-500" />
+        <span className="text-sm text-blue-500 capitalize">
+          {i18n.language}
+        </span>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow-lg z-50">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => changeLanguage(lang.code)}
+              className="flex items-center w-full px-4 py-2 hover:bg-blue-100 text-sm text-left"
+            >
+              <span className="mr-2">{lang.flag}</span> {lang.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+

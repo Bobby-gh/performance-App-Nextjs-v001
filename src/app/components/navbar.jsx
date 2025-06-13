@@ -6,6 +6,7 @@ import { AuthContext } from "../contex/context-context";
 import { useTranslation } from "react-i18next";
 import { MdAccountCircle } from "react-icons/md";
 import { CgMenuGridR } from "react-icons/cg";
+import { InnerLanguageButton } from "../language/language_switcher";
 
 
 export function Navbar() {
@@ -15,6 +16,7 @@ export function Navbar() {
      <nav className="flex justify-end">
       {/* <div className="flex flex-row items-center"><span className="text-lg font-bold">{t("welcomeBack")}</span ><span className="ml-2 text-lg font-bold text-blue-900">{auth.name}</span></div> */}
       <div className="flex cursor-pointer space-x-4 item-center">
+        <InnerLanguageButton/>
         <LogOut/>
         <div className="flex text-2xl cursor-pointer">
           <MdAccountCircle/>

@@ -576,15 +576,15 @@ export function EmployeeDetails({ data, open, onClose }) {
               src={avatar}
               alt="User Avatar"
               className="rounded-full border-2 mb-4"
-              width={120}
-              height={120}
+              width={150}
+              height={150}
             />
-            <h6 className="text-sm mb-2">{t("uploadImage")}</h6>
+            {/* <h6 className="text-sm mb-2">{t("uploadImage")}</h6> */}
           </div>
 
           {/* Right: Form Fields (2/3 width) */}
           <div className="w-2/3 pl-6">
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex items-center space-x-2">
                 <IoPerson color="blue" />
                 {editMode ? (
