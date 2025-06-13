@@ -61,7 +61,7 @@ export function InnerLanguageButton() {
       <button
         onClick={toggleDropdown}
       >
-        <HiGlobeEuropeAfrica />
+        <HiGlobeEuropeAfrica color="blue"/>
       </button>
 
       {open && (
