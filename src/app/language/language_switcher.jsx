@@ -39,6 +39,7 @@ export function LanguageButton() {
 
 
 export function InnerLanguageButton() {
+  const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const languages = [
