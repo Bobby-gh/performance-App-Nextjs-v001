@@ -402,7 +402,6 @@ export function AssessGoal({ data, open, onClose }) {
                   onChange={handleChange}
                 />
 
-                //test field for work Quality
                 <FormInputField
                   label={t("qualityOfWork")}
                   id="workQuality"
