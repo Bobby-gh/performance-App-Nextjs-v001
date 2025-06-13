@@ -15,9 +15,7 @@ export function Navbar() {
     <nav className="flex justify-end">
       {/* <div className="flex flex-row items-center"><span className="text-lg font-bold">{t("welcomeBack")}</span ><span className="ml-2 text-lg font-bold text-blue-900">{auth.name}</span></div> */}
       <div className="flex cursor-pointer space-x-4 item-center">
-        <div className="flex text-xl cursor-pointer">
-          <LogOut />
-        </div>
+        <LogOut />
         <div className="flex text-2xl cursor-pointer">
           <InnerLanguageButton/>
         </div>
