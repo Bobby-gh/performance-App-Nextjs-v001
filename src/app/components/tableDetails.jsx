@@ -542,7 +542,7 @@ export function EmployeeDetails({ data, open, onClose }) {
 
           {/* Right: Form Fields (2/3 width) */}
           <div className="w-2/3 pl-6">
-            <div className="space-y-2">
+            <div className="space-y-6">
               <div className="flex items-center space-x-2">
                 <IoPerson color="blue" />
                 {editMode ? (
