@@ -294,6 +294,19 @@ export const ModalModification = {
   borderRadius: 1,
 };
 
+export const TeamModalModification = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "#FFFFFF !important",
+  width: "60vw",
+  height: "50vh",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 1,
+};
+
 export const CategoryType = [
   { value: "human relationship", label: "humanRelationship"},
   { value: "financial", label: "financial" },

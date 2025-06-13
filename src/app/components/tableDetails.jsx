@@ -38,6 +38,7 @@ import {
   FormInputField,
   ModalFormSelect,
   ModalModification,
+  TeamModalModification,
 } from "./widgets";
 import {
   IoCalendarClearOutline,
@@ -516,7 +517,7 @@ export function EmployeeDetails({ data, open, onClose }) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={ModalModification}>
+      <Box sx={TeamModalModification}>
         <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
           <button onClick={() => setEditMode(!editMode)}>
             <FaRegEdit className="text-blue-500" size={20} />
