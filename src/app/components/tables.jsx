@@ -275,6 +275,7 @@ export function AccessGoalTable() {
   };
 
   const handleEdit = (row) => {
+    console.log("Edit", row);
     setAssessGoalInfo(row.original);
     setOpen(true);
   };
