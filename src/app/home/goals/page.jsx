@@ -32,7 +32,7 @@ export default function MyGoals() {
       setGoal(null);
       setOpen(true);
     } else {
-      setSelectedGoal(goal);
+      // setSelectedGoal(goal);
       setGoal(goal);
       setOpen(true);
     }

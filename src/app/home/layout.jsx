@@ -34,12 +34,12 @@ export default function Layout({ children }) {
   return (
     <div>
       {validated ? (
-        <main className="flex h-screen bg-[#edf0ff] p-4">
+        <main className="flex h-screen bg-[#dddf] p-4">
           <ToastProvider />
           <div>
             <Sidebar />
           </div>
-          <div className="flex-1 overflow-auto p-4 bg-white rounded-lg space-y-4">
+          <div className="flex-1 overflow-auto p-2 bg-white rounded-lg space-y-4">
             <div>
               <Navbar />
             </div>

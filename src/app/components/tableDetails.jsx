@@ -519,8 +519,6 @@ export function EmployeeDetails({ data, open, onClose }) {
         </div>
 
         <main className="flex flex-row gap-6 text-black p-6 bg-white rounded-lg">
-          {/* Left Section */}
-          <div className="flex-[1] bg-gray-50 p-6 rounded shadow space-y-4">
             <div className="flex flex-col items-center">
               <Image
                 src={avatar}
@@ -605,7 +603,6 @@ export function EmployeeDetails({ data, open, onClose }) {
                 </div>
               )}
             </div>
-          </div>
         </main>
       </Box>
     </Modal>
