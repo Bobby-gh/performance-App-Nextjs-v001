@@ -648,21 +648,39 @@ export function GoalDetails({ open, onClose }) {
 
 
 
-export function Goals({ goalTitle, status, goalDeadline, onClick, progress }) {
+export function Goals({ goalTitle, status, goalDeadline, onClick, progress, employeeGoals = [] }) {
   const { t } = useTranslation();
+  const { auth } = useContext(AuthContext);
+
+  const isManager = auth.refNum === "ref?2!";
+
+  const departmentProgress = isManager
+    ? Math.round(
+        employeeGoals.reduce((sum, emp) => sum + (emp.actualProgress || 0), 0) /
+          (employeeGoals.length || 1)
+      )
+    : null;
+
+  const displayedProgress = isManager ? departmentProgress : progress;
+  const progressLabel = isManager ? t("departmentProgress") : t("actualProgress");
+
   return (
     <div
-      className="bg-white rounded-lg p-4 cursor-pointer flex flex-col h-full"
-      onClick={onClick}>
+      className="bg-white rounded-lg p-4 cursor-pointer flex flex-col h-full shadow-sm border hover:shadow-md transition"
+      onClick={onClick}
+    >
       {/* Progress Section */}
       <div className="mb-4">
         <p className="text-blue-900 text-sm mb-2">
-          <strong>{t("actualProgress")}:</strong> {progress}%
+          <strong>{progressLabel}:</strong> {displayedProgress}%
         </p>
         <div className="relative w-full h-4 bg-gray-200 rounded">
           <div
-            className="absolute h-4 bg-blue-500 rounded"
-            style={{ width: `${progress}%` }}></div>
+            className={`absolute h-4 ${
+              isManager ? "bg-green-500" : "bg-blue-500"
+            } rounded transition-all duration-500`}
+            style={{ width: `${displayedProgress}%` }}
+          ></div>
         </div>
       </div>
 

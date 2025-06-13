@@ -307,6 +307,7 @@ export function AssignGoal({ data, open, onClose }) {
     </div>
   );
 }
+
 export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
@@ -482,6 +483,7 @@ export function AssessGoal({ data, open, onClose }) {
 }
 
 
+
 export function EmployeeDetails({ data, open, onClose }) {
   const { t } = useTranslation();
   const { triggerComponent } = useContext(AuthContext);
@@ -490,7 +492,7 @@ export function EmployeeDetails({ data, open, onClose }) {
     new Date(dateString).toISOString().split("T")[0];
 
   const [editableFields, setEditableFields] = useState({
-    employeeId: data?._id,
+    employeeId: data?.userId,
     name: data?.name,
     email: data?.email,
     department: data?.department,
@@ -578,6 +580,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                 <MdOutlineMarkEmailRead color="blue" />
                 {editMode ? (
                   <input
+                    readOnly
                     className="border rounded px-2 py-1 w-full"
                     value={editableFields.email}
                     onChange={(e) => handleChange("email", e.target.value)}
@@ -591,6 +594,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                 <FaSitemap color="blue" />
                 {editMode ? (
                   <input
+                    readOnly
                     className="border rounded px-2 py-1 w-full"
                     value={editableFields.department}
                     onChange={(e) => handleChange("department", e.target.value)}
