@@ -55,10 +55,12 @@ export function AssignGoal({ data, open, onClose }) {
   const { triggerComponent } = useContext(AuthContext);
   const { departmenttable } = useDepartmentRouteData();
   const { editFunction } = useEdit();
+
   const formattedDate = (dateString) =>
     new Date(dateString).toISOString().split("T")[0];
+
   const [isLoading, setIsLoading] = useState(false);
-  const [editableFields, setEditableFields] = useState({ 
+  const [editableFields, setEditableFields] = useState({
     goalId: data._id,
     taskAssignedToId: data.taskAssignedToId,
     goalTitle: data.goalTitle,
@@ -67,8 +69,9 @@ export function AssignGoal({ data, open, onClose }) {
     assignedTo: data.taskAssignedTo,
     deadline: data.goalDeadline,
     target: data.target,
-    goalType: data.goalType
-   });
+    goalType: data.goalType,
+  });
+
   const [editMode, setEditMode] = useState(false);
 
   const handleChange = (key, value) => {
@@ -78,31 +81,29 @@ export function AssignGoal({ data, open, onClose }) {
   const updateData = {
     goalTitle: editableFields.goalTitle,
     goalDescription: editableFields.goalDescription,
-    goalStatus: editableFields.status,
+    goalStatus: editableFields.goalStatus,
     taskAssignedTo: editableFields.assignedTo,
     goalDeadline: editableFields.deadline,
     target: editableFields.target,
     priority: "",
-    goalType: editableFields.goalType
+    goalType: editableFields.goalType,
   };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log("Update Data:", updateData);
     try {
       const name = "goal";
       const id = editableFields.goalId;
       const response = await editFunction(updateData, id, name);
 
       if (response?.status === 200) {
-        showToast("Edit Saved successful:", "success");
+        showToast("Edit Saved successfully", "success");
         triggerComponent();
         onClose();
       } else {
-        console.log("Edit Save failed:", response);
-        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+        showToast("Edit failed to save. Try again later.", "error");
       }
     } catch (error) {
       console.log("Edit error:", error);
@@ -114,22 +115,13 @@ export function AssignGoal({ data, open, onClose }) {
 
   return (
     <div>
-      <Modal
-        open={open}
-        onClose={onClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
+      <Modal open={open} onClose={onClose}>
         <Box sx={ModalModification}>
-          {/* Modal Header */}
           <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
-            <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
-              <button onClick={onClose}>
-                <IoClose size={24} />
-              </button>
-            </div>
+            <button onClick={onClose}>
+              <IoClose size={24} />
+            </button>
           </div>
-
-          {/* Modal Body */}
 
           <div className="p-6 space-y-2 mt-2 bg-[#D7E7FA] max-h-[90vh] rounded-lg">
             <div className="flex justify-between mb-6">
@@ -140,7 +132,7 @@ export function AssignGoal({ data, open, onClose }) {
                       className="w-full bg-transparent outline-none focus:ring-0 focus:border-transparent"
                       value={editableFields.goalTitle || ""}
                       onChange={(e) =>
-                        handleChange("actionItem", e.target.value)
+                        handleChange("goalTitle", e.target.value)
                       }
                     />
                   ) : (
@@ -157,16 +149,13 @@ export function AssignGoal({ data, open, onClose }) {
                         <input
                           type="date"
                           className="border px-2 py-1 rounded"
-                          value={convertDate(editableFields.deadline) || ""}
+                          value={formattedDate(editableFields.deadline) || ""}
                           onChange={(e) =>
-                            handleChange(
-                              "expectedCompletionDate",
-                              e.target.value
-                            )
+                            handleChange("deadline", e.target.value)
                           }
                         />
                       ) : (
-                        editableFields.deadline
+                        formattedDate(editableFields.deadline)
                       )}
                     </span>
                   </div>
@@ -177,51 +166,36 @@ export function AssignGoal({ data, open, onClose }) {
                 {editableFields.goalStatus}
               </div>
             </div>
+
             <div className="my-6 bg-white p-4 rounded-lg max-h-[65vh] overflow-y-auto">
               <div className="overflow-y-auto max-h-[70vh] p-6">
                 <FormControl fullWidth>
-                  {/* Form Fields */}
                   <div className="grid grid-cols-2 gap-6 mb-6">
                     <FormInputField
                       label={t("goalTitle")}
                       id="goalTitle"
                       value={editableFields.goalTitle}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        handleChange("goalTitle", e.target.value)
+                      }
                     />
                     <FormInputField
                       label={t("status")}
                       id="goalStatus"
                       value={editableFields.goalStatus}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        handleChange("goalStatus", e.target.value)
+                      }
                     />
                     <FormInputField
                       label={t("description")}
                       id="goalDescription"
                       value={editableFields.goalDescription}
-                      onChange={handleChange}
-                    />
-                    {/*<ModalFormSelect
-                      id="assignedTo"
-                      label={t("assignedTo")}
-                      value={editableFields.assignedTo}
-                      options={auth.refNum === "ref?1!"
-                        ? departmenttable.map((department) => ({
-                            value: department.departmentId,
-                            label: department.departmentName,
-                          }))
-                        : employeetable.map((employee) => ({
-                            value: employee.employeeId,
-                            label: employee.employeeName,
-                          }))
+                      onChange={(e) =>
+                        handleChange("goalDescription", e.target.value)
                       }
-                      onChange={(selectedOptions) => {
-                        setEditableFields((prev) => ({
-                          ...prev,
-                          workQuality: selectedOptions,
-                        }));
-                      }}
-                      
-                    />*/}
+                    />
+
                     <ModalFormSelect
                       id="assignedTo"
                       label={t("assignedTo")}
@@ -230,24 +204,22 @@ export function AssignGoal({ data, open, onClose }) {
                         value: department.departmentId,
                         label: department.departmentName,
                       }))}
-                      onChange={(selectedOptions) => {
-                        setEditableFields((prev) => ({
-                          ...prev,
-                          workQuality: selectedOptions,
-                        }));
-                      }}
+                      onChange={(selected) =>
+                        handleChange("assignedTo", selected)
+                      }
                       required
                     />
+
                     <FormInputField
                       label={t("assignedBy")}
                       id="assignedBy"
                       value={data.taskAssignedById}
-                      onChange={handleChange}
+                      disabled
                     />
 
                     <ModalFormSelect
                       id="goalType"
-                      label="Goal Type"
+                      label={t("goalType")}
                       value={editableFields.goalType}
                       options={[
                         {
@@ -264,37 +236,38 @@ export function AssignGoal({ data, open, onClose }) {
                           label: t("internalProcessingAndInnovation"),
                         },
                       ]}
-                      onChange={(selectedOptions) => {
-                        setEditableFields((prev) => ({
-                          ...prev,
-                          goalType: selectedOptions,
-                        }));
-                      }}
+                      onChange={(selected) =>
+                        handleChange("goalType", selected)
+                      }
                       required
                     />
 
                     <FormInputField
-                      label="target"
+                      label="Target"
                       id="target"
                       value={editableFields.target}
+                      onChange={(e) => handleChange("target", e.target.value)}
                     />
+
                     <FormInputField
                       label={t("date")}
-                      id="goalDescription"
+                      id="goalDeadline"
                       type="date"
                       value={formattedDate(editableFields.deadline)}
+                      onChange={(e) => handleChange("deadline", e.target.value)}
                     />
                   </div>
                 </FormControl>
               </div>
             </div>
+
             <button
               onClick={handleEditSubmit}
               className="text-sm text-blue-500 hover:text-blue-700 px-4 py-1 rounded"
               disabled={isLoading}>
               {isLoading ? (
                 <div className="flex flex-row justify-center items-center">
-                  <p className="text-sm pr-2">loading...</p>
+                  <p className="text-sm pr-2">Loading...</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
@@ -307,6 +280,7 @@ export function AssignGoal({ data, open, onClose }) {
     </div>
   );
 }
+
 
 export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
