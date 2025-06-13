@@ -420,7 +420,6 @@ export function GoalDetails({ open, onClose }) {
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
   const { triggerComponent } = useContext(Modaltrigger);
-
   const [progress, setProgress] = useState(goal.actualProgress);
   const [comment, setComment] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -429,9 +428,22 @@ export function GoalDetails({ open, onClose }) {
   const isManager = auth.refNum === "ref?2!";
   const departmentProgressPercent = isManager
     ? Math.round(
-        employeeGoals.reduce((sum, e) => sum + e.actualProgress, 0) / (employeeGoals.length || 1)
+        employeeGoals.reduce((sum, e) => sum + e.actualProgress, 0) /
+          (employeeGoals.length || 1)
       )
     : null;
+
+  const statusCounts = {
+    Completed: 0,
+    InProgress: 0,
+    NotStarted: 0,
+  };
+
+  employeeGoals.forEach((e) => {
+    if (statusCounts[e.status] !== undefined) {
+      statusCounts[e.status]++;
+    }
+  });
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -440,12 +452,7 @@ export function GoalDetails({ open, onClose }) {
       const res = await axios.patch(
         UPDATE_GOAL_PROGRESS,
         JSON.stringify({ goalId: goal.id, progressIncrement: progress, comment }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
+        { headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.token}` } }
       );
       if (res.status === 200) {
         showToast("Progress updated successfully", "success");
@@ -468,14 +475,13 @@ export function GoalDetails({ open, onClose }) {
           </button>
         </div>
 
-        {/* Header */}
         <div className="mb-6">
           <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
           <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
         </div>
 
-        {/* Goal Info */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+        {/* Top Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-8">
           {[
             { label: t("target"), value: goal.target },
             { label: t("startDate"), value: new Date(goal.dateAssigned).toLocaleDateString() },
@@ -486,6 +492,25 @@ export function GoalDetails({ open, onClose }) {
               <p className="mt-2 text-xl font-bold">{value}</p>
             </div>
           ))}
+
+          {/* Assigned Goals Summary */}
+          <div className="p-4 bg-blue-50 rounded-xl text-center shadow-sm">
+            <p className="text-blue-700 font-semibold">{t("assignedGoals")}</p>
+            <div className="mt-2 space-y-1 text-sm text-gray-800">
+              <p>
+                <span className="font-bold text-green-700">{statusCounts.Completed}</span>{" "}
+                {t("completed")}
+              </p>
+              <p>
+                <span className="font-bold text-yellow-700">{statusCounts.InProgress}</span>{" "}
+                {t("inProgress")}
+              </p>
+              <p>
+                <span className="font-bold text-red-700">{statusCounts.NotStarted}</span>{" "}
+                {t("notStarted")}
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col md:flex-row gap-8">
@@ -526,7 +551,7 @@ export function GoalDetails({ open, onClose }) {
               </div>
             )}
 
-            {/* Staff Update Form */}
+            {/* Staff Submission Form */}
             {!isManager && (
               <form onSubmit={handleUpdate} className="space-y-6">
                 <div>
@@ -564,7 +589,7 @@ export function GoalDetails({ open, onClose }) {
               </form>
             )}
 
-            {/* Recent Updates */}
+            {/* Recent Activity Feed */}
             {goal.progressUpdates?.length > 0 && (
               <div className="mb-8">
                 <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("recentUpdates")}</h4>
@@ -581,65 +606,17 @@ export function GoalDetails({ open, onClose }) {
                 </ul>
               </div>
             )}
-
-            {/* Manager Bar Chart */}
-            {isManager && employeeGoals.length > 0 && (
-              <div className="mb-8">
-                <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("teamProgressChart")}</h4>
-                <ResponsiveContainer width="100%" height={180}>
-                  <BarChart
-                    data={employeeGoals}
-                    barCategoryGap="10%"
-                    barGap={2}
-                    margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-                  >
-                    <XAxis dataKey="employeeName" tick={{ fontSize: 12 }} />
-                    <Tooltip />
-                    <Bar dataKey="actualProgress" barSize={80} fill="#3b82f6">
-                      {employeeGoals.map((e, idx) => (
-                        <Cell key={idx} fill={e.actualProgress > 80 ? "#10b981" : "#3b82f6"} />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            )}
           </div>
 
-          {/* Manager Right Column */}
+          {/* Right Column for Managers */}
           {isManager && (
             <>
               <div className="hidden md:block border-l border-gray-300" />
               <div className="w-full md:w-1/3 space-y-6">
-                {/* Assigned Goals */}
-                <div className="bg-blue-50 rounded-xl p-4 shadow-sm">
-                  <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("assignedGoals")}</h4>
-                  {employeeGoals.map((e, i) => (
-                    <div key={i} className="flex justify-between mb-2 items-center">
-                      <p className="text-sm text-gray-800">{e.goalTitle}</p>
-                      <span
-                        className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                          e.status === "Completed"
-                            ? "bg-green-100 text-green-800"
-                            : e.status === "In Progress"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {t(e.status.toLowerCase().replace(" ", "")) || e.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Employees */}
                 <h4 className="text-lg font-semibold text-gray-700">{t("employees")}</h4>
                 <div className="grid grid-cols-2 gap-6">
                   {employeeGoals.map((emp) => (
-                    <div
-                      key={emp.employeeName}
-                      className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
-                    >
+                    <div key={emp.employeeName} className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center">
                       <img
                         src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
                         alt={emp.employeeName}
@@ -661,6 +638,32 @@ export function GoalDetails({ open, onClose }) {
                     </div>
                   ))}
                 </div>
+
+                {/* Manager Bar Chart under Employees */}
+                {employeeGoals.length > 0 && (
+                  <div className="mt-4">
+                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("teamProgressChart")}</h4>
+                    <ResponsiveContainer width="100%" height={180}>
+                      <BarChart
+                        data={employeeGoals}
+                        barCategoryGap="10%"
+                        barGap={2}
+                        margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+                      >
+                        <XAxis dataKey="employeeName" tick={{ fontSize: 12 }} />
+                        <Tooltip />
+                        <Bar dataKey="actualProgress" barSize={80} fill="#3b82f6">
+                          {employeeGoals.map((e, idx) => (
+                            <Cell
+                              key={idx}
+                              fill={e.actualProgress > 80 ? "#10b981" : "#3b82f6"}
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
               </div>
             </>
           )}
@@ -669,6 +672,7 @@ export function GoalDetails({ open, onClose }) {
     </Modal>
   );
 }
+
 
 
 
