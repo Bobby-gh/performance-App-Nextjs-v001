@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { HiGlobeEuropeAfrica } from "react-icons/hi2";
 
 export function LanguageButton() {
   const { i18n } = useTranslation();
@@ -35,4 +36,49 @@ export function LanguageButton() {
     </div>
   );
 }
+
+
+export function InnerLanguageButton() {
+  const { i18n } = useTranslation();
+  const [open, setOpen] = useState(false);
+
+  const languages = [
+    { code: "en", label: "English", flag: "🇬🇧" },
+    { code: "fr", label: "French", flag: "🇫🇷" },
+  ];
+
+  const toggleDropdown = () => setOpen(!open);
+
+  const changeLanguage = (langCode) => {
+    i18n.changeLanguage(langCode);
+    setOpen(false);
+  };
+
+  
+
+  return (
+    <div className="relative inline-block text-left">
+      <button
+        onClick={toggleDropdown}
+      >
+        <HiGlobeEuropeAfrica />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 mt-2 w-36 bg-white border rounded shadow-lg z-50">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => changeLanguage(lang.code)}
+              className="flex items-center w-full px-4 py-2 hover:bg-blue-100 text-sm text-left"
+            >
+              <span className="mr-2">{lang.flag}</span> {lang.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 
