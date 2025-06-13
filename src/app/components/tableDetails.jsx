@@ -526,7 +526,7 @@ export function EmployeeDetails({ data, open, onClose }) {
           </button>
         </div>
 
-        <main className="flex text-black p-6 bg-white rounded-lg">
+        <main className="flex text-black p-6 bg-white rounded-lg mt-6">
           {/* Left: Avatar (1/3 width) */}
           <div className="w-1/3 flex flex-col items-center pr-6 border-r border-gray-300">
             <Image
