@@ -183,9 +183,7 @@ export function AssignGoal({ data, open, onClose }) {
                       label={t("status")}
                       id="goalStatus"
                       value={editableFields.goalStatus}
-                      onChange={(e) =>
-                        handleChange("goalStatus", e.target.value)
-                      }
+                      onChange={handleChange}
                     />
                     <FormInputField
                       label={t("description")}
