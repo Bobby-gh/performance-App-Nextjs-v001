@@ -696,7 +696,6 @@ export function TopGoalTable() {
             [`.${gridClasses.cell}.empty`]: {
               backgroundColor: "#808080",
             },
-            height: 650,
           }}>
           <DataGrid
             rows={topGoal}

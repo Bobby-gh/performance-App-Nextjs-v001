@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { HiGlobeEuropeAfrica } from "react-icons/hi2";
 
 export function LanguageButton() {
   const { i18n } = useTranslation();
@@ -60,7 +61,7 @@ export function InnerLanguageButton() {
         onClick={toggleDropdown}
         className="flex items-center space-x-2 border border-blue-500 rounded px-2 py-1 hover:bg-blue-50 transition"
       >
-        <FiGlobe className="text-blue-500" />
+        <HiGlobeEuropeAfrica className="text-blue-500" />
         <span className="text-sm text-blue-500 capitalize">
           {i18n.language}
         </span>
