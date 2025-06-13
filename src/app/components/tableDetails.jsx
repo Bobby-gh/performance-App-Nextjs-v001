@@ -508,11 +508,9 @@ export function EmployeeDetails({ data, open, onClose }) {
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
         <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
-          <div className="flex justify-end mb-2">
-            <button onClick={() => setEditMode(!editMode)}>
-              <FaRegEdit className="text-blue-500" size={20} />
-            </button>
-          </div>
+          <button onClick={() => setEditMode(!editMode)}>
+            <FaRegEdit className="text-blue-500" size={20} />
+          </button>
           <button onClick={onClose}>
             <IoClose size={24} />
           </button>
