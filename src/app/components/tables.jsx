@@ -330,15 +330,16 @@ export function AccessGoalTable() {
     setDeleteRow(true);
   };
 
-    const goalAssessmentData = goalAssessment.map((goal) => ({
+  const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
     goalTitle: goal.goalAssessed?.goalTitle || "",
     goalStatus: goal.goalAssessed?.status || "",
     taskAssignedTo:
-    auth?.refNum === "ref?2!"
-      ? goal.goalAssessed?.taskAssignedTo?.fullName || ""
-      : goal.goalAssessed?.taskAssignedTo?.departmentName || "",
-    goalDeadline: new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
+      isManager === "ref?2!"
+        ? goal.goalAssessed?.taskAssignedTo?.fullName || ""
+        : goal.goalAssessed?.taskAssignedTo?.departmentName || "",
+    goalDeadline:
+      new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
     workQuality: goal.workQuality ?? 0,
     productivity: goal.productivity ?? 0,
@@ -349,7 +350,7 @@ export function AccessGoalTable() {
     creativity: goal.creativity ?? 0,
     comment: goal.comment || "",
     rating: goal.rating || "",
-  }));
+}));
 
 
   const data = useMemo(
