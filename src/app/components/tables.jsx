@@ -336,8 +336,8 @@ export function AccessGoalTable() {
     goalStatus: goal.goalAssessed?.status || "",
     taskAssignedTo:
     auth?.refNum === "ref?2!"
-      ? data.goalAssessed?.taskAssignedTo?.fullName || ""
-      : data.goalAssessed?.taskAssignedTo?.departmentName || "",
+      ? goal.goalAssessed?.taskAssignedTo?.fullName || ""
+      : goal.goalAssessed?.taskAssignedTo?.departmentName || "",
     goalDeadline: new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
     workQuality: goal.workQuality ?? 0,
