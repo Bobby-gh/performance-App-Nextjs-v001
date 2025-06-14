@@ -345,7 +345,7 @@ export function AccessGoalTable() {
     teamwork: goal.teamwork ?? 0,
     creativity: goal.creativity ?? 0,
     comment: goal.comment || "",
-    rating: goal.rating?.toUpperCase() || "",
+    rating: goal.rating || "",
   }));
 
 

@@ -102,7 +102,7 @@ export const useOperationalEffeciencyColumn = () => {
       headerClassName: "header-table",
     },
     {
-      field: "taskAssignedTo",
+      field: "taskAssignedToId",
       headerName: t("department"),
       flex: 1,
       headerClassName: "header-table",
@@ -238,7 +238,7 @@ export const useAccessingGoalColumn = () => {
       header: "Department Goal",
     },
     {
-      accessorKey: "taskAssignedToId",
+      accessorKey: "taskAssignedTo",
       header: t("department"),
     },
     {
