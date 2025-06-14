@@ -301,11 +301,11 @@ export function EmployeeBadgeTable() {
 export function AccessGoalTable() {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
-  const { auth } = useContext(Modaltrigger);
+  const {auth} = useContext(Modaltrigger);
   const isManager = auth?.refNum === "ref?2!";
   const [assessGoalInfo, setAssessGoalInfo] = useState("");
   const { goalAssessment } = useGoalAccessmentRouteData();
-  const accessinggoalcolumn = useAccessingGoalColumn();
+  const accessinggoalcolumn = useAccessingGoalColumn(isManager);
   const [deleteRow, setDeleteRow] = useState(false);
   const [deleteItem, setDeleteItem] = useState("");
 
@@ -320,6 +320,7 @@ export function AccessGoalTable() {
   };
 
   const handleEdit = (row) => {
+    console.log("Edit", row);
     setAssessGoalInfo(row.original);
     setOpen(true);
   };
@@ -329,15 +330,13 @@ export function AccessGoalTable() {
     setDeleteRow(true);
   };
 
-  const goalAssessmentData = goalAssessment.map((goal) => ({
+    const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
     goalTitle: goal.goalAssessed?.goalTitle || "",
     goalStatus: goal.goalAssessed?.status || "",
-    taskAssignedTo: isManager
-      ? goal.goalAssessed?.taskAssignedTo?.fullName || ""
-      : goal.goalAssessed?.taskAssignedTo?.departmentName || "",
-    goalDeadline:
-      new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
+    taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
+    fullName: goal.goalAssessed?.taskAssignedTo?.fullName || "",
+    goalDeadline: new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
     workQuality: goal.workQuality ?? 0,
     productivity: goal.productivity ?? 0,
@@ -350,18 +349,24 @@ export function AccessGoalTable() {
     rating: goal.rating || "",
   }));
 
+
   const data = useMemo(
     () => (goalAssessment ? goalAssessmentData : []),
     [goalAssessment]
   );
 
-  const columns = useMemo(() => {
-    return accessinggoalcolumn.filter((col) => {
-      // Managers see all except "mainGoal"
-      // Others see all except "mainGoal"
-      return !(!isManager && col.accessorKey === "mainGoal");
-    });
-  }, [accessinggoalcolumn, isManager]);
+ 
+
+  // Inject MRN column override
+const columns = useMemo(() => {
+  return accessinggoalcolumn.filter((col) => {
+    if (isManager) {
+      return col.accessorKey !== "taskAssignedTo"; // hide taskAssignedTo for managers
+    } else {
+      return col.accessorKey !== "mainGoal"; // hide mainGoal for non-managers
+    }
+  });
+}, [accessinggoalcolumn, isManager]);
 
   const table = useMaterialReactTable({
     columns,
@@ -411,7 +416,7 @@ export function AccessGoalTable() {
             bgColor = "#F84626";
           } else {
             bgColor = "#ecbe2f";
-            color = "#000";
+            color = "#000"; // improve contrast
           }
         }
 
@@ -433,8 +438,7 @@ export function AccessGoalTable() {
         onClick={() => {
           handleEdit(row);
           closeMenu();
-        }}
-      >
+        }}>
         <ListItemIcon>
           <MdEditNotifications fontSize="small" />
         </ListItemIcon>
@@ -445,8 +449,7 @@ export function AccessGoalTable() {
         onClick={() => {
           handleDelete(row);
           closeMenu();
-        }}
-      >
+        }}>
         <ListItemIcon>
           <MdDelete fontSize="small" />
         </ListItemIcon>
@@ -473,7 +476,6 @@ export function AccessGoalTable() {
     </div>
   );
 }
-
 
 export function DepartmentTable() {
   const { departmenttable } = useDepartmentRouteData();
