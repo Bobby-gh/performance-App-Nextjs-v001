@@ -340,17 +340,17 @@ export function AssessGoal({ data, open, onClose }) {
       const response = await editFunction(updateData, id, name);
 
       if (response?.status === 200) {
-        showToast(t("editSavedSuccess"), "success");
+        showToast("Edit Saved successfully", "success");
         triggerComponent();
         onClose();
       } else {
-        showToast(t("editFailedSave"), "error");
+        showToast("Edit failed to save. Try again later.", "error");
       }
     } catch (error) {
-      console.error("Edit error:", error);
-      showToast(t("editFailedSave"), "error");
+      console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
+      setEditMode(false);
     }
   };
 
