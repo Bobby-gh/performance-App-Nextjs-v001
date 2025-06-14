@@ -330,16 +330,24 @@ export function AccessGoalTable() {
     setDeleteRow(true);
   };
 
-  const goalAssessmentData = goalAssessment.map((goal) => ({
+    const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
-    taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
     goalTitle: goal.goalAssessed?.goalTitle || "",
-    goalDeadline:
-      new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
+    goalStatus: goal.goalAssessed?.status || "",
+    assignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
+    goalDeadline: new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
-    rating: goal.rating?.toUpperCase() || "",
+    workQuality: goal.workQuality ?? 0,
+    productivity: goal.productivity ?? 0,
+    communication: goal.communication ?? 0,
+    proceduralKnowledge: goal.proceduralKnowledge ?? 0,
+    reliability: goal.reliability ?? 0,
+    teamwork: goal.teamwork ?? 0,
+    creativity: goal.creativity ?? 0,
     comment: goal.comment || "",
+    rating: goal.rating?.toUpperCase() || "",
   }));
+
 
   const data = useMemo(
     () => (goalAssessment ? goalAssessmentData : []),
