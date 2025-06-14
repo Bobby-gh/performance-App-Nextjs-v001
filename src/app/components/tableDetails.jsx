@@ -285,13 +285,12 @@ export function AssessGoal({ data, open, onClose }) {
   const { t } = useTranslation();
   const { departmenttable } = useDepartmentRouteData();
   const { editFunction } = useEdit();
-  const { triggerComponent, auth } = useContext(AuthContext);
+  const { triggerComponent } = useContext(AuthContext);
 
   const formattedDate = (dateString) =>
     dateString ? new Date(dateString).toISOString().split("T")[0] : "";
 
   const [isLoading, setIsLoading] = useState(false);
-  const [editMode, setEditMode] = useState(false);
 
   const [editableFields, setEditableFields] = useState({
     goalId: data?._id,
@@ -310,6 +309,8 @@ export function AssessGoal({ data, open, onClose }) {
     comment: data?.comment,
     rating: data?.rating,
   });
+
+  const [editMode, setEditMode] = useState(false);
 
   const handleChange = (key, value) => {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
@@ -330,9 +331,9 @@ export function AssessGoal({ data, open, onClose }) {
     creativity: editableFields.creativity,
     comment: editableFields.comment,
     rating: editableFields.rating,
-    ...(auth?.refNum === "ref?2!" && { mainGoal: data.mainGoal }),
   };
   console.log("Sending rating:", updateData.rating);
+
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -357,6 +358,7 @@ export function AssessGoal({ data, open, onClose }) {
     }
   };
 
+  // Options for dropdowns
   const performanceOptions = [
     { value: "1", label: t("weak") },
     { value: "2", label: t("average") },
@@ -371,6 +373,7 @@ export function AssessGoal({ data, open, onClose }) {
     { value: "Outstanding", label: t("outstanding") },
   ];
 
+  // Find assignedTo label for display
   const assignedToLabel =
     departmenttable.find((d) => d.departmentId === editableFields.assignedTo)
       ?.departmentName || "";
@@ -378,34 +381,16 @@ export function AssessGoal({ data, open, onClose }) {
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={ModalModification}>
+        {/* Close button */}
         <div className="flex absolute top-2 right-2 text-gray-500 hover:text-gray-700 space-x-2">
           <button onClick={onClose}>
             <IoClose size={24} />
           </button>
         </div>
 
+        {/* Top section: read-only display */}
         <div className="mb-6 p-4 bg-[#D7E7FA] rounded">
-          <div className="flex justify-between items-start">
-            <h2 className="text-xl font-semibold mb-2">
-              {editMode ? (
-                <input
-                  className="w-full font-semibold text-lg bg-transparent outline-none border-b border-gray-300 focus:border-blue-500"
-                  value={editableFields.goalTitle}
-                  onChange={(e) => handleChange("goalTitle", e.target.value)}
-                />
-              ) : (
-                editableFields.goalTitle
-              )}
-            </h2>
-
-            <button
-              onClick={() => setEditMode((prev) => !prev)}
-              className="text-sm text-blue-500 underline hover:text-blue-700"
-            >
-              {editMode ? t("cancelEdit") : t("edit")}
-            </button>
-          </div>
-
+          <h2 className="text-xl font-semibold mb-2">{editableFields.goalTitle}</h2>
           <div className="flex flex-wrap gap-6 text-sm text-gray-700">
             <div>
               <span className="font-semibold">{t("assignedTo")}: </span>
@@ -427,92 +412,104 @@ export function AssessGoal({ data, open, onClose }) {
           </div>
         </div>
 
+        {/* Editable form in 3 columns grid */}
         <form onSubmit={handleEditSubmit}>
           <FormControl fullWidth>
             <div className="grid grid-cols-3 gap-6 max-h-[65vh] overflow-y-auto">
-              {[
-                "workQuality",
-                "productivity",
-                "communication",
-                "proceduralKnowledge",
-                "reliability",
-                "teamwork",
-                "creativity",
-              ].map((key) => (
-                <div key={key}>
-                  {editMode ? (
-                    <ModalFormSelect
-                      id={key}
-                      label={t(key)}
-                      value={editableFields[key]}
-                      options={performanceOptions}
-                      onChange={(option) => handleChange(key, option)}
-                      required
-                    />
-                  ) : (
-                    <>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        {t(key)}
-                      </label>
-                      <div className="text-gray-800">{editableFields[key]}</div>
-                    </>
-                  )}
-                </div>
-              ))}
+              <ModalFormSelect
+                id="workQuality"
+                label={t("qualityOfWork")}
+                value={editableFields.workQuality}
+                options={performanceOptions}
+                onChange={(option) => handleChange("workQuality", option)}
+                required
+              />
+              <ModalFormSelect
+                id="productivity"
+                label={t("productivity")}
+                value={editableFields.productivity}
+                options={performanceOptions}
+                onChange={(option) => handleChange("productivity", option)}
+                required
+              />
+              <ModalFormSelect
+                id="communication"
+                label={t("communication")}
+                value={editableFields.communication}
+                options={performanceOptions}
+                onChange={(option) => handleChange("communication", option)}
+                required
+              />
+              <ModalFormSelect
+                id="proceduralKnowledge"
+                label={t("procedure")}
+                value={editableFields.proceduralKnowledge}
+                options={performanceOptions}
+                onChange={(option) => handleChange("proceduralKnowledge", option)}
+                required
+              />
+              <ModalFormSelect
+                id="reliability"
+                label={t("reliability")}
+                value={editableFields.reliability}
+                options={performanceOptions}
+                onChange={(option) => handleChange("reliability", option)}
+                required
+              />
+              <ModalFormSelect
+                id="teamwork"
+                label={t("teamWork")}
+                value={editableFields.teamwork}
+                options={performanceOptions}
+                onChange={(option) => handleChange("teamwork", option)}
+                required
+              />
+              <ModalFormSelect
+                id="creativity"
+                label={t("creativity")}
+                value={editableFields.creativity}
+                options={performanceOptions}
+                onChange={(option) => handleChange("creativity", option)}
+                required
+              />
+              <ModalFormSelect
+                id="rating"
+                label={t("goalRating")}
+                value={editableFields.rating}
+                options={ratingOptions}
+                onChange={(option) => handleChange("rating", option)}
+                required
+              />
 
+              {/* Comment TextArea spans all 3 columns */}
               <div className="col-span-3">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t("goalRating")}
-                </label>
-                {editMode ? (
-                  <ModalFormSelect
-                    id="rating"
-                    label={t("goalRating")}
-                    value={editableFields.rating}
-                    options={ratingOptions}
-                    onChange={(option) => handleChange("rating", option)}
-                    required
-                  />
-                ) : (
-                  <div className="text-gray-800">{editableFields.rating}</div>
-                )}
-              </div>
-
-              <div className="col-span-3">
-                <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="comment" className="block mb-1 font-medium text-gray-700">
                   {t("comment")}
                 </label>
-                {editMode ? (
-                  <textarea
-                    id="comment"
-                    rows={4}
-                    value={editableFields.comment || ""}
-                    onChange={(e) => handleChange("comment", e.target.value)}
-                    className="w-full rounded border border-gray-300 p-2 resize-y"
-                  />
-                ) : (
-                  <p className="text-gray-800 whitespace-pre-line">{editableFields.comment}</p>
-                )}
+                <textarea
+                  id="comment"
+                  rows={4}
+                  value={editableFields.comment || ""}
+                  onChange={(e) => handleChange("comment", e.target.value)}
+                  className="w-full rounded border border-gray-300 p-2 resize-y"
+                />
               </div>
             </div>
 
-            {editMode && (
-              <div className="flex justify-end mt-6">
-                <CustomButton
-                  label={isLoading ? t("saving") : t("save")}
-                  type="submit"
-                  disabled={isLoading}
-                  className="custom-class"
-                />
-              </div>
-            )}
+            <div className="flex justify-end mt-6">
+              <CustomButton
+                label={isLoading ? t("saving") : t("save")}
+                type="submit"
+                disabled={isLoading}
+                className="custom-class"
+              />
+            </div>
           </FormControl>
         </form>
       </Box>
     </Modal>
   );
 }
-
 
 export function EmployeeDetails({ data, open, onClose }) {
   const { t } = useTranslation();
