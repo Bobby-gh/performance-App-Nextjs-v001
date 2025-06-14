@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { HiGlobeEuropeAfrica } from "react-icons/hi2";
+import { IoGlobeOutline } from "react-icons/io5";
 
 export function LanguageButton() {
   const { i18n } = useTranslation();
@@ -61,7 +61,7 @@ export function InnerLanguageButton() {
       <button
         onClick={toggleDropdown}
       >
-        <HiGlobeEuropeAfrica color="blue"/>
+        <IoGlobeOutline/>
       </button>
 
       {open && (
