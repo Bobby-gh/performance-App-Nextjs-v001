@@ -102,7 +102,7 @@ export const useOperationalEffeciencyColumn = () => {
       headerClassName: "header-table",
     },
     {
-      field: "taskAssignedToId",
+      field: "taskAssignedTo",
       headerName: t("department"),
       flex: 1,
       headerClassName: "header-table",
