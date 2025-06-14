@@ -428,7 +428,7 @@ export function GoalDetails({ open, onClose }) {
   const isManager = auth.refNum === "ref?2!";
   const departmentProgressPercent = isManager
     ? Math.round(
-        employeeGoals.reduce((sum, e) => sum + e.actualProgress, 0) /
+        employeeGoals.reduce((sum, e) => sum + e.actualProgressPercent, 0) /
           (employeeGoals.length || 1)
       )
     : null;
@@ -625,8 +625,8 @@ export function GoalDetails({ open, onClose }) {
                       <p className="text-sm font-medium mb-1">{emp.employeeName}</p>
                       <div className="w-16 h-16">
                         <CircularProgressbar
-                          value={emp.actualProgress}
-                          text={`${emp.actualProgress}%`}
+                          value={emp.actualProgressPercent}
+                          text={`${emp.actualProgressPercent}%`}
                           styles={buildStyles({
                             pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
                             textColor: "#374151",
@@ -656,7 +656,7 @@ export function GoalDetails({ open, onClose }) {
                           {employeeGoals.map((e, idx) => (
                             <Cell
                               key={idx}
-                              fill={e.actualProgress > 80 ? "#10b981" : "#3b82f6"}
+                              fill={e.actualProgressPercent > 80 ? "#10b981" : "#3b82f6"}
                             />
                           ))}
                         </Bar>
@@ -685,7 +685,7 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress, empl
 
   const departmentProgress = isManager
     ? Math.round(
-        employeeGoals.reduce((sum, emp) => sum + (emp.actualProgress || 0), 0) /
+        employeeGoals.reduce((sum, emp) => sum + (emp.actualProgressPercent || 0), 0) /
           (employeeGoals.length || 1)
       )
     : null;
