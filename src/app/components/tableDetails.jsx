@@ -292,22 +292,22 @@ export function AssessGoal({ data, open, onClose }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [editableFields, setEditableFields] = useState({
-    goalId: data?._id,
-    goalTitle: data?.goalTitle,
-    goalStatus: data?.status,
-    assignedTo: data?.taskAssignedTo,
-    deadline: data?.goalDeadline,
-    performancePercent: data?.performancePercent,
-    workQuality: data?.workQuality,
-    productivity: data?.productivity,
-    communication: data?.communication,
-    proceduralKnowledge: data?.proceduralKnowledge,
-    reliability: data?.reliability,
-    teamwork: data?.teamwork,
-    creativity: data?.creativity,
-    comment: data?.comment,
-    rating: data?.rating,
-  });
+  goalId: data?._id,
+  goalTitle: data?.goalAssessed?.goalTitle || "",
+  goalStatus: data?.goalAssessed?.status || "",
+  assignedTo: data?.goalAssessed?.taskAssignedTo?.departmentName || "",
+  deadline: data?.goalAssessed?.goalDeadline || "",
+  performancePercent: data?.averageRating?.performancePercent || 0,
+  workQuality: data?.workQuality || 0,
+  productivity: data?.productivity || 0,
+  communication: data?.communication || 0,
+  proceduralKnowledge: data?.proceduralKnowledge || 0,
+  reliability: data?.reliability || 0,
+  teamwork: data?.teamwork || 0,
+  creativity: data?.creativity || 0,
+  comment: data?.comment || "",
+  rating: data?.rating || "",
+});
 
   const handleChange = (key, value) => {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
