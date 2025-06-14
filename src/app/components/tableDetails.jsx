@@ -332,8 +332,6 @@ export function AssessGoal({ data, open, onClose }) {
     comment: editableFields.comment,
     rating: editableFields.rating,
   };
-  console.log("Sending rating:", updateData.rating);
-
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
