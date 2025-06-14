@@ -334,7 +334,10 @@ export function AccessGoalTable() {
     _id: goal._id,
     goalTitle: goal.goalAssessed?.goalTitle || "",
     goalStatus: goal.goalAssessed?.status || "",
-    taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.fullName || "",
+    taskAssignedTo:
+    auth?.refNum === "ref?2!"
+      ? data.goalAssessed?.taskAssignedTo?.fullName || ""
+      : data.goalAssessed?.taskAssignedTo?.departmentName || "",
     goalDeadline: new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
     workQuality: goal.workQuality ?? 0,
