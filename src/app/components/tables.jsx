@@ -302,7 +302,7 @@ export function AccessGoalTable() {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const {auth} = useContext(Modaltrigger);
-  const isManager = auth?.refNum === "ref?2!";
+  const isManager = auth?.refNum;
   const [assessGoalInfo, setAssessGoalInfo] = useState("");
   const { goalAssessment } = useGoalAccessmentRouteData();
   const accessinggoalcolumn = useAccessingGoalColumn();
@@ -334,9 +334,7 @@ export function AccessGoalTable() {
     _id: goal._id,
     goalTitle: goal.goalAssessed?.goalTitle || "",
     goalStatus: goal.goalAssessed?.status || "",
-    taskAssignedTo: isManager
-      ? goal.goalAssessed?.taskAssignedTo?.fullName || ""
-      : goal.goalAssessed?.taskAssignedTo?.departmentName || "",
+    taskAssignedTo: goal.goalAssessed?.taskAssignedTo?.departmentName || "",
     fullName: goal.goalAssessed?.taskAssignedTo?.fullName || "",
     goalDeadline: new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
@@ -362,7 +360,9 @@ export function AccessGoalTable() {
   // Inject MRN column override
 const columns = useMemo(() => {
   return accessinggoalcolumn.filter((col) => {
-    if (isManager !== "ref?2!") {
+    if (isManager === "ref?2!") {
+      return col.accessorKey !== "taskAssignedTo"; // hide taskAssignedTo for managers
+    } else {
       return col.accessorKey !== "mainGoal"; // hide mainGoal for non-managers
     }
   });
