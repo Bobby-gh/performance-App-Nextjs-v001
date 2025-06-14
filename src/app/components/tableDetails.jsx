@@ -310,6 +310,8 @@ export function AssessGoal({ data, open, onClose }) {
     rating: data?.rating,
   });
 
+  const [editMode, setEditMode] = useState(false);
+
   const handleChange = (key, value) => {
     setEditableFields((prev) => ({ ...prev, [key]: value }));
   };
