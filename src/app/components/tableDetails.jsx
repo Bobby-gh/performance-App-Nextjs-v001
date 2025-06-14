@@ -53,7 +53,7 @@ import { showToast } from "./notification";
 
 export function AssignGoal({ data, open, onClose }) {
   const { t } = useTranslation();
-  const { triggerComponent } = useContext(AuthContext);
+  const { auth, triggerComponent } = useContext(AuthContext);
   const { departmenttable } = useDepartmentRouteData();
   const { editFunction } = useEdit();
 
@@ -80,15 +80,16 @@ export function AssignGoal({ data, open, onClose }) {
   };
 
   const updateData = {
-    goalTitle: editableFields.goalTitle,
-    goalDescription: editableFields.goalDescription,
-    goalStatus: editableFields.goalStatus,
-    taskAssignedTo: editableFields.assignedTo,
-    goalDeadline: editableFields.deadline,
-    target: editableFields.target,
-    priority: "",
-    goalType: editableFields.goalType,
-  };
+  goalTitle: editableFields.goalTitle,
+  goalDescription: editableFields.goalDescription,
+  goalStatus: editableFields.goalStatus,
+  taskAssignedTo: editableFields.assignedTo,
+  goalDeadline: editableFields.deadline,
+  target: editableFields.target,
+  priority: "",
+  goalType: editableFields.goalType,
+  ...(auth?.refNum === "ref?2!" && { mainGoal: data.mainGoal }),
+};
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
