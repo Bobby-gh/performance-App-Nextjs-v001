@@ -229,7 +229,7 @@ export const useTopGoalColumn = () => {
   ];
 };
 
-export const useAccessingGoalColumn = (isManager) => {
+export const useAccessingGoalColumn = () => {
   const { t } = useTranslation();
 
   return [
@@ -239,7 +239,7 @@ export const useAccessingGoalColumn = (isManager) => {
     },
     {
       accessorKey: "taskAssignedTo",
-      header: isManager ? t("fullName") : t("department"),
+      header: t("department"),
     },
     {
       accessorKey: "goalTitle",
@@ -259,7 +259,6 @@ export const useAccessingGoalColumn = (isManager) => {
     },
   ];
 };
-
 
 export const useUserColumn = () => {
   const { t } = useTranslation();
