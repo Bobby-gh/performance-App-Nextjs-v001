@@ -34,7 +34,7 @@ import {
   MdOutlineGeneratingTokens,
 } from "react-icons/md";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
-import { Modaltrigger } from "../contex/context-context";
+import { Modaltrigger, AuthContext } from "../contex/context-context";
 import {
   AssessGoal,
   AssignGoal,
@@ -301,7 +301,7 @@ export function EmployeeBadgeTable() {
 export function AccessGoalTable() {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
-  const {auth} = useContext(Modaltrigger);
+  const {auth} = useContext(AuthContext);
   const isManager = auth?.refNum;
   const [assessGoalInfo, setAssessGoalInfo] = useState("");
   const { goalAssessment } = useGoalAccessmentRouteData();
