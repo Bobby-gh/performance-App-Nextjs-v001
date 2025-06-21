@@ -331,6 +331,7 @@ export function AccessGoalTable() {
   };
     console.log("goalAssessment", goalAssessment);
     console.log("goalAssessment2", isManager === "ref?2!");
+    console.log("goalAssessment3", isManager);
     const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
     goalTitle: goal.goalAssessed?.goalTitle || "",
