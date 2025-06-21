@@ -363,7 +363,7 @@ const columns = useMemo(() => {
     if (isManager === "ref?2!") {
       return col.accessorKey !== "taskAssignedTo"; // hide taskAssignedTo for managers
     } else {
-      return col.accessorKey !== "mainGoal"; // hide mainGoal for non-managers
+      return col.accessorKey !== "fullName"; // hide mainGoal for non-managers
     }
   });
 }, [accessinggoalcolumn, isManager]);
