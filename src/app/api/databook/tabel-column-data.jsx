@@ -7,6 +7,8 @@ import { useContext } from "react";
 
 export const useGoalSettingColumn = () => {
   const { t } = useTranslation();
+  const {auth} = useContext(AuthContext);
+  const isManager = auth?.refNum;
 
   return [
     {
@@ -19,7 +21,7 @@ export const useGoalSettingColumn = () => {
     },
     {
       accessorKey: "taskAssignedToId",
-      header: t("department"),
+      header: (isManager === "ref?2!") ? t("employee") : t("department"),
     },
     {
       accessorKey: "goalDeadline",
