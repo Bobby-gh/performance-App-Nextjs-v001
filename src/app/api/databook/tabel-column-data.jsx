@@ -1,6 +1,9 @@
+'use client';
 import { AssessGoal, AssignGoal } from "@/app/components/tableDetails";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { AuthContext } from "@/app/contex/context-context";
+import { useContext } from "react";
 
 export const useGoalSettingColumn = () => {
   const { t } = useTranslation();
@@ -231,6 +234,8 @@ export const useTopGoalColumn = () => {
 
 export const useAccessingGoalColumn = () => {
   const { t } = useTranslation();
+  const {auth} = useContext(AuthContext);
+  const isManager = auth?.refNum;
 
   return [
     {
@@ -239,7 +244,7 @@ export const useAccessingGoalColumn = () => {
     },
     {
       accessorKey: "taskAssignedTo",
-      header: t("department"),
+      header: (isManager === "ref?2!") ? t("department") : t("employee"),
     },
     {
       accessorKey: "goalTitle",

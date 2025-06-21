@@ -167,6 +167,7 @@ export function GoalTable() {
   );
 }
 
+
 export function EmployeeBadgeTable() {
   const { t } = useTranslation();
   const { getallUserBadges } = useUserGoalBadgesTableData();
@@ -192,8 +193,7 @@ export function EmployeeBadgeTable() {
         header: t("badge"),
         Cell: ({ cell }) => {
           const rawValue = cell.getValue();
-          const lower =
-            typeof rawValue === "string" ? rawValue.toLowerCase() : "";
+          const lower = typeof rawValue === "string" ? rawValue.toLowerCase() : "";
 
           const translatedValue = (() => {
             switch (lower) {
@@ -249,8 +249,7 @@ export function EmployeeBadgeTable() {
     muiTableBodyCellProps: ({ cell }) => {
       if (cell.column.id === "badge") {
         const rawValue = cell.getValue();
-        const value =
-          typeof rawValue === "string" ? rawValue.toLowerCase() : "";
+        const value = typeof rawValue === "string" ? rawValue.toLowerCase() : "";
         let bgColor = "";
         let color = "#fff";
 
@@ -298,10 +297,11 @@ export function EmployeeBadgeTable() {
   );
 }
 
+
 export function AccessGoalTable() {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
-  const { auth } = useContext(AuthContext);
+  const {auth} = useContext(AuthContext);
   const isManager = auth?.refNum;
   const [assessGoalInfo, setAssessGoalInfo] = useState("");
   const { goalAssessment } = useGoalAccessmentRouteData();
@@ -330,17 +330,13 @@ export function AccessGoalTable() {
     setDeleteRow(true);
   };
 
-  const goalAssessmentData = goalAssessment.map((goal) => ({
+    const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
     goalTitle: goal.goalAssessed?.goalTitle || "",
     goalStatus: goal.goalAssessed?.status || "",
-    taskAssignedTo:
-      isManager === "ref?2!"
-        ? goal.goalAssessed?.taskAssignedTo?.fullName
-        : goal.goalAssessed?.taskAssignedTo?.departmentName,
+    taskAssignedTo: (isManager === "ref?2!") ? goal.goalAssessed?.taskAssignedTo?.fullName : goal.goalAssessed?.taskAssignedTo?.departmentName,
     fullName: goal.goalAssessed?.taskAssignedTo?.fullName || "",
-    goalDeadline:
-      new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
+    goalDeadline: new Date(goal.goalAssessed?.goalDeadline).toLocaleDateString() || "",
     performancePercent: goal.averageRating?.performancePercent || 0,
     workQuality: goal.workQuality ?? 0,
     productivity: goal.productivity ?? 0,
@@ -353,23 +349,14 @@ export function AccessGoalTable() {
     rating: goal.rating || "",
   }));
 
+
   const data = useMemo(
     () => (goalAssessment ? goalAssessmentData : []),
     [goalAssessment]
   );
 
-  // Inject MRN column override
-  const columns = useMemo(() => {
-    return accessinggoalcolumn.map((col) => {
-      if (col.key === "taskAssignedTo") {
-        return {
-          ...col,
-          title: isManager === "ref?2!" ? "Employee Name" : "Department Name",
-        };
-      }
-      return col;
-    });
-  }, [accessinggoalcolumn, isManager]);
+ 
+  const columns = useMemo(() => accessinggoalcolumn, [accessinggoalcolumn]);
 
   const table = useMaterialReactTable({
     columns,
