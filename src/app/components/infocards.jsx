@@ -753,6 +753,6 @@ export function GoalsHeader() {
 export function OrganizationalEmployees() {
   const { t } = useTranslation();
   return (
-    <div className="font-si"></div>
+    <div className="font"></div>
   );
 }
