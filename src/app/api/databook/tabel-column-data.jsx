@@ -236,6 +236,7 @@ export const useAccessingGoalColumn = () => {
   const { t } = useTranslation();
   const {auth} = useContext(AuthContext);
   const isManager = auth?.refNum;
+  console.log({"isManager": isManager})
 
   return [
     {
