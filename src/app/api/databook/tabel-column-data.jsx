@@ -236,20 +236,15 @@ export const useAccessingGoalColumn = () => {
   const { t } = useTranslation();
   const {auth} = useContext(AuthContext);
   const isManager = auth?.refNum;
-  console.log({"isManager": isManager})
 
   return [
     {
-      accessorKey: "mainGoal",
-      header: "Department Goal",
+      accessorKey: "goalTitle",
+      header: t("goalName"),
     },
     {
       accessorKey: "taskAssignedTo",
-      header: (isManager === "ref?2!") ? t("department") : t("employee"),
-    },
-    {
-      accessorKey: "goalTitle",
-      header: t("goalName"),
+      header: (isManager === "ref?2!") ? t("employee") : t("department"),
     },
     {
       accessorKey: "goalDeadline",
