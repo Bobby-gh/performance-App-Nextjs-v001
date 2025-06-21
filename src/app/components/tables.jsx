@@ -330,6 +330,7 @@ export function AccessGoalTable() {
     setDeleteRow(true);
   };
     console.log("goalAssessment", goalAssessment);
+    console.log("goalAssessment2", isManager === "ref?2!");
     const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
     goalTitle: goal.goalAssessed?.goalTitle || "",
