@@ -329,9 +329,7 @@ export function AccessGoalTable() {
     setDeleteItem(row.original._id);
     setDeleteRow(true);
   };
-    console.log("goalAssessment", goalAssessment);
-    console.log("goalAssessment2", isManager === "ref?2!");
-    console.log("goalAssessment3", isManager);
+
     const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
     goalTitle: goal.goalAssessed?.goalTitle || "",
@@ -363,10 +361,8 @@ export function AccessGoalTable() {
 const columns = useMemo(() => {
   return accessinggoalcolumn.filter((col) => {
     if (isManager === "ref?2!") {
-      return col.accessorKey !== "taskAssignedTo"; // hide taskAssignedTo for managers
-    } else {
-      return col.accessorKey !== "fullName"; // hide fullname for non-managers
-    }
+      return "Employee"; 
+    } 
   });
 }, [accessinggoalcolumn, isManager]);
 
