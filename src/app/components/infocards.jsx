@@ -426,15 +426,14 @@ export function GoalDetails({ open, onClose }) {
 
   const employeeGoals = goal.employeeGoals || [];
   const isManager = auth.refNum === "ref?2!";
+  const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp.employeeEmail === auth.email);
+
   const departmentProgressPercent = isManager
     ? Math.round(
         employeeGoals.reduce((sum, e) => sum + e.actualProgressPercent, 0) /
           (employeeGoals.length || 1)
       )
     : null;
-
-  const canManagerSubmit =
-    isManager && employeeGoals.some((e) => e.employeeEmail === auth.email);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -489,7 +488,7 @@ export function GoalDetails({ open, onClose }) {
             </div>
           ))}
 
-          {/* Assigned Goals Card - Manager only */}
+          {/* Assigned Goals Card - Only for Managers */}
           {isManager && (
             <div className="bg-blue-50 rounded-xl p-4 shadow-sm">
               <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("assignedGoals")}</h4>
@@ -553,8 +552,8 @@ export function GoalDetails({ open, onClose }) {
               </div>
             )}
 
-            {/* Submission Form for Staff or Eligible Managers */}
-            {(!isManager || canManagerSubmit) && (
+            {/* Submission Form — Shown for staff and managers assigned to this goal */}
+            {(!isManager || isGoalAssignedToManager) && (
               <form onSubmit={handleUpdate} className="space-y-6">
                 <div>
                   <label className="block mb-2 font-semibold text-gray-700">{t("enterProgress")}</label>
@@ -677,6 +676,7 @@ export function GoalDetails({ open, onClose }) {
     </Modal>
   );
 }
+
 
 
 
