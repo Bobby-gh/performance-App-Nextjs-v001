@@ -10,7 +10,7 @@ export default function MyGoals() {
   const { mygoal, fetchData } = useMyGoalRouteData();
   const [open, setOpen] = useState(false);
   const { trigger, resettriggerComponent } = useContext(Modaltrigger);
-  console.log({"my assigned goal": mygoal});
+  console.log({ "my assigned goal": mygoal });
   useEffect(() => {
     const fetchAndReset = async () => {
       if (!trigger) return;
@@ -39,24 +39,22 @@ export default function MyGoals() {
   };
 
   return (
-    <main className="flex space-x-4 width-full h-full">
-      {/* Left Panel:: Show Goal Details only when a goal is selected */}
+    <main className="flex h-full space-x-4">
+      {/* Goal Details Panel */}
       {selectedGoal && (
         <div>
-          <GoalDetails open = {open}
-            onClose = {()=> {setOpen(false)}}
-          />
+          <GoalDetails open={open} onClose={() => setOpen(false)} />
         </div>
       )}
 
-      {/* Right Panel: Goals List */}
-      <div className="overflow-y-auto max-h-[87vh] p-2">
+      {/* Goals List */}
+      <div className="flex-1 overflow-y-auto p-2">
         {mygoal.length > 0 ? (
           <div
             className={`grid gap-4 cursor-pointer ${
               selectedGoal
-                ? "grid-cols-1  xl:grid-cols-2 2xl:grid-cols-3"
-                : "grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4"
+                ? "grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3"
+                : "grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
             }`}>
             {mygoal.map((goal, index) => (
               <div
@@ -79,7 +77,7 @@ export default function MyGoals() {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col justify-center items-center h-[60vh] w-full text-gray-600 bg-white rounded-lg shadow-inner">
+          <div className="flex flex-col justify-center items-center h-[60vh] w-full text-gray-600 rounded-lg shadow-inner">
             <svg
               className="w-12 h-12 mb-3 text-gray-400"
               fill="none"
