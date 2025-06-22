@@ -476,8 +476,8 @@ export function GoalDetails({ open, onClose }) {
         </div>
 
         {/* Top Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-8">
-          {[
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+          {[ 
             { label: t("target"), value: goal.target },
             { label: t("startDate"), value: new Date(goal.dateAssigned).toLocaleDateString() },
             { label: t("deadline"), value: new Date(goal.goalDeadline).toLocaleDateString() },
@@ -487,31 +487,6 @@ export function GoalDetails({ open, onClose }) {
               <p className="mt-2 text-xl font-bold">{value}</p>
             </div>
           ))}
-
-          {/* Assigned Goals Card - Only for Managers */}
-          {isManager && (
-            <div className="bg-blue-50 rounded-xl p-4 shadow-sm">
-              <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("assignedGoals")}</h4>
-              {employeeGoals.map((e, i) => (
-                <div key={i} className="flex justify-between mb-2 items-center">
-                  <p className="text-sm text-gray-800">{e.goalTitle}</p>
-                  <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                    e.status === "Completed" ? "bg-green-100 text-green-800" :
-                    e.status === "In Progress" ? "bg-yellow-100 text-yellow-800" :
-                    "bg-red-100 text-red-800"
-                  }`}>
-                    {t(
-                      e.status === "In Progress"
-                        ? "inProgress"
-                        : e.status === "Not Started"
-                        ? "notStarted"
-                        : "completed"
-                    )}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
 
         <div className="flex flex-col md:flex-row gap-8">
@@ -549,6 +524,31 @@ export function GoalDetails({ open, onClose }) {
                     }}
                   />
                 </div>
+              </div>
+            )}
+
+            {/* Assigned Goals Card — moved here for manager */}
+            {isManager && (
+              <div className="mb-6 bg-blue-50 rounded-xl p-4 shadow-sm">
+                <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("assignedGoals")}</h4>
+                {employeeGoals.map((e, i) => (
+                  <div key={i} className="flex justify-between mb-2 items-center">
+                    <p className="text-sm text-gray-800">{e.goalTitle}</p>
+                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                      e.status === "Completed" ? "bg-green-100 text-green-800" :
+                      e.status === "In Progress" ? "bg-yellow-100 text-yellow-800" :
+                      "bg-red-100 text-red-800"
+                    }`}>
+                      {t(
+                        e.status === "In Progress"
+                          ? "inProgress"
+                          : e.status === "Not Started"
+                          ? "notStarted"
+                          : "completed"
+                      )}
+                    </span>
+                  </div>
+                ))}
               </div>
             )}
 
@@ -676,6 +676,7 @@ export function GoalDetails({ open, onClose }) {
     </Modal>
   );
 }
+
 
 
 
