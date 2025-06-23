@@ -19,11 +19,25 @@ import { LanguageButton } from "../language/language_switcher";
 import { FaLanguage } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { FaLanguage } from "react-icons/fa";
+import { AuthContext } from "./context-context";
+import LanguageButton from "./LanguageButton"; // Adjust this import path as needed
+import { LOGIN_URL } from "./api-endpoints"; // Adjust this import path as needed
+
 export function LoginForm() {
   const { t } = useTranslation();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
-  const { auth, setAuth } = React.useContext(AuthContext);
+  const { setAuth } = React.useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [success, setLogin] = useState(false);
   const [userDetails, setUserDetails] = useState({
@@ -34,7 +48,7 @@ export function LoginForm() {
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -50,8 +64,10 @@ export function LoginForm() {
           withCredentials: true,
         }
       );
+
       if (response.request.status === 200) {
-        console.log({ "oringal auth": response.data });
+        console.log({ "original auth": response.data });
+
         setAuth({
           token: response.data.token,
           name: response.data.fullName,
@@ -70,6 +86,7 @@ export function LoginForm() {
           secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
         });
+
         setLogin(true);
       }
     } catch (err) {
@@ -80,6 +97,14 @@ export function LoginForm() {
     }
   };
 
+  // 🔁 useEffect to handle redirect
+  useEffect(() => {
+    if (success) {
+      console.log("Redirecting to: /home");
+      router.push("/home", { scroll: false });
+    }
+  }, [success]);
+
   return (
     <main className="w-[430px]">
       <div>
@@ -89,13 +114,15 @@ export function LoginForm() {
             <FaLanguage size={20} color="blue" />
           </span>
         </div>
+
         <div className="flex justify-center p-12">
           <img
             src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
-            alt="Paris"
+            alt="Afriquetek Logo"
             className="w-55 h-20"
           />
         </div>
+
         <form autoComplete="off">
           <div className="flex flex-col">
             <label>{t("email")}</label>
@@ -113,6 +140,7 @@ export function LoginForm() {
               className="border border-blue-500 rounded-lg p-4 my-2"
             />
           </div>
+
           <div className="flex flex-col">
             <label>{t("password")}</label>
             <input
@@ -142,6 +170,7 @@ export function LoginForm() {
               </h4>
             </Link>
           </div>
+
           <div
             className="flex justify-center p-4 text-white rounded-lg mt-8 bg-blue-900"
             onClick={handleSubmit}>
@@ -156,6 +185,7 @@ export function LoginForm() {
               )}
             </button>
           </div>
+
           {/* or line */}
           <div className="flex items-center justify-center my-6">
             <div className="flex-grow border-t border-slate-500"></div>
@@ -173,11 +203,11 @@ export function LoginForm() {
             </span>
           </div>
         </form>
-        {success && router.push("/home", { scroll: false })}
       </div>
     </main>
   );
 }
+
 
 export function ForgetPassword() {
   const { t } = useTranslation();
