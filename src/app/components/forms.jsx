@@ -56,7 +56,7 @@ export function LoginForm() {
           token: response.data.token,
           name: response.data.fullName,
           refNum: response.data.refNum,
-          refNum: response.data.email,
+          email: response.data.email,
         });
 
         Cookies.set("token", response.data.token, {
