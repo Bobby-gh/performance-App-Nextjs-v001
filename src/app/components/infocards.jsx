@@ -438,10 +438,15 @@ export function GoalDetails({ open, onClose }) {
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const managerAssignedGoalId = isManager
+    ? employeeGoals.find(emp => emp.employeeEmail === auth.email)?.goalId
+    : null;
+
+    const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
     try {
       const res = await axios.patch(
         UPDATE_GOAL_PROGRESS,
-        JSON.stringify({ goalId: goal.id, progressIncrement: progress, comment }),
+        JSON.stringify({ goalId: goalIdToUse, progressIncrement: progress, comment }),
         {
           headers: {
             "Content-Type": "application/json",
