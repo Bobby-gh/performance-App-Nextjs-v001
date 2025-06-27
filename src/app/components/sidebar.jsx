@@ -22,7 +22,7 @@ export function Sidebar() {
     if (auth.refNum === "ref?2!") {
       return !["/home/department"].includes(item.path);
     }
-    if (auth.refNum === "ref3!") {
+    if (auth.refNum === "ref?3!") {
       return !["/home/department", "/home/employees", "/home/goal-setting", "/home/goal-assessment"].includes(item.path);
     }
     return ![""].includes(item.path);
