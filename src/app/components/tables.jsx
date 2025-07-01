@@ -178,7 +178,7 @@ export function EmployeeBadgeTable() {
     return [
       {
         accessorKey: "name",
-        header: t("name"),
+        header: t("fullName"),
       },
       {
         accessorKey: "department",
@@ -186,7 +186,7 @@ export function EmployeeBadgeTable() {
       },
       {
         accessorKey: "performance",
-        header: t("performance"),
+        header: t("Performance"),
       },
       {
         accessorKey: "badge",
