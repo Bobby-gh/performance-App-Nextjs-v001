@@ -332,6 +332,7 @@ export function AccessGoalTable() {
 
     const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
+    mainGoal: goal.mainGoal,
     goalTitle: goal.goalAssessed?.goalTitle || "",
     goalStatus: goal.goalAssessed?.status || "",
     taskAssignedTo: (isManager === "ref?2!") ? goal.goalAssessed?.taskAssignedTo?.fullName : goal.goalAssessed?.taskAssignedTo?.departmentName,
