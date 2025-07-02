@@ -494,7 +494,7 @@ export function useGetActionItems() {
         withCredentials: true,
       });
 
-      console.log("Fetched Action Items Response:", response.data);
+      console.log("Main Goal respomce", response.data);
 
       if (Array.isArray(response.data)) {
         response.data.forEach((item, i) => {

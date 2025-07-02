@@ -45,10 +45,6 @@ export function CreateGoal() {
     mainGoal: "",
   });
 
-  console.log("Form Data:", formData);
-  console.log("Action Items (from backend):", actionItem);
-  console.log("Auth:", auth);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
