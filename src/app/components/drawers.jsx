@@ -191,6 +191,8 @@ export function CreateGoal() {
                   label="Department Goal"
                   value={formData.mainGoal}
                   onChange={(selectedOption) => {
+                    console.log("Selected Option from dropdown:", selectedOption);
+                    console.log("All action items available:", actionItem);
                     const matched = actionItem.find(item => item.value === selectedOption.value);
                     console.log("Selected Main Goal:", matched);
                     setFormData((prev) => ({
