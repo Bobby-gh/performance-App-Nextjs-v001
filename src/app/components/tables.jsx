@@ -259,10 +259,10 @@ export function EmployeeBadgeTable() {
             color = "#000";
             break;
           case "exceeds expectations":
-            bgColor = "#CD7F32"; // Bronze
+            bgColor = "#C0C0C0"; // silver
             break;
           case "meets expectations":
-            bgColor = "#C0C0C0"; // Silver
+            bgColor = "#CD7F32"; // bronze
             color = "#000";
             break;
           case "below expectations":
