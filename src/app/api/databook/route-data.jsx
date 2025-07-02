@@ -481,7 +481,7 @@ export function useGoalCategoryCountRouteData() {
 
 export function useGetActionItems() {
   const { auth } = useContext(AuthContext);
-  const [actionItem, setActionItem] = useState("");
+  const [actionItem, setActionItem] = useState([]);
   const token = auth.token?.trim();
 
   const getActionItems = async () => {
@@ -493,10 +493,23 @@ export function useGetActionItems() {
         },
         withCredentials: true,
       });
+
+      console.log("Fetched Action Items Response:", response.data);
+
+      if (Array.isArray(response.data)) {
+        response.data.forEach((item, i) => {
+          console.log(`Item ${i}:`, {
+            label: item.label,
+            value: item.value,
+            mainTarget: item.mainTarget,
+            remainingTarget: item.remainingTarget,
+          });
+        });
+      }
+
       setActionItem(response.data);
-      console.log({response:response})
     } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch action items:", error);
     }
   };
 
@@ -506,6 +519,7 @@ export function useGetActionItems() {
 
   return { actionItem };
 }
+
 
 
 export function useUserGoalRatingByID() {

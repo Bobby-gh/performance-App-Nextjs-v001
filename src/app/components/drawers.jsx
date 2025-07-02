@@ -53,22 +53,9 @@ export function CreateGoal() {
     e.preventDefault();
     setLoading(true);
 
-    console.log("Submitting goal...");
-    console.log("Payload preview:", {
-      goalTitle: formData.title,
-      goalDescription: formData.description,
-      goalDeadline: formData.endDate,
-      taskAssignedTo: departments,
-      target: formData.target,
-      priority: priority,
-      goalType: category,
-      mainGoal: formData.mainGoal,
-    });
-
     if (auth.refNum === "ref?2!") {
       const inputTarget = parseFloat(formData.target);
       const allowed = parseFloat(formData.mainGoal?.remainingTarget ?? 0);
-      console.log("Validating target...");
       console.log("Input target:", inputTarget);
       console.log("Remaining allowed:", allowed);
 
