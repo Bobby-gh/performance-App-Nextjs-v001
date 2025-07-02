@@ -42,7 +42,7 @@ export function CreateGoal() {
     target: "",
     endDate: "",
     department: "",
-    mainGoal: "",
+    mainGoal: null, 
   });
 
   const handleSubmit = async (e) => {
@@ -80,7 +80,7 @@ export function CreateGoal() {
           target: formData.target,
           priority: priority,
           goalType: category,
-          mainGoal: formData.mainGoal,
+          mainGoal: formData.mainGoal?.value ?? "", 
         }),
         {
           headers: {
@@ -118,7 +118,7 @@ export function CreateGoal() {
       target: "",
       endDate: "",
       department: "",
-      mainGoal: "",
+      mainGoal: null,
     });
   };
 
@@ -190,11 +190,12 @@ export function CreateGoal() {
                   id="mainGoal"
                   label="Department Goal"
                   value={formData.mainGoal}
-                  onChange={(selectOption) => {
-                    console.log("Main Goal selected:", selectOption);
+                  onChange={(selectedOption) => {
+                    const matched = actionItem.find(item => item.value === selectedOption.value);
+                    console.log("Selected Main Goal:", matched);
                     setFormData((prev) => ({
                       ...prev,
-                      mainGoal: selectOption,
+                      mainGoal: matched,
                     }));
                   }}
                   options={actionItem}
@@ -205,12 +206,10 @@ export function CreateGoal() {
                 {formData.mainGoal && (
                   <div className="bg-gray-100 p-3 rounded text-sm space-y-1">
                     <div>
-                      <strong>Main Target:</strong>{" "}
-                      {formData.mainGoal.mainTarget}
+                      <strong>Main Target:</strong> {formData.mainGoal.mainTarget}
                     </div>
                     <div>
-                      <strong>Assignable Target:</strong>{" "}
-                      {formData.mainGoal.remainingTarget}
+                      <strong>Assignable Target:</strong> {formData.mainGoal.remainingTarget}
                     </div>
                   </div>
                 )}
@@ -306,6 +305,7 @@ export function CreateGoal() {
     </>
   );
 }
+
 
 export function AccessGoal() {
   const { t } = useTranslation();
