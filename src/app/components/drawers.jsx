@@ -190,17 +190,27 @@ export function CreateGoal() {
                   id="mainGoal"
                   label="Department Goal"
                   value={formData.mainGoal}
-                  onChange={(selectedOption) => {
-                    console.log("Selected Option from dropdown:", selectedOption);
+                  onChange={(selectedValue) => {
+                    console.log("Selected Option from dropdown:", selectedValue);
                     console.log("All action items available:", actionItem);
-                    const matched = actionItem.find(item => item.value === selectedOption.value);
-                    console.log("Selected Main Goal:", matched);
-                    setFormData((prev) => ({
+
+                    const matched = actionItem.find(item => item.value === selectedValue);
+                    
+                    if (!matched) {
+                      console.warn("No match found for selected value:", selectedValue);
+                    } else {
+                      console.log("Matched Main Goal object:", matched);
+                    }
+
+                    setFormData(prev => ({
                       ...prev,
-                      mainGoal: matched,
+                      mainGoal: matched || {},
                     }));
                   }}
-                  options={actionItem}
+                  options={actionItem.map(item => ({
+                    value: item.value,
+                    label: item.label,
+                  }))}
                   searchable={true}
                   required
                   group={false}
