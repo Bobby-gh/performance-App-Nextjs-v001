@@ -52,8 +52,6 @@ export function CreateGoal() {
     if (auth.refNum === "ref?2!") {
       const inputTarget = parseFloat(formData.target);
       const allowed = parseFloat(formData.mainGoal?.remainingTarget ?? 0);
-      console.log("Input target:", inputTarget);
-      console.log("Remaining allowed:", allowed);
 
       if (isNaN(inputTarget)) {
         showToast("Target must be a valid number", "error");
@@ -135,7 +133,6 @@ export function CreateGoal() {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
-    console.log(`Input changed: ${id} = ${value}`);
   };
 
   return (
@@ -193,8 +190,6 @@ export function CreateGoal() {
                   label="Department Goal"
                   value={formData.mainGoal}
                   onChange={(selectedValue) => {
-                    console.log("Selected Option from dropdown:", selectedValue);
-                    console.log("All action items available:", actionItem);
 
                     const matched = actionItem.find(item => item.value === selectedValue);
 
