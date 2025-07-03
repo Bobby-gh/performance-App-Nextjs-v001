@@ -195,12 +195,6 @@ export function CreateGoal() {
                     console.log("All action items available:", actionItem);
 
                     const matched = actionItem.find(item => item.value === selectedValue);
-                    
-                    if (!matched) {
-                      console.warn("No match found for selected value:", selectedValue);
-                    } else {
-                      console.log("Matched Main Goal object:", matched);
-                    }
 
                     setFormData(prev => ({
                       ...prev,
@@ -261,9 +255,24 @@ export function CreateGoal() {
                 type="number"
                 min="0"
                 max={formData.mainGoal.remainingTarget}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const parsed = parseFloat(value);
+                  const maxAllowed = parseFloat(formData.mainGoal.remainingTarget);
+
+                  if (!isNaN(parsed) && parsed > maxAllowed) {
+                    showToast(`Target cannot exceed ${maxAllowed}`, "error");
+                    return;
+                  }
+
+                  setFormData((prev) => ({
+                    ...prev,
+                    target: value,
+                  }));
+                }}
                 value={formData.target}
               />
+
             ) : (
               <FormInputField
                 label={t("target")}
