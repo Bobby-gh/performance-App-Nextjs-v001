@@ -494,19 +494,6 @@ export function useGetActionItems() {
         withCredentials: true,
       });
 
-      console.log("Main Goal respomce", response.data);
-
-      if (Array.isArray(response.data)) {
-        response.data.forEach((item, i) => {
-          console.log(`Item ${i}:`, {
-            label: item.label,
-            value: item.value,
-            mainTarget: item.mainTarget,
-            remainingTarget: item.remainingTarget,
-          });
-        });
-      }
-
       setActionItem(response.data);
     } catch (error) {
       console.error("Failed to fetch action items:", error);
@@ -517,8 +504,9 @@ export function useGetActionItems() {
     getActionItems();
   }, [auth]);
 
-  return { actionItem };
+  return { actionItem, refreshActionItems: getActionItems };
 }
+
 
 
 

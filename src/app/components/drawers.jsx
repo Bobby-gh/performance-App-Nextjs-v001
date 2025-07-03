@@ -34,7 +34,7 @@ export function CreateGoal() {
   const [isLoading, setLoading] = useState(false);
   const [priority, setPriority] = useState("");
   const [category, setCategory] = useState("");
-  const { actionItem } = useGetActionItems();
+  const { actionItem, refreshActionItems } = useGetActionItems();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -89,8 +89,10 @@ export function CreateGoal() {
           },
         }
       );
-      showToast("Action Item Created Successfully", "success");
-      console.log("Goal submitted successfully");
+      showToast("Goal Created Successfully", "success");
+
+      await refreshActionItems(); 
+
       triggerComponent();
       handleClose();
       reload();
