@@ -549,6 +549,7 @@ export function EmployeeDetails({ data, open, onClose, onUpdate }) {
         triggerComponent();
         onUpdate({ ...editableFields });
         onClose();
+        window.location.reload();
       } else {
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
