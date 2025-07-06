@@ -387,7 +387,7 @@ export function AccessGoal() {
       if (error.response.status === 400) {
         showToast("Kindly check Input details", "error");
       } else if (error.response.status === 500) {
-        showToast("Task Assessed Successfuly", "success");
+        showToast("Server is currently down Contact your admin", "error");
       }
       console.log(error);
       handleClose();
