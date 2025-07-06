@@ -665,6 +665,7 @@ export function EmployeeTable() {
           data={employeeInfo}
           open={open}
           onClose={handleClose}
+          onUpdate={(updatedData) => setEmployee(updatedData)}
         />
       )}
       {deleteRow && (
