@@ -537,9 +537,11 @@ export function GoalDetails({ open, onClose }) {
               <div className="mb-6 bg-blue-50 rounded-xl p-4 shadow-sm">
                 <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("assignedGoals")}</h4>
                 {employeeGoals.map((e, i) => (
-                  <div key={i} className="flex justify-between mb-2 items-center">
-                    <p className="text-sm text-gray-800">{e.goalTitle}</p>
-                    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                  <div key={i} className="grid grid-cols-4 gap-2 items-center text-sm text-gray-800 border-b border-gray-200 py-2">
+                    <p>{e.employeeName}</p>
+                    <p>{e.goalTitle}</p>
+                    <p>{e.target}</p>
+                    <span className={`text-xs font-semibold px-2 py-1 rounded-full text-center ${
                       e.status === "Completed" ? "bg-green-100 text-green-800" :
                       e.status === "In Progress" ? "bg-yellow-100 text-yellow-800" :
                       "bg-red-100 text-red-800"
@@ -556,6 +558,7 @@ export function GoalDetails({ open, onClose }) {
                 ))}
               </div>
             )}
+
 
             {/* Submission Form — Shown for staff and managers assigned to this goal */}
             {(!isManager || isGoalAssignedToManager) && (
