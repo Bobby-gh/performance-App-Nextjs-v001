@@ -535,17 +535,36 @@ export function GoalDetails({ open, onClose }) {
             {/* Assigned Goals Card — moved here for manager */}
             {isManager && (
               <div className="mb-6 bg-blue-50 rounded-xl p-4 shadow-sm">
-                <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("assignedGoals")}</h4>
+                <h4 className="text-lg font-semibold text-gray-700 mb-4">
+                  {t("assignedGoals")}
+                </h4>
+
+                {/* Header Row */}
+                <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-700 border-b pb-2 text-center">
+                  <p>{t("name")}</p>
+                  <p>{t("goalName")}</p>
+                  <p>{t("target")}</p>
+                  <p>{t("status")}</p>
+                </div>
+
+                {/* Assigned Goals List */}
                 {employeeGoals.map((e, i) => (
-                  <div key={i} className="grid grid-cols-4 gap-2 items-center text-sm text-gray-800 border-b border-gray-200 py-2">
+                  <div
+                    key={i}
+                    className="grid grid-cols-4 gap-2 items-center text-sm text-gray-800 border-b py-2 text-center"
+                  >
                     <p>{e.employeeName}</p>
                     <p>{e.goalTitle}</p>
                     <p>{e.target}</p>
-                    <span className={`text-xs font-semibold px-2 py-1 rounded-full text-center ${
-                      e.status === "Completed" ? "bg-green-100 text-green-800" :
-                      e.status === "In Progress" ? "bg-yellow-100 text-yellow-800" :
-                      "bg-red-100 text-red-800"
-                    }`}>
+                    <span
+                      className={`text-xs font-semibold px-2 py-1 rounded-full inline-block ${
+                        e.status === "Completed"
+                          ? "bg-green-100 text-green-800"
+                          : e.status === "In Progress"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
                       {t(
                         e.status === "In Progress"
                           ? "inProgress"
@@ -558,7 +577,6 @@ export function GoalDetails({ open, onClose }) {
                 ))}
               </div>
             )}
-
 
             {/* Submission Form — Shown for staff and managers assigned to this goal */}
             {(!isManager || isGoalAssignedToManager) && (
@@ -650,32 +668,6 @@ export function GoalDetails({ open, onClose }) {
                     </div>
                   ))}
                 </div>
-
-                {/* Bar Chart below Employees */}
-                {employeeGoals.length > 0 && (
-                  <div className="mt-6">
-                    <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("teamProgressChart")}</h4>
-                    <ResponsiveContainer width="100%" height={180}>
-                      <BarChart
-                        data={employeeGoals}
-                        barCategoryGap="10%"
-                        barGap={2}
-                        margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-                      >
-                        <XAxis dataKey="employeeName" tick={{ fontSize: 12 }} />
-                        <Tooltip />
-                        <Bar dataKey="actualProgress" barSize={80} fill="#3b82f6">
-                          {employeeGoals.map((e, idx) => (
-                            <Cell
-                              key={idx}
-                              fill={e.actualProgressPercent > 80 ? "#10b981" : "#3b82f6"}
-                            />
-                          ))}
-                        </Bar>
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                )}
               </div>
             </>
           )}
