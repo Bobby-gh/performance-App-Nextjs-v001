@@ -274,6 +274,8 @@ export function CreateGoal() {
               <FormInputField
                 label={t("target")}
                 id="target"
+                type="number"
+                min="0"
                 onChange={handleInputChange}
                 value={formData.target}
               />
