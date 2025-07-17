@@ -428,12 +428,8 @@ export function GoalDetails({ open, onClose }) {
   const isManager = auth.refNum === "ref?2!";
   const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp.employeeEmail === auth.email);
 
-  const departmentProgressPercent = isManager
-    ? Math.round(
-        employeeGoals.reduce((sum, e) => sum + e.actualProgressPercent, 0) /
-          (employeeGoals.length || 1)
-      )
-    : null;
+  const departmentProgressPercent = isManager ? goal.actualProgressPercent : null;
+
 
   const handleUpdate = async (e) => {
     e.preventDefault();
