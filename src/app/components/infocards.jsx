@@ -686,7 +686,7 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress, empl
 
   const isManager = auth.refNum === "ref?2!";
 
-  const displayedProgress = isManager ? departmentProgress : progress;
+  const displayedProgress = progress;
   const progressLabel = isManager ? t("departmentProgress") : t("actualProgress");
 
   return (
