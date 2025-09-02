@@ -420,38 +420,35 @@ export function GoalDetails({ open, onClose }) {
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
   const { triggerComponent } = useContext(Modaltrigger);
-  const [progress, setProgress] = useState(goal.actualProgress);
-  const [comment, setComment] = useState("");
+  const [progress, setProgress] = useState(goal.actualProgress || 0);
+  const [comment, setComment] = useState('');
   const [isLoading, setLoading] = useState(false);
 
   const employeeGoals = goal.employeeGoals || [];
-  const isManager = auth.refNum === "ref?2!";
+  const isManager = auth.refNum === 'ref?2!';
   const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp.employeeEmail === auth.email);
-
   const departmentProgressPercent = isManager ? goal.actualProgressPercent : null;
-
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
     const managerAssignedGoalId = isManager
-    ? employeeGoals.find(emp => emp.employeeEmail === auth.email)?.goalId
-    : null;
-
+      ? employeeGoals.find(emp => emp.employeeEmail === auth.email)?.goalId
+      : null;
     const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
     try {
       const res = await axios.patch(
-        UPDATE_GOAL_PROGRESS,
+        'UPDATE_GOAL_PROGRESS',
         JSON.stringify({ goalId: goalIdToUse, progressIncrement: progress, comment }),
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${auth.token}`,
           },
         }
       );
       if (res.status === 200) {
-        showToast("Progress updated successfully", "success");
+        showToast('Progress updated successfully', 'success');
         triggerComponent();
       }
     } catch (err) {
@@ -464,47 +461,46 @@ export function GoalDetails({ open, onClose }) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{ ...ModalModification, maxHeight: "90vh", overflowY: "auto" }}>
-        <div className="absolute top-2 right-2">
-          <button onClick={onClose}>
-            <IoClose size={24} />
-          </button>
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition"
+      >
+        <IoClose size={24} />
+      </button>
+
+      <div className="space-y-6">
+        {/* Header */}
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">{goal.goalTitle}</h2>
+          <p className="text-gray-500 mt-2">{goal.goalDescription}</p>
         </div>
 
-        <div className="mb-6">
-          <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
-          <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
-        </div>
-
-        {/* Top Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-          {[ 
-            { label: t("target"), value: goal.target },
-            { label: t("startDate"), value: new Date(goal.dateAssigned).toLocaleDateString() },
-            { label: t("deadline"), value: new Date(goal.goalDeadline).toLocaleDateString() },
+        {/* Info Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { label: t('target'), value: goal.target },
+            { label: t('startDate'), value: new Date(goal.dateAssigned).toLocaleDateString() },
+            { label: t('deadline'), value: new Date(goal.goalDeadline).toLocaleDateString() },
           ].map(({ label, value }) => (
-            <div key={label} className="p-4 bg-blue-50 rounded-xl text-center shadow-sm">
-              <p className="text-blue-700 font-semibold">{label}</p>
-              <p className="mt-2 text-xl font-bold">{value}</p>
+            <div key={label} className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 shadow-sm text-center">
+              <p className="text-blue-700 font-medium">{label}</p>
+              <p className="text-lg font-semibold text-gray-800">{value}</p>
             </div>
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="flex-1">
-            {/* Staff Progress */}
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex-1 space-y-6">
+            {/* Progress Section */}
             {!isManager && (
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                  {t("currentProgress")} ({goal.actualProgressPercent}%)
+              <div>
+                <h3 className="text-lg font-semibold text-gray-700">
+                  {t('currentProgress')} ({goal.actualProgressPercent}%)
                 </h3>
-                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
+                <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden mt-2">
                   <div
-                    className="h-full bg-blue-600 transition-all duration-700"
-                    style={{
-                      width: `${goal.actualProgressPercent}%`,
-                      borderRadius: "9999px",
-                    }}
+                    className="h-full bg-blue-500 transition-all duration-500 ease-out"
+                    style={{ width: `${goal.actualProgressPercent}%` }}
                   />
                 </div>
               </div>
@@ -512,163 +508,160 @@ export function GoalDetails({ open, onClose }) {
 
             {/* Department Progress */}
             {isManager && (
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-700 mb-3">
-                  {t("departmentProgress")} ({departmentProgressPercent}%)
-                </h4>
-                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-700">
+                  {t('departmentProgress')} ({departmentProgressPercent}%)
+                </h3>
+                <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden mt-2">
                   <div
-                    className="h-full bg-green-600 transition-all duration-700"
-                    style={{
-                      width: `${departmentProgressPercent}%`,
-                      borderRadius: "9999px",
-                    }}
+                    className="h-full bg-green-500 transition-all duration-500 ease-out"
+                    style={{ width: `${departmentProgressPercent}%` }}
                   />
                 </div>
               </div>
             )}
 
-            {/* Assigned Goals Card — moved here for manager */}
+            {/* Assigned Goals Table */}
             {isManager && (
-              <div className="mb-6 bg-blue-50 rounded-xl p-4 shadow-sm">
-                <h4 className="text-lg font-semibold text-gray-700 mb-4">
-                  {t("assignedGoals")}
-                </h4>
-
-                {/* Header Row */}
-                <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-700 border-b pb-2 text-center">
-                  <p>{t("name")}</p>
-                  <p>{t("goalName")}</p>
-                  <p>{t("target")}</p>
-                  <p>{t("status")}</p>
+              <div className="bg-white rounded-lg shadow-sm p-4">
+                <h3 className="text-lg font-semibold text-gray-700 mb-4">{t('assignedGoals')}</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-gray-700">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="py-2 px-4 text-left">{t('name')}</th>
+                        <th className="py-2 px-4 text-left">{t('goalName')}</th>
+                        <th className="py-2 px-4 text-left">{t('target')}</th>
+                        <th className="py-2 px-4 text-left">{t('status')}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {employeeGoals.map((e, i) => (
+                        <tr key={i} className="border-b hover:bg-gray-50">
+                          <td className="py-2 px-4">{e.employeeName}</td>
+                          <td className="py-2 px-4">{e.goalTitle}</td>
+                          <td className="py-2 px-4">{e.target}</td>
+                          <td className="py-2 px-4">
+                            <span
+                              className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                                e.status === 'Completed'
+                                  ? 'bg-green-100 text-green-800'
+                                  : e.status === 'In Progress'
+                                  ? 'bg-yellow-100 text-yellow-800'
+                                  : 'bg-red-100 text-red-800'
+                              }`}
+                            >
+                              {t(
+                                e.status === 'In Progress'
+                                  ? 'inProgress'
+                                  : e.status === 'Not Started'
+                                  ? 'notStarted'
+                                  : 'completed'
+                              )}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-
-                {/* Assigned Goals List */}
-                {employeeGoals.map((e, i) => (
-                  <div
-                    key={i}
-                    className="grid grid-cols-4 gap-2 items-center text-sm text-gray-800 border-b py-2 text-center"
-                  >
-                    <p>{e.employeeName}</p>
-                    <p>{e.goalTitle}</p>
-                    <p>{e.target}</p>
-                    <span
-                      className={`text-xs font-semibold px-2 py-1 rounded-full inline-block ${
-                        e.status === "Completed"
-                          ? "bg-green-100 text-green-800"
-                          : e.status === "In Progress"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {t(
-                        e.status === "In Progress"
-                          ? "inProgress"
-                          : e.status === "Not Started"
-                          ? "notStarted"
-                          : "completed"
-                      )}
-                    </span>
-                  </div>
-                ))}
               </div>
             )}
 
-            {/* Submission Form — Shown for staff and managers assigned to this goal */}
+            {/* Progress Submission Form */}
             {(!isManager || isGoalAssignedToManager) && (
-              <form onSubmit={handleUpdate} className="space-y-6">
+              <form onSubmit={handleUpdate} className="space-y-4">
                 <div>
-                  <label className="block mb-2 font-semibold text-gray-700">{t("enterProgress")}</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('enterProgress')}</label>
                   <input
                     type="number"
                     min="0"
                     max="100"
                     value={progress}
                     onChange={(e) => setProgress(Number(e.target.value))}
-                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 font-semibold text-gray-700">{t("comment")}</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('comment')}</label>
                   <textarea
                     rows="4"
                     placeholder="Enter comment"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     required
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full py-3 rounded-xl text-white font-bold transition ${
-                    isLoading ? "bg-blue-700" : "bg-blue-900 hover:bg-blue-800"
+                  className={`w-full py-3 rounded-lg text-white font-semibold transition-all ${
+                    isLoading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
                   }`}
                 >
-                  {isLoading ? t("submitting") : t("submitProgress")}
+                  {isLoading ? t('submitting') : t('submitProgress')}
                 </button>
               </form>
             )}
 
             {/* Recent Updates */}
             {goal.progressUpdates?.length > 0 && (
-              <div className="mb-8">
-                <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("recentUpdates")}</h4>
-                <ul className="space-y-3 max-h-[150px] overflow-y-auto">
+              <div className="bg-white rounded-lg shadow-sm p-4">
+                <h3 className="text-lg font-semibold text-gray-700 mb-4">{t('recentUpdates')}</h3>
+                <div className="space-y-3 max-h-48 overflow-y-auto">
                   {goal.progressUpdates.map((u, i) => (
-                    <li key={i} className="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <div key={i} className="bg-gray-50 p-3 rounded-lg">
                       <div className="flex justify-between text-sm text-gray-600">
                         <span>{u.employeeName}</span>
                         <span>{new Date(u.date).toLocaleString()}</span>
                       </div>
-                      <p className="mt-2 text-gray-800">{u.comment}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-
-          {/* Manager Side Panel */}
-          {isManager && (
-            <>
-              <div className="hidden md:block border-l border-gray-300" />
-              <div className="w-full md:w-1/3 space-y-6">
-                <h4 className="text-lg font-semibold text-gray-700">{t("employees")}</h4>
-                <div className="grid grid-cols-2 gap-6">
-                  {employeeGoals.map((emp) => (
-                    <div
-                      key={emp.employeeName}
-                      className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
-                    >
-                      <img
-                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
-                        alt={emp.employeeName}
-                        className="w-16 h-16 rounded-full mb-3"
-                      />
-                      <p className="text-sm font-medium mb-1">{emp.employeeName}</p>
-                      <div className="w-16 h-16">
-                        <CircularProgressbar
-                          value={emp.actualProgressPercent}
-                          text={`${emp.actualProgressPercent}%`}
-                          styles={buildStyles({
-                            pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
-                            textColor: "#374151",
-                            trailColor: "#e5e7eb",
-                            textSize: "28px",
-                          })}
-                        />
-                      </div>
+                      <p className="mt-1 text-gray-800">{u.comment}</p>
                     </div>
                   ))}
                 </div>
               </div>
-            </>
+            )}
+          </div>
+
+          {/* Manager Employee Panel */}
+          {isManager && (
+            <div className="w-full md:w-80 space-y-6">
+              <h3 className="text-lg font-semibold text-gray-700">{t('employees')}</h3>
+              <div className="grid grid-cols-1 gap-4">
+                {employeeGoals.map((emp) => (
+                  <div
+                    key={emp.employeeName}
+                    className="bg-white p-4 rounded-lg shadow-sm flex items-center space-x-4"
+                  >
+                    <img
+                      src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
+                      alt={emp.employeeName}
+                      className="w-12 h-12 rounded-full"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-800">{emp.employeeName}</p>
+                      <div className="w-16 h-16 mt-2">
+                        <CircularProgressbar
+                          value={emp.actualProgressPercent}
+                          text={`${emp.actualProgressPercent}%`}
+                          styles={buildStyles({
+                            pathColor: emp.status === 'Completed' ? '#22c55e' : '#3b82f6',
+                            textColor: '#374151',
+                            trailColor: '#e5e7eb',
+                            textSize: '28px',
+                          })}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
-      </Box>
+      </div>
     </Modal>
   );
 }
