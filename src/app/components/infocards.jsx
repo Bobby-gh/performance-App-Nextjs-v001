@@ -415,47 +415,67 @@ export function AddDepartment() {
 
 
 
+const ModalModification = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '90%',
+  maxWidth: 800,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 4,
+};
+
+const StatCard = ({ label, value }) => (
+  <div className="p-4 bg-white rounded-lg shadow-md text-center transition-transform hover:scale-105">
+    <p className="text-gray-600 font-medium">{label}</p>
+    <p className="mt-2 text-xl font-bold text-gray-800">{value}</p>
+  </div>
+);
+
+const ProgressCard = ({ title, percentage, color }) => (
+  <div className="mb-6">
+    <h3 className="text-lg font-semibold text-gray-700 mb-3">{title} ({percentage}%)</h3>
+    <div className="relative w-full h-2 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+      <div
+        className="h-full transition-all duration-700"
+        style={{
+          width: `${percentage}%`,
+          backgroundColor: color,
+          borderRadius: '9999px',
+        }}
+      />
+    </div>
+  </div>
+);
+
 export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
-  const { auth } = useContext(AuthContext) || {};
-  const { goal } = useContext(GoalSelectContext) || {};
-  const { triggerComponent } = useContext(Modaltrigger) || {};
-  const [progress, setProgress] = useState(goal?.actualProgress || 0);
+  const { auth } = useContext(AuthContext);
+  const { goal } = useContext(GoalSelectContext);
+  const { triggerComponent } = useContext(Modaltrigger);
+  const [progress, setProgress] = useState(goal.actualProgress);
   const [comment, setComment] = useState('');
   const [isLoading, setLoading] = useState(false);
 
-  // Defensive checks for undefined context values
-  if (!auth || !goal) {
-    return (
-      <Modal open={open} onClose={onClose}>
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition"
-        >
-          <IoClose size={24} />
-        </button>
-        <div className="text-center text-gray-600 p-6">
-          <p>{t('errorLoadingData')}</p>
-        </div>
-      </Modal>
-    );
-  }
-
   const employeeGoals = goal.employeeGoals || [];
   const isManager = auth.refNum === 'ref?2!';
-  const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp?.employeeEmail === auth.email);
-  const departmentProgressPercent = isManager ? goal.actualProgressPercent || 0 : null;
+  const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp.employeeEmail === auth.email);
+  const departmentProgressPercent = isManager ? goal.actualProgressPercent : null;
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
     const managerAssignedGoalId = isManager
-      ? employeeGoals.find(emp => emp?.employeeEmail === auth.email)?.goalId
+      ? employeeGoals.find(emp => emp.employeeEmail === auth.email)?.goalId
       : null;
     const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
+
     try {
       const res = await axios.patch(
-        'UPDATE_GOAL_PROGRESS',
+        UPDATE_GOAL_PROGRESS,
         JSON.stringify({ goalId: goalIdToUse, progressIncrement: progress, comment }),
         {
           headers: {
@@ -466,7 +486,7 @@ export function GoalDetails({ open, onClose }) {
       );
       if (res.status === 200) {
         showToast('Progress updated successfully', 'success');
-        triggerComponent?.();
+        triggerComponent();
       }
     } catch (err) {
       console.error(err);
@@ -478,7 +498,7 @@ export function GoalDetails({ open, onClose }) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <div className="relative max-h-[90vh] overflow-y-auto">
+      <Box sx={{ ...ModalModification, maxHeight: '90vh', overflowY: 'auto' }}>
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition"
@@ -486,206 +506,177 @@ export function GoalDetails({ open, onClose }) {
           <IoClose size={24} />
         </button>
 
-        <div className="space-y-6">
-          {/* Header */}
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">{goal.goalTitle || t('noTitle')}</h2>
-            <p className="text-gray-500 mt-2">{goal.goalDescription || t('noDescription')}</p>
-          </div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">{goal.goalTitle}</h2>
+          <p className="text-gray-600 mt-2">{goal.goalDescription}</p>
+        </div>
 
-          {/* Info Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {[
-              { label: t('target'), value: goal.target || t('noTarget') },
-              { label: t('startDate'), value: goal.dateAssigned ? new Date(goal.dateAssigned).toLocaleDateString() : t('noDate') },
-              { label: t('deadline'), value: goal.goalDeadline ? new Date(goal.goalDeadline).toLocaleDateString() : t('noDate') },
-            ].map(({ label, value }) => (
-              <div key={label} className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 shadow-sm text-center">
-                <p className="text-blue-700 font-medium">{label}</p>
-                <p className="text-lg font-semibold text-gray-800">{value}</p>
-              </div>
-            ))}
-          </div>
+        {/* Top Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <StatCard label={t('target')} value={goal.target} />
+          <StatCard
+            label={t('startDate')}
+            value={new Date(goal.dateAssigned).toLocaleDateString()}
+          />
+          <StatCard
+            label={t('deadline')}
+            value={new Date(goal.goalDeadline).toLocaleDateString()}
+          />
+        </div>
 
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-1 space-y-6">
-              {/* Staff Progress */}
-              {!isManager && (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-700">
-                    {t('currentProgress')} ({goal.actualProgressPercent || 0}%)
-                  </h3>
-                  <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden mt-2">
-                    <div
-                      className="h-full bg-blue-500 transition-all duration-500 ease-out"
-                      style={{ width: `${goal.actualProgressPercent || 0}%` }}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Department Progress */}
-              {isManager && (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-700">
-                    {t('departmentProgress')} ({departmentProgressPercent}%)
-                  </h3>
-                  <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden mt-2">
-                    <div
-                      className="h-full bg-green-500 transition-all duration-500 ease-out"
-                      style={{ width: `${departmentProgressPercent}%` }}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Assigned Goals Table */}
-              {isManager && employeeGoals.length > 0 && (
-                <div className="bg-white rounded-lg shadow-sm p-4">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-4">{t('assignedGoals')}</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-gray-700">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="py-2 px-4 text-left">{t('name')}</th>
-                          <th className="py-2 px-4 text-left">{t('goalName')}</th>
-                          <th className="py-2 px-4 text-left">{t('target')}</th>
-                          <th className="py-2 px-4 text-left">{t('status')}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {employeeGoals.map((e, i) => (
-                          <tr key={i} className="border-b hover:bg-gray-50">
-                            <td className="py-2 px-4">{e.employeeName || t('unknown')}</td>
-                            <td className="py-2 px-4">{e.goalTitle || t('noTitle')}</td>
-                            <td className="py-2 px-4">{e.target || t('noTarget')}</td>
-                            <td className="py-2 px-4">
-                              <span
-                                className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-                                  e.status === 'Completed'
-                                    ? 'bg-green-100 text-green-800'
-                                    : e.status === 'In Progress'
-                                    ? 'bg-yellow-100 text-yellow-800'
-                                    : 'bg-red-100 text-red-800'
-                                }`}
-                              >
-                                {t(
-                                  e.status === 'In Progress'
-                                    ? 'inProgress'
-                                    : e.status === 'Not Started'
-                                    ? 'notStarted'
-                                    : e.status === 'Completed'
-                                    ? 'completed'
-                                    : 'unknown'
-                                )}
-                              </span>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-
-              {/* Submission Form */}
-              {(!isManager || isGoalAssignedToManager) && (
-                <form onSubmit={handleUpdate} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">{t('enterProgress')}</label>
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={progress}
-                      onChange={(e) => setProgress(Number(e.target.value))}
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">{t('comment')}</label>
-                    <textarea
-                      rows="4"
-                      placeholder={t('enterComment')}
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                      required
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full py-3 rounded-lg text-white font-semibold transition-all ${
-                      isLoading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-                    }`}
-                  >
-                    {isLoading ? t('submitting') : t('submitProgress')}
-                  </button>
-                </form>
-              )}
-
-              {/* Recent Updates */}
-              {goal.progressUpdates?.length > 0 && (
-                <div className="bg-white rounded-lg shadow-sm p-4">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-4">{t('recentUpdates')}</h3>
-                  <div className="space-y-3 max-h-48 overflow-y-auto">
-                    {goal.progressUpdates.map((u, i) => (
-                      <div key={i} className="bg-gray-50 p-3 rounded-lg">
-                        <div className="flex justify-between text-sm text-gray-600">
-                          <span>{u.employeeName || t('unknown')}</span>
-                          <span>{u.date ? new Date(u.date).toLocaleString() : t('noDate')}</span>
-                        </div>
-                        <p className="mt-1 text-gray-800">{u.comment || t('noComment')}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Manager Side Panel */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex-1 space-y-6">
+            {/* Progress Bars */}
+            {!isManager && (
+              <ProgressCard
+                title={t('currentProgress')}
+                percentage={goal.actualProgressPercent}
+                color="#3b82f6"
+              />
+            )}
             {isManager && (
-              <>
-                <div className="hidden md:block border-l border-gray-200 mx-6" />
-                <div className="w-full md:w-80 space-y-6">
-                  <h3 className="text-lg font-semibold text-gray-700">{t('employees')}</h3>
-                  <div className="grid grid-cols-1 gap-4">
-                    {employeeGoals.map((emp) => (
-                      <div
-                        key={emp.employeeName || `emp-${Math.random()}`}
-                        className="bg-white p-4 rounded-lg shadow-sm flex items-center space-x-4"
-                      >
-                        <img
-                          src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName || 'Unknown'}`}
-                          alt={emp.employeeName || 'Unknown'}
-                          className="w-12 h-12 rounded-full"
-                        />
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-800">{emp.employeeName || t('unknown')}</p>
-                          <div className="w-16 h-16 mt-2">
-                            <CircularProgressbar
-                              value={emp.actualProgressPercent || 0}
-                              text={`${emp.actualProgressPercent || 0}%`}
-                              styles={buildStyles({
-                                pathColor: emp.status === 'Completed' ? '#22c55e' : '#3b82f6',
-                                textColor: '#374151',
-                                trailColor: '#e5e7eb',
-                                textSize: '28px',
-                              })}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+              <ProgressCard
+                title={t('departmentProgress')}
+                percentage={departmentProgressPercent}
+                color="#22c55e"
+              />
+            )}
+
+            {/* Assigned Goals Table (Manager) */}
+            {isManager && (
+              <div className="bg-white rounded-lg shadow-md p-4">
+                <h4 className="text-lg font-semibold text-gray-700 mb-4">{t('assignedGoals')}</h4>
+                <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-600 border-b pb-2 text-center">
+                  <p>{t('name')}</p>
+                  <p>{t('goalName')}</p>
+                  <p>{t('target')}</p>
+                  <p>{t('status')}</p>
                 </div>
-              </>
+                {employeeGoals.map((e, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-4 gap-2 items-center text-sm text-gray-700 border-b py-2 text-center"
+                  >
+                    <p>{e.employeeName}</p>
+                    <p>{e.goalTitle}</p>
+                    <p>{e.target}</p>
+                    <span
+                      className={`text-xs font-medium px-2 py-1 rounded-full ${
+                        e.status === 'Completed'
+                          ? 'bg-green-100 text-green-800'
+                          : e.status === 'In Progress'
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}
+                    >
+                      {t(
+                        e.status === 'In Progress'
+                          ? 'inProgress'
+                          : e.status === 'Not Started'
+                          ? 'notStarted'
+                          : 'completed'
+                      )}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Progress Update Form */}
+            {(!isManager || isGoalAssignedToManager) && (
+              <form onSubmit={handleUpdate} className="space-y-4">
+                <div>
+                  <label className="block mb-1 font-medium text-gray-700">{t('enterProgress')}</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={progress}
+                    onChange={(e) => setProgress(Number(e.target.value))}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1 font-medium text-gray-700">{t('comment')}</label>
+                  <textarea
+                    rows="4"
+                    placeholder={t('enterComment')}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`w-full py-3 rounded-lg text-white font-semibold transition ${
+                    isLoading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                  }`}
+                >
+                  {isLoading ? t('submitting') : t('submitProgress')}
+                </button>
+              </form>
+            )}
+
+            {/* Recent Updates */}
+            {goal.progressUpdates?.length > 0 && (
+              <div className="bg-white rounded-lg shadow-md p-4">
+                <h4 className="text-lg font-semibold text-gray-700 mb-3">{t('recentUpdates')}</h4>
+                <ul className="space-y-3 max-h-[200px] overflow-y-auto">
+                  {goal.progressUpdates.map((u, i) => (
+                    <li key={i} className="bg-gray-50 p-3 rounded-lg shadow-sm">
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <span>{u.employeeName}</span>
+                        <span>{new Date(u.date).toLocaleString()}</span>
+                      </div>
+                      <p className="mt-2 text-gray-700">{u.comment}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
+
+          {/* Manager Employee Panel */}
+          {isManager && (
+            <>
+              <div className="hidden lg:block border-l border-gray-200" />
+              <div className="w-full lg:w-1/3 space-y-6">
+                <h4 className="text-lg font-semibold text-gray-700">{t('employees')}</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {employeeGoals.map((emp) => (
+                    <div
+                      key={emp.employeeName}
+                      className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center transition-transform hover:scale-105"
+                    >
+                      <img
+                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
+                        alt={emp.employeeName}
+                        className="w-12 h-12 rounded-full mb-3"
+                      />
+                      <p className="text-sm font-medium text-gray-700 mb-2">{emp.employeeName}</p>
+                      <div className="w-16 h-16">
+                        <CircularProgressbar
+                          value={emp.actualProgressPercent}
+                          text={`${emp.actualProgressPercent}%`}
+                          styles={buildStyles({
+                            pathColor: emp.status === 'Completed' ? '#22c55e' : '#3b82f6',
+                            textColor: '#374151',
+                            trailColor: '#e5e7eb',
+                            textSize: '28px',
+                          })}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
-      </div>
+      </Box>
     </Modal>
   );
 }
