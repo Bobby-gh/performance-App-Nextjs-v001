@@ -415,19 +415,6 @@ export function AddDepartment() {
 
 
 
-const Sparkline = ({ data }) => (
-  <div className="w-full h-6 relative">
-    <svg className="w-full h-full" viewBox="0 0 100 20">
-      <polyline
-        points={data.map((val, i) => `${i * (100 / (data.length - 1))},${20 - (val / 5)}`).join(" ")}
-        fill="none"
-        stroke="#4B5EAA"
-        strokeWidth="1"
-      />
-    </svg>
-  </div>
-);
-
 export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
@@ -711,10 +698,6 @@ export function GoalDetails({ open, onClose }) {
                 <div className="grid grid-cols-2 gap-6">
                   {employeeGoals.map((emp) => {
                     const isEmpOverdue = new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
-                    // Mock progress history for sparkline (replace with actual data if available)
-                    const progressHistory = [emp.actualProgressPercent, ...((goal.progressUpdates || [])
-                      .filter(u => u.employeeName === emp.employeeName)
-                      .map(u => u.progress || 0)).slice(0, 4)];
                     return (
                       <div
                         key={emp.employeeName}
@@ -738,8 +721,325 @@ export function GoalDetails({ open, onClose }) {
                             })}
                           />
                         </div>
-                        <div className="mt-2">
-                          <Sparkline data={progressHistory.length > 1 ? progressHistory : [0, emp.actualProgressPercent]} />
+                        <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
+                          {t("progressHistoryTooltip", { name: emp.employeeName })}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </Box>
+    </Modal>
+  );
+}export function GoalDetails({ open, onClose }) {
+  const { t } = useTranslation();
+  const { auth } = useContext(AuthContext);
+  const { goal } = useContext(GoalSelectContext);
+  const { triggerComponent } = useContext(Modaltrigger);
+  const [progress, setProgress] = useState(goal.actualProgress);
+  const [comment, setComment] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
+  const employeeGoals = goal.employeeGoals || [];
+  const isManager = auth.refNum === "ref?2!";
+  const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp.employeeEmail === auth.email);
+  const departmentProgressPercent = isManager ? goal.actualProgressPercent : null;
+
+  // Calculate progress trend (assuming progressUpdates has historical progress values)
+  const lastUpdate = goal.progressUpdates?.[0] || {};
+  const previousProgress = goal.progressUpdates?.[1]?.progress || 0;
+  const progressTrend = goal.actualProgressPercent > previousProgress ? "up" : goal.actualProgressPercent < previousProgress ? "down" : "neutral";
+
+  // Check if goal is overdue
+  const isOverdue = new Date(goal.goalDeadline) < new Date();
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (progress > goal.target) {
+      alert(t("progressExceedsTarget"));
+      return;
+    }
+    setLoading(true);
+    const managerAssignedGoalId = isManager
+      ? employeeGoals.find(emp => emp.employeeEmail === auth.email)?.goalId
+      : null;
+    const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
+    try {
+      const res = await axios.patch(
+        UPDATE_GOAL_PROGRESS,
+        JSON.stringify({ goalId: goalIdToUse, progressIncrement: progress, comment }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        showToast(t("progressUpdated"), "success");
+        triggerComponent();
+      }
+    } catch (err) {
+      console.error(err);
+      alert(`Error: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <Box sx={{ ...ModalModification, maxHeight: "90vh", overflowY: "auto", backgroundColor: "#F9FAFB" }}>
+        <div className="absolute top-4 right-4">
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+          >
+            <IoClose size={24} className="text-gray-600" />
+          </button>
+        </div>
+
+        <div className="mb-6 px-6 pt-6 animate-fade-in">
+          <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{goal.goalTitle}</h2>
+          <p className="text-gray-500 mt-2 text-base leading-relaxed">{goal.goalDescription}</p>
+        </div>
+
+        {/* Top Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 px-6 animate-fade-in">
+          {[
+            { label: t("target"), value: goal.target },
+            { label: t("startDate"), value: new Date(goal.dateAssigned).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric" }) },
+            { 
+              label: t("deadline"), 
+              value: new Date(goal.goalDeadline).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
+              className: isOverdue ? "text-red-600" : "text-gray-900"
+            },
+          ].map(({ label, value, className = "text-gray-900" }) => (
+            <div
+              key={label}
+              className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+            >
+              <p className="text-gray-500 font-medium text-sm">{label}</p>
+              <p className={`mt-2 text-xl font-semibold ${className}`}>{value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-8 px-6">
+          <div className="flex-1">
+            {/* Staff Progress */}
+            {!isManager && (
+              <div className="mb-6 animate-fade-in">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  {t("currentProgress")} ({goal.actualProgressPercent}%)
+                  <span className="ml-2 text-sm" title={t("lastUpdate", { date: lastUpdate.date ? new Date(lastUpdate.date).toLocaleString() : "N/A" })}>
+                    {progressTrend === "up" && "↑"}{progressTrend === "down" && "↓"}
+                  </span>
+                </h3>
+                <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm group">
+                  <div
+                    className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-700"
+                    style={{ width: `${goal.actualProgressPercent}%` }}
+                  />
+                  <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
+                    {t("progressTooltip", { percent: goal.actualProgressPercent })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Department Progress */}
+            {isManager && (
+              <div className="mb-6 animate-fade-in">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                  {t("departmentProgress")} ({departmentProgressPercent}%)
+                  <span className="ml-2 text-sm" title={t("lastUpdate", { date: lastUpdate.date ? new Date(lastUpdate.date).toLocaleString() : "N/A" })}>
+                    {progressTrend === "up" && "↑"}{progressTrend === "down" && "↓"}
+                  </span>
+                </h4>
+                <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm group">
+                  <div
+                    className="h-full bg-gradient-to-r from-green-500 to-teal-600 transition-all duration-700"
+                    style={{ width: `${departmentProgressPercent}%` }}
+                  />
+                  <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
+                    {t("departmentProgressTooltip", { percent: departmentProgressPercent })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Assigned Goals Card */}
+            {isManager && (
+              <div className="mb-6 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                <button
+                  className="text-lg font-semibold text-gray-800 mb-4 flex items-center"
+                  onClick={() => document.getElementById("assigned-goals").classList.toggle("hidden")}
+                >
+                  {t("assignedGoals")}
+                  <span className="ml-2 text-sm">{employeeGoals.length} {t("employees")}</span>
+                </button>
+                <div id="assigned-goals">
+                  <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-600 bg-gray-50 p-3 rounded-t-md">
+                    <p className="text-center">{t("name")}</p>
+                    <p className="text-center">{t("goalName")}</p>
+                    <p className="text-center">{t("target")}</p>
+                    <p className="text-center">{t("status")}</p>
+                  </div>
+                  {employeeGoals.map((e, i) => {
+                    const isEmpOverdue = new Date(goal.goalDeadline) < new Date() && e.status !== "Completed";
+                    return (
+                      <div
+                        key={i}
+                        className={`grid grid-cols-4 gap-2 items-center text-sm text-gray-700 py-3 text-center ${
+                          i % 2 === 0 ? "bg-white" : "bg-gray-50"
+                        } hover:bg-gray-100 transition-colors duration-200`}
+                      >
+                        <p>{e.employeeName}</p>
+                        <p>{e.goalTitle}</p>
+                        <p>{e.target}</p>
+                        <span
+                          className={`text-xs font-medium px-3 py-1 rounded-full group relative ${
+                            isEmpOverdue
+                              ? "bg-red-200 text-red-800"
+                              : e.status === "Completed"
+                              ? "bg-green-100 text-green-700"
+                              : e.status === "In Progress"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-gray-100 text-gray-700"
+                          }`}
+                        >
+                          {t(
+                            isEmpOverdue
+                              ? "overdue"
+                              : e.status === "In Progress"
+                              ? "inProgress"
+                              : e.status === "Not Started"
+                              ? "notStarted"
+                              : "completed"
+                          )}
+                          <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
+                            {t(isEmpOverdue ? "overdueTooltip" : `${e.status.toLowerCase()}Tooltip`)}
+                          </div>
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Submission Form */}
+            {(!isManager || isGoalAssignedToManager) && (
+              <form onSubmit={handleUpdate} className="space-y-6 animate-fade-in">
+                <div>
+                  <label className="block mb-2 font-medium text-gray-700">{t("enterProgress")}</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={progress}
+                    onChange={(e) => setProgress(Number(e.target.value))}
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white ${
+                      progress > goal.target ? "border-red-500" : "border-gray-200"
+                    }`}
+                    required
+                  />
+                  {progress > goal.target && (
+                    <p className="text-red-500 text-sm mt-1">{t("progressExceedsTarget")}</p>
+                  )}
+                </div>
+                <div>
+                  <label className="block mb-2 font-medium text-gray-700">{t("comment")}</label>
+                  <div className="relative">
+                    <textarea
+                      rows="4"
+                      placeholder={t("enterComment")}
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
+                      required
+                    />
+                    <p className="text-sm text-gray-500 mt-1">{comment.length}/200 {t("characters")}</p>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  disabled={isLoading || progress > goal.target}
+                  className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
+                    isLoading || progress > goal.target
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  }`}
+                >
+                  {isLoading ? t("submitting") : t("submitProgress")}
+                </button>
+              </form>
+            )}
+
+            {/* Recent Updates */}
+            {goal.progressUpdates?.length > 0 && (
+              <div className="mb-8">
+                <button
+                  className="text-lg font-semibold text-gray-800 mb-3 flex items-center"
+                  onClick={() => document.getElementById("recent-updates").classList.toggle("hidden")}
+                >
+                  {t("recentUpdates")}
+                  <span className="ml-2 text-sm">{goal.progressUpdates.length} {t("updates")}</span>
+                </button>
+                <ul id="recent-updates" className="space-y-3 max-h-[150px] overflow-y-auto">
+                  {goal.progressUpdates.map((u, i) => (
+                    <li
+                      key={i}
+                      className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      <div className="flex justify-between text-sm text-gray-500">
+                        <span className="font-medium text-gray-700">{u.employeeName}</span>
+                        <span>{new Date(u.date).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
+                      </div>
+                      <p className="mt-2 text-gray-600">{u.comment}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* Manager Side Panel */}
+          {isManager && (
+            <>
+              <div className="hidden md:block border-l border-gray-200" />
+              <div className="w-full md:w-1/3 space-y-6">
+                <h4 className="text-lg font-semibold text-gray-800">{t("employees")}</h4>
+                <div className="grid grid-cols-2 gap-6">
+                  {employeeGoals.map((emp) => {
+                    const isEmpOverdue = new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
+                    return (
+                      <div
+                        key={emp.employeeName}
+                        className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 group"
+                      >
+                        <img
+                          src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
+                          alt={emp.employeeName}
+                          className="w-16 h-16 rounded-full mb-3"
+                        />
+                        <p className="text-sm font-medium text-gray-700 mb-2">{emp.employeeName}</p>
+                        <div className="w-16 h-16">
+                          <CircularProgressbar
+                            value={emp.actualProgressPercent}
+                            text={`${emp.actualProgressPercent}%`}
+                            styles={buildStyles({
+                              pathColor: isEmpOverdue ? "#EF4444" : emp.status === "Completed" ? "#22C55E" : "#4B5EAA",
+                              textColor: "#1F2937",
+                              trailColor: "#F3F4F6",
+                              textSize: "28px",
+                            })}
+                          />
                         </div>
                         <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
                           {t("progressHistoryTooltip", { name: emp.employeeName })}
