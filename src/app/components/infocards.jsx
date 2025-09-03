@@ -429,10 +429,6 @@ export function GoalDetails({ open, onClose }) {
   const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp.employeeEmail === auth.email);
   const departmentProgressPercent = isManager ? goal.actualProgressPercent : null;
 
-  // Calculate progress trend (assuming progressUpdates has historical progress values)
-  const lastUpdate = goal.progressUpdates?.[0] || {};
-  const previousProgress = goal.progressUpdates?.[1]?.progress || 0;
-  const progressTrend = goal.actualProgressPercent > previousProgress ? "up" : goal.actualProgressPercent < previousProgress ? "down" : "neutral";
 
   // Check if goal is overdue
   const isOverdue = new Date(goal.goalDeadline) < new Date();
@@ -720,9 +716,6 @@ export function GoalDetails({ open, onClose }) {
                               textSize: "28px",
                             })}
                           />
-                        </div>
-                        <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
-                          {t("progressHistoryTooltip", { name: emp.employeeName })}
                         </div>
                       </div>
                     );
