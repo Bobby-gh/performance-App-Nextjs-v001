@@ -427,17 +427,14 @@ export function GoalDetails({ open, onClose }) {
   const employeeGoals = goal.employeeGoals || [];
   const isManager = auth.refNum === "ref?2!";
   const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp.employeeEmail === auth.email);
-
   const departmentProgressPercent = isManager ? goal.actualProgressPercent : null;
-
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
     const managerAssignedGoalId = isManager
-    ? employeeGoals.find(emp => emp.employeeEmail === auth.email)?.goalId
-    : null;
-
+      ? employeeGoals.find(emp => emp.employeeEmail === auth.email)?.goalId
+      : null;
     const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
     try {
       const res = await axios.patch(
@@ -464,47 +461,50 @@ export function GoalDetails({ open, onClose }) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{ ...ModalModification, maxHeight: "90vh", overflowY: "auto" }}>
-        <div className="absolute top-2 right-2">
-          <button onClick={onClose}>
-            <IoClose size={24} />
+      <Box sx={{ ...ModalModification, maxHeight: "90vh", overflowY: "auto", backgroundColor: "#F9FAFB" }}>
+        <div className="absolute top-4 right-4">
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+          >
+            <IoClose size={24} className="text-gray-600" />
           </button>
         </div>
 
-        <div className="mb-6">
-          <h2 className="text-3xl font-extrabold text-gray-900">{goal.goalTitle}</h2>
-          <p className="text-gray-600 mt-1">{goal.goalDescription}</p>
+        <div className="mb-6 px-6 pt-6">
+          <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{goal.goalTitle}</h2>
+          <p className="text-gray-500 mt-2 text-base leading-relaxed">{goal.goalDescription}</p>
         </div>
 
         {/* Top Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-          {[ 
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 px-6">
+          {[
             { label: t("target"), value: goal.target },
             { label: t("startDate"), value: new Date(goal.dateAssigned).toLocaleDateString() },
             { label: t("deadline"), value: new Date(goal.goalDeadline).toLocaleDateString() },
           ].map(({ label, value }) => (
-            <div key={label} className="p-4 bg-blue-50 rounded-xl text-center shadow-sm">
-              <p className="text-blue-700 font-semibold">{label}</p>
-              <p className="mt-2 text-xl font-bold">{value}</p>
+            <div
+              key={label}
+              className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+            >
+              <p className="text-gray-500 font-medium text-sm">{label}</p>
+              <p className="mt-2 text-xl font-semibold text-gray-900">{value}</p>
             </div>
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-8 px-6">
           <div className="flex-1">
             {/* Staff Progress */}
             {!isManager && (
               <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-700 mb-4">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
                   {t("currentProgress")} ({goal.actualProgressPercent}%)
                 </h3>
-                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
+                <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm">
                   <div
-                    className="h-full bg-blue-600 transition-all duration-700"
-                    style={{
-                      width: `${goal.actualProgressPercent}%`,
-                      borderRadius: "9999px",
-                    }}
+                    className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-700"
+                    style={{ width: `${goal.actualProgressPercent}%` }}
                   />
                 </div>
               </div>
@@ -513,52 +513,45 @@ export function GoalDetails({ open, onClose }) {
             {/* Department Progress */}
             {isManager && (
               <div className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-700 mb-3">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3">
                   {t("departmentProgress")} ({departmentProgressPercent}%)
                 </h4>
-                <div className="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner mb-6">
+                <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm">
                   <div
-                    className="h-full bg-green-600 transition-all duration-700"
-                    style={{
-                      width: `${departmentProgressPercent}%`,
-                      borderRadius: "9999px",
-                    }}
+                    className="h-full bg-gradient-to-r from-green-500 to-teal-600 transition-all duration-700"
+                    style={{ width: `${departmentProgressPercent}%` }}
                   />
                 </div>
               </div>
             )}
 
-            {/* Assigned Goals Card — moved here for manager */}
+            {/* Assigned Goals Card */}
             {isManager && (
-              <div className="mb-6 bg-blue-50 rounded-xl p-4 shadow-sm">
-                <h4 className="text-lg font-semibold text-gray-700 mb-4">
-                  {t("assignedGoals")}
-                </h4>
-
-                {/* Header Row */}
-                <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-700 border-b pb-2 text-center">
-                  <p>{t("name")}</p>
-                  <p>{t("goalName")}</p>
-                  <p>{t("target")}</p>
-                  <p>{t("status")}</p>
+              <div className="mb-6 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                <h4 className="text-lg font-semibold text-gray-800 mb-4">{t("assignedGoals")}</h4>
+                <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-600 bg-gray-50 p-3 rounded-t-md">
+                  <p className="text-center">{t("name")}</p>
+                  <p className="text-center">{t("goalName")}</p>
+                  <p className="text-center">{t("target")}</p>
+                  <p className="text-center">{t("status")}</p>
                 </div>
-
-                {/* Assigned Goals List */}
                 {employeeGoals.map((e, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-4 gap-2 items-center text-sm text-gray-800 border-b py-2 text-center"
+                    className={`grid grid-cols-4 gap-2 items-center text-sm text-gray-700 py-3 text-center ${
+                      i % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    } hover:bg-gray-100 transition-colors duration-200`}
                   >
                     <p>{e.employeeName}</p>
                     <p>{e.goalTitle}</p>
                     <p>{e.target}</p>
                     <span
-                      className={`text-xs font-semibold px-2 py-1 rounded-full inline-block ${
+                      className={`text-xs font-medium px-3 py-1 rounded-full ${
                         e.status === "Completed"
-                          ? "bg-green-100 text-green-800"
+                          ? "bg-green-100 text-green-700"
                           : e.status === "In Progress"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-red-100 text-red-800"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-red-100 text-red-700"
                       }`}
                     >
                       {t(
@@ -574,37 +567,39 @@ export function GoalDetails({ open, onClose }) {
               </div>
             )}
 
-            {/* Submission Form — Shown for staff and managers assigned to this goal */}
+            {/* Submission Form */}
             {(!isManager || isGoalAssignedToManager) && (
               <form onSubmit={handleUpdate} className="space-y-6">
                 <div>
-                  <label className="block mb-2 font-semibold text-gray-700">{t("enterProgress")}</label>
+                  <label className="block mb-2 font-medium text-gray-700">{t("enterProgress")}</label>
                   <input
                     type="number"
                     min="0"
                     max="100"
                     value={progress}
                     onChange={(e) => setProgress(Number(e.target.value))}
-                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 font-semibold text-gray-700">{t("comment")}</label>
+                  <label className="block mb-2 font-medium text-gray-700">{t("comment")}</label>
                   <textarea
                     rows="4"
-                    placeholder="Enter comment"
+                    placeholder={t("enterComment")}
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
                     required
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full py-3 rounded-xl text-white font-bold transition ${
-                    isLoading ? "bg-blue-700" : "bg-blue-900 hover:bg-blue-800"
+                  className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
+                    isLoading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                   }`}
                 >
                   {isLoading ? t("submitting") : t("submitProgress")}
@@ -615,15 +610,18 @@ export function GoalDetails({ open, onClose }) {
             {/* Recent Updates */}
             {goal.progressUpdates?.length > 0 && (
               <div className="mb-8">
-                <h4 className="text-lg font-semibold text-gray-700 mb-3">{t("recentUpdates")}</h4>
+                <h4 className="text-lg font-semibold text-gray-800 mb-3">{t("recentUpdates")}</h4>
                 <ul className="space-y-3 max-h-[150px] overflow-y-auto">
                   {goal.progressUpdates.map((u, i) => (
-                    <li key={i} className="bg-gray-50 p-3 rounded-lg shadow-sm">
-                      <div className="flex justify-between text-sm text-gray-600">
-                        <span>{u.employeeName}</span>
+                    <li
+                      key={i}
+                      className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      <div className="flex justify-between text-sm text-gray-500">
+                        <span className="font-medium text-gray-700">{u.employeeName}</span>
                         <span>{new Date(u.date).toLocaleString()}</span>
                       </div>
-                      <p className="mt-2 text-gray-800">{u.comment}</p>
+                      <p className="mt-2 text-gray-600">{u.comment}</p>
                     </li>
                   ))}
                 </ul>
@@ -634,29 +632,29 @@ export function GoalDetails({ open, onClose }) {
           {/* Manager Side Panel */}
           {isManager && (
             <>
-              <div className="hidden md:block border-l border-gray-300" />
+              <div className="hidden md:block border-l border-gray-200" />
               <div className="w-full md:w-1/3 space-y-6">
-                <h4 className="text-lg font-semibold text-gray-700">{t("employees")}</h4>
+                <h4 className="text-lg font-semibold text-gray-800">{t("employees")}</h4>
                 <div className="grid grid-cols-2 gap-6">
                   {employeeGoals.map((emp) => (
                     <div
                       key={emp.employeeName}
-                      className="bg-gray-50 p-4 rounded-xl shadow-sm flex flex-col items-center"
+                      className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200"
                     >
                       <img
                         src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
                         alt={emp.employeeName}
                         className="w-16 h-16 rounded-full mb-3"
                       />
-                      <p className="text-sm font-medium mb-1">{emp.employeeName}</p>
+                      <p className="text-sm font-medium text-gray-700 mb-2">{emp.employeeName}</p>
                       <div className="w-16 h-16">
                         <CircularProgressbar
                           value={emp.actualProgressPercent}
                           text={`${emp.actualProgressPercent}%`}
                           styles={buildStyles({
-                            pathColor: emp.status === "Completed" ? "#22c55e" : "#3b82f6",
-                            textColor: "#374151",
-                            trailColor: "#e5e7eb",
+                            pathColor: emp.status === "Completed" ? "#22C55E" : "#4B5EAA",
+                            textColor: "#1F2937",
+                            trailColor: "#F3F4F6",
                             textSize: "28px",
                           })}
                         />
