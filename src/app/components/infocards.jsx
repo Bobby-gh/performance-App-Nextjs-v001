@@ -746,46 +746,128 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress, empl
 
   const displayedProgress = progress;
   const progressLabel = isManager ? t("departmentProgress") : t("actualProgress");
+  const progressColor = isManager ? "bg-green-500" : "bg-blue-500";
+
+  // Simple avatar component
+  const Avatar = ({ name }) => {
+    const firstLetter = name.charAt(0).toUpperCase();
+    return (
+      <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-semibold shadow-sm">
+        {firstLetter}
+      </div>
+    );
+  };
 
   return (
     <div
-      className="bg-white rounded-lg p-4 cursor-pointer flex flex-col h-full shadow-sm border hover:shadow-md transition"
+      className="bg-white rounded-xl p-6 cursor-pointer flex flex-col h-full shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 overflow-hidden"
       onClick={onClick}
     >
-      {/* Progress Section */}
+      {/* Header with Goal Title and Description Placeholder */}
       <div className="mb-4">
-        <p className="text-blue-900 text-sm mb-2">
-          <strong>{progressLabel}:</strong> {displayedProgress}%
-        </p>
-        <div className="relative w-full h-4 bg-gray-200 rounded">
+        <h2 className="text-xl font-bold text-gray-800 mb-1">{goalTitle}</h2>
+        <p className="text-gray-600 text-sm italic">Description: none at the moment</p>
+      </div>
+
+      {/* Enhanced Progress Section */}
+      <div className="mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <p className="text-gray-700 text-sm font-medium">
+            <strong>{progressLabel}:</strong> {displayedProgress}%
+          </p>
+          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+            Target: 100%
+          </span>
+        </div>
+        <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden">
           <div
-            className={`absolute h-4 ${
-              isManager ? "bg-green-500" : "bg-blue-500"
-            } rounded transition-all duration-500`}
+            className={`h-full ${progressColor} rounded-full transition-all duration-700 ease-out`}
+            style={{ width: `${displayedProgress}%` }}
+          ></div>
+          <div
+            className="absolute inset-0 h-3 bg-gradient-to-r from-transparent via-white/20 to-transparent"
             style={{ width: `${displayedProgress}%` }}
           ></div>
         </div>
       </div>
 
-      {/* Goal Title */}
-      <div className="mb-2">
-        <h3 className="font-semibold">{t("goal")}:</h3>
-        <p>{goalTitle}</p>
-      </div>
-
       {/* Deadline */}
-      <div className="mb-4">
-        <h3 className="font-semibold">{t("deadline")}:</h3>
-        <p>{goalDeadline}</p>
+      <div className="mb-6">
+        <div className="flex items-center">
+          <span className="text-gray-500 text-sm mr-2">📅</span>
+          <h3 className="font-semibold text-gray-700">{t("deadline")}:</h3>
+          <p className="ml-2 text-gray-900 font-medium">{goalDeadline}</p>
+        </div>
       </div>
 
-      {/* Bottom section pinned to bottom */}
-      <div className="mt-auto">
-        <hr className="h-px my-2 border-0 bg-gray-300" />
-        <div className="flex items-center mt-2">
-          <span className="font-medium text-sm text-gray-600">{t("status")}:</span>
-          <span className="ml-2 text-blue-900 text-xs">{status}</span>
+      {/* Employee Sub-Goals Section */}
+      {employeeGoals.length > 0 && (
+        <div className="mb-6">
+          <h3 className="font-semibold text-gray-800 mb-3 text-base">Sub-Goals</h3>
+          <div className="space-y-3">
+            {employeeGoals.map((empGoal, index) => (
+              <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">{empGoal.employeeName}</p>
+                  <p className="text-xs text-gray-600 truncate">{empGoal.goalTitle}</p>
+                </div>
+                <div className="w-20">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-xs text-gray-600">{empGoal.actualProgressPercent}%</span>
+                    <span className="text-xs text-gray-500">/{empGoal.target}</span>
+                  </div>
+                  <div className="w-full h-2 bg-gray-300 rounded">
+                    <div
+                      className="h-2 bg-indigo-500 rounded transition-all duration-300"
+                      style={{ width: `${empGoal.actualProgressPercent}%` }}
+                    ></div>
+                  </div>
+                </div>
+                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                  empGoal.status === "In Progress"
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-green-100 text-green-800"
+                }`}>
+                  {empGoal.status}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
+      )}
+
+      {/* Footer with Status and Avatars */}
+      <div className="mt-auto pt-4 border-t border-gray-200">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <span className="font-medium text-sm text-gray-600 mr-2">Status:</span>
+            <span
+              className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                status === "In Progress"
+                  ? "bg-blue-100 text-blue-800"
+                  : status === "Completed"
+                  ? "bg-green-100 text-green-800"
+                  : "bg-gray-100 text-gray-800"
+              }`}
+            >
+              {status}
+            </span>
+          </div>
+          <div className="flex -space-x-2">
+            {employeeGoals.map((empGoal, index) => (
+              <Avatar key={index} name={empGoal.employeeName} />
+            ))}
+            {employeeGoals.length === 0 && (
+              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
+                -
+              </div>
+            )}
+          </div>
+        </div>
+        <p className="text-xs text-gray-500 mt-2 text-center">
+          Assigned: {employeeGoals.length} employee{employeeGoals.length !== 1 ? 's' : ''}
+        </p>
       </div>
     </div>
   );
