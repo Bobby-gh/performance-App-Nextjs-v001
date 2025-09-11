@@ -414,7 +414,6 @@ export function AddDepartment() {
 }
 
 
-
 export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
@@ -423,6 +422,8 @@ export function GoalDetails({ open, onClose }) {
   const [progress, setProgress] = useState(goal.actualProgress);
   const [comment, setComment] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [assignedExpanded, setAssignedExpanded] = useState(false);
+  const [updatesExpanded, setUpdatesExpanded] = useState(false);
 
   const employeeGoals = goal.employeeGoals || [];
   const isManager = auth.refNum === "ref?2!";
@@ -471,264 +472,251 @@ export function GoalDetails({ open, onClose }) {
     }
   };
 
+  const metricCards = [
+    { label: t("target"), value: goal.target, icon: "🎯" },
+    { 
+      label: t("startDate"), 
+      value: new Date(goal.dateAssigned).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
+      icon: "📅"
+    },
+    { 
+      label: t("deadline"), 
+      value: new Date(goal.goalDeadline).toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
+      icon: isOverdue ? "⏰" : "📅",
+      color: isOverdue ? "error" : "primary"
+    },
+  ];
+
   return (
-    <Modal open={open} onClose={onClose}>
-      <Box sx={{ ...ModalModification, maxHeight: "90vh", overflowY: "auto", backgroundColor: "#F9FAFB" }}>
-        <div className="absolute top-4 right-4">
-          <button
-            onClick={onClose}
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
-          >
-            <IoClose size={24} className="text-gray-600" />
-          </button>
-        </div>
+    <Modal open={open} onClose={onClose} keepMounted>
+      <Box sx={{ 
+        position: 'absolute', 
+        top: '50%', 
+        left: '50%', 
+        transform: 'translate(-50%, -50%)', 
+        width: '90vw', 
+        maxWidth: '1200px', 
+        maxHeight: '90vh', 
+        overflowY: 'auto', 
+        bgcolor: '#F9FAFB', 
+        borderRadius: 2, 
+        boxShadow: 24,
+        p: 3 
+      }}>
+        {/* Close Button */}
+        <Button onClick={onClose} sx={{ position: 'absolute', top: 8, right: 8, minWidth: 'auto', color: 'gray.500' }}>
+          <IoClose size={24} />
+        </Button>
 
-        <div className="mb-6 px-6 pt-6 animate-fade-in">
-          <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{goal.goalTitle}</h2>
-          <p className="text-gray-500 mt-2 text-base leading-relaxed">{goal.goalDescription}</p>
-        </div>
+        {/* Header */}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold', color: 'gray.900', mb: 2 }}>
+            {goal.goalTitle}
+          </Typography>
+          <Typography variant="body1" sx={{ color: 'gray.600', lineHeight: 1.6 }}>
+            {goal.goalDescription}
+          </Typography>
+        </Box>
 
-        {/* Top Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 px-6 animate-fade-in">
-          {[
-            { label: t("target"), value: goal.target },
-            { label: t("startDate"), value: new Date(goal.dateAssigned).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric" }) },
-            { 
-              label: t("deadline"), 
-              value: new Date(goal.goalDeadline).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
-              className: isOverdue ? "text-red-600" : "text-gray-900"
-            },
-          ].map(({ label, value, className = "text-gray-900" }) => (
-            <div
-              key={label}
-              className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
-            >
-              <p className="text-gray-500 font-medium text-sm">{label}</p>
-              <p className={`mt-2 text-xl font-semibold ${className}`}>{value}</p>
-            </div>
+        {/* Key Metrics Row */}
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          {metricCards.map(({ label, value, icon, color }, i) => (
+            <Grid item xs={12} sm={4} key={i}>
+              <Card sx={{ height: '100%', border: '1px solid', borderColor: 'gray.200', '&:hover': { boxShadow: 2 } }}>
+                <CardContent sx={{ textAlign: 'center', py: 3 }}>
+                  <Box sx={{ fontSize: 32, mb: 1 }}>{icon}</Box>
+                  <Typography variant="body2" sx={{ color: 'gray.500', fontWeight: 500 }}>
+                    {label}
+                  </Typography>
+                  <Typography variant="h5" sx={{ mt: 1, color: color ? `${color}.main` : 'gray.900', fontWeight: 'bold' }}>
+                    {value}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           ))}
-        </div>
+        </Grid>
 
-        <div className="flex flex-col md:flex-row gap-8 px-6">
-          <div className="flex-1">
-            {/* Staff Progress */}
-            {!isManager && (
-              <div className="mb-6 animate-fade-in">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                  {t("currentProgress")} ({goal.actualProgressPercent}%)
-                  <span className="ml-2 text-sm" title={t("lastUpdate", { date: lastUpdate.date ? new Date(lastUpdate.date).toLocaleString() : "N/A" })}>
-                    {progressTrend === "up" && "↑"}{progressTrend === "down" && "↓"}
-                  </span>
-                </h3>
-                <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm group">
-                  <div
-                    className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-700"
-                    style={{ width: `${goal.actualProgressPercent}%` }}
+        {/* Main Content Grid */}
+        <Grid container spacing={4}>
+          {/* Left Column: Goal Progress & Actions */}
+          <Grid item xs={12} md={isManager ? 8 : 12}>
+            {/* Progress Bar */}
+            <Card sx={{ mb: 3, border: '1px solid', borderColor: 'gray.200' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                  <Typography variant="h6" sx={{ color: 'gray.800' }}>
+                    {isManager ? t("departmentProgress") : t("currentProgress")}
+                    <Chip label={`${isManager ? departmentProgressPercent : goal.actualProgressPercent}%`} size="small" sx={{ ml: 1 }} color="primary" />
+                    <span style={{ fontSize: '1rem', marginLeft: 8 }}>
+                      {progressTrend === "up" ? "↑" : progressTrend === "down" ? "↓" : "→"}
+                    </span>
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: 'gray.500' }}>
+                    {t("lastUpdate", { date: lastUpdate.date ? new Date(lastUpdate.date).toLocaleString() : "N/A" })}
+                  </Typography>
+                </Box>
+                <Box sx={{ position: 'relative', display: 'inline-block', width: '100%' }}>
+                  <LinearProgress 
+                    variant="determinate" 
+                    value={isManager ? departmentProgressPercent : goal.actualProgressPercent}
+                    sx={{ 
+                      height: 8, 
+                      borderRadius: 4, 
+                      bgcolor: 'gray.200',
+                      '& .MuiLinearProgress-bar': { borderRadius: 4, background: 'linear-gradient(90deg, #3B82F6 0%, #8B5CF6 100%)' }
+                    }} 
                   />
-                  <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
-                    {t("progressTooltip", { percent: goal.actualProgressPercent })}
-                  </div>
-                </div>
-              </div>
-            )}
+                  {/* Tooltip simulation */}
+                  <Typography variant="caption" sx={{ position: 'absolute', top: -20, left: '50%', transform: 'translateX(-50%)', bgcolor: 'gray.800', color: 'white', px: 1, py: 0.5, borderRadius: 1, minWidth: 40, textAlign: 'center' }}>
+                    {t("progressTooltip", { percent: isManager ? departmentProgressPercent : goal.actualProgressPercent })}
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
 
-            {/* Department Progress */}
-            {isManager && (
-              <div className="mb-6 animate-fade-in">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
-                  {t("departmentProgress")} ({departmentProgressPercent}%)
-                  <span className="ml-2 text-sm" title={t("lastUpdate", { date: lastUpdate.date ? new Date(lastUpdate.date).toLocaleString() : "N/A" })}>
-                    {progressTrend === "up" && "↑"}{progressTrend === "down" && "↓"}
-                  </span>
-                </h4>
-                <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm group">
-                  <div
-                    className="h-full bg-gradient-to-r from-green-500 to-teal-600 transition-all duration-700"
-                    style={{ width: `${departmentProgressPercent}%` }}
-                  />
-                  <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
-                    {t("departmentProgressTooltip", { percent: departmentProgressPercent })}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Assigned Goals Card */}
-            {isManager && (
-              <div className="mb-6 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                <button
-                  className="text-lg font-semibold text-gray-800 mb-4 flex items-center"
-                  onClick={() => document.getElementById("assigned-goals").classList.toggle("hidden")}
-                >
-                  {t("assignedGoals")}
-                  <span className="ml-2 text-sm">{employeeGoals.length} {t("employees")}</span>
-                </button>
-                <div id="assigned-goals">
-                  <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-600 bg-gray-50 p-3 rounded-t-md">
-                    <p className="text-center">{t("name")}</p>
-                    <p className="text-center">{t("goalName")}</p>
-                    <p className="text-center">{t("target")}</p>
-                    <p className="text-center">{t("status")}</p>
-                  </div>
-                  {employeeGoals.map((e, i) => {
-                    const isEmpOverdue = new Date(goal.goalDeadline) < new Date() && e.status !== "Completed";
-                    return (
-                      <div
-                        key={i}
-                        className={`grid grid-cols-4 gap-2 items-center text-sm text-gray-700 py-3 text-center ${
-                          i % 2 === 0 ? "bg-white" : "bg-gray-50"
-                        } hover:bg-gray-100 transition-colors duration-200`}
-                      >
-                        <p>{e.employeeName}</p>
-                        <p>{e.goalTitle}</p>
-                        <p>{e.target}</p>
-                        <span
-                          className={`text-xs font-medium px-3 py-1 rounded-full group relative ${
-                            isEmpOverdue
-                              ? "bg-red-200 text-red-800"
-                              : e.status === "Completed"
-                              ? "bg-green-100 text-green-700"
-                              : e.status === "In Progress"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-gray-100 text-gray-700"
-                          }`}
-                        >
-                          {t(
-                            isEmpOverdue
-                              ? "overdue"
-                              : e.status === "In Progress"
-                              ? "inProgress"
-                              : e.status === "Not Started"
-                              ? "notStarted"
-                              : "completed"
-                          )}
-                          <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
-                            {t(isEmpOverdue ? "overdueTooltip" : `${e.status.toLowerCase()}Tooltip`)}
-                          </div>
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Submission Form */}
+            {/* Submission Form (if applicable) */}
             {(!isManager || isGoalAssignedToManager) && (
-              <form onSubmit={handleUpdate} className="space-y-6 animate-fade-in">
-                <div>
-                  <label className="block mb-2 font-medium text-gray-700">{t("enterProgress")}</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={progress}
-                    onChange={(e) => setProgress(Number(e.target.value))}
-                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white ${
-                      progress > goal.target ? "border-red-500" : "border-gray-200"
-                    }`}
-                    required
-                  />
-                  {progress > goal.target && (
-                    <p className="text-red-500 text-sm mt-1">{t("progressExceedsTarget")}</p>
-                  )}
-                </div>
-                <div>
-                  <label className="block mb-2 font-medium text-gray-700">{t("comment")}</label>
-                  <div className="relative">
-                    <textarea
-                      rows="4"
-                      placeholder={t("enterComment")}
+              <Card sx={{ mb: 3, border: '1px solid', borderColor: 'gray.200' }}>
+                <CardContent sx={{ p: 3 }}>
+                  <Typography variant="h6" sx={{ mb: 3, color: 'gray.800' }}>{t("updateProgress")}</Typography>
+                  <Box component="form" onSubmit={handleUpdate} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <TextField
+                      label={t("enterProgress")}
+                      type="number"
+                      inputProps={{ min: 0, max: goal.target }}
+                      value={progress}
+                      onChange={(e) => setProgress(Number(e.target.value))}
+                      error={progress > goal.target}
+                      helperText={progress > goal.target ? t("progressExceedsTarget") : ""}
+                      fullWidth
+                    />
+                    <TextField
+                      label={t("comment")}
+                      multiline
+                      rows={4}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
-                      required
+                      inputProps={{ maxLength: 200 }}
+                      helperText={`${comment.length}/200 ${t("characters")}`}
+                      fullWidth
                     />
-                    <p className="text-sm text-gray-500 mt-1">{comment.length}/200 {t("characters")}</p>
-                  </div>
-                </div>
-                <button
-                  type="submit"
-                  disabled={isLoading || progress > goal.target}
-                  className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
-                    isLoading || progress > goal.target
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                  }`}
-                >
-                  {isLoading ? t("submitting") : t("submitProgress")}
-                </button>
-              </form>
-            )}
-
-            {/* Recent Updates */}
-            {goal.progressUpdates?.length > 0 && (
-              <div className="mb-8">
-                <button
-                  className="text-lg font-semibold text-gray-800 mb-3 flex items-center"
-                  onClick={() => document.getElementById("recent-updates").classList.toggle("hidden")}
-                >
-                  {t("recentUpdates")}
-                  <span className="ml-2 text-sm">{goal.progressUpdates.length} {t("updates")}</span>
-                </button>
-                <ul id="recent-updates" className="space-y-3 max-h-[150px] overflow-y-auto">
-                  {goal.progressUpdates.map((u, i) => (
-                    <li
-                      key={i}
-                      className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors duration-200"
+                    <Button
+                      type="submit"
+                      disabled={isLoading || progress > goal.target}
+                      variant="contained"
+                      fullWidth
+                      sx={{ py: 1.5, background: 'linear-gradient(90deg, #3B82F6 0%, #8B5CF6 100%)', '&:hover': { background: 'linear-gradient(90deg, #2563EB 0%, #7C3AED 100%)' }, '&:disabled': { background: 'gray.400' } }}
                     >
-                      <div className="flex justify-between text-sm text-gray-500">
-                        <span className="font-medium text-gray-700">{u.employeeName}</span>
-                        <span>{new Date(u.date).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
-                      </div>
-                      <p className="mt-2 text-gray-600">{u.comment}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                      {isLoading ? t("submitting") : t("submitProgress")}
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
             )}
-          </div>
 
-          {/* Manager Side Panel */}
+            {/* Recent Updates Accordion */}
+            {goal.progressUpdates?.length > 0 && (
+              <Accordion expanded={updatesExpanded} onChange={() => setUpdatesExpanded(!updatesExpanded)} sx={{ border: '1px solid', borderColor: 'gray.200' }}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant="h6" sx={{ color: 'gray.800' }}>
+                    {t("recentUpdates")} <Chip label={goal.progressUpdates.length} size="small" sx={{ ml: 1 }} />
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails sx={{ maxHeight: 200, overflowY: 'auto', p: 0 }}>
+                  {goal.progressUpdates.map((u, i) => (
+                    <Card key={i} sx={{ mb: 2, border: '1px solid', borderColor: 'gray.100' }}>
+                      <CardContent sx={{ p: 2 }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>{u.employeeName}</Typography>
+                          <Typography variant="caption" sx={{ color: 'gray.500' }}>
+                            {new Date(u.date).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                          </Typography>
+                        </Box>
+                        <Typography variant="body2" sx={{ color: 'gray.600' }}>{u.comment}</Typography>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+            )}
+          </Grid>
+
+          {/* Right Column: Manager Employee Overview */}
           {isManager && (
-            <>
-              <div className="hidden md:block border-l border-gray-200" />
-              <div className="w-full md:w-1/3 space-y-6">
-                <h4 className="text-lg font-semibold text-gray-800">{t("employees")}</h4>
-                <div className="grid grid-cols-2 gap-6">
-                  {employeeGoals.map((emp) => {
-                    const isEmpOverdue = new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
+            <Grid item xs={12} md={4}>
+              {/* Assigned Goals Accordion/Table */}
+              <Accordion expanded={assignedExpanded} onChange={() => setAssignedExpanded(!assignedExpanded)} sx={{ mb: 3, border: '1px solid', borderColor: 'gray.200' }}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography variant="h6" sx={{ color: 'gray.800' }}>
+                    {t("assignedGoals")} <Chip label={employeeGoals.length} size="small" sx={{ ml: 1 }} />
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails sx={{ p: 2 }}>
+                  <Grid container spacing={1} sx={{ fontSize: '0.875rem', fontWeight: 500, color: 'gray.600', mb: 1 }}>
+                    <Grid item xs={3}><Typography textAlign="center">{t("name")}</Typography></Grid>
+                    <Grid item xs={3}><Typography textAlign="center">{t("target")}</Typography></Grid>
+                    <Grid item xs={3}><Typography textAlign="center">{t("progress")}</Typography></Grid>
+                    <Grid item xs={3}><Typography textAlign="center">{t("status")}</Typography></Grid>
+                  </Grid>
+                  {employeeGoals.map((e, i) => {
+                    const isEmpOverdue = new Date(goal.goalDeadline) < new Date() && e.status !== "Completed";
+                    const statusColor = isEmpOverdue ? "error" : e.status === "Completed" ? "success" : e.status === "In Progress" ? "warning" : "default";
+                    const statusKey = isEmpOverdue ? "overdue" : e.status.toLowerCase().replace(' ', '');
                     return (
-                      <div
-                        key={emp.employeeName}
-                        className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200"
-                      >
-                        <img
-                          src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
-                          alt={emp.employeeName}
-                          className="w-16 h-16 rounded-full mb-3"
-                        />
-                        <p className="text-sm font-medium text-gray-700 mb-2">{emp.employeeName}</p>
-                        <div className="w-16 h-16">
-                          <CircularProgressbar
-                            value={emp.actualProgressPercent}
-                            text={`${emp.actualProgressPercent}%`}
-                            styles={buildStyles({
-                              pathColor: isEmpOverdue ? "#EF4444" : emp.status === "Completed" ? "#22C55E" : "#4B5EAA",
-                              textColor: "#1F2937",
-                              trailColor: "#F3F4F6",
-                              textSize: "28px",
-                            })}
-                          />
-                        </div>
-                      </div>
+                      <Grid container key={i} spacing={1} alignItems="center" sx={{ py: 1, borderBottom: i < employeeGoals.length - 1 ? '1px solid' : 'none', borderColor: 'gray.200' }}>
+                        <Grid item xs={3}><Typography textAlign="center" variant="body2">{e.employeeName}</Typography></Grid>
+                        <Grid item xs={3}><Typography textAlign="center" variant="body2">{e.target}</Typography></Grid>
+                        <Grid item xs={3}><Typography textAlign="center" variant="body2">{e.actualProgressPercent}%</Typography></Grid>
+                        <Grid item xs={3}>
+                          <Chip label={t(statusKey)} size="small" color={statusColor} />
+                        </Grid>
+                      </Grid>
                     );
                   })}
-                </div>
-              </div>
-            </>
+                </AccordionDetails>
+              </Accordion>
+
+              {/* Employee Cards Grid */}
+              <Card sx={{ border: '1px solid', borderColor: 'gray.200' }}>
+                <CardContent sx={{ p: 2 }}>
+                  <Typography variant="h6" sx={{ mb: 2, color: 'gray.800' }}>{t("employees")}</Typography>
+                  <Grid container spacing={2}>
+                    {employeeGoals.map((emp) => {
+                      const isEmpOverdue = new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
+                      const progressColor = isEmpOverdue ? "error" : emp.status === "Completed" ? "success" : "primary";
+                      return (
+                        <Grid item xs={6} key={emp.employeeName}>
+                          <Card sx={{ height: '100%', '&:hover': { boxShadow: 2 } }}>
+                            <CardContent sx={{ textAlign: 'center', py: 2 }}>
+                              <Avatar 
+                                src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`} 
+                                sx={{ width: 48, height: 48, mx: 'auto', mb: 1 }}
+                              />
+                              <Typography variant="body2" sx={{ fontWeight: 500, mb: 1 }}>{emp.employeeName}</Typography>
+                              <Box sx={{ mx: 'auto', width: 60, height: 60 }}>
+                                <CircularProgressbar
+                                  value={emp.actualProgressPercent}
+                                  text={`${emp.actualProgressPercent}%`}
+                                  styles={buildStyles({
+                                    pathColor: isEmpOverdue ? "#EF4444" : emp.status === "Completed" ? "#22C55E" : "#4B5EAA",
+                                    textColor: "#1F2937",
+                                    trailColor: "#F3F4F6",
+                                    textSize: "20px",
+                                  })}
+                                />
+                              </Box>
+                            </CardContent>
+                          </Card>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
           )}
-        </div>
+        </Grid>
       </Box>
     </Modal>
   );
