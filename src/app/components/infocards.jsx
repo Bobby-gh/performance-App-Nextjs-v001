@@ -738,7 +738,7 @@ export function GoalDetails({ open, onClose }) {
 
 
 
-export function Goals({ goalTitle, status, goalDeadline, onClick, progress, employeeGoals = [] }) {
+export function Goals({ goalTitle, goalDescription, status, goalDeadline, onClick, progress, employeeGoals = [] }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
 
