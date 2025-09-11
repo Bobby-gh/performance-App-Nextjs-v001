@@ -21,7 +21,23 @@ import { FormInputField, ModalModification } from "./widgets";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { IoClose } from "react-icons/io5";
-import { Box, Modal } from "@mui/material";
+import { 
+  Box, 
+  Modal, 
+  Grid, 
+  Card, 
+  CardContent, 
+  Typography, 
+  LinearProgress, 
+  Avatar, 
+  Chip, 
+  Accordion, 
+  AccordionSummary, 
+  AccordionDetails, 
+  TextField, 
+  Button } from "@mui/material";
+
+import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import { ResponsiveContainer, BarChart, Bar, XAxis, Tooltip, Cell } from "recharts";
 
 
@@ -430,7 +446,6 @@ export function GoalDetails({ open, onClose }) {
   const isGoalAssignedToManager = isManager && employeeGoals.some(emp => emp.employeeEmail === auth.email);
   const departmentProgressPercent = isManager ? goal.actualProgressPercent : null;
 
-  // Calculate progress trend (assuming progressUpdates has historical progress values)
   const lastUpdate = goal.progressUpdates?.[0] || {};
   const previousProgress = goal.progressUpdates?.[1]?.progress || 0;
   const progressTrend = goal.actualProgressPercent > previousProgress ? "up" : goal.actualProgressPercent < previousProgress ? "down" : "neutral";
