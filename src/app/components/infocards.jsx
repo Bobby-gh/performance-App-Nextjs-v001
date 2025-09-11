@@ -799,15 +799,6 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress, empl
         </div>
       </div>
 
-      {/* Deadline */}
-      <div className="mb-6">
-        <div className="flex items-center">
-          <span className="text-gray-500 text-sm mr-2">📅</span>
-          <h3 className="font-semibold text-gray-700">{t("deadline")}:</h3>
-          <p className="ml-2 text-gray-900 font-medium">{goalDeadline}</p>
-        </div>
-      </div>
-
       {/* Footer with Status and Avatars */}
       <div className="mt-auto pt-4 border-t border-gray-200">
         <div className="flex items-center justify-between">
