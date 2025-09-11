@@ -764,9 +764,15 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress, empl
       onClick={onClick}
     >
       {/* Header with Goal Title and Description Placeholder */}
-      <div className="mb-4">
+      <div className="mb-4 flex justify-evenly">
         <h2 className="text-xl font-bold text-gray-800 mb-1">{goalTitle}</h2>
-        <p className="text-gray-600 text-sm italic">Description: none at the moment</p>
+        <p className="text-gray-600 text-sm italic">Description:{goalDeadline}</p>
+        {/* Deadline */}
+          <div className="flex items-center">
+            <span className="text-gray-500 text-sm mr-2">📅</span>
+            <h3 className="font-semibold text-gray-700">{t("deadline")}:</h3>
+            <p className="ml-2 text-gray-900 font-medium">{goalDeadline}</p>
+        </div>
       </div>
 
       {/* Enhanced Progress Section */}
@@ -799,43 +805,6 @@ export function Goals({ goalTitle, status, goalDeadline, onClick, progress, empl
           <p className="ml-2 text-gray-900 font-medium">{goalDeadline}</p>
         </div>
       </div>
-
-      {/* Employee Sub-Goals Section */}
-      {employeeGoals.length > 0 && (
-        <div className="mb-6">
-          <h3 className="font-semibold text-gray-800 mb-3 text-base">Sub-Goals</h3>
-          <div className="space-y-3">
-            {employeeGoals.map((empGoal, index) => (
-              <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">{empGoal.employeeName}</p>
-                  <p className="text-xs text-gray-600 truncate">{empGoal.goalTitle}</p>
-                </div>
-                <div className="w-20">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs text-gray-600">{empGoal.actualProgressPercent}%</span>
-                    <span className="text-xs text-gray-500">/{empGoal.target}</span>
-                  </div>
-                  <div className="w-full h-2 bg-gray-300 rounded">
-                    <div
-                      className="h-2 bg-indigo-500 rounded transition-all duration-300"
-                      style={{ width: `${empGoal.actualProgressPercent}%` }}
-                    ></div>
-                  </div>
-                </div>
-                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                  empGoal.status === "In Progress"
-                    ? "bg-yellow-100 text-yellow-800"
-                    : "bg-green-100 text-green-800"
-                }`}>
-                  {empGoal.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Footer with Status and Avatars */}
       <div className="mt-auto pt-4 border-t border-gray-200">
