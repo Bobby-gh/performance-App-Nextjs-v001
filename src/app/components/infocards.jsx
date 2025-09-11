@@ -767,12 +767,12 @@ export function Goals({ goalTitle, goalDescription, status, goalDeadline, onClic
         <h2 className="text-xl font-bold text-gray-800 mb-1">{goalTitle}</h2>
         <div className="flex justify-start">  
           <p className="text-gray-600 text-sm italic">Description:{goalDescription}</p>
+        </div>
           {/* Deadline */}
         <div className="flex justify-end">  
           <span className="text-gray-500 text-sm mr-2">📅</span>
           <h3 className="font-semibold text-gray-700">{t("deadline")}:</h3>
           <p className="ml-2 text-gray-900 font-medium">{goalDeadline}</p>
-        </div>
         </div>
       </div>
 
