@@ -887,21 +887,23 @@ export function GoalDetails({ open, onClose }) {
           <div className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 animate-fade-in">
               {topInfoCards.map(({ label, value, icon, className = "text-gray-900" }) => (
-                <div
-                  key={label}
-                  className="relative flex items-center bg-white rounded-xl shadow-sm border border-gray-100"
-                >
-                  {/* Left colored icon section */}
-                  <div className="flex items-center justify-center w-1/3 bg-gradient-to-br from-blue-100 to-blue-200 p-6">
-                    <div className="text-blue-600 text-4xl">{icon}</div>
+                
+                <div className="flex items-center bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden w-64">
+                  {/* Left Icon Section */}
+                  <div className="flex items-center justify-center bg-blue-50 w-16 h-full p-4">
+                    <span className="text-blue-600 text-2xl">
+                      {/* Replace with your icon */}
+                      {icon}
+                    </span>
                   </div>
 
-                  {/* Right text section */}
-                  <div className="flex-1 p-6">
-                    <p className="text-sm font-medium text-gray-500 tracking-wide">{label}</p>
-                    <p className={`mt-2 text-2xl font-bold ${className}`}>{value}</p>
+                  {/* Right Text Section */}
+                  <div className="flex flex-col justify-center px-4 py-3">
+                    <p className="text-gray-600 text-sm font-medium">{label}</p>
+                    <p className="text-gray-900 text-2xl font-bold">{value}</p>
                   </div>
                 </div>
+
 
               ))}
             </div>
