@@ -1293,8 +1293,11 @@ export function GoalDetails({ open, onClose }) {
             {topInfoCards.map(({ label, value, icon, className = "text-slate-700" }) => (
               <div key={label} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow duration-200">
                 <div className="flex items-center space-x-3">
-                  <div className="flex-shrink-0 p-2 bg-slate-50 rounded-lg">
-                    {icon}
+                  <div className="flex items-center justify-center bg-blue-50 w-22 h-full p-4">
+                    <span className="text-blue-600 text-2xl">
+                       {/* Replace with your icon */}
+                      {icon}
+                    </span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">
@@ -1304,6 +1307,8 @@ export function GoalDetails({ open, onClose }) {
                       {value}
                     </p>
                   </div>
+
+                  
                 </div>
               </div>
             ))}
