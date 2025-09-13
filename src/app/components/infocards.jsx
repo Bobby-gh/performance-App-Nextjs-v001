@@ -1083,112 +1083,65 @@ export function GoalDetails({ open, onClose }) {
           </div>
 
           {/* Manager Side Panel */}
-          <div className="flex-1">
-            {isManager && (
-            <>
-              <div className="hidden md:block border-l border-gray-200" />
-              <div className="w-full md:w-1/3 space-y-6">
-                <h4 className="text-lg font-semibold text-gray-800">
-                  {t("employees")}
-                </h4>
-                <div className="grid grid-cols-2 gap-6">
-                  {employeeGoals.map((emp) => {
-                    const isEmpOverdue =
-                      new Date(goal.goalDeadline) < new Date() &&
-                      emp.status !== "Completed";
-                    return (
-                      <div
-                        key={emp.employeeName}
-                        className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200">
-                        <img
-                          src={`https://api.dicebear.com/7.x/initials/svg?seed=${emp.employeeName}`}
-                          alt={emp.employeeName}
-                          className="w-16 h-16 rounded-full mb-3"
-                        />
-                        <p className="text-sm font-medium text-gray-700 mb-2">
-                          {emp.employeeName}
-                        </p>
-                        <div className="w-16 h-16">
-                          <CircularProgressbar
-                            value={emp.actualProgressPercent}
-                            text={`${emp.actualProgressPercent}%`}
-                            styles={buildStyles({
-                              pathColor: isEmpOverdue
-                                ? "#EF4444"
-                                : emp.status === "Completed"
-                                ? "#22C55E"
-                                : "#4B5EAA",
-                              textColor: "#1F2937",
-                              trailColor: "#F3F4F6",
-                              textSize: "28px",
-                            })}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </>
-          )}
-          {/* Submission Form */}
-          {(!isManager || isGoalAssignedToManager) && (
-            <form
-              onSubmit={handleUpdate}
-              className="space-y-6 animate-fade-in">
-              <div>
-                <label className="block mb-2 font-medium text-gray-700">
-                  {t("enterProgress")}
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  value={progress}
-                  onChange={(e) => setProgress(Number(e.target.value))}
-                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white ${
-                    progress > goal.target
-                      ? "border-red-500"
-                      : "border-gray-200"
-                  }`}
-                  required
-                />
-                {progress > goal.target && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {t("progressExceedsTarget")}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block mb-2 font-medium text-gray-700">
-                  {t("comment")}
-                </label>
-                <div className="relative">
-                  <textarea
-                    rows="4"
-                    placeholder={t("enterComment")}
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
+          <div className="flex-1"> 
+            {/* Submission Form */}
+            {(!isManager || isGoalAssignedToManager) && (
+              <form
+                onSubmit={handleUpdate}
+                className="space-y-6 animate-fade-in">
+                <div>
+                  <label className="block mb-2 font-medium text-gray-700">
+                    {t("enterProgress")}
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={progress}
+                    onChange={(e) => setProgress(Number(e.target.value))}
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white ${
+                      progress > goal.target
+                        ? "border-red-500"
+                        : "border-gray-200"
+                    }`}
                     required
                   />
-                  <p className="text-sm text-gray-500 mt-1">
-                    {comment.length}/200 {t("characters")}
-                  </p>
+                  {progress > goal.target && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {t("progressExceedsTarget")}
+                    </p>
+                  )}
                 </div>
-              </div>
-              <button
-                type="submit"
-                disabled={isLoading || progress > goal.target}
-                className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
-                  isLoading || progress > goal.target
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                }`}>
-                {isLoading ? t("submitting") : t("submitProgress")}
-              </button>
-            </form>
-          )}
+                <div>
+                  <label className="block mb-2 font-medium text-gray-700">
+                    {t("comment")}
+                  </label>
+                  <div className="relative">
+                    <textarea
+                      rows="4"
+                      placeholder={t("enterComment")}
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
+                      required
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      {comment.length}/200 {t("characters")}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  disabled={isLoading || progress > goal.target}
+                  className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
+                    isLoading || progress > goal.target
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  }`}>
+                  {isLoading ? t("submitting") : t("submitProgress")}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </Box>
