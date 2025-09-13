@@ -300,7 +300,7 @@ export const ModalModifications = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "#FFFFFF !important",
-  width: "60vw",
+  width: "70vw",
   height: "90vh",
   boxShadow: 24,
   p: 4,
