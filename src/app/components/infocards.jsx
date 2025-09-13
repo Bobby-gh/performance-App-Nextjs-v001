@@ -1083,7 +1083,7 @@ export function GoalDetails({ open, onClose }) {
           </div>
 
           {/* Manager Side Panel */}
-          <div>
+          <div className="flex-1">
             {isManager && (
             <>
               <div className="hidden md:block border-l border-gray-200" />
