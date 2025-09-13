@@ -888,7 +888,7 @@ export function GoalDetails({ open, onClose }) {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 animate-fade-in">
               {topInfoCards.map(({ label, value, icon, className = "text-gray-900" }) => (
                 
-                <div key={label} className="flex items-center bg-white rounded-xl shadow-sm border border-gray-100 ">
+                <div key={label} className="flex items-center bg-white rounded-xl shadow-lg border border-gray-100 ">
                   {/* Left Icon Section */}
                   <div className="flex items-center justify-center bg-blue-50 w-16 h-full p-4">
                     <span className="text-blue-600 text-2xl">
@@ -969,7 +969,7 @@ export function GoalDetails({ open, onClose }) {
 
             {/* Assigned Goals Card */}
             {isManager && (
-              <div className="mb-6 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+              <div className="mb-6 bg-white rounded-xl p-4 shadow-lg border border-gray-100">
                 <button
                   className="text-lg font-semibold text-gray-800 mb-4 flex items-center"
                   onClick={() =>
