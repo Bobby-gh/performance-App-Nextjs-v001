@@ -884,7 +884,7 @@ export function GoalDetails({ open, onClose }) {
         </div>
 
         <div className="flex flex-col md:flex-row gap-8 px-6">
-          <div className="flex-1">
+          <div className="w-2/3">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 animate-fade-in">
               {topInfoCards.map(({ label, value, icon, className = "text-gray-900" }) => (
                 
@@ -1083,7 +1083,7 @@ export function GoalDetails({ open, onClose }) {
           </div>
 
           {/* Manager Side Panel */}
-          <div className="flex-1"> 
+          <div className="w-1/3"> 
             {/* Submission Form */}
             {(!isManager || isGoalAssignedToManager) && (
               <form
