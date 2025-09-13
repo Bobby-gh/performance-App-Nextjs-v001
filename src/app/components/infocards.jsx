@@ -1290,29 +1290,31 @@ export function GoalDetails({ open, onClose }) {
         <div className="px-8 py-6">
           {/* Info Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            {topInfoCards.map(({ label, value, icon, className = "text-slate-700" }) => (
-              <div key={label} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow duration-200">
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center justify-center bg-blue-50 w-22 h-full p-4">
-                    <span className="text-blue-600 text-2xl">
-                       {/* Replace with your icon */}
-                      {icon}
-                    </span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">
-                      {label}
-                    </p>
-                    <p className={`text-lg font-semibold ${className} truncate`}>
-                      {value}
-                    </p>
-                  </div>
+  {topInfoCards.map(({ label, value, icon, className = "text-slate-700" }) => (
+    <div
+      key={label}
+      className="bg-white rounded-lg border border-gray-200 p-0 hover:shadow-sm transition-shadow duration-200"
+    >
+      <div className="grid grid-cols-3 h-full">
+        {/* Icon Section (1/3) */}
+        <div className="flex items-center justify-center bg-blue-50">
+          <span className="text-blue-600 text-2xl">{icon}</span>
+        </div>
 
-                  
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Text Section (2/3) */}
+        <div className="col-span-2 flex flex-col justify-center px-4 py-3">
+          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">
+            {label}
+          </p>
+          <p className={`text-lg font-semibold ${className} truncate`}>
+            {value}
+          </p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
 
           {/* Progress Sections */}
           <div className="space-y-6">
