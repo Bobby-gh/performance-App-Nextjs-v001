@@ -864,7 +864,7 @@ export function GoalDetails({ open, onClose }) {
           ...ModalModification,
           maxHeight: "90vh",
           overflowY: "auto",
-          backgroundColor: "#ecececff",
+          backgroundColor: "#F9FAFB",
         }}>
         <div className="absolute top-4 right-4">
           <button
