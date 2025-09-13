@@ -519,6 +519,25 @@ export function GoalDetails({ open, onClose }) {
 
         <div className="flex flex-col md:flex-row gap-8 px-6">
           <div className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 px-6 animate-fade-in">
+              {[
+                { label: t("target"), value: goal.target },
+                { label: t("startDate"), value: new Date(goal.dateAssigned).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric" }) },
+                { 
+                  label: t("deadline"), 
+                  value: new Date(goal.goalDeadline).toLocaleString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
+                  className: isOverdue ? "text-red-600" : "text-gray-900"
+                },
+              ].map(({ label, value, className = "text-gray-900" }) => (
+                <div
+                  key={label}
+                  className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+                >
+                  <p className="text-gray-500 font-medium text-sm">{label}</p>
+                  <p className={`mt-2 text-xl font-semibold ${className}`}>{value}</p>
+                </div>
+              ))}
+            </div>
             {/* Staff Progress */}
             {!isManager && (
               <div className="mb-6 animate-fade-in">
