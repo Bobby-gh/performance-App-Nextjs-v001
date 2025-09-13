@@ -294,6 +294,19 @@ export const ModalModification = {
   borderRadius: 1,
 };
 
+export const ModalModifications = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "#FFFFFF !important",
+  width: "78vw",
+  height: "90vh",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 1,
+};
+
 export const TeamModalModification = {
   position: "absolute",
   top: "50%",

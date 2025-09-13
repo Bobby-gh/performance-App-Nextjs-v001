@@ -17,7 +17,7 @@ import axios from "../api/axios";
 import { UPDATE_GOAL_PROGRESS } from "../api/routes";
 import { useTranslation } from "react-i18next";
 import { showToast } from "./notification";
-import { FormInputField, ModalModification } from "./widgets";
+import { FormInputField, ModalModification, ModalModifications } from "./widgets";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { IoClose } from "react-icons/io5";
@@ -861,7 +861,7 @@ export function GoalDetails({ open, onClose }) {
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          ...ModalModification,
+          ...ModalModifications,
           maxHeight: "90vh",
           overflowY: "auto",
           backgroundColor: "#F9FAFB",
