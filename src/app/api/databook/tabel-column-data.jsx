@@ -236,17 +236,25 @@ export const useTopGoalColumn = () => {
 
 export const useAccessingGoalColumn = () => {
   const { t } = useTranslation();
-  const {auth} = useContext(AuthContext);
-  const isManager = auth?.refNum;
+  const { auth } = useContext(AuthContext);
+  const isManager = auth?.refNum === "ref?2!";
 
-  return [
+  const columns = [
+    ...(isManager
+      ? [
+          {
+            accessorKey: "mainGoal",
+            header: t("mainGoal"),
+          },
+        ]
+      : []),
     {
       accessorKey: "goalTitle",
       header: t("goalName"),
     },
     {
       accessorKey: "taskAssignedTo",
-      header: (isManager === "ref?2!") ? t("employee") : t("department"),
+      header: isManager ? t("employee") : t("department"),
     },
     {
       accessorKey: "goalDeadline",
@@ -261,7 +269,10 @@ export const useAccessingGoalColumn = () => {
       header: t("remark"),
     },
   ];
+
+  return columns;
 };
+
 
 export const useUserColumn = () => {
   const { t } = useTranslation();

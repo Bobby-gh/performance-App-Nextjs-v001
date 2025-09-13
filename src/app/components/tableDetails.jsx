@@ -509,12 +509,10 @@ export function AssessGoal({ data, open, onClose }) {
   );
 }
 
-export function EmployeeDetails({ data, open, onClose }) {
+export function EmployeeDetails({ data, open, onClose, onUpdate }) {
   const { t } = useTranslation();
   const { triggerComponent } = useContext(AuthContext);
   const { editFunction } = useEdit();
-  const formattedDate = (dateString) =>
-    new Date(dateString).toISOString().split("T")[0];
 
   const [editableFields, setEditableFields] = useState({
     employeeId: data?.userId,
@@ -543,12 +541,15 @@ export function EmployeeDetails({ data, open, onClose }) {
         department: editableFields.department,
         role: editableFields.role,
       };
+
       const response = await editFunction(updateData, id, name);
 
       if (response?.status === 200) {
-        showToast("Edit Saved successful:", "success");
+        showToast("Edit Saved successfully:", "success");
         triggerComponent();
+        onUpdate({ ...editableFields });
         onClose();
+        window.location.reload();
       } else {
         showToast("Edit failed to Save, kindly Try Again Later:", "error");
       }
@@ -573,7 +574,7 @@ export function EmployeeDetails({ data, open, onClose }) {
         </div>
 
         <main className="flex text-black p-6 bg-white rounded-lg mt-6">
-          {/* Left: Avatar (1/3 width) */}
+          {/* Left: Avatar */}
           <div className="w-1/3 flex flex-col items-center pr-6 border-r border-gray-300">
             <Image
               src={avatar}
@@ -582,10 +583,9 @@ export function EmployeeDetails({ data, open, onClose }) {
               width={150}
               height={150}
             />
-            {/* <h6 className="text-sm mb-2">{t("uploadImage")}</h6> */}
           </div>
 
-          {/* Right: Form Fields (2/3 width) */}
+          {/* Right: Details */}
           <div className="w-2/3 pl-6">
             <div className="space-y-8">
               <div className="flex items-center space-x-2">
@@ -597,7 +597,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                     onChange={(e) => handleChange("name", e.target.value)}
                   />
                 ) : (
-                  <span className="font-medium">{data?.name}</span>
+                  <span className="font-medium">{editableFields.name}</span>
                 )}
               </div>
 
@@ -611,7 +611,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                     onChange={(e) => handleChange("email", e.target.value)}
                   />
                 ) : (
-                  <span>{data?.email}</span>
+                  <span>{editableFields.email}</span>
                 )}
               </div>
 
@@ -622,10 +622,12 @@ export function EmployeeDetails({ data, open, onClose }) {
                     readOnly
                     className="border rounded px-2 py-1 w-full"
                     value={editableFields.department}
-                    onChange={(e) => handleChange("department", e.target.value)}
+                    onChange={(e) =>
+                      handleChange("department", e.target.value)
+                    }
                   />
                 ) : (
-                  <span>{data?.department}</span>
+                  <span>{editableFields.department}</span>
                 )}
               </div>
 
@@ -638,7 +640,7 @@ export function EmployeeDetails({ data, open, onClose }) {
                     onChange={(e) => handleChange("role", e.target.value)}
                   />
                 ) : (
-                  <span>{data?.role}</span>
+                  <span>{editableFields.role}</span>
                 )}
               </div>
 

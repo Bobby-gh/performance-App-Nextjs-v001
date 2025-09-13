@@ -34,9 +34,7 @@ export function CreateGoal() {
   const [isLoading, setLoading] = useState(false);
   const [priority, setPriority] = useState("");
   const [category, setCategory] = useState("");
-  const {actionItem} = useGetActionItems();
-  
-  console.log({actionItem:actionItem})
+  const { actionItem, refreshActionItems } = useGetActionItems();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -44,21 +42,31 @@ export function CreateGoal() {
     target: "",
     endDate: "",
     department: "",
-    mainGoal: "",
+    mainGoal: null, 
   });
 
-  console.log({
-    goalTitle: formData.title,
-          goalDescription: formData.description,
-          goalDeadline: formData.endDate,
-          taskAssignedTo: departments,
-          target: formData.target,
-          priority: priority,
-          goalType: category,
-          mainGoal: formData.mainGoal,})
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    if (auth.refNum === "ref?2!") {
+      const inputTarget = parseFloat(formData.target);
+      const allowed = parseFloat(formData.mainGoal?.remainingTarget ?? 0);
+
+      if (isNaN(inputTarget)) {
+        showToast("Target must be a valid number", "error");
+        setLoading(false);
+        return;
+      }
+
+      if (inputTarget > allowed) {
+        showToast("Assigned target exceeds remaining assignable target", "error");
+        console.warn("Target validation failed");
+        setLoading(false);
+        return;
+      }
+    }
+
     try {
       await axios.post(
         GOALS_URL,
@@ -70,7 +78,7 @@ export function CreateGoal() {
           target: formData.target,
           priority: priority,
           goalType: category,
-          mainGoal: formData.mainGoal,
+          mainGoal: formData.mainGoal?.value ?? "", 
         }),
         {
           headers: {
@@ -79,14 +87,18 @@ export function CreateGoal() {
           },
         }
       );
-      showToast("Action Item Created Successfully", "success");
+      showToast("Goal Created Successfully", "success");
+
+      await refreshActionItems(); 
+
       triggerComponent();
       handleClose();
       reload();
     } catch (error) {
-      if (error.response.status === 400) {
+      console.error("Submission error:", error);
+      if (error.response?.status === 400) {
         showToast("Kindly check Input details", "error");
-      } else if (error.response.status === 500) {
+      } else if (error.response?.status === 500) {
         showToast("Server is currently down Contact your admin", "error");
       }
       handleClose();
@@ -95,6 +107,7 @@ export function CreateGoal() {
       setLoading(false);
     }
   };
+
   const reload = () => {
     setDepartments("");
     setPriority("");
@@ -105,6 +118,7 @@ export function CreateGoal() {
       target: "",
       endDate: "",
       department: "",
+      mainGoal: null,
     });
   };
 
@@ -119,8 +133,8 @@ export function CreateGoal() {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
-    // setError((prevError) => ({ ...prevError, [id]: "" }));
   };
+
   return (
     <>
       <Button
@@ -131,8 +145,9 @@ export function CreateGoal() {
         <div className="px-6 text-sm">{t("assignGoal")}</div>
         <MdOutlineAddToPhotos size={25} />
       </Button>
+
       <Drawer anchor={"right"} open={open} onClose={handleClose}>
-        <div className="flex justify-center font-bold py-5  text-black">
+        <div className="flex justify-center font-bold py-5 text-black">
           {t("assignNewGoal")}
         </div>
         <hr />
@@ -158,38 +173,59 @@ export function CreateGoal() {
                 label={t("staff")}
                 value={departments}
                 onChange={setDepartments}
-                options={employeetable.map((department) => ({
-                  value: department.userId,
-                  label: department.name,
+                options={employeetable.map((employee) => ({
+                  value: employee.userId,
+                  label: employee.name,
                 }))}
                 searchable={true}
                 required
                 group={false}
               />
             )}
+
             {auth.refNum === "ref?2!" && (
-            <CustomSelect
-                id="mainGoal"
-                label="Department Goal"
-                value={formData.mainGoal}
-                onChange = {(selectOption)=>{
-                  setFormData((prev)=>({
-                    ...prev, 
-                    mainGoal: selectOption
-                  }))
-                }}
-                options={actionItem}
-                searchable={true}
-                required
-                group={false}
-              />
+              <>
+                <CustomSelect
+                  id="mainGoal"
+                  label="Department Goal"
+                  value={formData.mainGoal}
+                  onChange={(selectedValue) => {
+
+                    const matched = actionItem.find(item => item.value === selectedValue);
+
+                    setFormData(prev => ({
+                      ...prev,
+                      mainGoal: matched || {},
+                    }));
+                  }}
+                  options={actionItem.map(item => ({
+                    value: item.value,
+                    label: item.label,
+                  }))}
+                  searchable={true}
+                  required
+                  group={false}
+                />
+                {formData.mainGoal && (
+                  <div className="bg-gray-100 p-3 rounded text-sm space-y-1">
+                    <div>
+                      <strong>Main Target:</strong> {formData.mainGoal.mainTarget}
+                    </div>
+                    <div>
+                      <strong>Assignable Target:</strong> {formData.mainGoal.remainingTarget}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
+
             <FormInputField
               label={t("goalName")}
               id="title"
               onChange={handleInputChange}
               value={formData.title}
             />
+
             <CustomSelect
               id="category"
               value={category}
@@ -208,12 +244,43 @@ export function CreateGoal() {
               required
               group={false}
             />
-            <FormInputField
-              label={t("target")}
-              id="target"
-              onChange={handleInputChange}
-              value={formData.target}
-            />
+
+            {auth.refNum === "ref?2!" && formData.mainGoal ? (
+              <FormInputField
+                label={t("target")}
+                id="target"
+                type="number"
+                min="0"
+                max={formData.mainGoal.remainingTarget}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const parsed = parseFloat(value);
+                  const maxAllowed = parseFloat(formData.mainGoal.remainingTarget);
+
+                  if (!isNaN(parsed) && parsed > maxAllowed) {
+                    showToast(`Target cannot exceed ${maxAllowed}`, "error");
+                    return;
+                  }
+
+                  setFormData((prev) => ({
+                    ...prev,
+                    target: value,
+                  }));
+                }}
+                value={formData.target}
+              />
+
+            ) : (
+              <FormInputField
+                label={t("target")}
+                id="target"
+                type="number"
+                min="0"
+                onChange={handleInputChange}
+                value={formData.target}
+              />
+            )}
+
             <CustomSelect
               id="priority"
               value={priority}
@@ -228,6 +295,7 @@ export function CreateGoal() {
               required
               group={false}
             />
+
             <FormInputField
               label={t("description")}
               id="description"
@@ -242,8 +310,9 @@ export function CreateGoal() {
               value={formData.endDate}
             />
           </div>
+
           <div className="px-10 my-4">
-             <CustomButton
+            <CustomButton
               label="Submit"
               onClick={handleSubmit}
               type="submit"
@@ -256,6 +325,8 @@ export function CreateGoal() {
     </>
   );
 }
+
+
 export function AccessGoal() {
   const { t } = useTranslation();
   const { triggerComponent } = useContext(Modaltrigger);

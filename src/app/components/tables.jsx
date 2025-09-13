@@ -178,7 +178,7 @@ export function EmployeeBadgeTable() {
     return [
       {
         accessorKey: "name",
-        header: t("name"),
+        header: t("fullName"),
       },
       {
         accessorKey: "department",
@@ -186,7 +186,7 @@ export function EmployeeBadgeTable() {
       },
       {
         accessorKey: "performance",
-        header: t("performance"),
+        header: t("Performance"),
       },
       {
         accessorKey: "badge",
@@ -259,10 +259,10 @@ export function EmployeeBadgeTable() {
             color = "#000";
             break;
           case "exceeds expectations":
-            bgColor = "#CD7F32"; // Bronze
+            bgColor = "#C0C0C0"; // silver
             break;
           case "meets expectations":
-            bgColor = "#C0C0C0"; // Silver
+            bgColor = "#CD7F32"; // bronze
             color = "#000";
             break;
           case "below expectations":
@@ -332,6 +332,7 @@ export function AccessGoalTable() {
 
     const goalAssessmentData = goalAssessment.map((goal) => ({
     _id: goal._id,
+    mainGoal: goal.mainGoal,
     goalTitle: goal.goalAssessed?.goalTitle || "",
     goalStatus: goal.goalAssessed?.status || "",
     taskAssignedTo: (isManager === "ref?2!") ? goal.goalAssessed?.taskAssignedTo?.fullName : goal.goalAssessed?.taskAssignedTo?.departmentName,
@@ -664,6 +665,7 @@ export function EmployeeTable() {
           data={employeeInfo}
           open={open}
           onClose={handleClose}
+          onUpdate={(updatedData) => setEmployee(updatedData)}
         />
       )}
       {deleteRow && (

@@ -55,7 +55,7 @@ i18n.use(initReactI18next).init({
         goalStatus: "Goal Status",
         assessNewGoals: "Assess New Goals",
         remark: "Remark",
-        access: "Access", //done
+        access: "Assess", //done
         departmentName: "Department Name",
         edit: "Edit",
         delete: "Delete",
@@ -242,7 +242,7 @@ i18n.use(initReactI18next).init({
         goalStatus: "Statut de l'Objectif",
         assessNewGoals: "Évaluer de Nouveaux Objectifs",
         remark: "Remarque",
-        access: "Accès",
+        access: "Évaluer",
         departmentName: "Nom du Département",
         edit: "Modifier",
         delete: "Supprimer",
