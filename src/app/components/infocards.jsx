@@ -747,6 +747,405 @@ export function AddDepartment() {
 //     </Modal>
 //   );
 // }
+// export function GoalDetails({ open, onClose }) {
+//   const { t } = useTranslation();
+//   const { auth } = useContext(AuthContext);
+//   const { goal } = useContext(GoalSelectContext);
+//   const { triggerComponent } = useContext(Modaltrigger);
+//   const [progress, setProgress] = useState(goal.actualProgress);
+//   const [comment, setComment] = useState("");
+//   const [isLoading, setLoading] = useState(false);
+//   const [editableGoal, setEditableGoal] = useState({
+//     title: goal.goalTitle,
+//     description: goal.goalDescription,
+//     target: goal.target,
+//     startDate: goal.dateAssigned,
+//     deadline: goal.goalDeadline,
+//   });
+
+//   const employeeGoals = goal.employeeGoals || [];
+//   const isManager = auth.refNum === "ref?2!";
+//   const isGoalAssignedToManager =
+//     isManager && employeeGoals.some((emp) => emp.employeeEmail === auth.email);
+//   const departmentProgressPercent = isManager
+//     ? goal.actualProgressPercent
+//     : null;
+
+//   // Calculate progress trend (assuming progressUpdates has historical progress values)
+//   const lastUpdate = goal.progressUpdates?.[0] || {};
+//   const previousProgress = goal.progressUpdates?.[1]?.progress || 0;
+//   const progressTrend =
+//     goal.actualProgressPercent > previousProgress
+//       ? "up"
+//       : goal.actualProgressPercent < previousProgress
+//       ? "down"
+//       : "neutral";
+
+//   // Check if goal is overdue
+//   const isOverdue = new Date(goal.goalDeadline) < new Date();
+
+//   const currentProgressPercent = isManager
+//     ? departmentProgressPercent
+//     : goal.actualProgressPercent;
+
+//   const handleUpdate = async (e) => {
+//     e.preventDefault();
+//     if (progress > goal.target) {
+//       alert(t("progressExceedsTarget"));
+//       return;
+//     }
+//     setLoading(true);
+//     const managerAssignedGoalId = isManager
+//       ? employeeGoals.find((emp) => emp.employeeEmail === auth.email)?.goalId
+//       : null;
+//     const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
+//     try {
+//       const res = await axios.patch(
+//         UPDATE_GOAL_PROGRESS,
+//         JSON.stringify({
+//           goalId: goalIdToUse,
+//           progressIncrement: progress,
+//           comment,
+//         }),
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${auth.token}`,
+//           },
+//         }
+//       );
+//       if (res.status === 200) {
+//         showToast(t("progressUpdated"), "success");
+//         triggerComponent();
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       alert(`Error: ${err.message}`);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const topInfoCards = [
+//     {
+//       label: t("target"),
+//       value: goal.target,
+//       icon: <FiTarget className="text-gray-400 w-6 h-6" />,
+//     },
+//     {
+//       label: t("startDate"),
+//       value: new Date(goal.dateAssigned).toLocaleString("en-US", {
+//         month: "short",
+//         day: "2-digit",
+//         year: "numeric",
+//       }),
+//       icon: <FiCalendar className="text-gray-400 w-6 h-6" />,
+//     },
+//     {
+//       label: t("deadline"),
+//       value: new Date(goal.goalDeadline).toLocaleString("en-US", {
+//         month: "short",
+//         day: "2-digit",
+//         year: "numeric",
+//       }),
+//       className: isOverdue ? "text-red-600" : "text-gray-900",
+//       icon: (
+//         <FiClock
+//           className={`w-6 h-6 ${isOverdue ? "text-red-600" : "text-gray-400"}`}
+//         />
+//       ),
+//     },
+//   ];
+  
+//   return (
+//     <Modal open={open} onClose={onClose}>
+//       <Box
+//         sx={{
+//           ...ModalModifications,
+//           maxHeight: "90vh",
+//           overflowY: "auto",
+//           backgroundColor: "#F9FAFB",
+//         }}>
+//         <div className="absolute top-4 right-4">
+//           <button
+//             onClick={onClose}
+//             className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200">
+//             <IoClose size={24} className="text-gray-600" />
+//           </button>
+//         </div>
+
+//         <div className="mb-6 px-6 pt-6 animate-fade-in">
+//           <h2 className="text-3xl font-bold text-gray-900 tracking-tight">
+//             {goal.goalTitle}
+//           </h2>
+//           <p className="text-gray-500 mt-2 text-base leading-relaxed">
+//             {goal.goalDescription}
+//           </p>
+//         </div>
+
+//         <div className="flex flex-col md:flex-row gap-8 px-6">
+//           <div className="flex-1">
+//             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 animate-fade-in">
+//               {topInfoCards.map(({ label, value, icon, className = "text-gray-900" }) => (
+                
+//                 <div key={label} className="flex items-center bg-white rounded-xl shadow-lg border border-gray-100 ">
+//                   {/* Left Icon Section */}
+//                   <div className="flex items-center justify-center bg-blue-50 w-16 h-full p-4">
+//                     <span className="text-blue-600 text-2xl">
+//                       {/* Replace with your icon */}
+//                       {icon}
+//                     </span>
+//                   </div>
+
+//                   {/* Right Text Section */}
+//                   <div className="flex flex-col justify-center px-4 py-3">
+//                     <p className="text-gray-600 text-sm font-medium">{label}</p>
+//                     <p className="text-gray-900 text-2xl font-bold">{value}</p>
+//                   </div>
+//                 </div>
+
+
+//               ))}
+//             </div>
+//             {/* Staff Progress */}
+//             {!isManager && (
+//               <div className="mb-6 animate-fade-in">
+//                 <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+//                   {t("currentProgress")} ({goal.actualProgressPercent}%)
+//                   <span
+//                     className="ml-2 text-sm"
+//                     title={t("lastUpdate", {
+//                       date: lastUpdate.date
+//                         ? new Date(lastUpdate.date).toLocaleString()
+//                         : "N/A",
+//                     })}>
+//                     {progressTrend === "up" && "↑"}
+//                     {progressTrend === "down" && "↓"}
+//                   </span>
+//                 </h3>
+//                 <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm group">
+//                   <div
+//                     className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-700"
+//                     style={{ width: `${goal.actualProgressPercent}%` }}
+//                   />
+//                   <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
+//                     {t("progressTooltip", {
+//                       percent: goal.actualProgressPercent,
+//                     })}
+//                   </div>
+//                 </div>
+//               </div>
+//             )}
+
+//             {/* Department Progress */}
+//             {isManager && (
+//               <div className="mb-6 animate-fade-in">
+//                 <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+//                   {t("departmentProgress")} ({departmentProgressPercent}%)
+//                   <span
+//                     className="ml-2 text-sm"
+//                     title={t("lastUpdate", {
+//                       date: lastUpdate.date
+//                         ? new Date(lastUpdate.date).toLocaleString()
+//                         : "N/A",
+//                     })}>
+//                     {progressTrend === "up" && "↑"}
+//                     {progressTrend === "down" && "↓"}
+//                   </span>
+//                 </h4>
+//                 <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm group">
+//                   <div
+//                     className="h-full bg-gradient-to-r from-green-500 to-teal-600 transition-all duration-700"
+//                     style={{ width: `${departmentProgressPercent}%` }}
+//                   />
+//                   <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
+//                     {t("departmentProgressTooltip", {
+//                       percent: departmentProgressPercent,
+//                     })}
+//                   </div>
+//                 </div>
+//               </div>
+//             )}
+
+//             {/* Assigned Goals Card */}
+//             {isManager && (
+//               <div className="mb-6 bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+//                 <button
+//                   className="text-lg font-semibold text-gray-800 mb-4 flex items-center"
+//                   onClick={() =>
+//                     document
+//                       .getElementById("assigned-goals")
+//                       .classList.toggle("hidden")
+//                   }>
+//                   {t("assignedGoals")}
+//                   <span className="ml-2 text-sm">
+//                     {employeeGoals.length} {t("employees")}
+//                   </span>
+//                 </button>
+//                 <div id="assigned-goals">
+//                   <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-600 bg-gray-50 p-3 rounded-t-md">
+//                     <p className="text-center">{t("name")}</p>
+//                     <p className="text-center">{t("goalName")}</p>
+//                     <p className="text-center">{t("target")}</p>
+//                     <p className="text-center">{t("status")}</p>
+//                   </div>
+//                   {employeeGoals.map((e, i) => {
+//                     const isEmpOverdue =
+//                       new Date(goal.goalDeadline) < new Date() &&
+//                       e.status !== "Completed";
+//                     return (
+//                       <div
+//                         key={i}
+//                         className={`grid grid-cols-4 gap-2 items-center text-sm text-gray-700 py-3 text-center ${
+//                           i % 2 === 0 ? "bg-white" : "bg-gray-50"
+//                         } hover:bg-gray-100 transition-colors duration-200`}>
+//                         <p>{e.employeeName}</p>
+//                         <p>{e.goalTitle}</p>
+//                         <p>{e.target}</p>
+//                         <span
+//                           className={`text-xs font-medium px-3 py-1 rounded-full group relative ${
+//                             isEmpOverdue
+//                               ? "bg-red-200 text-red-800"
+//                               : e.status === "Completed"
+//                               ? "bg-green-100 text-green-700"
+//                               : e.status === "In Progress"
+//                               ? "bg-yellow-100 text-yellow-700"
+//                               : "bg-gray-100 text-gray-700"
+//                           }`}>
+//                           {t(
+//                             isEmpOverdue
+//                               ? "overdue"
+//                               : e.status === "In Progress"
+//                               ? "inProgress"
+//                               : e.status === "Not Started"
+//                               ? "notStarted"
+//                               : "completed"
+//                           )}
+//                           <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
+//                             {t(
+//                               isEmpOverdue
+//                                 ? "overdueTooltip"
+//                                 : `${e.status.toLowerCase()}Tooltip`
+//                             )}
+//                           </div>
+//                         </span>
+//                       </div>
+//                     );
+//                   })}
+//                 </div>
+//               </div>
+//             )}
+
+//             {/* Submission Form */}
+//             {(!isManager || isGoalAssignedToManager) && (
+//               <form
+//                 onSubmit={handleUpdate}
+//                 className="space-y-6 animate-fade-in">
+//                 <div>
+//                   <label className="block mb-2 font-medium text-gray-700">
+//                     {t("enterProgress")}
+//                   </label>
+//                   <input
+//                     type="number"
+//                     min="0"
+//                     max="100"
+//                     value={progress}
+//                     onChange={(e) => setProgress(Number(e.target.value))}
+//                     className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white ${
+//                       progress > goal.target
+//                         ? "border-red-500"
+//                         : "border-gray-200"
+//                     }`}
+//                     required
+//                   />
+//                   {progress > goal.target && (
+//                     <p className="text-red-500 text-sm mt-1">
+//                       {t("progressExceedsTarget")}
+//                     </p>
+//                   )}
+//                 </div>
+//                 <div>
+//                   <label className="block mb-2 font-medium text-gray-700">
+//                     {t("comment")}
+//                   </label>
+//                   <div className="relative">
+//                     <textarea
+//                       rows="4"
+//                       placeholder={t("enterComment")}
+//                       value={comment}
+//                       onChange={(e) => setComment(e.target.value)}
+//                       className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
+//                       required
+//                     />
+//                     <p className="text-sm text-gray-500 mt-1">
+//                       {comment.length}/200 {t("characters")}
+//                     </p>
+//                   </div>
+//                 </div>
+//                 <div className="flex justify-end">
+//                   <button
+//                     type="submit"
+//                     disabled={isLoading || progress > goal.target}
+//                     className={`px-6 py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
+//                       isLoading || progress > goal.target
+//                         ? "bg-gray-400 cursor-not-allowed"
+//                         : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+//                     }`}
+//                   >
+//                     {isLoading ? t("submitting") : t("submitProgress")}
+//                   </button>
+//                 </div>
+//               </form>
+//             )}
+
+//             {/* Recent Updates */}
+//             {goal.progressUpdates?.length > 0 && (
+//               <div className="mb-8">
+//                 <button
+//                   className="text-lg font-semibold text-gray-800 mb-3 flex items-center"
+//                   onClick={() =>
+//                     document
+//                       .getElementById("recent-updates")
+//                       .classList.toggle("hidden")
+//                   }>
+//                   {t("recentUpdates")}
+//                   <span className="ml-2 text-sm">
+//                     {goal.progressUpdates.length} {t("updates")}
+//                   </span>
+//                 </button>
+//                 <ul
+//                   id="recent-updates"
+//                   className="space-y-3 max-h-[150px] overflow-y-auto">
+//                   {goal.progressUpdates.map((u, i) => (
+//                     <li
+//                       key={i}
+//                       className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors duration-200">
+//                       <div className="flex justify-between text-sm text-gray-500">
+//                         <span className="font-medium text-gray-700">
+//                           {u.employeeName}
+//                         </span>
+//                         <span>
+//                           {new Date(u.date).toLocaleString("en-US", {
+//                             month: "short",
+//                             day: "2-digit",
+//                             year: "numeric",
+//                             hour: "2-digit",
+//                             minute: "2-digit",
+//                           })}
+//                         </span>
+//                       </div>
+//                       <p className="mt-2 text-gray-600">{u.comment}</p>
+//                     </li>
+//                   ))}
+//                 </ul>
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       </Box>
+//     </Modal>
+//   );
+// }
 export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
@@ -771,7 +1170,7 @@ export function GoalDetails({ open, onClose }) {
     ? goal.actualProgressPercent
     : null;
 
-  // Calculate progress trend (assuming progressUpdates has historical progress values)
+  // Calculate progress trend
   const lastUpdate = goal.progressUpdates?.[0] || {};
   const previousProgress = goal.progressUpdates?.[1]?.progress || 0;
   const progressTrend =
@@ -830,7 +1229,7 @@ export function GoalDetails({ open, onClose }) {
     {
       label: t("target"),
       value: goal.target,
-      icon: <FiTarget className="text-gray-400 w-6 h-6" />,
+      icon: <FiTarget className="text-slate-500 w-5 h-5" />,
     },
     {
       label: t("startDate"),
@@ -839,7 +1238,7 @@ export function GoalDetails({ open, onClose }) {
         day: "2-digit",
         year: "numeric",
       }),
-      icon: <FiCalendar className="text-gray-400 w-6 h-6" />,
+      icon: <FiCalendar className="text-slate-500 w-5 h-5" />,
     },
     {
       label: t("deadline"),
@@ -848,10 +1247,10 @@ export function GoalDetails({ open, onClose }) {
         day: "2-digit",
         year: "numeric",
       }),
-      className: isOverdue ? "text-red-600" : "text-gray-900",
+      className: isOverdue ? "text-red-600" : "text-slate-700",
       icon: (
         <FiClock
-          className={`w-6 h-6 ${isOverdue ? "text-red-600" : "text-gray-400"}`}
+          className={`w-5 h-5 ${isOverdue ? "text-red-500" : "text-slate-500"}`}
         />
       ),
     },
@@ -862,76 +1261,84 @@ export function GoalDetails({ open, onClose }) {
       <Box
         sx={{
           ...ModalModifications,
-          maxHeight: "90vh",
+          maxHeight: "92vh",
           overflowY: "auto",
-          backgroundColor: "#F9FAFB",
+          backgroundColor: "#FAFAFA",
+          borderRadius: "12px",
+          border: "1px solid #E5E7EB",
         }}>
-        <div className="absolute top-4 right-4">
-          <button
-            onClick={onClose}
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200">
-            <IoClose size={24} className="text-gray-600" />
-          </button>
+        {/* Header Section */}
+        <div className="sticky top-0 bg-white border-b border-gray-100 px-8 py-6 rounded-t-xl">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <h2 className="text-2xl font-semibold text-slate-800 mb-2 leading-tight">
+                {goal.goalTitle}
+              </h2>
+              <p className="text-slate-600 text-sm leading-relaxed max-w-3xl">
+                {goal.goalDescription}
+              </p>
+            </div>
+            <button
+              onClick={onClose}
+              className="ml-4 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 flex-shrink-0">
+              <IoClose size={20} className="text-slate-500" />
+            </button>
+          </div>
         </div>
 
-        <div className="mb-6 px-6 pt-6 animate-fade-in">
-          <h2 className="text-3xl font-bold text-gray-900 tracking-tight">
-            {goal.goalTitle}
-          </h2>
-          <p className="text-gray-500 mt-2 text-base leading-relaxed">
-            {goal.goalDescription}
-          </p>
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-8 px-6">
-          <div className="flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 animate-fade-in">
-              {topInfoCards.map(({ label, value, icon, className = "text-gray-900" }) => (
-                
-                <div key={label} className="flex items-center bg-white rounded-xl shadow-lg border border-gray-100 ">
-                  {/* Left Icon Section */}
-                  <div className="flex items-center justify-center bg-blue-50 w-16 h-full p-4">
-                    <span className="text-blue-600 text-2xl">
-                      {/* Replace with your icon */}
-                      {icon}
-                    </span>
+        {/* Content Section */}
+        <div className="px-8 py-6">
+          {/* Info Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {topInfoCards.map(({ label, value, icon, className = "text-slate-700" }) => (
+              <div key={label} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow duration-200">
+                <div className="flex items-center space-x-3">
+                  <div className="flex-shrink-0 p-2 bg-slate-50 rounded-lg">
+                    {icon}
                   </div>
-
-                  {/* Right Text Section */}
-                  <div className="flex flex-col justify-center px-4 py-3">
-                    <p className="text-gray-600 text-sm font-medium">{label}</p>
-                    <p className="text-gray-900 text-2xl font-bold">{value}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">
+                      {label}
+                    </p>
+                    <p className={`text-lg font-semibold ${className} truncate`}>
+                      {value}
+                    </p>
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
 
-
-              ))}
-            </div>
-            {/* Staff Progress */}
+          {/* Progress Sections */}
+          <div className="space-y-6">
+            {/* Individual Progress */}
             {!isManager && (
-              <div className="mb-6 animate-fade-in">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                  {t("currentProgress")} ({goal.actualProgressPercent}%)
-                  <span
-                    className="ml-2 text-sm"
-                    title={t("lastUpdate", {
-                      date: lastUpdate.date
-                        ? new Date(lastUpdate.date).toLocaleString()
-                        : "N/A",
-                    })}>
-                    {progressTrend === "up" && "↑"}
-                    {progressTrend === "down" && "↓"}
-                  </span>
-                </h3>
-                <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm group">
-                  <div
-                    className="h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-700"
-                    style={{ width: `${goal.actualProgressPercent}%` }}
-                  />
-                  <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
-                    {t("progressTooltip", {
-                      percent: goal.actualProgressPercent,
-                    })}
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-slate-800">
+                    {t("currentProgress")}
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-2xl font-bold text-slate-700">
+                      {goal.actualProgressPercent}%
+                    </span>
+                    {progressTrend !== "neutral" && (
+                      <span className={`text-sm ${progressTrend === "up" ? "text-green-600" : "text-red-500"}`}>
+                        {progressTrend === "up" ? "↗" : "↘"}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-slate-500 to-slate-600 transition-all duration-500 ease-out rounded-full"
+                      style={{ width: `${Math.min(goal.actualProgressPercent, 100)}%` }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-500 mt-2">
+                    <span>0</span>
+                    <span>{goal.target}</span>
                   </div>
                 </div>
               </div>
@@ -939,205 +1346,227 @@ export function GoalDetails({ open, onClose }) {
 
             {/* Department Progress */}
             {isManager && (
-              <div className="mb-6 animate-fade-in">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
-                  {t("departmentProgress")} ({departmentProgressPercent}%)
-                  <span
-                    className="ml-2 text-sm"
-                    title={t("lastUpdate", {
-                      date: lastUpdate.date
-                        ? new Date(lastUpdate.date).toLocaleString()
-                        : "N/A",
-                    })}>
-                    {progressTrend === "up" && "↑"}
-                    {progressTrend === "down" && "↓"}
-                  </span>
-                </h4>
-                <div className="relative w-full h-6 bg-gray-100 rounded-full overflow-hidden shadow-sm group">
-                  <div
-                    className="h-full bg-gradient-to-r from-green-500 to-teal-600 transition-all duration-700"
-                    style={{ width: `${departmentProgressPercent}%` }}
-                  />
-                  <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
-                    {t("departmentProgressTooltip", {
-                      percent: departmentProgressPercent,
-                    })}
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-slate-800">
+                    {t("departmentProgress")}
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-2xl font-bold text-slate-700">
+                      {departmentProgressPercent}%
+                    </span>
+                    {progressTrend !== "neutral" && (
+                      <span className={`text-sm ${progressTrend === "up" ? "text-green-600" : "text-red-500"}`}>
+                        {progressTrend === "up" ? "↗" : "↘"}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all duration-500 ease-out rounded-full"
+                      style={{ width: `${Math.min(departmentProgressPercent, 100)}%` }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-500 mt-2">
+                    <span>0</span>
+                    <span>100%</span>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Assigned Goals Card */}
-            {isManager && (
-              <div className="mb-6 bg-white rounded-xl p-4 shadow-lg border border-gray-100">
-                <button
-                  className="text-lg font-semibold text-gray-800 mb-4 flex items-center"
-                  onClick={() =>
-                    document
-                      .getElementById("assigned-goals")
-                      .classList.toggle("hidden")
-                  }>
-                  {t("assignedGoals")}
-                  <span className="ml-2 text-sm">
-                    {employeeGoals.length} {t("employees")}
-                  </span>
-                </button>
-                <div id="assigned-goals">
-                  <div className="grid grid-cols-4 gap-2 font-semibold text-sm text-gray-600 bg-gray-50 p-3 rounded-t-md">
-                    <p className="text-center">{t("name")}</p>
-                    <p className="text-center">{t("goalName")}</p>
-                    <p className="text-center">{t("target")}</p>
-                    <p className="text-center">{t("status")}</p>
-                  </div>
-                  {employeeGoals.map((e, i) => {
-                    const isEmpOverdue =
-                      new Date(goal.goalDeadline) < new Date() &&
-                      e.status !== "Completed";
-                    return (
-                      <div
-                        key={i}
-                        className={`grid grid-cols-4 gap-2 items-center text-sm text-gray-700 py-3 text-center ${
-                          i % 2 === 0 ? "bg-white" : "bg-gray-50"
-                        } hover:bg-gray-100 transition-colors duration-200`}>
-                        <p>{e.employeeName}</p>
-                        <p>{e.goalTitle}</p>
-                        <p>{e.target}</p>
-                        <span
-                          className={`text-xs font-medium px-3 py-1 rounded-full group relative ${
-                            isEmpOverdue
-                              ? "bg-red-200 text-red-800"
-                              : e.status === "Completed"
-                              ? "bg-green-100 text-green-700"
-                              : e.status === "In Progress"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-gray-100 text-gray-700"
-                          }`}>
-                          {t(
-                            isEmpOverdue
-                              ? "overdue"
-                              : e.status === "In Progress"
-                              ? "inProgress"
-                              : e.status === "Not Started"
-                              ? "notStarted"
-                              : "completed"
-                          )}
-                          <div className="absolute hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
-                            {t(
-                              isEmpOverdue
-                                ? "overdueTooltip"
-                                : `${e.status.toLowerCase()}Tooltip`
-                            )}
-                          </div>
-                        </span>
-                      </div>
-                    );
-                  })}
+            {/* Assigned Goals Table */}
+            {isManager && employeeGoals.length > 0 && (
+              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-100">
+                  <h3 className="text-lg font-semibold text-slate-800">
+                    {t("assignedGoals")}
+                    <span className="ml-2 text-sm font-normal text-slate-500">
+                      ({employeeGoals.length} {t("employees")})
+                    </span>
+                  </h3>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          {t("name")}
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          {t("goalName")}
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          {t("target")}
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                          {t("status")}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {employeeGoals.map((e, i) => {
+                        const isEmpOverdue =
+                          new Date(goal.goalDeadline) < new Date() &&
+                          e.status !== "Completed";
+                        return (
+                          <tr key={i} className="hover:bg-slate-25 transition-colors duration-150">
+                            <td className="px-6 py-4 text-sm font-medium text-slate-800">
+                              {e.employeeName}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-slate-600">
+                              {e.goalTitle}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-slate-600">
+                              {e.target}
+                            </td>
+                            <td className="px-6 py-4">
+                              <span
+                                className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full ${
+                                  isEmpOverdue
+                                    ? "bg-red-50 text-red-700 border border-red-200"
+                                    : e.status === "Completed"
+                                    ? "bg-green-50 text-green-700 border border-green-200"
+                                    : e.status === "In Progress"
+                                    ? "bg-yellow-50 text-yellow-700 border border-yellow-200"
+                                    : "bg-gray-50 text-gray-600 border border-gray-200"
+                                }`}>
+                                {t(
+                                  isEmpOverdue
+                                    ? "overdue"
+                                    : e.status === "In Progress"
+                                    ? "inProgress"
+                                    : e.status === "Not Started"
+                                    ? "notStarted"
+                                    : "completed"
+                                )}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             )}
 
-            {/* Submission Form */}
+            {/* Progress Update Form */}
             {(!isManager || isGoalAssignedToManager) && (
-              <form
-                onSubmit={handleUpdate}
-                className="space-y-6 animate-fade-in">
-                <div>
-                  <label className="block mb-2 font-medium text-gray-700">
-                    {t("enterProgress")}
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={progress}
-                    onChange={(e) => setProgress(Number(e.target.value))}
-                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white ${
-                      progress > goal.target
-                        ? "border-red-500"
-                        : "border-gray-200"
-                    }`}
-                    required
-                  />
-                  {progress > goal.target && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {t("progressExceedsTarget")}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <label className="block mb-2 font-medium text-gray-700">
-                    {t("comment")}
-                  </label>
-                  <div className="relative">
+              <div className="bg-white rounded-lg border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-slate-800 mb-6">
+                  {t("updateProgress")}
+                </h3>
+                <form onSubmit={handleUpdate} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      {t("enterProgress")}
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={progress}
+                      onChange={(e) => setProgress(Number(e.target.value))}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 ${
+                        progress > goal.target
+                          ? "border-red-300 bg-red-50"
+                          : "border-gray-300 bg-white"
+                      }`}
+                      required
+                    />
+                    {progress > goal.target && (
+                      <p className="text-red-600 text-sm mt-2 flex items-center">
+                        <span className="mr-1">⚠</span>
+                        {t("progressExceedsTarget")}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      {t("comment")}
+                    </label>
                     <textarea
                       rows="4"
                       placeholder={t("enterComment")}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
+                      maxLength="200"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 resize-none"
                       required
                     />
-                    <p className="text-sm text-gray-500 mt-1">
-                      {comment.length}/200 {t("characters")}
-                    </p>
+                    <div className="flex justify-between text-sm text-slate-500 mt-2">
+                      <span></span>
+                      <span>{comment.length}/200 {t("characters")}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex justify-end">
-                  <button
-                    type="submit"
-                    disabled={isLoading || progress > goal.target}
-                    className={`px-6 py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
-                      isLoading || progress > goal.target
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                    }`}
-                  >
-                    {isLoading ? t("submitting") : t("submitProgress")}
-                  </button>
-                </div>
-              </form>
+                  
+                  <div className="flex justify-end pt-4">
+                    <button
+                      type="submit"
+                      disabled={isLoading || progress > goal.target}
+                      className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
+                        isLoading || progress > goal.target
+                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                          : "bg-slate-700 hover:bg-slate-800 text-white shadow-sm hover:shadow-md"
+                      }`}
+                    >
+                      {isLoading ? (
+                        <span className="flex items-center">
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          {t("submitting")}
+                        </span>
+                      ) : (
+                        t("submitProgress")
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </div>
             )}
 
             {/* Recent Updates */}
             {goal.progressUpdates?.length > 0 && (
-              <div className="mb-8">
-                <button
-                  className="text-lg font-semibold text-gray-800 mb-3 flex items-center"
-                  onClick={() =>
-                    document
-                      .getElementById("recent-updates")
-                      .classList.toggle("hidden")
-                  }>
-                  {t("recentUpdates")}
-                  <span className="ml-2 text-sm">
-                    {goal.progressUpdates.length} {t("updates")}
-                  </span>
-                </button>
-                <ul
-                  id="recent-updates"
-                  className="space-y-3 max-h-[150px] overflow-y-auto">
-                  {goal.progressUpdates.map((u, i) => (
-                    <li
-                      key={i}
-                      className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors duration-200">
-                      <div className="flex justify-between text-sm text-gray-500">
-                        <span className="font-medium text-gray-700">
-                          {u.employeeName}
-                        </span>
-                        <span>
-                          {new Date(u.date).toLocaleString("en-US", {
-                            month: "short",
-                            day: "2-digit",
-                            year: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </span>
+              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-100">
+                  <h3 className="text-lg font-semibold text-slate-800">
+                    {t("recentUpdates")}
+                    <span className="ml-2 text-sm font-normal text-slate-500">
+                      ({goal.progressUpdates.length} {t("updates")})
+                    </span>
+                  </h3>
+                </div>
+                <div className="max-h-80 overflow-y-auto">
+                  <div className="divide-y divide-gray-100">
+                    {goal.progressUpdates.map((u, i) => (
+                      <div key={i} className="px-6 py-4 hover:bg-slate-25 transition-colors duration-150">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium text-slate-800 text-sm">
+                            {u.employeeName}
+                          </span>
+                          <time className="text-xs text-slate-500">
+                            {new Date(u.date).toLocaleString("en-US", {
+                              month: "short",
+                              day: "2-digit",
+                              year: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </time>
+                        </div>
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                          {u.comment}
+                        </p>
                       </div>
-                      <p className="mt-2 text-gray-600">{u.comment}</p>
-                    </li>
-                  ))}
-                </ul>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </div>
