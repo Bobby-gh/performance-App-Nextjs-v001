@@ -1037,63 +1037,66 @@ export function GoalDetails({ open, onClose }) {
             )}
 
             {/* Submission Form */}
-          {(!isManager || isGoalAssignedToManager) && (
-            <form
-              onSubmit={handleUpdate}
-              className="space-y-6 animate-fade-in">
-              <div>
-                <label className="block mb-2 font-medium text-gray-700">
-                  {t("enterProgress")}
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  value={progress}
-                  onChange={(e) => setProgress(Number(e.target.value))}
-                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white ${
-                    progress > goal.target
-                      ? "border-red-500"
-                      : "border-gray-200"
-                  }`}
-                  required
-                />
-                {progress > goal.target && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {t("progressExceedsTarget")}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block mb-2 font-medium text-gray-700">
-                  {t("comment")}
-                </label>
-                <div className="relative">
-                  <textarea
-                    rows="4"
-                    placeholder={t("enterComment")}
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
+            {(!isManager || isGoalAssignedToManager) && (
+              <form
+                onSubmit={handleUpdate}
+                className="space-y-6 animate-fade-in">
+                <div>
+                  <label className="block mb-2 font-medium text-gray-700">
+                    {t("enterProgress")}
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={progress}
+                    onChange={(e) => setProgress(Number(e.target.value))}
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white ${
+                      progress > goal.target
+                        ? "border-red-500"
+                        : "border-gray-200"
+                    }`}
                     required
                   />
-                  <p className="text-sm text-gray-500 mt-1">
-                    {comment.length}/200 {t("characters")}
-                  </p>
+                  {progress > goal.target && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {t("progressExceedsTarget")}
+                    </p>
+                  )}
                 </div>
-              </div>
-              <button
-                type="submit"
-                disabled={isLoading || progress > goal.target}
-                className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
-                  isLoading || progress > goal.target
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                }`}>
-                {isLoading ? t("submitting") : t("submitProgress")}
-              </button>
-            </form>
-          )}
+                <div>
+                  <label className="block mb-2 font-medium text-gray-700">
+                    {t("comment")}
+                  </label>
+                  <div className="relative">
+                    <textarea
+                      rows="4"
+                      placeholder={t("enterComment")}
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow duration-200 bg-white"
+                      required
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      {comment.length}/200 {t("characters")}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    disabled={isLoading || progress > goal.target}
+                    className={`px-6 py-3 rounded-lg text-white font-semibold transition-all duration-200 ${
+                      isLoading || progress > goal.target
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                    }`}
+                  >
+                    {isLoading ? t("submitting") : t("submitProgress")}
+                  </button>
+                </div>
+              </form>
+            )}
 
             {/* Recent Updates */}
             {goal.progressUpdates?.length > 0 && (
