@@ -807,7 +807,7 @@ export function GoalDetails({ open, onClose }) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{ ...ModalModification, maxHeight: "90vh", overflowY: "auto", backgroundColor: "#F9FAFB" }}>
+      <Box sx={{ ...ModalModification, maxHeight: "90vh", overflowY: "auto", backgroundColor: "#f3f3ff" }}> 
         <div className="absolute top-4 right-4">
           <button
             onClick={onClose}
