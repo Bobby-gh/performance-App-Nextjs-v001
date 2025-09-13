@@ -1017,7 +1017,6 @@ export function GoalDetails({ open, onClose }) {
                           textAnchor="end"
                           height={60}
                         />
-                        <YAxis />
                         <Tooltip />
                         <Bar dataKey="actualProgressPercent" barSize={60} fill="#3b82f6">
                           {employeeGoals.map((emp, idx) => (
