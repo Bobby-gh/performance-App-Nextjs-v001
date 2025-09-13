@@ -856,6 +856,7 @@ export function GoalDetails({ open, onClose }) {
       ),
     },
   ];
+  
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -863,7 +864,7 @@ export function GoalDetails({ open, onClose }) {
           ...ModalModification,
           maxHeight: "90vh",
           overflowY: "auto",
-          backgroundColor: "#f3f3ff",
+          backgroundColor: "#ecececff",
         }}>
         <div className="absolute top-4 right-4">
           <button
@@ -888,15 +889,20 @@ export function GoalDetails({ open, onClose }) {
               {topInfoCards.map(({ label, value, icon, className = "text-gray-900" }) => (
                 <div
                   key={label}
-                  className="flex justify-between items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
-                  <div>
-                    <p className="text-gray-500 font-medium text-sm">{label}</p>
-                    <p className={`mt-2 text-xl font-semibold ${className}`}>
-                      {value}
-                    </p>
+                  className="relative flex items-center bg-white rounded-xl shadow-sm border border-gray-100"
+                >
+                  {/* Left colored icon section */}
+                  <div className="flex items-center justify-center w-1/3 bg-gradient-to-br from-blue-100 to-blue-200 p-6">
+                    <div className="text-blue-600 text-4xl">{icon}</div>
                   </div>
-                  <div className="ml-4">{icon}</div>
+
+                  {/* Right text section */}
+                  <div className="flex-1 p-6">
+                    <p className="text-sm font-medium text-gray-500 tracking-wide">{label}</p>
+                    <p className={`mt-2 text-2xl font-bold ${className}`}>{value}</p>
+                  </div>
                 </div>
+
               ))}
             </div>
             {/* Staff Progress */}
