@@ -200,18 +200,18 @@ export function FinancialGoal() {
           <Gauge
             valueMax={valueMax}
             value={value}
-            height={230}
+            height="50vw"
             cx="50%"
             cy="60%"
             startAngle={-110}
             endAngle={110}
-            innerRadius={90}
-            outerRadius={120}
+            innerRadius="30%"  // Use percentage for inner radius
+            outerRadius="35%" 
             fill="#08397e"
             datakey="overallAverage"
             sx={(theme) => ({
               [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 30,
+                fontSize: "5vw",
               },
               [`& .${gaugeClasses.valueArc}`]: {
                 fill: "#08397e",
