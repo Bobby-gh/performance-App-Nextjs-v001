@@ -206,7 +206,7 @@ export function FinancialGoal() {
             cy="60%"
             startAngle={-110}
             endAngle={110}
-            innerRadius="80%"
+            innerRadius="75%"
             outerRadius="100%"
             fill="#08397e"
             datakey="overallAverage"
