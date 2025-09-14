@@ -213,7 +213,6 @@ export function FinancialGoal() {
             sx={(theme) => ({
               width: '100%',
               maxWidth: '300px',
-              height: 'auto',
               minHeight: '200px', // Ensures minimum size
               [`& .${gaugeClasses.valueText}`]: {
                 fontSize: 'clamp(20px, 4vw, 30px)', // Responsive font size
