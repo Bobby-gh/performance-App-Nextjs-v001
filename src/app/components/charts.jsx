@@ -205,11 +205,14 @@ export function FinancialGoal() {
             cy="60%"
             startAngle={-110}
             endAngle={110}
-            innerRadius={90}
-            outerRadius={120}
+            innerRadius="40%"
+            outerRadius="52%"
             fill="#08397e"
             datakey="overallAverage"
             sx={(theme) => ({
+              width: '100%',
+              maxWidth: '300px',
+              height: 'auto',
               [`& .${gaugeClasses.valueText}`]: {
                 fontSize: 30,
               },
