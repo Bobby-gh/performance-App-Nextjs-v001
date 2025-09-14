@@ -211,7 +211,7 @@ export function FinancialGoal() {
             datakey="overallAverage"
             sx={(theme) => ({
               width: '100%',
-              maxWidth: '500px',
+              maxWidth: '1000px',
               height: 'auto',
               [`& .${gaugeClasses.valueText}`]: {
                 fontSize: 30,
