@@ -244,7 +244,7 @@ export function HumanResourceGoal() {
         <div className="text-md font-bold text-black">
           {t("humanRelationship")}
         </div>
-        <div>
+        <div className="w-full flex justify-center">
           <Gauge
             valueMax={valueMax}
             value={value}
@@ -292,7 +292,7 @@ export function InternalProcessandInnovation() {
         <div className="text-md font-bold text-black">
           {t("processAndInnovation")}
         </div>
-        <div>
+        <div className="w-full flex justify-center">
           <Gauge
             valueMax={valueMax}
             value={value}
@@ -340,7 +340,7 @@ export function CustomerCentricGoal() {
         <div className="text-md font-bold text-black">
           {t("customerCentred")}
         </div>
-        <div>
+        <div className="w-full flex justify-center">
           <Gauge
             valueMax={valueMax}
             value={value}
