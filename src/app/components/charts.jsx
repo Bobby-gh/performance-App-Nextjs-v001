@@ -206,8 +206,8 @@ export function FinancialGoal() {
             cy="60%"
             startAngle={-110}
             endAngle={110}
-            innerRadius="40%"
-            outerRadius="82%"
+            innerRadius="60%"
+            outerRadius="95%"
             fill="#08397e"
             datakey="overallAverage"
             sx={(theme) => ({
