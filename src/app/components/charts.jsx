@@ -196,10 +196,11 @@ export function FinancialGoal() {
     <div>
       <div className="p-4 bg-white rounded-lg">
         <div className="text-md font-bold text-black">{t("financial")} </div>
-        <div>
+        <div className="w-full flex justify-center">
           <Gauge
             valueMax={valueMax}
             value={value}
+            width={300}
             height={230}
             cx="50%"
             cy="60%"
@@ -211,10 +212,11 @@ export function FinancialGoal() {
             datakey="overallAverage"
             sx={(theme) => ({
               width: '100%',
-              maxWidth: '1000px',
+              maxWidth: '300px',
               height: 'auto',
+              minHeight: '200px', // Ensures minimum size
               [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 30,
+                fontSize: 'clamp(20px, 4vw, 30px)', // Responsive font size
               },
               [`& .${gaugeClasses.valueArc}`]: {
                 fill: "#08397e",
