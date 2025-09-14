@@ -296,21 +296,25 @@ export function InternalProcessandInnovation() {
           <Gauge
             valueMax={valueMax}
             value={value}
+            width={300}
             height={230}
             cx="50%"
             cy="60%"
             startAngle={-110}
             endAngle={110}
-            innerRadius={80}
-            outerRadius={110}
+            innerRadius="75%"
+            outerRadius="100%"
             fill="#08397e"
             datakey="overallAverage"
             sx={(theme) => ({
+              width: '100%',
+              maxWidth: '300px',
+              minHeight: '200px', // Ensures minimum size
               [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 30,
+                fontSize: 'clamp(20px, 4vw, 30px)', // Responsive font size
               },
               [`& .${gaugeClasses.valueArc}`]: {
-                fill: "yellow",
+                fill: "#08397e",
               },
               [`& .${gaugeClasses.referenceArc}`]: {
                 fill: theme.palette.text.disabled,
@@ -340,21 +344,25 @@ export function CustomerCentricGoal() {
           <Gauge
             valueMax={valueMax}
             value={value}
+            width={300}
             height={230}
             cx="50%"
             cy="60%"
             startAngle={-110}
             endAngle={110}
-            innerRadius={90}
-            outerRadius={120}
+            innerRadius="75%"
+            outerRadius="100%"
             fill="#08397e"
             datakey="overallAverage"
             sx={(theme) => ({
+              width: '100%',
+              maxWidth: '300px',
+              minHeight: '200px', // Ensures minimum size
               [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 30,
+                fontSize: 'clamp(20px, 4vw, 30px)', // Responsive font size
               },
               [`& .${gaugeClasses.valueArc}`]: {
-                fill: "red",
+                fill: "#08397e",
               },
               [`& .${gaugeClasses.referenceArc}`]: {
                 fill: theme.palette.text.disabled,

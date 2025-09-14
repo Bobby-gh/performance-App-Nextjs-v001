@@ -10,7 +10,7 @@ import { GoalTable} from "@/app/components/tables";
 export default function BalanceScoreCard() {
   return (
     <div className="mt-8 mx-8">
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 sm:grid-cols-2 gap-4">
         <FinancialGoal />
         <HumanResourceGoal />
         <CustomerCentricGoal />
