@@ -61,19 +61,19 @@ export function LoginForm() {
 
         Cookies.set("token", response.data.token, {
           secure: process.env.NODE_ENV === "production",
-          sameSite: "None",
+          sameSite: "Strict",
         });
         Cookies.set("name", response.data.fullName, {
           secure: process.env.NODE_ENV === "production",
-          sameSite: "None",
+          sameSite: "Strict",
         });
         Cookies.set("refNum", response.data.refNum, {
           secure: process.env.NODE_ENV === "production",
-          sameSite: "None",
+          sameSite: "Strict",
         });
         Cookies.set("email", response.data.email, {
           secure: process.env.NODE_ENV === "production",
-          sameSite: "None",
+          sameSite: "Strict",
         });
         setLogin(true);
       }
