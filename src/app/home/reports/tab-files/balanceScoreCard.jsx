@@ -37,7 +37,7 @@ export default function BalanceScoreCard() {
     <div className="mt-8 mx-8">
       <button 
         onClick={exportChartsAsPDF} 
-        className="p-2 text-white rounded hover:bg-blue-600 mb-4"
+        className="p-2 text-blue rounded hover:bg-blue-600 mb-4"
       >
         Export Charts to PDF
       </button>
