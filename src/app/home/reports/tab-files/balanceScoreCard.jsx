@@ -10,76 +10,53 @@ import {
 import { GoalTable } from "@/app/components/tables";
 
 export default function BalanceScoreCard() {
-  // Create refs for each individual chart component
-  const financialGoalRef = useRef(null);
-  const hrGoalRef = useRef(null);
-  const customerGoalRef = useRef(null);
-  const internalProcessGoalRef = useRef(null);
+  // 1. Create a ref to target the chart container
+  const chartsRef = useRef(null); 
 
   const exportChartsAsPDF = async () => {
-    const doc = new jsPDF('p', 'mm', 'a4'); 
-    const margin = 10; 
-    const availableWidth = doc.internal.pageSize.getWidth() - (2 * margin);
+    if (chartsRef.current) {
+      // 2. Use html2canvas to capture the charts' container
+      const canvas = await html2canvas(chartsRef.current, {
+        scale: 2, // Increase resolution for better PDF quality
+        useCORS: true, // Needed if charts use external images/SVGs
+        logging: false // Optional: suppress console logging
+      });
 
-    const chartRefs = [
-      { ref: financialGoalRef, title: "Financial Goal" },
-      { ref: hrGoalRef, title: "Human Resource Goal" },
-      { ref: customerGoalRef, title: "Customer Centric Goal" },
-      { ref: internalProcessGoalRef, title: "Internal Process & Innovation" },
-    ];
-
-    for (const { ref, title } of chartRefs) {
-      if (ref.current) {
-        const canvas = await html2canvas(ref.current, { 
-          scale: 3, 
-          useCORS: true,
-          logging: false 
-        });
-
-        const imgData = canvas.toDataURL('image/jpeg', 0.9);
-        const imgProps = doc.getImageProperties(imgData);
-
-        let imgHeight = (imgProps.height * availableWidth) / imgProps.width;
-        let imgWidth = availableWidth; 
-
-        if (yOffset + imgHeight + margin > doc.internal.pageSize.getHeight()) {
-          doc.addPage();
-          yOffset = margin; 
-        }
-        
-        // Add chart title (optional)
-        doc.setFontSize(16);
-        doc.text(title, margin, yOffset);
-        yOffset += 8; 
-
-        doc.addImage(imgData, 'JPEG', margin, yOffset, imgWidth, imgHeight);
-        
-        yOffset += imgHeight + margin; 
-      }
+      const imgData = canvas.toDataURL('image/jpeg', 1.0); // Convert canvas to JPEG image data
+      const pdf = new jsPDF('p', 'mm', 'a4'); 
+      
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+      
+      // 5. Save the PDF file
+      pdf.save("balanced-scorecard-charts.pdf");
     }
-
-    doc.save("balanced-scorecard-charts.pdf");
   };
 
   return (
     <div className="mt-8 mx-8">
       <button 
         onClick={exportChartsAsPDF} 
-        className="p-2 text-blue rounded hover:bg-blue-600 mb-4"
+        className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-4"
       >
         Export Charts to PDF
       </button>
 
-      {/* Apply individual refs to each chart's outer div */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4"> 
-        <div ref={financialGoalRef}><FinancialGoal /></div>
-        <div ref={hrGoalRef}><HumanResourceGoal /></div>
-        <div ref={customerGoalRef}><CustomerCentricGoal /></div>
-        <div ref={internalProcessGoalRef}><InternalProcessandInnovation/></div>
+      <div 
+        className="grid grid-cols-2 lg:grid-cols-1 gap-4" 
+        ref={chartsRef} 
+      > 
+        <FinancialGoal />
+        <HumanResourceGoal />
+        <CustomerCentricGoal />
+        <InternalProcessandInnovation/>
       </div>
 
       <div className="mt-8 card bg-white rounded-lg">
-        <GoalTable/> 
+        <GoalTable/> {/* This will be excluded from the PDF */}
       </div>
     </div>
   );
