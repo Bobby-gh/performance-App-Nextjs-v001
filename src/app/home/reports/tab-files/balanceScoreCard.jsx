@@ -50,12 +50,10 @@ export default function BalanceScoreCard() {
         // Add chart title (optional)
         doc.setFontSize(16);
         doc.text(title, margin, yOffset);
-        yOffset += 8; // Space after title
+        yOffset += 8; 
 
-        // Add the image to the PDF
         doc.addImage(imgData, 'JPEG', margin, yOffset, imgWidth, imgHeight);
         
-        // Update yOffset for the next chart, adding some space between charts
         yOffset += imgHeight + margin; 
       }
     }
