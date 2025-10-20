@@ -15,11 +15,10 @@ export default function BalanceScoreCard() {
 
   const exportChartsAsPDF = async () => {
     if (chartsRef.current) {
-      // 2. Use html2canvas to capture the charts' container
       const canvas = await html2canvas(chartsRef.current, {
-        scale: 2, // Increase resolution for better PDF quality
-        useCORS: true, // Needed if charts use external images/SVGs
-        logging: false // Optional: suppress console logging
+        scale: 2, 
+        useCORS: true, 
+        logging: false 
       });
 
       const imgData = canvas.toDataURL('image/jpeg', 1.0); // Convert canvas to JPEG image data
@@ -46,7 +45,7 @@ export default function BalanceScoreCard() {
       </button>
 
       <div 
-        className="grid grid-cols-2 lg:grid-cols-1 gap-4" 
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4" 
         ref={chartsRef} 
       > 
         <FinancialGoal />
@@ -56,7 +55,7 @@ export default function BalanceScoreCard() {
       </div>
 
       <div className="mt-8 card bg-white rounded-lg">
-        <GoalTable/> {/* This will be excluded from the PDF */}
+        <GoalTable/> 
       </div>
     </div>
   );
