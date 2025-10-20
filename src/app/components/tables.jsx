@@ -643,7 +643,8 @@ export function EmployeeTable() {
         </ListItemIcon>
         <ListItemText>{t("ratings")}</ListItemText>
       </MenuItem>,
-      <MenuItem
+      row?.original?.role !== "Administrator" &&(
+        <MenuItem
         key="delete"
         onClick={() => {
           handleDelete(row);
@@ -653,7 +654,8 @@ export function EmployeeTable() {
           <MdDelete fontSize="small" />
         </ListItemIcon>
         <ListItemText>{t("delete")}</ListItemText>
-      </MenuItem>,
+      </MenuItem>
+      ),  
     ],
   });
 
