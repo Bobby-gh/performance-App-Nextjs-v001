@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Printer, Download, Calendar, Building2, X, CheckSquare, Square } from 'lucide-react';
@@ -16,14 +16,14 @@ import {
   PieChart,
   Pie,
   Cell,
-} from "recharts";
-import { useGeneralPerformanceChartRouteData,
+} from 'recharts';
+import {
+  useGeneralPerformanceChartRouteData,
   useGoalCategoryCountRouteData,
   useGoalStatus,
   useOrganizationalAveragePerMonthChartRouteData,
   useAchievedGoalsData,
- } from '@/app/api/databook/route-data';
-
+} from '@/app/api/databook/route-data';
 
 export default function ExportReportComponent({ onClose }) {
   const { t } = useTranslation();
@@ -39,15 +39,15 @@ export default function ExportReportComponent({ onClose }) {
   });
 
   const toggleChart = (chartName) => {
-    setSelectedCharts(prev => ({
+    setSelectedCharts((prev) => ({
       ...prev,
-      [chartName]: !prev[chartName]
+      [chartName]: !prev[chartName],
     }));
   };
 
   const selectAll = () => {
     const allSelected = {};
-    Object.keys(selectedCharts).forEach(key => {
+    Object.keys(selectedCharts).forEach((key) => {
       allSelected[key] = true;
     });
     setSelectedCharts(allSelected);
@@ -55,20 +55,21 @@ export default function ExportReportComponent({ onClose }) {
 
   const deselectAll = () => {
     const allDeselected = {};
-    Object.keys(selectedCharts).forEach(key => {
+    Object.keys(selectedCharts).forEach((key) => {
       allDeselected[key] = false;
     });
     setSelectedCharts(allDeselected);
   };
 
   const handlePrint = () => {
+    // Ensure only printable content is visible during print
     window.print();
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Non-printable Header */}
-      <div className="print:hidden sticky top-0 z-50 bg-white shadow-lg border-b border-gray-200">
+      <div className="no-print sticky top-0 z-50 bg-white shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -82,7 +83,6 @@ export default function ExportReportComponent({ onClose }) {
                 </p>
               </div>
             </div>
-            
             <div className="flex gap-3">
               <button
                 onClick={onClose}
@@ -108,9 +108,8 @@ export default function ExportReportComponent({ onClose }) {
             </div>
           </div>
         </div>
-
         {/* Chart Selection Panel */}
-        <div className="bg-gray-50 border-t border-gray-200 py-4">
+        <div className="no-print bg-gray-50 border-t border-gray-200 py-4">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-semibold text-gray-700">
@@ -137,16 +136,12 @@ export default function ExportReportComponent({ onClose }) {
                   key={key}
                   onClick={() => toggleChart(key)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${
-                    selected 
-                      ? 'bg-blue-50 border-blue-500 text-blue-700' 
+                    selected
+                      ? 'bg-blue-50 border-blue-500 text-blue-700'
                       : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
                   }`}
                 >
-                  {selected ? (
-                    <CheckSquare className="w-5 h-5" />
-                  ) : (
-                    <Square className="w-5 h-5" />
-                  )}
+                  {selected ? <CheckSquare className="w-5 h-5" /> : <Square className="w-5 h-5" />}
                   <span className="text-sm font-medium">
                     {t(key) || key.replace(/([A-Z])/g, ' $1').trim()}
                   </span>
@@ -158,14 +153,13 @@ export default function ExportReportComponent({ onClose }) {
       </div>
 
       {/* Printable Content */}
-      <div className="print:p-0">
+      <div className="printable-content">
         {/* Cover Page */}
         <div className="page-break bg-white min-h-screen flex flex-col justify-center items-center p-12">
           <div className="text-center space-y-8">
             <div className="inline-block p-6 bg-blue-600 rounded-full shadow-2xl">
               <Building2 className="w-24 h-24 text-white" />
             </div>
-            
             <div className="space-y-4">
               <h1 className="text-6xl font-bold text-gray-900 print:text-5xl">
                 {t('performanceReport') || 'Performance Report'}
@@ -175,16 +169,16 @@ export default function ExportReportComponent({ onClose }) {
                 {t('comprehensiveAnalysis') || 'Comprehensive Performance Analysis'}
               </p>
             </div>
-
             <div className="flex items-center justify-center gap-2 text-lg text-gray-700 mt-12">
               <Calendar className="w-5 h-5" />
-              <span>{new Date().toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}</span>
+              <span>
+                {new Date().toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </span>
             </div>
-
             <div className="mt-16 pt-8 border-t border-gray-200">
               <p className="text-gray-500 text-sm">
                 {t('confidential') || 'Confidential - Internal Use Only'}
@@ -335,35 +329,61 @@ export default function ExportReportComponent({ onClose }) {
             size: A4 landscape;
             margin: 1cm;
           }
-          
+
           body {
+            margin: 0;
+            padding: 0;
+            background: white !important;
             print-color-adjust: exact;
             -webkit-print-color-adjust: exact;
           }
-          
+
+          .no-print,
+          .no-print * {
+            display: none !important;
+          }
+
+          .printable-content {
+            display: block !important;
+          }
+
           .page-break {
             page-break-after: always;
             page-break-inside: avoid;
+            width: 100%;
+            box-sizing: border-box;
           }
-          
-          .print\\:hidden {
-            display: none !important;
-          }
-          
+
           .print\\:p-8 {
             padding: 2rem !important;
           }
-          
+
           .print\\:p-0 {
             padding: 0 !important;
           }
-          
+
           .print\\:text-5xl {
             font-size: 3rem !important;
           }
-          
+
           .print\\:text-xl {
             font-size: 1.25rem !important;
+          }
+
+          /* Ensure charts are not cut off */
+          .recharts-wrapper,
+          .recharts-surface {
+            width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
+          }
+
+          /* Remove scrollbars and ensure content fits */
+          html,
+          body,
+          .min-h-screen {
+            overflow: hidden !important;
+            height: auto !important;
           }
         }
       `}</style>
@@ -371,8 +391,7 @@ export default function ExportReportComponent({ onClose }) {
   );
 }
 
-// Chart Components with Real Data
-
+// Chart Components (unchanged, included for completeness)
 function BalanceScorecardChart() {
   const { t } = useTranslation();
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
@@ -579,7 +598,7 @@ function ComparativeTrendsChart() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
 
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   const transformedTrends = months.map((month) => {
     const row = { month };
@@ -593,10 +612,10 @@ function ComparativeTrendsChart() {
   });
 
   const colors = {
-    'financial': '#8884d8',
-    'innovation': '#82ca9d',
+    financial: '#8884d8',
+    innovation: '#82ca9d',
     'customer centred': '#ffc658',
-    'human relationship': '#ff8042'
+    'human relationship': '#ff8042',
   };
 
   return (
@@ -612,7 +631,7 @@ function ComparativeTrendsChart() {
             key={category}
             type="monotone"
             dataKey={category}
-            stroke={colors[category] || "#8884d8"}
+            stroke={colors[category] || '#8884d8'}
             name={t(category) || category}
             strokeWidth={2}
             dot={{ r: 4 }}
