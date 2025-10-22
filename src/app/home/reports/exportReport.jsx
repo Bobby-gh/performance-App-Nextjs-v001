@@ -41,40 +41,49 @@ export default function ExportReportComponent({ onClose }) {
     innovationTrends: true,
   });
   
-    const exportChartsAsPDF = async () => {
-  if (chartsRef.current) {
-    const pdf = new jsPDF('p', 'mm', 'a4'); // Create PDF in portrait mode
-    const elements = chartsRef.current.querySelectorAll('.print-page'); // Get all .print-page sections
-    const pdfWidth = pdf.internal.pageSize.getWidth(); // A4 width: 210mm
-    const pdfHeight = pdf.internal.pageSize.getHeight(); // A4 height: 297mm
+  const exportChartsAsPDF = async () => {
+    if (chartsRef.current) {
+      const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait A4
+      const elements = chartsRef.current.querySelectorAll('.print-page'); // All .print-page sections
+      const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
+      const sectionHeight = (pdf.internal.pageSize.getHeight() - 30) / 3; // 297mm - 10mm top/bottom margins, divided by 3
+      const marginBetween = 5; // 5mm between sections
+      const marginTop = 10; // 10mm top margin
 
-    for (let i = 0; i < elements.length; i++) {
-      const canvas = await html2canvas(elements[i], {
-        scale: 2, // Higher resolution for clarity
-        useCORS: true,
-        logging: false,
-      });
+      let sectionIndex = 0;
 
-      const imgData = canvas.toDataURL('image/jpeg', 1.0);
-      const imgProps = pdf.getImageProperties(imgData);
-      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width; // Scale to fit A4 width
+      for (let i = 0; i < elements.length; i++) {
+        const canvas = await html2canvas(elements[i], {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+        });
 
-      // If the image height exceeds A4 page height, scale it down
-      const maxPageHeight = pdfHeight - 20; // Account for margins (e.g., 10mm top/bottom)
-      const finalHeight = Math.min(imgHeight, maxPageHeight);
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const imgProps = pdf.getImageProperties(imgData);
+        const imgHeight = (imgProps.height * pdfWidth) / imgProps.width; // Scaled height
 
-      // Add new page for each section (except the first one)
-      if (i > 0) {
-        pdf.addPage();
+        // Calculate position: 0, 1, or 2 (mod 3) for three sections per page
+        const positionInPage = sectionIndex % 3;
+        const yPosition = marginTop + positionInPage * (sectionHeight + marginBetween);
+
+        // Add new page at the start of every third section (except the first page)
+        if (positionInPage === 0 && sectionIndex > 0) {
+          pdf.addPage();
+        }
+
+        // Add the image to the PDF
+        pdf.addImage(imgData, 'JPEG', 0, yPosition, pdfWidth, sectionHeight);
+
+        sectionIndex++;
+
+        // If this is the last section and not a multiple of 3, save the PDF
+        if (i === elements.length - 1) {
+          pdf.save('balanced-scorecard-charts.pdf');
+        }
       }
-
-      // Add the image to the PDF
-      pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, finalHeight);
     }
-
-    pdf.save('balanced-scorecard-charts.pdf');
-  }
-};
+  };
 
   const toggleChart = (chartName) => {
     setSelectedCharts(prev => ({
