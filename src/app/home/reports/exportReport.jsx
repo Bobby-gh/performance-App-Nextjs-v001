@@ -47,9 +47,9 @@ export default function ExportReportComponent({ onClose }) {
       const elements = chartsRef.current.querySelectorAll('.print-page');
       const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
       const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
-      const sectionHeight = (pdfHeight - 30) / 3; // ~89mm for non-cover pages
+      const sectionHeight = (pdfHeight - 25) / 2; // ~136mm (297mm - 10mm top - 10mm bottom - 5mm gap)
       const marginBetween = 5; // 5mm between sections
-      const marginTop = 10; // 10mm top margin for non-cover pages
+      const marginTop = 10; // 10mm top margin
 
       for (let i = 0; i < elements.length; i++) {
         const canvas = await html2canvas(elements[i], {
@@ -70,9 +70,9 @@ export default function ExportReportComponent({ onClose }) {
             pdf.addPage(); // Add new page for remaining sections
           }
         } else {
-          // Other sections: Three per page
+          // Other sections: Two per page
           const sectionIndex = i - 1; // Adjust for cover page
-          const positionInPage = sectionIndex % 3;
+          const positionInPage = sectionIndex % 2; // 0 or 1 for two sections
           const yPosition = marginTop + positionInPage * (sectionHeight + marginBetween);
 
           if (positionInPage === 0 && sectionIndex > 0) {
@@ -138,7 +138,7 @@ export default function ExportReportComponent({ onClose }) {
             <div className="flex gap-3">
               <button
                 onClick={onClose}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:transition-all shadow-md font-medium"
+                className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all shadow-md font-medium"
               >
                 <X className="w-5 h-5" />
                 {t('close') || 'Close'}
@@ -213,23 +213,23 @@ export default function ExportReportComponent({ onClose }) {
       <div className="printable-content" ref={chartsRef}>
         {/* Cover Page */}
         <div className="cover-page print-page">
-          <div className="text-center space-y-4"> {/* Reduced from space-y-8 to space-y-4 */}
-            <div className="inline-block p-4 bg-blue-600 rounded-full shadow-2xl"> {/* Reduced padding from p-6 to p-4 */}
-              <Building2 className="w-16 h-16 text-white" /> {/* Reduced icon size from w-24 h-24 to w-16 h-16 */}
+          <div className="text-center space-y-4">
+            <div className="inline-block p-4 bg-blue-600 rounded-full shadow-2xl">
+              <Building2 className="w-16 h-16 text-white" />
             </div>
             
-            <div className="space-y-2"> {/* Reduced from space-y-4 to space-y-2 */}
-              <h1 className="text-5xl font-bold text-gray-900"> {/* Reduced from text-6xl to text-5xl */}
+            <div className="space-y-2">
+              <h1 className="text-5xl font-bold text-gray-900">
                 {t('performanceReportChart') || 'Performance Report'}
               </h1>
-              <div className="h-1 w-24 bg-blue-600 mx-auto rounded"></div> {/* Reduced width from w-32 to w-24 */}
-              <p className="text-xl text-gray-600"> {/* Reduced from text-2xl to text-xl */}
+              <div className="h-1 w-24 bg-blue-600 mx-auto rounded"></div>
+              <p className="text-xl text-gray-600">
                 {t('comprehensiveAnalysis') || 'Comprehensive Performance Analysis'}
               </p>
             </div>
 
-            <div className="flex items-center justify-center gap-2 text-base text-gray-700 mt-8"> {/* Reduced from text-lg to text-base, mt-12 to mt-8 */}
-              <Calendar className="w-4 h-4" /> {/* Reduced from w-5 h-5 to w-4 h-4 */}
+            <div className="flex items-center justify-center gap-2 text-base text-gray-700 mt-8">
+              <Calendar className="w-4 h-4" />
               <span>{new Date().toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
@@ -237,8 +237,8 @@ export default function ExportReportComponent({ onClose }) {
               })}</span>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-gray-200"> {/* Reduced from mt-16 pt-8 to mt-8 pt-4 */}
-              <p className="text-xs text-gray-500"> {/* Reduced from text-sm to text-xs */}
+            <div className="mt-8 pt-4 border-t border-gray-200">
+              <p className="text-xs text-gray-500">
                 {t('confidential') || 'Confidential - Internal Use Only'}
               </p>
             </div>
@@ -410,8 +410,8 @@ export default function ExportReportComponent({ onClose }) {
         .cover-page,
         .report-section {
           background: white;
-          padding: 1.5rem; /* Reduced from 3rem for cover-page */
-          margin-bottom: 1rem; /* Reduced from 2rem */
+          padding: 1.5rem;
+          margin-bottom: 1rem;
           border-radius: 0.5rem;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
@@ -473,8 +473,8 @@ export default function ExportReportComponent({ onClose }) {
 
           /* Page setup */
           @page {
-            size: A4 portrait; /* Changed to portrait to match PDF */
-            margin: 1cm; /* Reduced from 1.5cm */
+            size: A4 portrait;
+            margin: 1cm;
           }
 
           /* Page breaks */
@@ -495,13 +495,13 @@ export default function ExportReportComponent({ onClose }) {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 1cm !important; /* Reduced from 2cm */
+            padding: 1cm !important;
             margin: 0 !important;
           }
 
           .report-section {
             width: 100% !important;
-            padding: 1cm !important; /* Reduced from 1.5cm */
+            padding: 1cm !important;
             margin: 0 !important;
             background: white !important;
             box-shadow: none !important;
@@ -511,7 +511,7 @@ export default function ExportReportComponent({ onClose }) {
           .section-header {
             page-break-after: avoid;
             break-after: avoid;
-            margin-bottom: 0.5cm !important; /* Reduced from 1cm */
+            margin-bottom: 0.5cm !important;
           }
 
           .section-header h2 {
@@ -560,7 +560,7 @@ export default function ExportReportComponent({ onClose }) {
           .grid > * {
             page-break-inside: avoid;
             break-inside: avoid;
-            margin-bottom: 0.5cm; /* Reduced from 1cm */
+            margin-bottom: 0.5cm;
           }
 
           /* Prevent orphans and widows */
@@ -581,7 +581,7 @@ export default function ExportReportComponent({ onClose }) {
   );
 }
 
-// Chart Components with Real Data (unchanged, included for completeness)
+// Chart Components with Real Data
 
 function BalanceScorecardChart() {
   const { t } = useTranslation();
@@ -617,51 +617,41 @@ function BalanceScorecardChart() {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 gap-6">
-        <div>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="category" angle={-45} textAnchor="end" height={80} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="value" fill="#08397e" name="Achieved" />
-              <Bar dataKey="max" fill="#e0e0e0" name="Target" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <div>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={data}
-                dataKey="percentage"
-                nameKey="category"
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                label={(entry) => `${entry.category}: ${entry.percentage.toFixed(1)}%`}
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+    <div className="flex flex-col space-y-6">
+      <div>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="category" angle={-45} textAnchor="end" height={80} />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" fill="#08397e" name="Achieved" />
+            <Bar dataKey="max" fill="#e0e0e0" name="Target" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
-      <div className="grid grid-cols-4 gap-4">
-        {data.map((item, index) => (
-          <div key={index} className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-            <h4 className="text-sm font-semibold text-gray-600 mb-2">{item.category}</h4>
-            <p className="text-2xl font-bold text-gray-900">{item.value} / {item.max}</p>
-            <p className="text-sm text-gray-500 mt-1">{item.percentage.toFixed(1)}% Complete</p>
-          </div>
-        ))}
+      <div>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={data}
+              dataKey="percentage"
+              nameKey="category"
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              label={(entry) => `${entry.category}: ${entry.percentage.toFixed(1)}%`}
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
+      {/* Removed the grid of data cards to prevent height overflow */}
     </div>
   );
 }
