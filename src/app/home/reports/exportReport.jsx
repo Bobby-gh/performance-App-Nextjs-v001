@@ -29,6 +29,7 @@ import { jsPDF } from 'jspdf';
 
 export default function ExportReportComponent({ onClose }) {
   const { t } = useTranslation();
+  const chartsRef = useRef(null);
   const [selectedCharts, setSelectedCharts] = useState({
     balanceScorecard: true,
     organizationPerformance: true,
@@ -39,8 +40,6 @@ export default function ExportReportComponent({ onClose }) {
     financialTrends: true,
     innovationTrends: true,
   });
-  
-   const chartsRef = useRef(null); 
   
     const exportChartsAsPDF = async () => {
       if (chartsRef.current) {
