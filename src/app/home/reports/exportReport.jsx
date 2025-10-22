@@ -42,26 +42,39 @@ export default function ExportReportComponent({ onClose }) {
   });
   
     const exportChartsAsPDF = async () => {
-      if (chartsRef.current) {
-        const canvas = await html2canvas(chartsRef.current, {
-          scale: 2, 
-          useCORS: true, 
-          logging: false 
-        });
-  
-        const imgData = canvas.toDataURL('image/jpeg', 1.0); // Convert canvas to JPEG image data
-        const pdf = new jsPDF('p', 'mm', 'a4'); 
-        
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-        
-        // 5. Save the PDF file
-        pdf.save("balanced-scorecard-charts.pdf");
+  if (chartsRef.current) {
+    const pdf = new jsPDF('p', 'mm', 'a4'); // Create PDF in portrait mode
+    const elements = chartsRef.current.querySelectorAll('.print-page'); // Get all .print-page sections
+    const pdfWidth = pdf.internal.pageSize.getWidth(); // A4 width: 210mm
+    const pdfHeight = pdf.internal.pageSize.getHeight(); // A4 height: 297mm
+
+    for (let i = 0; i < elements.length; i++) {
+      const canvas = await html2canvas(elements[i], {
+        scale: 2, // Higher resolution for clarity
+        useCORS: true,
+        logging: false,
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
+      const imgProps = pdf.getImageProperties(imgData);
+      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width; // Scale to fit A4 width
+
+      // If the image height exceeds A4 page height, scale it down
+      const maxPageHeight = pdfHeight - 20; // Account for margins (e.g., 10mm top/bottom)
+      const finalHeight = Math.min(imgHeight, maxPageHeight);
+
+      // Add new page for each section (except the first one)
+      if (i > 0) {
+        pdf.addPage();
       }
-    };
+
+      // Add the image to the PDF
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, finalHeight);
+    }
+
+    pdf.save('balanced-scorecard-charts.pdf');
+  }
+};
 
   const toggleChart = (chartName) => {
     setSelectedCharts(prev => ({
