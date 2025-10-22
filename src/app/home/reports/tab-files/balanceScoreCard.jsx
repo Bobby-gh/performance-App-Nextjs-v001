@@ -8,6 +8,7 @@ import {
   InternalProcessandInnovation,
 } from "@/app/components/charts";
 import { GoalTable } from "@/app/components/tables";
+import { Building2} from 'lucide-react';
 
 export default function BalanceScoreCard() {
   // 1. Create a ref to target the chart container
