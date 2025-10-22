@@ -168,7 +168,7 @@ export default function ExportReportComponent({ onClose }) {
             
             <div className="space-y-4">
               <h1 className="text-6xl font-bold text-gray-900">
-                {t('performanceReport') || 'Performance Report'}
+                {t('performanceReportChart') || 'Performance Report'}
               </h1>
               <div className="h-1 w-32 bg-blue-600 mx-auto rounded"></div>
               <p className="text-2xl text-gray-600">
