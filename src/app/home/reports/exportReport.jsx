@@ -40,17 +40,16 @@ export default function ExportReportComponent({ onClose }) {
     financialTrends: true,
     innovationTrends: true,
   });
-  
+
   const exportChartsAsPDF = async () => {
     if (chartsRef.current) {
       const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait A4
-      const elements = chartsRef.current.querySelectorAll('.print-page'); // All .print-page sections
+      const elements = chartsRef.current.querySelectorAll('.print-page');
       const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
-      const sectionHeight = (pdf.internal.pageSize.getHeight() - 30) / 3; // 297mm - 10mm top/bottom margins, divided by 3
+      const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
+      const sectionHeight = (pdfHeight - 30) / 3; // ~89mm for non-cover pages
       const marginBetween = 5; // 5mm between sections
-      const marginTop = 10; // 10mm top margin
-
-      let sectionIndex = 0;
+      const marginTop = 10; // 10mm top margin for non-cover pages
 
       for (let i = 0; i < elements.length; i++) {
         const canvas = await html2canvas(elements[i], {
@@ -61,23 +60,29 @@ export default function ExportReportComponent({ onClose }) {
 
         const imgData = canvas.toDataURL('image/jpeg', 1.0);
         const imgProps = pdf.getImageProperties(imgData);
-        const imgHeight = (imgProps.height * pdfWidth) / imgProps.width; // Scaled height
+        const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-        // Calculate position: 0, 1, or 2 (mod 3) for three sections per page
-        const positionInPage = sectionIndex % 3;
-        const yPosition = marginTop + positionInPage * (sectionHeight + marginBetween);
+        if (i === 0) {
+          // Cover page: Full A4 page
+          const coverHeight = Math.min(imgHeight, pdfHeight - 20); // Fit within A4 with 10mm margins
+          pdf.addImage(imgData, 'JPEG', 0, 10, pdfWidth, coverHeight);
+          if (elements.length > 1) {
+            pdf.addPage(); // Add new page for remaining sections
+          }
+        } else {
+          // Other sections: Three per page
+          const sectionIndex = i - 1; // Adjust for cover page
+          const positionInPage = sectionIndex % 3;
+          const yPosition = marginTop + positionInPage * (sectionHeight + marginBetween);
 
-        // Add new page at the start of every third section (except the first page)
-        if (positionInPage === 0 && sectionIndex > 0) {
-          pdf.addPage();
+          if (positionInPage === 0 && sectionIndex > 0) {
+            pdf.addPage();
+          }
+
+          pdf.addImage(imgData, 'JPEG', 0, yPosition, pdfWidth, sectionHeight);
         }
 
-        // Add the image to the PDF
-        pdf.addImage(imgData, 'JPEG', 0, yPosition, pdfWidth, sectionHeight);
-
-        sectionIndex++;
-
-        // If this is the last section and not a multiple of 3, save the PDF
+        // Save after the last section
         if (i === elements.length - 1) {
           pdf.save('balanced-scorecard-charts.pdf');
         }
@@ -133,20 +138,20 @@ export default function ExportReportComponent({ onClose }) {
             <div className="flex gap-3">
               <button
                 onClick={onClose}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all shadow-md font-medium"
+                className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:transition-all shadow-md font-medium"
               >
                 <X className="w-5 h-5" />
                 {t('close') || 'Close'}
               </button>
               <button
-                onClick={exportChartsAsPDF} 
+                onClick={exportChartsAsPDF}
                 className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg font-medium"
               >
                 <Printer className="w-5 h-5" />
                 {t('printReport') || 'Print Report'}
               </button>
               <button
-                onClick={exportChartsAsPDF} 
+                onClick={exportChartsAsPDF}
                 className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all shadow-md hover:shadow-lg font-medium"
               >
                 <Download className="w-5 h-5" />
@@ -208,19 +213,23 @@ export default function ExportReportComponent({ onClose }) {
       <div className="printable-content" ref={chartsRef}>
         {/* Cover Page */}
         <div className="cover-page print-page">
-          <div className="text-center space-y-8">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-gray-900">
+          <div className="text-center space-y-4"> {/* Reduced from space-y-8 to space-y-4 */}
+            <div className="inline-block p-4 bg-blue-600 rounded-full shadow-2xl"> {/* Reduced padding from p-6 to p-4 */}
+              <Building2 className="w-16 h-16 text-white" /> {/* Reduced icon size from w-24 h-24 to w-16 h-16 */}
+            </div>
+            
+            <div className="space-y-2"> {/* Reduced from space-y-4 to space-y-2 */}
+              <h1 className="text-5xl font-bold text-gray-900"> {/* Reduced from text-6xl to text-5xl */}
                 {t('performanceReportChart') || 'Performance Report'}
               </h1>
-              <div className="h-1 w-32 bg-blue-600 mx-auto rounded"></div>
-              <p className="text-2xl text-gray-600">
+              <div className="h-1 w-24 bg-blue-600 mx-auto rounded"></div> {/* Reduced width from w-32 to w-24 */}
+              <p className="text-xl text-gray-600"> {/* Reduced from text-2xl to text-xl */}
                 {t('comprehensiveAnalysis') || 'Comprehensive Performance Analysis'}
               </p>
             </div>
 
-            <div className="flex items-center justify-center gap-2 text-lg text-gray-700 mt-12">
-              <Calendar className="w-5 h-5" />
+            <div className="flex items-center justify-center gap-2 text-base text-gray-700 mt-8"> {/* Reduced from text-lg to text-base, mt-12 to mt-8 */}
+              <Calendar className="w-4 h-4" /> {/* Reduced from w-5 h-5 to w-4 h-4 */}
               <span>{new Date().toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
@@ -228,8 +237,8 @@ export default function ExportReportComponent({ onClose }) {
               })}</span>
             </div>
 
-            <div className="mt-16 pt-8 border-t border-gray-200">
-              <p className="text-gray-500 text-sm">
+            <div className="mt-8 pt-4 border-t border-gray-200"> {/* Reduced from mt-16 pt-8 to mt-8 pt-4 */}
+              <p className="text-xs text-gray-500"> {/* Reduced from text-sm to text-xs */}
                 {t('confidential') || 'Confidential - Internal Use Only'}
               </p>
             </div>
@@ -401,8 +410,8 @@ export default function ExportReportComponent({ onClose }) {
         .cover-page,
         .report-section {
           background: white;
-          padding: 3rem;
-          margin-bottom: 2rem;
+          padding: 1.5rem; /* Reduced from 3rem for cover-page */
+          margin-bottom: 1rem; /* Reduced from 2rem */
           border-radius: 0.5rem;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
@@ -412,7 +421,7 @@ export default function ExportReportComponent({ onClose }) {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          min-height: 600px;
+          min-height: 297mm; /* Match A4 height for full-page rendering */
         }
 
         /* Critical Print Styles */
@@ -464,8 +473,8 @@ export default function ExportReportComponent({ onClose }) {
 
           /* Page setup */
           @page {
-            size: A4 landscape;
-            margin: 1.5cm;
+            size: A4 portrait; /* Changed to portrait to match PDF */
+            margin: 1cm; /* Reduced from 1.5cm */
           }
 
           /* Page breaks */
@@ -481,18 +490,18 @@ export default function ExportReportComponent({ onClose }) {
           }
 
           .cover-page {
-            min-height: 100vh;
+            min-height: 297mm;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2cm !important;
+            padding: 1cm !important; /* Reduced from 2cm */
             margin: 0 !important;
           }
 
           .report-section {
             width: 100% !important;
-            padding: 1.5cm !important;
+            padding: 1cm !important; /* Reduced from 1.5cm */
             margin: 0 !important;
             background: white !important;
             box-shadow: none !important;
@@ -502,7 +511,7 @@ export default function ExportReportComponent({ onClose }) {
           .section-header {
             page-break-after: avoid;
             break-after: avoid;
-            margin-bottom: 1cm !important;
+            margin-bottom: 0.5cm !important; /* Reduced from 1cm */
           }
 
           .section-header h2 {
@@ -551,7 +560,7 @@ export default function ExportReportComponent({ onClose }) {
           .grid > * {
             page-break-inside: avoid;
             break-inside: avoid;
-            margin-bottom: 1cm;
+            margin-bottom: 0.5cm; /* Reduced from 1cm */
           }
 
           /* Prevent orphans and widows */
@@ -572,7 +581,7 @@ export default function ExportReportComponent({ onClose }) {
   );
 }
 
-// Chart Components with Real Data (Same as before)
+// Chart Components with Real Data (unchanged, included for completeness)
 
 function BalanceScorecardChart() {
   const { t } = useTranslation();
