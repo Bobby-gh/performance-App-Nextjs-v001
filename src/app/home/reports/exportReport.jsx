@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Printer, Download, Calendar, Building2, X, CheckSquare, Square } from 'lucide-react';
@@ -16,14 +16,14 @@ import {
   PieChart,
   Pie,
   Cell,
-} from 'recharts';
+} from "recharts";
 import {
   useGeneralPerformanceChartRouteData,
   useGoalCategoryCountRouteData,
   useGoalStatus,
   useOrganizationalAveragePerMonthChartRouteData,
   useAchievedGoalsData,
-} from '@/app/api/databook/route-data';
+} from "../api/databook/route-data";
 
 export default function ExportReportComponent({ onClose }) {
   const { t } = useTranslation();
@@ -39,15 +39,15 @@ export default function ExportReportComponent({ onClose }) {
   });
 
   const toggleChart = (chartName) => {
-    setSelectedCharts((prev) => ({
+    setSelectedCharts(prev => ({
       ...prev,
-      [chartName]: !prev[chartName],
+      [chartName]: !prev[chartName]
     }));
   };
 
   const selectAll = () => {
     const allSelected = {};
-    Object.keys(selectedCharts).forEach((key) => {
+    Object.keys(selectedCharts).forEach(key => {
       allSelected[key] = true;
     });
     setSelectedCharts(allSelected);
@@ -55,21 +55,20 @@ export default function ExportReportComponent({ onClose }) {
 
   const deselectAll = () => {
     const allDeselected = {};
-    Object.keys(selectedCharts).forEach((key) => {
+    Object.keys(selectedCharts).forEach(key => {
       allDeselected[key] = false;
     });
     setSelectedCharts(allDeselected);
   };
 
   const handlePrint = () => {
-    // Ensure only printable content is visible during print
     window.print();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="report-container">
       {/* Non-printable Header */}
-      <div className="no-print sticky top-0 z-50 bg-white shadow-lg border-b border-gray-200">
+      <div className="no-print header-controls">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -83,6 +82,7 @@ export default function ExportReportComponent({ onClose }) {
                 </p>
               </div>
             </div>
+            
             <div className="flex gap-3">
               <button
                 onClick={onClose}
@@ -108,8 +108,9 @@ export default function ExportReportComponent({ onClose }) {
             </div>
           </div>
         </div>
+
         {/* Chart Selection Panel */}
-        <div className="no-print bg-gray-50 border-t border-gray-200 py-4">
+        <div className="bg-gray-50 border-t border-gray-200 py-4">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-semibold text-gray-700">
@@ -136,12 +137,16 @@ export default function ExportReportComponent({ onClose }) {
                   key={key}
                   onClick={() => toggleChart(key)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${
-                    selected
-                      ? 'bg-blue-50 border-blue-500 text-blue-700'
+                    selected 
+                      ? 'bg-blue-50 border-blue-500 text-blue-700' 
                       : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
                   }`}
                 >
-                  {selected ? <CheckSquare className="w-5 h-5" /> : <Square className="w-5 h-5" />}
+                  {selected ? (
+                    <CheckSquare className="w-5 h-5" />
+                  ) : (
+                    <Square className="w-5 h-5" />
+                  )}
                   <span className="text-sm font-medium">
                     {t(key) || key.replace(/([A-Z])/g, ' $1').trim()}
                   </span>
@@ -155,30 +160,31 @@ export default function ExportReportComponent({ onClose }) {
       {/* Printable Content */}
       <div className="printable-content">
         {/* Cover Page */}
-        <div className="page-break bg-white min-h-screen flex flex-col justify-center items-center p-12">
+        <div className="cover-page print-page">
           <div className="text-center space-y-8">
             <div className="inline-block p-6 bg-blue-600 rounded-full shadow-2xl">
               <Building2 className="w-24 h-24 text-white" />
             </div>
+            
             <div className="space-y-4">
-              <h1 className="text-6xl font-bold text-gray-900 print:text-5xl">
+              <h1 className="text-6xl font-bold text-gray-900">
                 {t('performanceReport') || 'Performance Report'}
               </h1>
               <div className="h-1 w-32 bg-blue-600 mx-auto rounded"></div>
-              <p className="text-2xl text-gray-600 print:text-xl">
+              <p className="text-2xl text-gray-600">
                 {t('comprehensiveAnalysis') || 'Comprehensive Performance Analysis'}
               </p>
             </div>
+
             <div className="flex items-center justify-center gap-2 text-lg text-gray-700 mt-12">
               <Calendar className="w-5 h-5" />
-              <span>
-                {new Date().toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </span>
+              <span>{new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}</span>
             </div>
+
             <div className="mt-16 pt-8 border-t border-gray-200">
               <p className="text-gray-500 text-sm">
                 {t('confidential') || 'Confidential - Internal Use Only'}
@@ -189,19 +195,19 @@ export default function ExportReportComponent({ onClose }) {
 
         {/* Balance Scorecard */}
         {selectedCharts.balanceScorecard && (
-          <div className="page-break bg-white p-12 print:p-8">
-            <div className="mb-8">
+          <div className="report-section print-page">
+            <div className="section-header">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-2 h-8 bg-blue-600 rounded"></div>
                 <h2 className="text-3xl font-bold text-gray-900">
                   {t('balanceScorecard') || 'Balance Scorecard'}
                 </h2>
               </div>
-              <p className="text-gray-600 ml-5">
+              <p className="text-gray-600 ml-5 mb-6">
                 {t('balanceScorecardDesc') || 'Overview of key performance indicators across all business dimensions'}
               </p>
             </div>
-            <div className="bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl shadow-sm border border-blue-100">
+            <div className="chart-container bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl">
               <BalanceScorecardChart />
             </div>
           </div>
@@ -209,19 +215,19 @@ export default function ExportReportComponent({ onClose }) {
 
         {/* Organization Performance */}
         {selectedCharts.organizationPerformance && (
-          <div className="page-break bg-white p-12 print:p-8">
-            <div className="mb-8">
+          <div className="report-section print-page">
+            <div className="section-header">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-2 h-8 bg-green-600 rounded"></div>
                 <h2 className="text-3xl font-bold text-gray-900">
                   {t('organizationPerformance') || 'Organization Performance'}
                 </h2>
               </div>
-              <p className="text-gray-600 ml-5">
+              <p className="text-gray-600 ml-5 mb-6">
                 {t('monthlyPerformanceOverview') || 'Monthly average performance across the organization'}
               </p>
             </div>
-            <div className="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-sm border border-green-100">
+            <div className="chart-container bg-gradient-to-br from-green-50 to-white p-6 rounded-xl">
               <OrganizationPerformanceChart />
             </div>
           </div>
@@ -229,31 +235,31 @@ export default function ExportReportComponent({ onClose }) {
 
         {/* Goal Status Section */}
         {(selectedCharts.achievedGoals || selectedCharts.partiallyAchievedGoals || selectedCharts.notAchievedGoals) && (
-          <div className="page-break bg-white p-12 print:p-8">
-            <div className="mb-8">
+          <div className="report-section print-page">
+            <div className="section-header">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-2 h-8 bg-purple-600 rounded"></div>
                 <h2 className="text-3xl font-bold text-gray-900">
                   {t('goalStatus') || 'Goal Status Overview'}
                 </h2>
               </div>
-              <p className="text-gray-600 ml-5">
+              <p className="text-gray-600 ml-5 mb-6">
                 {t('goalStatusDesc') || 'Current status of organizational goals and achievements'}
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {selectedCharts.achievedGoals && (
-                <div className="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl shadow-sm border border-green-100">
+                <div className="chart-container bg-gradient-to-br from-green-50 to-white p-6 rounded-xl">
                   <AchievedGoalsChart />
                 </div>
               )}
               {selectedCharts.partiallyAchievedGoals && (
-                <div className="bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl shadow-sm border border-yellow-100">
+                <div className="chart-container bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl">
                   <PartiallyAchievedGoalsChart />
                 </div>
               )}
               {selectedCharts.notAchievedGoals && (
-                <div className="bg-gradient-to-br from-red-50 to-white p-6 rounded-xl shadow-sm border border-red-100">
+                <div className="chart-container bg-gradient-to-br from-red-50 to-white p-6 rounded-xl">
                   <NotAchievedGoalsChart />
                 </div>
               )}
@@ -263,19 +269,19 @@ export default function ExportReportComponent({ onClose }) {
 
         {/* Comparative Trends */}
         {selectedCharts.comparativeTrends && (
-          <div className="page-break bg-white p-12 print:p-8">
-            <div className="mb-8">
+          <div className="report-section print-page">
+            <div className="section-header">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-2 h-8 bg-indigo-600 rounded"></div>
                 <h2 className="text-3xl font-bold text-gray-900">
                   {t('comparativeTrends') || 'Comparative Trends Analysis'}
                 </h2>
               </div>
-              <p className="text-gray-600 ml-5">
+              <p className="text-gray-600 ml-5 mb-6">
                 {t('comparativeTrendsDesc') || 'Comparative performance trends across categories'}
               </p>
             </div>
-            <div className="bg-gradient-to-br from-indigo-50 to-white p-6 rounded-xl shadow-sm border border-indigo-100">
+            <div className="chart-container bg-gradient-to-br from-indigo-50 to-white p-6 rounded-xl">
               <ComparativeTrendsChart />
             </div>
           </div>
@@ -283,19 +289,19 @@ export default function ExportReportComponent({ onClose }) {
 
         {/* Financial Trends */}
         {selectedCharts.financialTrends && (
-          <div className="page-break bg-white p-12 print:p-8">
-            <div className="mb-8">
+          <div className="report-section print-page">
+            <div className="section-header">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-2 h-8 bg-orange-600 rounded"></div>
                 <h2 className="text-3xl font-bold text-gray-900">
                   {t('financialTrends') || 'Financial Performance Trends'}
                 </h2>
               </div>
-              <p className="text-gray-600 ml-5">
+              <p className="text-gray-600 ml-5 mb-6">
                 {t('financialTrendsDesc') || 'Monthly financial performance trends'}
               </p>
             </div>
-            <div className="bg-gradient-to-br from-orange-50 to-white p-6 rounded-xl shadow-sm border border-orange-100">
+            <div className="chart-container bg-gradient-to-br from-orange-50 to-white p-6 rounded-xl">
               <FinancialTrendsChart />
             </div>
           </div>
@@ -303,87 +309,219 @@ export default function ExportReportComponent({ onClose }) {
 
         {/* Innovation Trends */}
         {selectedCharts.innovationTrends && (
-          <div className="page-break bg-white p-12 print:p-8">
-            <div className="mb-8">
+          <div className="report-section print-page">
+            <div className="section-header">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-2 h-8 bg-teal-600 rounded"></div>
                 <h2 className="text-3xl font-bold text-gray-900">
                   {t('innovationTrends') || 'Innovation Performance Trends'}
                 </h2>
               </div>
-              <p className="text-gray-600 ml-5">
+              <p className="text-gray-600 ml-5 mb-6">
                 {t('innovationTrendsDesc') || 'Monthly innovation performance trends'}
               </p>
             </div>
-            <div className="bg-gradient-to-br from-teal-50 to-white p-6 rounded-xl shadow-sm border border-teal-100">
+            <div className="chart-container bg-gradient-to-br from-teal-50 to-white p-6 rounded-xl">
               <InnovationTrendsChart />
             </div>
           </div>
         )}
       </div>
 
-      {/* Print Styles */}
+      {/* Comprehensive Print Styles */}
       <style jsx global>{`
+        /* Screen Styles */
+        .report-container {
+          min-height: 100vh;
+          background: linear-gradient(to bottom right, #f8fafc, #eff6ff);
+        }
+
+        .no-print {
+          display: block;
+        }
+
+        .header-controls {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          background: white;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+          border-bottom: 1px solid #e5e7eb;
+        }
+
+        .printable-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 2rem;
+        }
+
+        .cover-page,
+        .report-section {
+          background: white;
+          padding: 3rem;
+          margin-bottom: 2rem;
+          border-radius: 0.5rem;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .cover-page {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          min-height: 600px;
+        }
+
+        /* Critical Print Styles */
         @media print {
-          @page {
-            size: A4 landscape;
-            margin: 1cm;
+          /* Reset all positioning and overflow issues */
+          * {
+            overflow: visible !important;
+            position: static !important;
           }
 
-          body {
-            margin: 0;
-            padding: 0;
+          html, body {
+            width: 100% !important;
+            height: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
             background: white !important;
             print-color-adjust: exact;
             -webkit-print-color-adjust: exact;
           }
 
+          /* Hide non-printable elements */
           .no-print,
-          .no-print * {
+          .header-controls,
+          button,
+          .print\\:hidden {
             display: none !important;
           }
 
+          /* Container adjustments */
+          .report-container {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: white !important;
+            overflow: visible !important;
+            position: static !important;
+          }
+
           .printable-content {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+            position: static !important;
+          }
+
+          /* Page setup */
+          @page {
+            size: A4 landscape;
+            margin: 1.5cm;
+          }
+
+          /* Page breaks */
+          .print-page {
+            page-break-after: always;
+            page-break-inside: avoid;
+            break-after: page;
+            break-inside: avoid;
+          }
+
+          .print-page:last-child {
+            page-break-after: auto;
+          }
+
+          .cover-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2cm !important;
+            margin: 0 !important;
+          }
+
+          .report-section {
+            width: 100% !important;
+            padding: 1.5cm !important;
+            margin: 0 !important;
+            background: white !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+          }
+
+          .section-header {
+            page-break-after: avoid;
+            break-after: avoid;
+            margin-bottom: 1cm !important;
+          }
+
+          .section-header h2 {
+            page-break-after: avoid;
+            break-after: avoid;
+          }
+
+          .chart-container {
+            page-break-inside: avoid;
+            break-inside: avoid;
+            width: 100% !important;
+            overflow: visible !important;
+            position: static !important;
+          }
+
+          /* Ensure charts render properly */
+          .recharts-wrapper,
+          .recharts-surface {
+            overflow: visible !important;
+            position: static !important;
+          }
+
+          /* Typography adjustments for print */
+          body {
+            font-size: 11pt !important;
+            line-height: 1.4 !important;
+          }
+
+          h1 {
+            font-size: 28pt !important;
+          }
+
+          h2 {
+            font-size: 20pt !important;
+          }
+
+          h3 {
+            font-size: 16pt !important;
+          }
+
+          /* Grid layouts for print */
+          .grid {
             display: block !important;
           }
 
-          .page-break {
-            page-break-after: always;
+          .grid > * {
             page-break-inside: avoid;
-            width: 100%;
-            box-sizing: border-box;
+            break-inside: avoid;
+            margin-bottom: 1cm;
           }
 
-          .print\\:p-8 {
-            padding: 2rem !important;
+          /* Prevent orphans and widows */
+          p, li {
+            orphans: 3;
+            widows: 3;
           }
 
-          .print\\:p-0 {
-            padding: 0 !important;
-          }
-
-          .print\\:text-5xl {
-            font-size: 3rem !important;
-          }
-
-          .print\\:text-xl {
-            font-size: 1.25rem !important;
-          }
-
-          /* Ensure charts are not cut off */
-          .recharts-wrapper,
-          .recharts-surface {
-            width: 100% !important;
-            height: auto !important;
-            overflow: visible !important;
-          }
-
-          /* Remove scrollbars and ensure content fits */
-          html,
-          body,
-          .min-h-screen {
-            overflow: hidden !important;
-            height: auto !important;
+          /* Color preservation */
+          * {
+            print-color-adjust: exact !important;
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
           }
         }
       `}</style>
@@ -391,7 +529,8 @@ export default function ExportReportComponent({ onClose }) {
   );
 }
 
-// Chart Components (unchanged, included for completeness)
+// Chart Components with Real Data (Same as before)
+
 function BalanceScorecardChart() {
   const { t } = useTranslation();
   const { goalCateoryCount } = useGoalCategoryCountRouteData();
@@ -598,7 +737,7 @@ function ComparativeTrendsChart() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
 
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   const transformedTrends = months.map((month) => {
     const row = { month };
@@ -612,10 +751,10 @@ function ComparativeTrendsChart() {
   });
 
   const colors = {
-    financial: '#8884d8',
-    innovation: '#82ca9d',
+    'financial': '#8884d8',
+    'innovation': '#82ca9d',
     'customer centred': '#ffc658',
-    'human relationship': '#ff8042',
+    'human relationship': '#ff8042'
   };
 
   return (
@@ -631,7 +770,7 @@ function ComparativeTrendsChart() {
             key={category}
             type="monotone"
             dataKey={category}
-            stroke={colors[category] || '#8884d8'}
+            stroke={colors[category] || "#8884d8"}
             name={t(category) || category}
             strokeWidth={2}
             dot={{ r: 4 }}
