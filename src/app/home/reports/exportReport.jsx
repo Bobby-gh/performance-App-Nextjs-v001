@@ -209,12 +209,8 @@ export default function ExportReportComponent({ onClose }) {
         {/* Cover Page */}
         <div className="cover-page print-page">
           <div className="text-center space-y-8">
-            <div className="inline-block p-6 bg-blue-600 rounded-full shadow-2xl">
-              <Building2 className="w-24 h-24 text-white" />
-            </div>
-            
-            <div className="space-y-4">
-              <h1 className="text-6xl font-bold text-gray-900">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold text-gray-900">
                 {t('performanceReportChart') || 'Performance Report'}
               </h1>
               <div className="h-1 w-32 bg-blue-600 mx-auto rounded"></div>
