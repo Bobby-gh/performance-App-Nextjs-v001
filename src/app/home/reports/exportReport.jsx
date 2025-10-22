@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Printer, Download, Calendar, Building2, X, CheckSquare, Square } from 'lucide-react';
 import {
@@ -24,6 +24,7 @@ import {
   useOrganizationalAveragePerMonthChartRouteData,
   useAchievedGoalsData,
 } from "../api/databook/route-data";
+import html2canvas from 'html2canvas';
 
 export default function ExportReportComponent({ onClose }) {
   const { t } = useTranslation();
@@ -37,6 +38,30 @@ export default function ExportReportComponent({ onClose }) {
     financialTrends: true,
     innovationTrends: true,
   });
+  
+   const chartsRef = useRef(null); 
+  
+    const exportChartsAsPDF = async () => {
+      if (chartsRef.current) {
+        const canvas = await html2canvas(chartsRef.current, {
+          scale: 2, 
+          useCORS: true, 
+          logging: false 
+        });
+  
+        const imgData = canvas.toDataURL('image/jpeg', 1.0); // Convert canvas to JPEG image data
+        const pdf = new jsPDF('p', 'mm', 'a4'); 
+        
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        
+        // 5. Save the PDF file
+        pdf.save("balanced-scorecard-charts.pdf");
+      }
+    };
 
   const toggleChart = (chartName) => {
     setSelectedCharts(prev => ({
@@ -92,14 +117,14 @@ export default function ExportReportComponent({ onClose }) {
                 {t('close') || 'Close'}
               </button>
               <button
-                onClick={handlePrint}
+                onClick={exportChartsAsPDF} 
                 className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-md hover:shadow-lg font-medium"
               >
                 <Printer className="w-5 h-5" />
                 {t('printReport') || 'Print Report'}
               </button>
               <button
-                onClick={handlePrint}
+                onClick={exportChartsAsPDF} 
                 className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all shadow-md hover:shadow-lg font-medium"
               >
                 <Download className="w-5 h-5" />
@@ -158,7 +183,7 @@ export default function ExportReportComponent({ onClose }) {
       </div>
 
       {/* Printable Content */}
-      <div className="printable-content">
+      <div className="printable-content" ref={chartsRef}>
         {/* Cover Page */}
         <div className="cover-page print-page">
           <div className="text-center space-y-8">
