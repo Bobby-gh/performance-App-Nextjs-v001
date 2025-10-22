@@ -44,21 +44,22 @@ export default function BalanceScoreCard() {
       >
         Export Charts to PDF
       </button>
-
-      <div 
+      <div ref={chartsRef} >
+        <div className="space-y-4">
+        <h1 className="text-6xl font-bold text-gray-900 print:text-5xl">
+          {'General Report'}
+        </h1>
+        </div>
+        <div 
         className="grid grid-cols-2 lg:grid-cols-2 gap-4 items-center" 
-        ref={chartsRef} 
       > 
-    ` <div className="space-y-4">
-      <h1 className="text-6xl font-bold text-gray-900 print:text-5xl">
-        {'General Report'}
-      </h1>
-      </div>
         <FinancialGoal />
         <HumanResourceGoal />
         <CustomerCentricGoal />
         <InternalProcessandInnovation/>
       </div>
+      </div>
+      
 
       <div className="mt-8 card bg-white rounded-lg">
         <GoalTable/> 
