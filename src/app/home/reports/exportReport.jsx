@@ -23,7 +23,7 @@ import {
   useGoalStatus,
   useOrganizationalAveragePerMonthChartRouteData,
   useAchievedGoalsData,
-} from "../api/databook/route-data";
+} from '../../api/databook/route-data';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
