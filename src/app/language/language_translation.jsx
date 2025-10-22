@@ -16,31 +16,31 @@ i18n.use(initReactI18next).init({
         forgotPassword: "Forgot password?",
         
         // Dashboard
-        Dashboard: "Dashboard", //done
-        performanceMatrix: "PERFORMANCE MATRIX",//done
-        Projects: "Projects",//done
-        assignGoals: "Assign Goals", //done
-        assignGoal: "Assign Goal",//done
-        goalAssessment: "Assessment", //done
-        goalName: "Goal Name", //done
-        department: "Department", //done
-        employees: "Employees", //done
+        Dashboard: "Dashboard",
+        performanceMatrix: "PERFORMANCE MATRIX",
+        Projects: "Projects",
+        assignGoals: "Assign Goals",
+        assignGoal: "Assign Goal",
+        goalAssessment: "Assessment",
+        goalName: "Goal Name",
+        department: "Department",
+        employees: "Employees",
         employee: "Employee",
-        reports: "Reports", //done
-        completed: "Completed",//done
-        inProgress: "In Progress",//done
-        notStarted: "Not Started",//done
-        thanLastMonth: "Than last month",//done
-        welcomeBack: "Welcome back", //done
-        signOut: "Sign out", //done
-        averagePerformance: "AVERAGE PERFORMANCE", //done
-        selectDate: "Select Date", //done
-        selectStaff: "Select a Staff", //done
-        staff: "Staff", //done
-        dateFrom: "Date From",//done
-        dateTo: "Date To",//done
-        generalPerformance: "General Performance",//done
-        lastUpdated: "Last Updated",//done
+        reports: "Reports",
+        completed: "Completed",
+        inProgress: "In Progress",
+        notStarted: "Not Started",
+        thanLastMonth: "Than last month",
+        welcomeBack: "Welcome back",
+        signOut: "Sign out",
+        averagePerformance: "AVERAGE PERFORMANCE",
+        selectDate: "Select Date",
+        selectStaff: "Select a Staff",
+        staff: "Staff",
+        dateFrom: "Date From",
+        dateTo: "Date To",
+        generalPerformance: "General Performance",
+        lastUpdated: "Last Updated",
         goalTitle: "Goal Title",
         assignedDate: "Assigned Date",
         assignedGoals: "Assigned Goals",
@@ -50,63 +50,63 @@ i18n.use(initReactI18next).init({
         endDate: "End Date",
         detail: "Detail",
         rowsPerPage: "Rows per Page",
-        goals: "Goals", //done
+        goals: "Goals",
         goalCategory: "Goal Category",
         goalStatus: "Goal Status",
         assessNewGoals: "Assess New Goals",
         remark: "Remark",
-        access: "Assess", //done
+        access: "Assess",
         departmentName: "Department Name",
         edit: "Edit",
         delete: "Delete",
         departmentManager: "Department Manager",
         numberOfStaff: "Number of Staff",
         users: "Users",
-        firstName: "First Name",//done
+        firstName: "First Name",
         role: "Role",
-        emailAddress: "Email Address", //done
+        emailAddress: "Email Address",
         balancedScorecard: "Balanced Scorecard",
         operationalEfficiency: "Operational Efficiency",
         strategicPerformance: "Strategic Performance",
         enterpriseWideGoals: "Enterprise Wide Goals",
-        badges: "Badges", 
-        financial: "Financial",//done 
-        humanRelationship: "Human Relationship",//done
-        customerCentred: "Customer Centred",//done
-        processAndInnovation: "Process and Innovation",//done
+        badges: "Badges",
+        financial: "Financial",
+        humanRelationship: "Human Relationship",
+        customerCentred: "Customer Centred",
+        processAndInnovation: "Process and Innovation",
         internalProcessingAndInnovation: "Internal processing and innovation",
         currentDate: "Current Date",
         topPerformerAward: "Top Performer Award",
-        awardsDescription: "These awards celebrate exceptional performance and dedication to the Organization.",//done
-        goldBadges: "Gold Badges",//done
-        silverBadges: "Silver Badges",//done
-        bronzeBadges: "Bronze Badges",//done
+        awardsDescription: "These awards celebrate exceptional performance and dedication to the Organization.",
+        goldBadges: "Gold Badges",
+        silverBadges: "Silver Badges",
+        bronzeBadges: "Bronze Badges",
         fullName: "Full Name",
         submit: "Submit",
-        addNewEmployee: "Add a New Employee",//done
-        qualityOfWork: "Quality of Work Done",//done
-        productivity: "Productivity",//done
-        procedure: "Procedure",//done
-        communication: "Communication",//done
-        reliability: "Reliability",//done
-        teamWork: "Team Work",//done
-        creativity: "Creativity",//done
+        addNewEmployee: "Add a New Employee",
+        qualityOfWork: "Quality of Work Done",
+        productivity: "Productivity",
+        procedure: "Procedure",
+        communication: "Communication",
+        reliability: "Reliability",
+        teamWork: "Team Work",
+        creativity: "Creativity",
         goalRating: "Goal Rating",
         comment: "Comment",
-        target: "Target",//done
-        priorityLevel: "Priority Level",//done
-        description: "Description", //done
-        assignNewGoal: "Assign a New Goal",//done
+        target: "Target",
+        priorityLevel: "Priority Level",
+        description: "Description",
+        assignNewGoal: "Assign a New Goal",
         newDepartment: "New Department",
-        assessingRatingGoal: "ASSESING & RATING GOAL",//done
-        high: "High",//dome
-        low: "Low",//done
-        medium: "Medium",//done
-        loading: "Loading",//done
-        weak: "Weak",//done
-        average: "Average",//done
-        good: "Good",//done
-        veryGood: "Very Good",//done
+        assessingRatingGoal: "ASSESING & RATING GOAL",
+        high: "High",
+        low: "Low",
+        medium: "Medium",
+        loading: "Loading",
+        weak: "Weak",
+        average: "Average",
+        good: "Good",
+        veryGood: "Very Good",
         belowExpectations: "Below Expectations",
         meetsExpectations: "Meets Expectations",
         exceedsExpectations: "Exceeds Expectations",
@@ -149,21 +149,20 @@ i18n.use(initReactI18next).init({
         scorePercentage: "Score Percentage",
 
         //infocards
-        goalId: "Goal ID",  
-        deadline: "Deadline",  
-        status: "Status",  
-        currentProgress: "Current Progress",  
-        target: "Target",  
-        enterProgress: "Enter Progress",  
+        goalId: "Goal ID",
+        deadline: "Deadline",
+        status: "Status",
+        currentProgress: "Current Progress",
+        target: "Target",
+        enterProgress: "Enter Progress",
         submitProgress: "Submit Progress",
-        updateGoalProgress: "Update Goal Progress",  
-        selectProjectToUpdateProgress: "Select project to update progress",  
+        updateGoalProgress: "Update Goal Progress",
+        selectProjectToUpdateProgress: "Select project to update progress",
         organizationalEmployees: "Organizational Employees",
         highPerformingWorkers: "High Performing Workers",
         startDate: "Start Date",
 
-
-        //further reporting 
+        //further reporting
         financialTrends: "Financial Trends",
         innovationalTrends: "Innovational Trends",
         addDepartmentPrompt: "Wishing to add new Department ?",
@@ -193,6 +192,31 @@ i18n.use(initReactI18next).init({
         messageMeetExpectation: "Awarded a Bronze Star. Improvement is needed, but potential is visible.",
         ratings: "Ratings",
         performanceScore: "Performance Score",
+
+        // ExportReportComponent translations
+        exportReports: "Export Reports",
+        selectChartsToExport: "Select charts to include in your report",
+        selectCharts: "Select Charts to Export",
+        selectAll: "Select All",
+        deselectAll: "Deselect All",
+        close: "Close",
+        printReport: "Print Report",
+        exportPDF: "Save as PDF",
+        performanceReportChart: "Performance Report",
+        comprehensiveAnalysis: "Comprehensive Performance Analysis",
+        confidential: "Confidential - Internal Use Only",
+        balanceScorecard: "Balance Scorecard",
+        balanceScorecardDesc: "Overview of key performance indicators across all business dimensions",
+        organizationPerformance: "Organization Performance",
+        monthlyPerformanceOverview: "Monthly average performance across the organization",
+        goalStatus: "Goal Status Overview",
+        goalStatusDesc: "Current status of organizational goals and achievements",
+        comparativeTrends: "Comparative Trends Analysis",
+        comparativeTrendsDesc: "Comparative performance trends across categories",
+        financialTrends: "Financial Performance Trends",
+        financialTrendsDesc: "Monthly financial performance trends",
+        innovationTrends: "Innovation Performance Trends",
+        innovationTrendsDesc: "Monthly innovation performance trends",
       },
     },
     fr: {
@@ -256,7 +280,7 @@ i18n.use(initReactI18next).init({
         operationalEfficiency: "Efficacité Opérationnelle",
         strategicPerformance: "Performance Stratégique",
         enterpriseWideGoals: "Objectifs à l’échelle de l’entreprise.",
-        badges: "Tableau de mérite", 
+        badges: "Tableau de mérite",
         systemGoals: "Objectifs De Entreprise",
         financial: "Financier",
         humanRelationship: "Relations Humaines",
@@ -335,24 +359,23 @@ i18n.use(initReactI18next).init({
         scorePercentage: "Pourcentage du score",
 
         //infocards
-        goalId: "ID de l'objectif",  
-        deadline: "Date limite",  
-        status: "Statut",  
-        currentProgress: "Progrès actuel",  
-        target: "Cible",  
-        enterProgress: "Saisir le progrès",  
-        submitProgress: "Soumettre le progrès", 
+        goalId: "ID de l'objectif",
+        deadline: "Date limite",
+        status: "Statut",
+        currentProgress: "Progrès actuel",
+        target: "Cible",
+        enterProgress: "Saisir le progrès",
+        submitProgress: "Soumettre le progrès",
         updateGoalProgress: "Mettre à jour la progression de l'objectif",
         selectProjectToUpdateProgress: "Sélectionnez un projet pour mettre à jour la progression",
         organizationalEmployees: "Employés organisationnels",
         highPerformingWorkers: "Travailleurs très performants",
         startDate: "Date de début",
-      
 
         //further reporting
         financialTrends: "Tendances financières",
         innovationalTrends: "Tendances en innovation",
-        addDepartmentPrompt: "Souhaitez-vous ajouter un nouveau département ?",
+        addDepartmentPrompt: "Souhaitez-vous ajouter un nouveau département ?",
         enterDepartmentName: "Entrez le nom du département dans le champ ci-dessous",
         actualProgress: "Progrès réel",
         dueDate: "Date d'échéance",
@@ -378,7 +401,32 @@ i18n.use(initReactI18next).init({
         messageExceedExpectation: "Récompensé par une étoile d'argent pour de grandes performances et une forte constance.",
         messageMeetExpectation: "Récompensé par une étoile de bronze. Une amélioration est nécessaire, mais le potentiel est visible.",
         ratings: "Évaluations",
-        performanceScore: "Score de performance"
+        performanceScore: "Score de performance",
+
+        // ExportReportComponent translations
+        exportReports: "Exporter les Rapports",
+        selectChartsToExport: "Sélectionnez les graphiques à inclure dans votre rapport",
+        selectCharts: "Sélectionner les Graphiques à Exporter",
+        selectAll: "Tout Sélectionner",
+        deselectAll: "Tout Déselectionner",
+        close: "Fermer",
+        printReport: "Imprimer le Rapport",
+        exportPDF: "Enregistrer au format PDF",
+        performanceReportChart: "Rapport de Performance",
+        comprehensiveAnalysis: "Analyse Complète de la Performance",
+        confidential: "Confidentiel - Usage Interne Uniquement",
+        balanceScorecard: "Tableau de Bord Équilibré",
+        balanceScorecardDesc: "Aperçu des indicateurs clés de performance dans toutes les dimensions de l'entreprise",
+        organizationPerformance: "Performance de l'Organisation",
+        monthlyPerformanceOverview: "Performance moyenne mensuelle de l'organisation",
+        goalStatus: "Aperçu de l'État des Objectifs",
+        goalStatusDesc: "État actuel des objectifs et réalisations de l'organisation",
+        comparativeTrends: "Analyse des Tendances Comparatives",
+        comparativeTrendsDesc: "Tendances de performance comparatives à travers les catégories",
+        financialTrends: "Tendances de Performance Financière",
+        financialTrendsDesc: "Tendances de performance financière mensuelle",
+        innovationTrends: "Tendances de Performance en Innovation",
+        innovationTrendsDesc: "Tendances de performance en innovation mensuelle",
       },
     },
   },
