@@ -44,22 +44,21 @@ export default function BalanceScoreCard() {
       >
         Export Charts to PDF
       </button>
-      <div ref={chartsRef} >
+      {/* <div >
         <div className="space-y-4">
-        <h1 className="text-4xl font-bold text-gray-900 print:text-5xl text-center mb-8 py-12 pb-20 border-b-2 border-gray-300">
+        <h1 className="text-4xl font-bold text-gray-900 print:text-5xl text-center mb-8 py-12 pb- border-b-2 border-gray-300">
           {'General Report (Balanced Scorecard)'}
         </h1>
-        </div>
+        </div> */}
         <div 
         className="grid grid-cols-2 lg:grid-cols-2 gap-4 text-center" 
+        ref={chartsRef}
       > 
         <FinancialGoal />
         <HumanResourceGoal />
         <CustomerCentricGoal />
         <InternalProcessandInnovation/>
-      </div>
-      </div>
-      
+      </div>      
 
       <div className="mt-8 card bg-white rounded-lg">
         <GoalTable/> 
