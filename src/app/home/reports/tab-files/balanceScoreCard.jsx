@@ -45,9 +45,17 @@ export default function BalanceScoreCard() {
       </button>
 
       <div 
-        className="grid grid-cols-2 lg:grid-cols-1 gap-4" 
+        className="grid grid-cols-2 lg:grid-cols-1 gap-4 items-center" 
         ref={chartsRef} 
       > 
+      <div className="inline-block p-6 bg-blue-600 rounded-full shadow-2xl">
+              <Building2 className="w-24 h-24 text-white" />
+      </div>
+    ` <div className="space-y-4">
+      <h1 className="text-6xl font-bold text-gray-900 print:text-5xl">
+        {'General Report'}
+      </h1>
+      </div>
         <FinancialGoal />
         <HumanResourceGoal />
         <CustomerCentricGoal />

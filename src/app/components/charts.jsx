@@ -195,7 +195,7 @@ export function FinancialGoal() {
   return (
     <div>
       <div className="p-4 bg-white rounded-lg">
-        <div className="text-md font-bold text-black">{t("financial")} </div>
+        <div className="text-md font-bold text-black ">{t("financial")} </div>
         <div className="w-full flex justify-center">
           <Gauge
             valueMax={valueMax}
