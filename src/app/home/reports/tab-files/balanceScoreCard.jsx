@@ -46,7 +46,7 @@ export default function BalanceScoreCard() {
       </button>
       <div ref={chartsRef} >
         <div className="space-y-4">
-        <h1 className="text-6xl font-bold text-gray-900 print:text-5xl text-center mb-8">
+        <h1 className="text-2xl font-bold text-gray-900 print:text-5xl text-center mb-8">
           {'General Report (Balanced Scorecard)'}
         </h1>
         </div>
