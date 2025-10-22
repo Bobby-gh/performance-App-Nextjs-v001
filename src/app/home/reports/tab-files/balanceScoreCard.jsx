@@ -51,7 +51,7 @@ export default function BalanceScoreCard() {
         </h1>
         </div>
         <div 
-        className="grid grid-cols-2 lg:grid-cols-2 gap-4 items-center" 
+        className="grid grid-cols-2 lg:grid-cols-2 gap-4 text-center" 
       > 
         <FinancialGoal />
         <HumanResourceGoal />
