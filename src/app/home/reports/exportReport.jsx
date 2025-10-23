@@ -255,19 +255,19 @@ export default function ExportReportComponent({ onClose }) {
                 <p className="text-gray-600 ml-5 mb-6">
                   {t('goalStatusDesc') || 'Current status of organizational goals and achievements'}
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {selectedCharts.achievedGoals && (
-                    <div className="chart-container bg-gradient-to-br from-green-50 to-white p-6 rounded-xl">
+                    <div className="chart-container bg-gradient-to-br from-green-50 to-white p-4 rounded-xl">
                       <AchievedGoalsChart />
                     </div>
                   )}
                   {selectedCharts.partiallyAchievedGoals && (
-                    <div className="chart-container bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl">
+                    <div className="chart-container bg-gradient-to-br from-yellow-50 to-white p-4 rounded-xl">
                       <PartiallyAchievedGoalsChart />
                     </div>
                   )}
                   {selectedCharts.notAchievedGoals && (
-                    <div className="chart-container bg-gradient-to-br from-red-50 to-white p-6 rounded-xl">
+                    <div className="chart-container bg-gradient-to-br from-red-50 to-white p-4 rounded-xl">
                       <NotAchievedGoalsChart />
                     </div>
                   )}
@@ -536,6 +536,14 @@ export default function ExportReportComponent({ onClose }) {
             padding: 0.2cm !important;
           }
 
+          .combined-section .chart-container.goal-status {
+            padding: 0.2cm !important;
+          }
+
+          .combined-section .chart-container.balance-scorecard {
+            padding: 0.3cm !important;
+          }
+
           .recharts-wrapper,
           .recharts-surface {
             overflow: visible !important;
@@ -623,12 +631,12 @@ function BalanceScorecardChart() {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-8 balance-scorecard">
       <div>
-        <ResponsiveContainer width="100%" height={150}>
+        <ResponsiveContainer width="100%" height={350}>
           <BarChart data={data} margin={{ left: 20, right: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="category" angle={-45} textAnchor="end" height={60} />
+            <XAxis dataKey="category" angle={-45} textAnchor="end" height={80} />
             <YAxis />
             <Tooltip />
             <Legend />
@@ -638,7 +646,7 @@ function BalanceScorecardChart() {
         </ResponsiveContainer>
       </div>
       <div>
-        <ResponsiveContainer width="100%" height={150}>
+        <ResponsiveContainer width="100%" height={350}>
           <PieChart margin={{ left: 20, right: 20 }}>
             <Pie
               data={data}
@@ -646,7 +654,7 @@ function BalanceScorecardChart() {
               nameKey="category"
               cx="50%"
               cy="50%"
-              outerRadius={80}
+              outerRadius={120}
               label={(entry) => `${entry.category}: ${entry.percentage.toFixed(1)}%`}
             >
               {data.map((entry, index) => (
@@ -659,10 +667,10 @@ function BalanceScorecardChart() {
       </div>
       <div className="grid grid-cols-4 gap-2 mt-2">
         {data.map((item, index) => (
-          <div key={index} className="bg-white p-1 rounded-lg border border-gray-200 shadow-sm">
-            <h4 className="text-xs font-semibold text-gray-600 mb-1">{item.category}</h4>
-            <p className="text-base font-bold text-gray-900">{item.value} / {item.max}</p>
-            <p className="text-2xs text-gray-500 mt-1">{item.percentage.toFixed(1)}% Complete</p>
+          <div key={index} className="bg-white p-2 rounded-lg border border-gray-200 shadow-sm">
+            <h4 className="text-sm font-semibold text-gray-600 mb-1">{item.category}</h4>
+            <p className="text-lg font-bold text-gray-900">{item.value} / {item.max}</p>
+            <p className="text-xs text-gray-500 mt-1">{item.percentage.toFixed(1)}% Complete</p>
           </div>
         ))}
       </div>
@@ -697,28 +705,28 @@ function AchievedGoalsChart() {
   const percentage = Total > 0 ? ((Completed / Total) * 100).toFixed(1) : 0;
 
   return (
-    <div className="text-center">
-      <h3 className="text-base font-bold text-green-700 mb-2">{t('completed') || 'Completed Goals'}</h3>
+    <div className="text-center goal-status">
+      <h3 className="text-sm font-bold text-green-700 mb-2">{t('completed') || 'Completed Goals'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="100" height="100" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
+        <svg width="60" height="60" viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="24" fill="none" stroke="#e0e0e0" strokeWidth="6" />
           <circle
-            cx="50"
-            cy="50"
-            r="40"
+            cx="30"
+            cy="30"
+            r="24"
             fill="none"
             stroke="#22c55e"
-            strokeWidth="10"
-            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
-            transform="rotate(-90 50 50)"
+            strokeWidth="6"
+            strokeDasharray={`${(percentage / 100) * 150.8} 150.8`}
+            transform="rotate(-90 30 30)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xl font-bold text-gray-900">{Completed}</span>
-          <span className="text-xs text-gray-600">/ {Total}</span>
+          <span className="text-base font-bold text-gray-900">{Completed}</span>
+          <span className="text-2xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-sm font-semibold text-green-600 mt-2">{percentage}% Complete</p>
+      <p className="text-xs font-semibold text-green-600 mt-2">{percentage}% Complete</p>
     </div>
   );
 }
@@ -730,28 +738,28 @@ function PartiallyAchievedGoalsChart() {
   const percentage = Total > 0 ? ((InProgress / Total) * 100).toFixed(1) : 0;
 
   return (
-    <div className="text-center">
-      <h3 className="text-base font-bold text-yellow-700 mb-2">{t('inProgress') || 'In Progress'}</h3>
+    <div className="text-center goal-status">
+      <h3 className="text-sm font-bold text-yellow-700 mb-2">{t('inProgress') || 'In Progress'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="100" height="100" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
+        <svg width="60" height="60" viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="24" fill="none" stroke="#e0e0e0" strokeWidth="6" />
           <circle
-            cx="50"
-            cy="50"
-            r="40"
+            cx="30"
+            cy="30"
+            r="24"
             fill="none"
             stroke="#eab308"
-            strokeWidth="10"
-            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
-            transform="rotate(-90 50 50)"
+            strokeWidth="6"
+            strokeDasharray={`${(percentage / 100) * 150.8} 150.8`}
+            transform="rotate(-90 30 30)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xl font-bold text-gray-900">{InProgress}</span>
-          <span className="text-xs text-gray-600">/ {Total}</span>
+          <span className="text-base font-bold text-gray-900">{InProgress}</span>
+          <span className="text-2xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-sm font-semibold text-yellow-600 mt-2">{percentage}% In Progress</p>
+      <p className="text-xs font-semibold text-yellow-600 mt-2">{percentage}% In Progress</p>
     </div>
   );
 }
@@ -763,28 +771,28 @@ function NotAchievedGoalsChart() {
   const percentage = Total > 0 ? ((NotStarted / Total) * 100).toFixed(1) : 0;
 
   return (
-    <div className="text-center">
-      <h3 className="text-base font-bold text-red-700 mb-2">{t('notStarted') || 'Not Started'}</h3>
+    <div className="text-center goal-status">
+      <h3 className="text-sm font-bold text-red-700 mb-2">{t('notStarted') || 'Not Started'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="100" height="100" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
+        <svg width="60" height="60" viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="24" fill="none" stroke="#e0e0e0" strokeWidth="6" />
           <circle
-            cx="50"
-            cy="50"
-            r="40"
+            cx="30"
+            cy="30"
+            r="24"
             fill="none"
             stroke="#ef4444"
-            strokeWidth="10"
-            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
-            transform="rotate(-90 50 50)"
+            strokeWidth="6"
+            strokeDasharray={`${(percentage / 100) * 150.8} 150.8`}
+            transform="rotate(-90 30 30)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xl font-bold text-gray-900">{NotStarted}</span>
-          <span className="text-xs text-gray-600">/ {Total}</span>
+          <span className="text-base font-bold text-gray-900">{NotStarted}</span>
+          <span className="text-2xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-sm font-semibold text-red-600 mt-2">{percentage}% Not Started</p>
+      <p className="text-xs font-semibold text-red-600 mt-2">{percentage}% Not Started</p>
     </div>
   );
 }
