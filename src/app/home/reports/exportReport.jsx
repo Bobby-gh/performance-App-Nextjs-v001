@@ -214,15 +214,10 @@ export default function ExportReportComponent({ onClose }) {
         {/* Cover Page */}
         <div className="cover-page print-page">
           <div className="text-center space-y-4">
-            <div className="inline-block p-4 bg-blue-600 rounded-full shadow-2xl">
-              <Building2 className="w-16 h-16 text-white" />
-            </div>
-            
             <div className="space-y-2">
               <h1 className="text-5xl font-bold text-gray-900">
                 {t('performanceReportChart') || 'Performance Report'}
               </h1>
-              <div className="h-1 w-24 bg-blue-600 mx-auto rounded"></div>
               <p className="text-xl text-gray-600">
                 {t('comprehensiveAnalysis') || 'Comprehensive Performance Analysis'}
               </p>
@@ -259,7 +254,7 @@ export default function ExportReportComponent({ onClose }) {
                 {t('balanceScorecardDesc') || 'Overview of key performance indicators across all business dimensions'}
               </p>
             </div>
-            <div className="chart-container bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl">
+            <div className="chart-container bg-gradient-to-br from-blue-50 to-white p-4 rounded-xl">
               <BalanceScorecardChart />
             </div>
           </div>
@@ -619,7 +614,7 @@ function BalanceScorecardChart() {
   return (
     <div className="flex flex-col space-y-6">
       <div>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={250}>
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="category" angle={-45} textAnchor="end" height={80} />
@@ -632,7 +627,7 @@ function BalanceScorecardChart() {
         </ResponsiveContainer>
       </div>
       <div>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie
               data={data}
@@ -651,7 +646,15 @@ function BalanceScorecardChart() {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      {/* Removed the grid of data cards to prevent height overflow */}
+      <div className="grid grid-cols-4 gap-2 mt-2">
+        {data.map((item, index) => (
+          <div key={index} className="bg-white p-2 rounded-lg border border-gray-200 shadow-sm">
+            <h4 className="text-sm font-semibold text-gray-600 mb-1">{item.category}</h4>
+            <p className="text-lg font-bold text-gray-900">{item.value} / {item.max}</p>
+            <p className="text-xs text-gray-500 mt-1">{item.percentage.toFixed(1)}% Complete</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -814,7 +817,7 @@ function ComparativeTrendsChart() {
             dataKey={category}
             stroke={colors[category] || "#8884d8"}
             name={t(category) || category}
-            strokeWidth={2}
+            strokeWidth= {2}
             dot={{ r: 4 }}
             activeDot={{ r: 6 }}
           />
