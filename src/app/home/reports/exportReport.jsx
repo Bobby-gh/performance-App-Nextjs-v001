@@ -255,19 +255,19 @@ export default function ExportReportComponent({ onClose }) {
                 <p className="text-gray-600 ml-5 mb-6">
                   {t('goalStatusDesc') || 'Current status of organizational goals and achievements'}
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {selectedCharts.achievedGoals && (
-                    <div className="chart-container bg-gradient-to-br from-green-50 to-white p-4 rounded-xl">
+                    <div className="chart-container goal-status bg-gradient-to-br from-green-50 to-white p-6 rounded-xl">
                       <AchievedGoalsChart />
                     </div>
                   )}
                   {selectedCharts.partiallyAchievedGoals && (
-                    <div className="chart-container bg-gradient-to-br from-yellow-50 to-white p-4 rounded-xl">
+                    <div className="chart-container goal-status bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl">
                       <PartiallyAchievedGoalsChart />
                     </div>
                   )}
                   {selectedCharts.notAchievedGoals && (
-                    <div className="chart-container bg-gradient-to-br from-red-50 to-white p-4 rounded-xl">
+                    <div className="chart-container goal-status bg-gradient-to-br from-red-50 to-white p-6 rounded-xl">
                       <NotAchievedGoalsChart />
                     </div>
                   )}
@@ -285,7 +285,7 @@ export default function ExportReportComponent({ onClose }) {
                 <p className="text-gray-600 ml-5 mb-6">
                   {t('balanceScorecardDesc') || 'Overview of key performance indicators across all business dimensions'}
                 </p>
-                <div className="chart-container bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl">
+                <div className="chart-container balance-scorecard bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl">
                   <BalanceScorecardChart />
                 </div>
               </div>
@@ -496,7 +496,7 @@ export default function ExportReportComponent({ onClose }) {
 
           .report-section {
             width: 100% !important;
-            padding: 0.2cm !important;
+            padding: 0.3cm !important;
             margin: 0 !important;
             background: white !important;
             box-shadow: none !important;
@@ -504,7 +504,7 @@ export default function ExportReportComponent({ onClose }) {
           }
 
           .combined-section {
-            padding: 0.2cm !important;
+            padding: 0.3cm !important;
             display: flex !important;
             flex-direction: column !important;
             gap: 0.3cm !important;
@@ -533,15 +533,31 @@ export default function ExportReportComponent({ onClose }) {
             width: 100% !important;
             overflow: visible !important;
             position: static !important;
-            padding: 0.2cm !important;
+            padding: 0.3cm !important;
           }
 
           .combined-section .chart-container.goal-status {
-            padding: 0.2cm !important;
+            padding: 0.3cm !important;
           }
 
           .combined-section .chart-container.balance-scorecard {
             padding: 0.3cm !important;
+          }
+
+          .combined-section .chart-container.balance-scorecard .grid > div {
+            padding: 0.5cm !important;
+          }
+
+          .combined-section .chart-container.balance-scorecard .grid > div h4 {
+            font-size: 8pt !important;
+          }
+
+          .combined-section .chart-container.balance-scorecard .grid > div p:nth-child(2) {
+            font-size: 10pt !important;
+          }
+
+          .combined-section .chart-container.balance-scorecard .grid > div p:nth-child(3) {
+            font-size: 7pt !important;
           }
 
           .recharts-wrapper,
@@ -570,7 +586,7 @@ export default function ExportReportComponent({ onClose }) {
           .grid {
             display: flex !important;
             flex-direction: row !important;
-            gap: 0.2cm !important;
+            gap: 0.3cm !important;
           }
 
           .grid > * {
@@ -706,27 +722,27 @@ function AchievedGoalsChart() {
 
   return (
     <div className="text-center goal-status">
-      <h3 className="text-sm font-bold text-green-700 mb-2">{t('completed') || 'Completed Goals'}</h3>
+      <h3 className="text-base font-bold text-green-700 mb-2">{t('completed') || 'Completed Goals'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="60" height="60" viewBox="0 0 60 60">
-          <circle cx="30" cy="30" r="24" fill="none" stroke="#e0e0e0" strokeWidth="6" />
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
           <circle
-            cx="30"
-            cy="30"
-            r="24"
+            cx="50"
+            cy="50"
+            r="40"
             fill="none"
             stroke="#22c55e"
-            strokeWidth="6"
-            strokeDasharray={`${(percentage / 100) * 150.8} 150.8`}
-            transform="rotate(-90 30 30)"
+            strokeWidth="10"
+            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
+            transform="rotate(-90 50 50)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-base font-bold text-gray-900">{Completed}</span>
-          <span className="text-2xs text-gray-600">/ {Total}</span>
+          <span className="text-xl font-bold text-gray-900">{Completed}</span>
+          <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-xs font-semibold text-green-600 mt-2">{percentage}% Complete</p>
+      <p className="text-sm font-semibold text-green-600 mt-2">{percentage}% Complete</p>
     </div>
   );
 }
@@ -739,27 +755,27 @@ function PartiallyAchievedGoalsChart() {
 
   return (
     <div className="text-center goal-status">
-      <h3 className="text-sm font-bold text-yellow-700 mb-2">{t('inProgress') || 'In Progress'}</h3>
+      <h3 className="text-base font-bold text-yellow-700 mb-2">{t('inProgress') || 'In Progress'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="60" height="60" viewBox="0 0 60 60">
-          <circle cx="30" cy="30" r="24" fill="none" stroke="#e0e0e0" strokeWidth="6" />
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
           <circle
-            cx="30"
-            cy="30"
-            r="24"
+            cx="50"
+            cy="50"
+            r="40"
             fill="none"
             stroke="#eab308"
-            strokeWidth="6"
-            strokeDasharray={`${(percentage / 100) * 150.8} 150.8`}
-            transform="rotate(-90 30 30)"
+            strokeWidth="10"
+            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
+            transform="rotate(-90 50 50)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-base font-bold text-gray-900">{InProgress}</span>
-          <span className="text-2xs text-gray-600">/ {Total}</span>
+          <span className="text-xl font-bold text-gray-900">{InProgress}</span>
+          <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-xs font-semibold text-yellow-600 mt-2">{percentage}% In Progress</p>
+      <p className="text-sm font-semibold text-yellow-600 mt-2">{percentage}% In Progress</p>
     </div>
   );
 }
@@ -772,27 +788,27 @@ function NotAchievedGoalsChart() {
 
   return (
     <div className="text-center goal-status">
-      <h3 className="text-sm font-bold text-red-700 mb-2">{t('notStarted') || 'Not Started'}</h3>
+      <h3 className="text-base font-bold text-red-700 mb-2">{t('notStarted') || 'Not Started'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="60" height="60" viewBox="0 0 60 60">
-          <circle cx="30" cy="30" r="24" fill="none" stroke="#e0e0e0" strokeWidth="6" />
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
           <circle
-            cx="30"
-            cy="30"
-            r="24"
+            cx="50"
+            cy="50"
+            r="40"
             fill="none"
             stroke="#ef4444"
-            strokeWidth="6"
-            strokeDasharray={`${(percentage / 100) * 150.8} 150.8`}
-            transform="rotate(-90 30 30)"
+            strokeWidth="10"
+            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
+            transform="rotate(-90 50 50)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-base font-bold text-gray-900">{NotStarted}</span>
-          <span className="text-2xs text-gray-600">/ {Total}</span>
+          <span className="text-xl font-bold text-gray-900">{NotStarted}</span>
+          <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-xs font-semibold text-red-600 mt-2">{percentage}% Not Started</p>
+      <p className="text-sm font-semibold text-red-600 mt-2">{percentage}% Not Started</p>
     </div>
   );
 }
@@ -833,7 +849,7 @@ function ComparativeTrendsChart() {
           <Line
             key={category}
             type="monotone"
-            dataKey={category}
+            dataKey="category"
             stroke={colors[category] || "#8884d8"}
             name={t(category) || category}
             strokeWidth={2}
