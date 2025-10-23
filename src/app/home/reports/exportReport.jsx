@@ -63,8 +63,8 @@ export default function ExportReportComponent({ onClose }) {
         const imgProps = pdf.getImageProperties(imgData);
         const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-        if (i === 0 || (i === 1 && selectedCharts.balanceScorecard)) {
-          // Cover page or Balance Scorecard: Full A4 page
+        if (i === 0 || i === 1) {
+          // Cover page or Combined Goal Status + Balance Scorecard: Full A4 page
           const targetHeight = Math.min(imgHeight, fullPageHeight);
           pdf.addImage(imgData, 'JPEG', 0, 10, pdfWidth, targetHeight);
           if (i < elements.length - 1) {
@@ -72,7 +72,7 @@ export default function ExportReportComponent({ onClose }) {
           }
         } else {
           // Other sections: Three per page
-          const sectionIndex = i - (selectedCharts.balanceScorecard ? 2 : 1);
+          const sectionIndex = i - 2;
           const positionInPage = sectionIndex % 3;
           const yPosition = marginTop + positionInPage * (threeSectionHeight + marginBetween);
 
@@ -241,23 +241,55 @@ export default function ExportReportComponent({ onClose }) {
           </div>
         </div>
 
-        {/* Balance Scorecard */}
-        {selectedCharts.balanceScorecard && (
-          <div className="report-section print-page">
-            <div className="section-header">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-2 h-8 bg-blue-600 rounded"></div>
-                <h2 className="text-3xl font-bold text-gray-900">
-                  {t('balanceScorecard') || 'Balance Scorecard'}
-                </h2>
+        {/* Combined Goal Status and Balance Scorecard */}
+        {((selectedCharts.achievedGoals || selectedCharts.partiallyAchievedGoals || selectedCharts.notAchievedGoals) || selectedCharts.balanceScorecard) && (
+          <div className="report-section print-page combined-section">
+            {(selectedCharts.achievedGoals || selectedCharts.partiallyAchievedGoals || selectedCharts.notAchievedGoals) && (
+              <div className="section-header">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-2 h-8 bg-purple-600 rounded"></div>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    {t('goalStatus') || 'Goal Status Overview'}
+                  </h2>
+                </div>
+                <p className="text-gray-600 ml-5 mb-6">
+                  {t('goalStatusDesc') || 'Current status of organizational goals and achievements'}
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {selectedCharts.achievedGoals && (
+                    <div className="chart-container bg-gradient-to-br from-green-50 to-white p-6 rounded-xl">
+                      <AchievedGoalsChart />
+                    </div>
+                  )}
+                  {selectedCharts.partiallyAchievedGoals && (
+                    <div className="chart-container bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl">
+                      <PartiallyAchievedGoalsChart />
+                    </div>
+                  )}
+                  {selectedCharts.notAchievedGoals && (
+                    <div className="chart-container bg-gradient-to-br from-red-50 to-white p-6 rounded-xl">
+                      <NotAchievedGoalsChart />
+                    </div>
+                  )}
+                </div>
               </div>
-              <p className="text-gray-600 ml-5 mb-6">
-                {t('balanceScorecardDesc') || 'Overview of key performance indicators across all business dimensions'}
-              </p>
-            </div>
-            <div className="chart-container bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl">
-              <BalanceScorecardChart />
-            </div>
+            )}
+            {selectedCharts.balanceScorecard && (
+              <div className="section-header mt-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-2 h-8 bg-blue-600 rounded"></div>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    {t('balanceScorecard') || 'Balance Scorecard'}
+                  </h2>
+                </div>
+                <p className="text-gray-600 ml-5 mb-6">
+                  {t('balanceScorecardDesc') || 'Overview of key performance indicators across all business dimensions'}
+                </p>
+                <div className="chart-container bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl">
+                  <BalanceScorecardChart />
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -277,40 +309,6 @@ export default function ExportReportComponent({ onClose }) {
             </div>
             <div className="chart-container bg-gradient-to-br from-green-50 to-white p-6 rounded-xl">
               <OrganizationPerformanceChart />
-            </div>
-          </div>
-        )}
-
-        {/* Goal Status Section */}
-        {(selectedCharts.achievedGoals || selectedCharts.partiallyAchievedGoals || selectedCharts.notAchievedGoals) && (
-          <div className="report-section print-page">
-            <div className="section-header">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-2 h-8 bg-purple-600 rounded"></div>
-                <h2 className="text-3xl font-bold text-gray-900">
-                  {t('goalStatus') || 'Goal Status Overview'}
-                </h2>
-              </div>
-              <p className="text-gray-600 ml-5 mb-6">
-                {t('goalStatusDesc') || 'Current status of organizational goals and achievements'}
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {selectedCharts.achievedGoals && (
-                <div className="chart-container bg-gradient-to-br from-green-50 to-white p-6 rounded-xl">
-                  <AchievedGoalsChart />
-                </div>
-              )}
-              {selectedCharts.partiallyAchievedGoals && (
-                <div className="chart-container bg-gradient-to-br from-yellow-50 to-white p-6 rounded-xl">
-                  <PartiallyAchievedGoalsChart />
-                </div>
-              )}
-              {selectedCharts.notAchievedGoals && (
-                <div className="chart-container bg-gradient-to-br from-red-50 to-white p-6 rounded-xl">
-                  <NotAchievedGoalsChart />
-                </div>
-              )}
             </div>
           </div>
         )}
@@ -420,6 +418,12 @@ export default function ExportReportComponent({ onClose }) {
           min-height: 297mm;
         }
 
+        .combined-section {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5cm;
+        }
+
         /* Critical Print Styles */
         @media print {
           * {
@@ -492,28 +496,35 @@ export default function ExportReportComponent({ onClose }) {
 
           .report-section {
             width: 100% !important;
-            padding: 0.5cm !important;
+            padding: 0.2cm !important;
             margin: 0 !important;
             background: white !important;
             box-shadow: none !important;
             border-radius: 0 !important;
           }
 
+          .combined-section {
+            padding: 0.2cm !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.3cm !important;
+          }
+
           .section-header {
             page-break-after: avoid;
             break-after: avoid;
-            margin-bottom: 0.3cm !important;
+            margin-bottom: 0.2cm !important;
           }
 
           .section-header h2 {
             page-break-after: avoid;
             break-after: avoid;
-            font-size: 16pt !important;
+            font-size: 14pt !important;
           }
 
           .section-header p {
-            font-size: 9pt !important;
-            margin-bottom: 0.3cm !important;
+            font-size: 8pt !important;
+            margin-bottom: 0.2cm !important;
           }
 
           .chart-container {
@@ -522,7 +533,7 @@ export default function ExportReportComponent({ onClose }) {
             width: 100% !important;
             overflow: visible !important;
             position: static !important;
-            padding: 0.3cm !important;
+            padding: 0.2cm !important;
           }
 
           .recharts-wrapper,
@@ -532,8 +543,8 @@ export default function ExportReportComponent({ onClose }) {
           }
 
           body {
-            font-size: 9pt !important;
-            line-height: 1.4 !important;
+            font-size: 8pt !important;
+            line-height: 1.3 !important;
           }
 
           h1 {
@@ -541,17 +552,17 @@ export default function ExportReportComponent({ onClose }) {
           }
 
           h2 {
-            font-size: 16pt !important;
+            font-size: 14pt !important;
           }
 
           h3 {
-            font-size: 12pt !important;
+            font-size: 10pt !important;
           }
 
           .grid {
             display: flex !important;
             flex-direction: row !important;
-            gap: 0.3cm !important;
+            gap: 0.2cm !important;
           }
 
           .grid > * {
@@ -564,7 +575,7 @@ export default function ExportReportComponent({ onClose }) {
           p, li {
             orphans: 3;
             widows: 3;
-            font-size: 9pt !important;
+            font-size: 8pt !important;
           }
 
           * {
@@ -612,12 +623,12 @@ function BalanceScorecardChart() {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
-    <div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-4">
       <div>
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer width="100%" height={150}>
           <BarChart data={data} margin={{ left: 20, right: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="category" angle={-45} textAnchor="end" height={80} />
+            <XAxis dataKey="category" angle={-45} textAnchor="end" height={60} />
             <YAxis />
             <Tooltip />
             <Legend />
@@ -627,7 +638,7 @@ function BalanceScorecardChart() {
         </ResponsiveContainer>
       </div>
       <div>
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer width="100%" height={150}>
           <PieChart margin={{ left: 20, right: 20 }}>
             <Pie
               data={data}
@@ -635,7 +646,7 @@ function BalanceScorecardChart() {
               nameKey="category"
               cx="50%"
               cy="50%"
-              outerRadius={120}
+              outerRadius={80}
               label={(entry) => `${entry.category}: ${entry.percentage.toFixed(1)}%`}
             >
               {data.map((entry, index) => (
@@ -648,10 +659,10 @@ function BalanceScorecardChart() {
       </div>
       <div className="grid grid-cols-4 gap-2 mt-2">
         {data.map((item, index) => (
-          <div key={index} className="bg-white p-2 rounded-lg border border-gray-200 shadow-sm">
-            <h4 className="text-sm font-semibold text-gray-600 mb-1">{item.category}</h4>
-            <p className="text-lg font-bold text-gray-900">{item.value} / {item.max}</p>
-            <p className="text-xs text-gray-500 mt-1">{item.percentage.toFixed(1)}% Complete</p>
+          <div key={index} className="bg-white p-1 rounded-lg border border-gray-200 shadow-sm">
+            <h4 className="text-xs font-semibold text-gray-600 mb-1">{item.category}</h4>
+            <p className="text-base font-bold text-gray-900">{item.value} / {item.max}</p>
+            <p className="text-2xs text-gray-500 mt-1">{item.percentage.toFixed(1)}% Complete</p>
           </div>
         ))}
       </div>
@@ -840,7 +851,7 @@ function FinancialTrendsChart() {
         <YAxis domain={[0, 100]} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="average_performance" fill="#08397e" name={t('financialTrends') || 'Financial Performance'} />
+        <Bar dataKey="average_performance" fill="#08397e" name={t('financialPerformance') || 'Financial Performance'} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -859,7 +870,7 @@ function InnovationTrendsChart() {
         <YAxis domain={[0, 100]} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="average_performance" fill="#10b981" name={t('innovationTrends') || 'Innovation Performance'} />
+        <Bar dataKey="average_performance" fill="#10b981" name={t('innovationPerformance') || 'Innovation Performance'} />
       </BarChart>
     </ResponsiveContainer>
   );
