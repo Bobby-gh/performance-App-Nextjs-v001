@@ -47,8 +47,8 @@ export default function ExportReportComponent({ onClose }) {
       const elements = chartsRef.current.querySelectorAll('.print-page');
       const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
       const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
-      const sectionHeight = (pdfHeight - 25) / 2; // ~136mm for two sections
       const fullPageHeight = pdfHeight - 20; // ~277mm for full page
+      const threeSectionHeight = (pdfHeight - 30) / 3; // ~89mm for three sections
       const marginBetween = 5; // 5mm between sections
       const marginTop = 10; // 10mm top margin
 
@@ -71,16 +71,16 @@ export default function ExportReportComponent({ onClose }) {
             pdf.addPage();
           }
         } else {
-          // Other sections: Two per page
-          const sectionIndex = i - (selectedCharts.balanceScorecard ? 2 : 1); // Adjust for cover and Balance Scorecard
-          const positionInPage = sectionIndex % 2; // 0 or 1 for two sections
-          const yPosition = marginTop + positionInPage * (sectionHeight + marginBetween);
+          // Other sections: Three per page
+          const sectionIndex = i - (selectedCharts.balanceScorecard ? 2 : 1);
+          const positionInPage = sectionIndex % 3;
+          const yPosition = marginTop + positionInPage * (threeSectionHeight + marginBetween);
 
           if (positionInPage === 0 && sectionIndex > 0) {
             pdf.addPage();
           }
 
-          pdf.addImage(imgData, 'JPEG', 0, yPosition, pdfWidth, sectionHeight);
+          pdf.addImage(imgData, 'JPEG', 0, yPosition, pdfWidth, threeSectionHeight);
         }
 
         // Save after the last section
@@ -215,15 +215,10 @@ export default function ExportReportComponent({ onClose }) {
         {/* Cover Page */}
         <div className="cover-page print-page">
           <div className="text-center space-y-4">
-            <div className="inline-block p-4 bg-blue-600 rounded-full shadow-2xl">
-              <Building2 className="w-16 h-16 text-white" />
-            </div>
-            
             <div className="space-y-2">
               <h1 className="text-5xl font-bold text-gray-900">
                 {t('performanceReportChart') || 'Performance Report'}
               </h1>
-              <div className="h-1 w-24 bg-blue-600 mx-auto rounded"></div>
               <p className="text-xl text-gray-600">
                 {t('comprehensiveAnalysis') || 'Comprehensive Performance Analysis'}
               </p>
@@ -497,7 +492,7 @@ export default function ExportReportComponent({ onClose }) {
 
           .report-section {
             width: 100% !important;
-            padding: 1cm !important;
+            padding: 0.5cm !important;
             margin: 0 !important;
             background: white !important;
             box-shadow: none !important;
@@ -507,12 +502,18 @@ export default function ExportReportComponent({ onClose }) {
           .section-header {
             page-break-after: avoid;
             break-after: avoid;
-            margin-bottom: 0.5cm !important;
+            margin-bottom: 0.3cm !important;
           }
 
           .section-header h2 {
             page-break-after: avoid;
             break-after: avoid;
+            font-size: 16pt !important;
+          }
+
+          .section-header p {
+            font-size: 9pt !important;
+            margin-bottom: 0.3cm !important;
           }
 
           .chart-container {
@@ -521,6 +522,7 @@ export default function ExportReportComponent({ onClose }) {
             width: 100% !important;
             overflow: visible !important;
             position: static !important;
+            padding: 0.3cm !important;
           }
 
           .recharts-wrapper,
@@ -530,35 +532,39 @@ export default function ExportReportComponent({ onClose }) {
           }
 
           body {
-            font-size: 11pt !important;
+            font-size: 9pt !important;
             line-height: 1.4 !important;
           }
 
           h1 {
-            font-size: 28pt !important;
+            font-size: 24pt !important;
           }
 
           h2 {
-            font-size: 20pt !important;
-          }
-
-          h3 {
             font-size: 16pt !important;
           }
 
+          h3 {
+            font-size: 12pt !important;
+          }
+
           .grid {
-            display: block !important;
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 0.3cm !important;
           }
 
           .grid > * {
             page-break-inside: avoid;
             break-inside: avoid;
-            margin-bottom: 0.5cm;
+            margin-bottom: 0 !important;
+            flex: 1 !important;
           }
 
           p, li {
             orphans: 3;
             widows: 3;
+            font-size: 9pt !important;
           }
 
           * {
@@ -659,7 +665,7 @@ function OrganizationPerformanceChart() {
 
   return (
     <div>
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={200}>
         <BarChart data={organizationalChart} margin={{ left: 20, right: 20 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
@@ -681,27 +687,27 @@ function AchievedGoalsChart() {
 
   return (
     <div className="text-center">
-      <h3 className="text-xl font-bold text-green-700 mb-4">{t('completed') || 'Completed Goals'}</h3>
+      <h3 className="text-base font-bold text-green-700 mb-2">{t('completed') || 'Completed Goals'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="200" height="200" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="#e0e0e0" strokeWidth="20" />
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
           <circle
-            cx="100"
-            cy="100"
-            r="80"
+            cx="50"
+            cy="50"
+            r="40"
             fill="none"
             stroke="#22c55e"
-            strokeWidth="20"
-            strokeDasharray={`${(percentage / 100) * 502.65} 502.65`}
-            transform="rotate(-90 100 100)"
+            strokeWidth="10"
+            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
+            transform="rotate(-90 50 50)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-4xl font-bold text-gray-900">{Completed}</span>
-          <span className="text-sm text-gray-600">/ {Total}</span>
+          <span className="text-xl font-bold text-gray-900">{Completed}</span>
+          <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-lg font-semibold text-green-600 mt-4">{percentage}% Complete</p>
+      <p className="text-sm font-semibold text-green-600 mt-2">{percentage}% Complete</p>
     </div>
   );
 }
@@ -714,27 +720,27 @@ function PartiallyAchievedGoalsChart() {
 
   return (
     <div className="text-center">
-      <h3 className="text-xl font-bold text-yellow-700 mb-4">{t('inProgress') || 'In Progress'}</h3>
+      <h3 className="text-base font-bold text-yellow-700 mb-2">{t('inProgress') || 'In Progress'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="200" height="200" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="#e0e0e0" strokeWidth="20" />
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
           <circle
-            cx="100"
-            cy="100"
-            r="80"
+            cx="50"
+            cy="50"
+            r="40"
             fill="none"
             stroke="#eab308"
-            strokeWidth="20"
-            strokeDasharray={`${(percentage / 100) * 502.65} 502.65`}
-            transform="rotate(-90 100 100)"
+            strokeWidth="10"
+            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
+            transform="rotate(-90 50 50)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-4xl font-bold text-gray-900">{InProgress}</span>
-          <span className="text-sm text-gray-600">/ {Total}</span>
+          <span className="text-xl font-bold text-gray-900">{InProgress}</span>
+          <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-lg font-semibold text-yellow-600 mt-4">{percentage}% In Progress</p>
+      <p className="text-sm font-semibold text-yellow-600 mt-2">{percentage}% In Progress</p>
     </div>
   );
 }
@@ -747,27 +753,27 @@ function NotAchievedGoalsChart() {
 
   return (
     <div className="text-center">
-      <h3 className="text-xl font-bold text-red-700 mb-4">{t('notStarted') || 'Not Started'}</h3>
+      <h3 className="text-base font-bold text-red-700 mb-2">{t('notStarted') || 'Not Started'}</h3>
       <div className="relative inline-block mx-4">
-        <svg width="200" height="200" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="#e0e0e0" strokeWidth="20" />
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="10" />
           <circle
-            cx="100"
-            cy="100"
-            r="80"
+            cx="50"
+            cy="50"
+            r="40"
             fill="none"
             stroke="#ef4444"
-            strokeWidth="20"
-            strokeDasharray={`${(percentage / 100) * 502.65} 502.65`}
-            transform="rotate(-90 100 100)"
+            strokeWidth="10"
+            strokeDasharray={`${(percentage / 100) * 251.33} 251.33`}
+            transform="rotate(-90 50 50)"
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-4xl font-bold text-gray-900">{NotStarted}</span>
-          <span className="text-sm text-gray-600">/ {Total}</span>
+          <span className="text-xl font-bold text-gray-900">{NotStarted}</span>
+          <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-lg font-semibold text-red-600 mt-4">{percentage}% Not Started</p>
+      <p className="text-sm font-semibold text-red-600 mt-2">{percentage}% Not Started</p>
     </div>
   );
 }
@@ -797,7 +803,7 @@ function ComparativeTrendsChart() {
   };
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={200}>
       <LineChart data={transformedTrends} margin={{ left: 20, right: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month" />
@@ -827,7 +833,7 @@ function FinancialTrendsChart() {
   const trendsData = trends?.financial || [];
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={200}>
       <BarChart data={trendsData} margin={{ left: 20, right: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month" />
@@ -846,7 +852,7 @@ function InnovationTrendsChart() {
   const innovationData = trends?.innovation || [];
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={200}>
       <BarChart data={innovationData} margin={{ left: 20, right: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month" />
