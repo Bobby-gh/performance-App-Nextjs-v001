@@ -47,7 +47,8 @@ export default function ExportReportComponent({ onClose }) {
       const elements = chartsRef.current.querySelectorAll('.print-page');
       const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
       const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
-      const sectionHeight = (pdfHeight - 25) / 2; // ~136mm (297mm - 10mm top - 10mm bottom - 5mm gap)
+      const sectionHeight = (pdfHeight - 25) / 2; // ~136mm for two sections
+      const fullPageHeight = pdfHeight - 20; // ~277mm for full page
       const marginBetween = 5; // 5mm between sections
       const marginTop = 10; // 10mm top margin
 
@@ -62,16 +63,16 @@ export default function ExportReportComponent({ onClose }) {
         const imgProps = pdf.getImageProperties(imgData);
         const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-        if (i === 0) {
-          // Cover page: Full A4 page
-          const coverHeight = Math.min(imgHeight, pdfHeight - 20); // Fit within A4 with 10mm margins
-          pdf.addImage(imgData, 'JPEG', 0, 10, pdfWidth, coverHeight);
-          if (elements.length > 1) {
-            pdf.addPage(); // Add new page for remaining sections
+        if (i === 0 || (i === 1 && selectedCharts.balanceScorecard)) {
+          // Cover page or Balance Scorecard: Full A4 page
+          const targetHeight = Math.min(imgHeight, fullPageHeight);
+          pdf.addImage(imgData, 'JPEG', 0, 10, pdfWidth, targetHeight);
+          if (i < elements.length - 1) {
+            pdf.addPage();
           }
         } else {
           // Other sections: Two per page
-          const sectionIndex = i - 1; // Adjust for cover page
+          const sectionIndex = i - (selectedCharts.balanceScorecard ? 2 : 1); // Adjust for cover and Balance Scorecard
           const positionInPage = sectionIndex % 2; // 0 or 1 for two sections
           const yPosition = marginTop + positionInPage * (sectionHeight + marginBetween);
 
@@ -214,10 +215,15 @@ export default function ExportReportComponent({ onClose }) {
         {/* Cover Page */}
         <div className="cover-page print-page">
           <div className="text-center space-y-4">
+            <div className="inline-block p-4 bg-blue-600 rounded-full shadow-2xl">
+              <Building2 className="w-16 h-16 text-white" />
+            </div>
+            
             <div className="space-y-2">
               <h1 className="text-5xl font-bold text-gray-900">
                 {t('performanceReportChart') || 'Performance Report'}
               </h1>
+              <div className="h-1 w-24 bg-blue-600 mx-auto rounded"></div>
               <p className="text-xl text-gray-600">
                 {t('comprehensiveAnalysis') || 'Comprehensive Performance Analysis'}
               </p>
@@ -254,7 +260,7 @@ export default function ExportReportComponent({ onClose }) {
                 {t('balanceScorecardDesc') || 'Overview of key performance indicators across all business dimensions'}
               </p>
             </div>
-            <div className="chart-container bg-gradient-to-br from-blue-50 to-white p-4 rounded-xl">
+            <div className="chart-container bg-gradient-to-br from-blue-50 to-white p-6 rounded-xl">
               <BalanceScorecardChart />
             </div>
           </div>
@@ -416,12 +422,11 @@ export default function ExportReportComponent({ onClose }) {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          min-height: 297mm; /* Match A4 height for full-page rendering */
+          min-height: 297mm;
         }
 
         /* Critical Print Styles */
         @media print {
-          /* Reset all positioning and overflow issues */
           * {
             overflow: visible !important;
             position: static !important;
@@ -438,7 +443,6 @@ export default function ExportReportComponent({ onClose }) {
             -webkit-print-color-adjust: exact;
           }
 
-          /* Hide non-printable elements */
           .no-print,
           .header-controls,
           button,
@@ -446,7 +450,6 @@ export default function ExportReportComponent({ onClose }) {
             display: none !important;
           }
 
-          /* Container adjustments */
           .report-container {
             width: 100% !important;
             max-width: none !important;
@@ -466,13 +469,11 @@ export default function ExportReportComponent({ onClose }) {
             position: static !important;
           }
 
-          /* Page setup */
           @page {
             size: A4 portrait;
             margin: 1cm;
           }
 
-          /* Page breaks */
           .print-page {
             page-break-after: always;
             page-break-inside: avoid;
@@ -522,14 +523,12 @@ export default function ExportReportComponent({ onClose }) {
             position: static !important;
           }
 
-          /* Ensure charts render properly */
           .recharts-wrapper,
           .recharts-surface {
             overflow: visible !important;
             position: static !important;
           }
 
-          /* Typography adjustments for print */
           body {
             font-size: 11pt !important;
             line-height: 1.4 !important;
@@ -547,7 +546,6 @@ export default function ExportReportComponent({ onClose }) {
             font-size: 16pt !important;
           }
 
-          /* Grid layouts for print */
           .grid {
             display: block !important;
           }
@@ -558,13 +556,11 @@ export default function ExportReportComponent({ onClose }) {
             margin-bottom: 0.5cm;
           }
 
-          /* Prevent orphans and widows */
           p, li {
             orphans: 3;
             widows: 3;
           }
 
-          /* Color preservation */
           * {
             print-color-adjust: exact !important;
             -webkit-print-color-adjust: exact !important;
@@ -575,8 +571,6 @@ export default function ExportReportComponent({ onClose }) {
     </div>
   );
 }
-
-// Chart Components with Real Data
 
 function BalanceScorecardChart() {
   const { t } = useTranslation();
@@ -612,10 +606,10 @@ function BalanceScorecardChart() {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
-    <div className="flex flex-col space-y-6">
+    <div className="flex flex-col space-y-8">
       <div>
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={data}>
+        <ResponsiveContainer width="100%" height={350}>
+          <BarChart data={data} margin={{ left: 20, right: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="category" angle={-45} textAnchor="end" height={80} />
             <YAxis />
@@ -627,15 +621,15 @@ function BalanceScorecardChart() {
         </ResponsiveContainer>
       </div>
       <div>
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
+        <ResponsiveContainer width="100%" height={350}>
+          <PieChart margin={{ left: 20, right: 20 }}>
             <Pie
               data={data}
               dataKey="percentage"
               nameKey="category"
               cx="50%"
               cy="50%"
-              outerRadius={100}
+              outerRadius={120}
               label={(entry) => `${entry.category}: ${entry.percentage.toFixed(1)}%`}
             >
               {data.map((entry, index) => (
@@ -666,7 +660,7 @@ function OrganizationPerformanceChart() {
   return (
     <div>
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={organizationalChart}>
+        <BarChart data={organizationalChart} margin={{ left: 20, right: 20 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
           <YAxis domain={[0, 100]} />
@@ -688,7 +682,7 @@ function AchievedGoalsChart() {
   return (
     <div className="text-center">
       <h3 className="text-xl font-bold text-green-700 mb-4">{t('completed') || 'Completed Goals'}</h3>
-      <div className="relative inline-block">
+      <div className="relative inline-block mx-4">
         <svg width="200" height="200" viewBox="0 0 200 200">
           <circle cx="100" cy="100" r="80" fill="none" stroke="#e0e0e0" strokeWidth="20" />
           <circle
@@ -721,7 +715,7 @@ function PartiallyAchievedGoalsChart() {
   return (
     <div className="text-center">
       <h3 className="text-xl font-bold text-yellow-700 mb-4">{t('inProgress') || 'In Progress'}</h3>
-      <div className="relative inline-block">
+      <div className="relative inline-block mx-4">
         <svg width="200" height="200" viewBox="0 0 200 200">
           <circle cx="100" cy="100" r="80" fill="none" stroke="#e0e0e0" strokeWidth="20" />
           <circle
@@ -754,7 +748,7 @@ function NotAchievedGoalsChart() {
   return (
     <div className="text-center">
       <h3 className="text-xl font-bold text-red-700 mb-4">{t('notStarted') || 'Not Started'}</h3>
-      <div className="relative inline-block">
+      <div className="relative inline-block mx-4">
         <svg width="200" height="200" viewBox="0 0 200 200">
           <circle cx="100" cy="100" r="80" fill="none" stroke="#e0e0e0" strokeWidth="20" />
           <circle
@@ -804,7 +798,7 @@ function ComparativeTrendsChart() {
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={transformedTrends}>
+      <LineChart data={transformedTrends} margin={{ left: 20, right: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month" />
         <YAxis domain={[0, 100]} />
@@ -817,7 +811,7 @@ function ComparativeTrendsChart() {
             dataKey={category}
             stroke={colors[category] || "#8884d8"}
             name={t(category) || category}
-            strokeWidth= {2}
+            strokeWidth={2}
             dot={{ r: 4 }}
             activeDot={{ r: 6 }}
           />
@@ -834,13 +828,13 @@ function FinancialTrendsChart() {
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={trendsData}>
+      <BarChart data={trendsData} margin={{ left: 20, right: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month" />
         <YAxis domain={[0, 100]} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="average_performance" fill="#08397e" name={t('financialTrends') || 'Financial Performance'} />
+        <Bar dataKey="average_performance" fill="#08397e" name={t('financialPerformance') || 'Financial Performance'} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -853,13 +847,13 @@ function InnovationTrendsChart() {
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={innovationData}>
+      <BarChart data={innovationData} margin={{ left: 20, right: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month" />
         <YAxis domain={[0, 100]} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="average_performance" fill="#10b981" name={t('innovationTrends') || 'Innovation Performance'} />
+        <Bar dataKey="average_performance" fill="#10b981" name={t('innovationPerformance') || 'Innovation Performance'} />
       </BarChart>
     </ResponsiveContainer>
   );
