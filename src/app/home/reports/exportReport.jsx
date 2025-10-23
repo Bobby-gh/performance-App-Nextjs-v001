@@ -851,7 +851,7 @@ function FinancialTrendsChart() {
         <YAxis domain={[0, 100]} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="average_performance" fill="#08397e" name={t('financialPerformance') || 'Financial Performance'} />
+        <Bar dataKey="average_performance" fill="#08397e" name={t('financialTrends') || 'Financial Performance'} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -870,7 +870,7 @@ function InnovationTrendsChart() {
         <YAxis domain={[0, 100]} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="average_performance" fill="#10b981" name={t('innovationPerformance') || 'Innovation Performance'} />
+        <Bar dataKey="average_performance" fill="#10b981" name={t('innovationTrends') || 'Innovation Performance'} />
       </BarChart>
     </ResponsiveContainer>
   );
