@@ -38,7 +38,7 @@ export function InformationalSummary() {
   const { t } = useTranslation();
   const { goalStatus } = useGoalStatus();
   console.log({ "goal count desctruction": goalStatus });
-  const { Completed, InProgress, NotStarted } = goalStatus;
+  const { Completed, InProgress, NotStarted, Total } = goalStatus;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-2">
@@ -99,34 +99,22 @@ export function InformationalSummary() {
         </div>
       </div>
 
-      {/* Target Card */}
-      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-purple-500">
-        <div className="flex items-start justify-between mb-4">
-          <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg">
-            <Target className="text-white" size={24} />
+      {/* Total */}
+
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-orange-500">
+        <div className="flex items-start justify-between mb-6">
+          <div className="p-3 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg">
+            <Clock className="text-white" size={24} />
           </div>
           <div className="text-right">
-            <p className="text-sm text-gray-500 font-medium mb-1">{t("target")}</p>
-            <div className="flex items-baseline justify-end gap-1">
-              <h3 className="text-4xl font-bold text-gray-800">200</h3>
-              <span className="text-lg text-gray-400 font-semibold">/100</span>
-            </div>
+            <p className="text-sm text-gray-500 font-medium mb-1">{t("total")}</p>
+            <h3 className="text-4xl font-bold text-gray-800">{Total}</h3>
           </div>
         </div>
         
         <div className="pt-4 border-t border-gray-100">
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-red-50 rounded-lg p-2">
-              <p className="text-xs text-red-600 font-medium mb-1">{t("remaining")}</p>
-              <p className="text-xl font-bold text-red-700">40</p>
-            </div>
-            <div className="bg-purple-50 rounded-lg p-2">
-              <p className="text-xs text-purple-600 font-medium mb-1">vs {t("lastMonth")}</p>
-              <p className="text-xl font-bold text-purple-700 flex items-center gap-1">
-                30%
-                <TrendingUp size={16} />
-              </p>
-            </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">{t("thanLastMonth")}</span>
           </div>
         </div>
       </div>
