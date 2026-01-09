@@ -505,7 +505,7 @@ export function NotAchievedChart() {
 
 export default function TargetAchievementChart() {
   // Dummy data - 12 months
-  const payload = [
+  const data = [
     { month: 'Jan', target: 100, achievement: 85 },
     { month: 'Feb', target: 100, achievement: 95 },
     { month: 'Mar', target: 100, achievement: 110 },
@@ -522,6 +522,7 @@ export default function TargetAchievementChart() {
 
   // Custom tooltip
   const CustomTooltip = ({ active, payload }) => {
+    console.log({ payload: payload, active });
     if (active && payload && payload.length) {
       const achievement = payload.find(p => p.dataKey === 'achievement')?.value;
       const target = payload.find(p => p.dataKey === 'target')?.value;
