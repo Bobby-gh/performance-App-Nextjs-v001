@@ -99,16 +99,16 @@ export function InformationalSummary() {
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="flex">
-          <div className="card  bg-white rounded-lg p-4">
+          <div className="card  bg-red rounded-lg p-1">
             <span className="flex flex-col items-end">
-            <h3>{t("remaining")}</h3>
-            <h3 className="font-bold text-3xl">40</h3>
+            <h4>{t("remaining")}</h4>
+            <h3 className="font-bold text-1xl">40</h3>
           </span>
           </div>
-          <div className="card  bg-white rounded-lg p-4">
+          <div className="card  bg-blue rounded-lg p-1">
             <span className="flex flex-col items-end">
-            <h3> Vs {t("lastMonth")}</h3>
-            <h3 className="font-bold text-3xl">30% ↑</h3>
+            <h4> Vs {t("lastMonth")}</h4>
+            <h3 className="font-bold text-1xl">30% ↑</h3>
           </span>
           </div>
         </div>
