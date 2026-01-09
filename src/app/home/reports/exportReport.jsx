@@ -37,6 +37,7 @@ export default function ExportReportComponent({ onClose }) {
     achievedGoals: true,
     notAchievedGoals: true,
     partiallyAchievedGoals: true,
+    financialProjections: true,
     comparativeTrends: true,
     financialTrends: true,
     innovationTrends: true,
@@ -291,6 +292,26 @@ export default function ExportReportComponent({ onClose }) {
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Financial Export Graph*/}
+        {selectedCharts.financialProjections && (
+          <div className="report-section print-page">
+            <div className="section-header">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-2 h-8 bg-purple-600 rounded"></div>
+                <h2 className="text-3xl font-bold text-gray-900">
+                  {t('financialProjections') || 'Financial Projections'}
+                </h2>
+              </div>
+              <p className="text-gray-600 ml-5 mb-6">
+                {t('financialProjectionsDesc') || 'Projected financial performance and forecasts'}
+              </p>
+            </div>
+            <div className="chart-container bg-gradient-to-br from-purple-50 to-white p-6 rounded-xl">
+              <FinancialProjectionExport />
+            </div>
           </div>
         )}
 
