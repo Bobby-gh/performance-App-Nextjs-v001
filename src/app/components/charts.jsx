@@ -566,7 +566,7 @@ export default function TargetAchievementChart() {
           <XAxis 
             dataKey="month" 
             stroke="#9ca3af"
-            style={{ fontSize: '12px' }}
+            stick={{ fontSize: 12 }}
           />
           <YAxis 
             stroke="#9ca3af"
