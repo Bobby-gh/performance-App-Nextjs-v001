@@ -26,6 +26,7 @@ import {
 } from '../../api/databook/route-data';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import FinancialProjections from '@/app/components/widgets';
 
 export default function ExportReportComponent({ onClose }) {
   const { t } = useTranslation();
@@ -690,6 +691,14 @@ function BalanceScorecardChart() {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+function FinancialProjectionExport() {
+  return (
+    <div className="mt-8 mx-8">
+      <FinancialProjections/> 
     </div>
   );
 }
