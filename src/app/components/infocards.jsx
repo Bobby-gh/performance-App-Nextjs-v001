@@ -1263,7 +1263,7 @@ export function GoalDetails({ open, onClose }) {
       const goalId = getGoalIdToUse();
 
       try {
-        const res = await axios.patch(
+        const res = await axios.post(
           UPDATE_GOAL_PROGRESS,
           {
             goalId,
