@@ -339,7 +339,7 @@ const FinancialCard = ({ data }) => {
   const isPositive = trend === 'up';
   
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 w-80">
+    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full">
       {/* Header with trend badge */}
       <div className="flex justify-between items-start mb-4">
         <div>
