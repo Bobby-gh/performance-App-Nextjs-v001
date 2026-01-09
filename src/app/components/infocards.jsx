@@ -32,7 +32,7 @@ import {
   Cell,
 } from "recharts";
 import { FiTarget, FiCalendar, FiClock } from "react-icons/fi";
-import { Trophy, ThumbsUp, Clock, Target, TrendingUp, TrendingDown } from 'lucide-react';
+import { Trophy, ThumbsUp, Clock, Target, TrendingUp, TrendingDown, TargetIcon } from 'lucide-react';
 
 export function InformationalSummary() {
   const { t } = useTranslation();
@@ -101,10 +101,10 @@ export function InformationalSummary() {
 
       {/* Total */}
 
-      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-orange-500">
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-pink-500">
         <div className="flex items-start justify-between mb-6">
-          <div className="p-3 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg">
-            <Clock className="text-white" size={24} />
+          <div className="p-3 bg-gradient-to-br from-red-500 to-red-600 rounded-xl shadow-lg">
+            <TargetIcon className="text-white" size={24} />
           </div>
           <div className="text-right">
             <p className="text-sm text-gray-500 font-medium mb-1">{t("total")}</p>
