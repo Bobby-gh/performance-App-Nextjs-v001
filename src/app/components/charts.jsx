@@ -15,7 +15,6 @@ import {
   Line,
   ReferenceLine,
 } from "recharts";
-import { TrendingUp, TrendingDown } from 'lucide-react';
 import { Gauge, gaugeClasses, BarChart as MuiBarchart } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
 import {
@@ -505,8 +504,6 @@ export function NotAchievedChart() {
 }
 
 export default function TargetAchievementChart() {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-
   // Dummy data - 12 months
   const data = [
     { month: 'Jan', target: 100, achievement: 85 },
@@ -523,30 +520,34 @@ export default function TargetAchievementChart() {
     { month: 'Dec', target: 100, achievement: 118 },
   ];
 
-  const maxValue = 130;
-  const minValue = 80;
-  const chartHeight = 300;
-  const chartWidth = 800;
-  const padding = { top: 20, right: 40, bottom: 40, left: 40 };
+  // Custom tooltip
+  const CustomTooltip = ({ active, payload }) => {
+    console.log({ payload: payload, active });
+    if (active && payload && payload.length) {
+      const achievement = payload.find(p => p.dataKey === 'achievement')?.value;
+      const target = payload.find(p => p.dataKey === 'target')?.value;
+      const difference = achievement - target;
+      const isAbove = difference >= 0;
 
-  const scaleY = (value) => {
-    return chartHeight - padding.bottom - ((value - minValue) / (maxValue - minValue)) * (chartHeight - padding.top - padding.bottom);
+      return (
+        <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+          <p className="font-semibold text-gray-700 mb-2">{payload[0].payload.month}</p>
+          <div className="space-y-1">
+            <p className="text-sm">
+              <span className="text-purple-600 font-medium">Target:</span> {target}
+            </p>
+            <p className="text-sm">
+              <span className="text-blue-600 font-medium">Achievement:</span> {achievement}
+            </p>
+            <p className={`text-sm font-semibold ${isAbove ? 'text-green-600' : 'text-red-600'}`}>
+              {isAbove ? '↑' : '↓'} {Math.abs(difference)} ({isAbove ? 'Above' : 'Below'} Target)
+            </p>
+          </div>
+        </div>
+      );
+    }
+    return null;
   };
-
-  const scaleX = (index) => {
-    return padding.left + (index / (data.length - 1)) * (chartWidth - padding.left - padding.right);
-  };
-
-  const targetPath = data.map((d, i) => 
-    `${i === 0 ? 'M' : 'L'} ${scaleX(i)},${scaleY(d.target)}`
-  ).join(' ');
-
-  const achievementPath = data.map((d, i) => 
-    `${i === 0 ? 'M' : 'L'} ${scaleX(i)},${scaleY(d.achievement)}`
-  ).join(' ');
-
-  const avgAchievement = Math.round(data.reduce((sum, d) => sum + d.achievement, 0) / data.length);
-  const performance = avgAchievement - 100;
 
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -555,129 +556,48 @@ export default function TargetAchievementChart() {
         <p className="text-sm text-gray-500">Monthly performance comparison</p>
       </div>
 
-      <div className="relative">
-        <svg width="100%" height={chartHeight} viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="overflow-visible">
-          {/* Grid lines */}
-          {[80, 90, 100, 110, 120, 130].map((value) => (
-            <g key={value}>
-              <line
-                x1={padding.left}
-                y1={scaleY(value)}
-                x2={chartWidth - padding.right}
-                y2={scaleY(value)}
-                stroke="#f0f0f0"
-                strokeWidth="1"
-              />
-              <text
-                x={padding.left - 10}
-                y={scaleY(value) + 4}
-                textAnchor="end"
-                fontSize="12"
-                fill="#9ca3af"
-              >
-                {value}
-              </text>
-            </g>
-          ))}
-
-          {/* Target line (dashed) */}
-          <path
-            d={targetPath}
-            fill="none"
-            stroke="#9333ea"
-            strokeWidth="3"
-            strokeDasharray="8 4"
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <XAxis 
+            dataKey="month" 
+            stroke="#9ca3af"
+            style={{ fontSize: '12px' }}
           />
-
-          {/* Achievement line (solid) */}
-          <path
-            d={achievementPath}
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth="3"
+          <YAxis 
+            stroke="#9ca3af"
+            style={{ fontSize: '12px' }}
           />
-
-          {/* Data points and labels */}
-          {data.map((d, i) => {
-            const x = scaleX(i);
-            const yTarget = scaleY(d.target);
-            const yAchievement = scaleY(d.achievement);
-            const isHovered = hoveredIndex === i;
-            const difference = d.achievement - d.target;
-            const isAbove = difference >= 0;
-
-            return (
-              <g key={i}>
-                {/* Target dot */}
-                <circle
-                  cx={x}
-                  cy={yTarget}
-                  r={isHovered ? 6 : 4}
-                  fill="#9333ea"
-                  className="transition-all cursor-pointer"
-                />
-
-                {/* Achievement dot */}
-                <circle
-                  cx={x}
-                  cy={yAchievement}
-                  r={isHovered ? 7 : 5}
-                  fill="#3b82f6"
-                  className="transition-all cursor-pointer"
-                  onMouseEnter={() => setHoveredIndex(i)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                />
-
-                {/* Month label */}
-                <text
-                  x={x}
-                  y={chartHeight - padding.bottom + 20}
-                  textAnchor="middle"
-                  fontSize="12"
-                  fill="#9ca3af"
-                >
-                  {d.month}
-                </text>
-
-                {/* Tooltip on hover */}
-                {isHovered && (
-                  <g>
-                    <foreignObject
-                      x={x - 70}
-                      y={yAchievement - 100}
-                      width="140"
-                      height="90"
-                    >
-                      <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200 text-xs">
-                        <p className="font-semibold text-gray-700 mb-2">{d.month}</p>
-                        <div className="space-y-1">
-                          <p><span className="text-purple-600 font-medium">Target:</span> {d.target}</p>
-                          <p><span className="text-blue-600 font-medium">Achievement:</span> {d.achievement}</p>
-                          <p className={`font-semibold ${isAbove ? 'text-green-600' : 'text-red-600'}`}>
-                            {isAbove ? '↑' : '↓'} {Math.abs(difference)} ({isAbove ? 'Above' : 'Below'})
-                          </p>
-                        </div>
-                      </div>
-                    </foreignObject>
-                  </g>
-                )}
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* Legend */}
-        <div className="flex justify-center gap-6 mt-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-0.5 bg-purple-600" style={{ borderTop: '3px dashed #9333ea' }}></div>
-            <span className="text-sm text-gray-600">Target</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-0.5 bg-blue-600"></div>
-            <span className="text-sm text-gray-600">Achievement</span>
-          </div>
-        </div>
-      </div>
+          <Tooltip content={<CustomTooltip />} />
+          <Legend 
+            wrapperStyle={{ paddingTop: '20px' }}
+            iconType="line"
+          />
+          
+          {/* Target line - dashed */}
+          <Line 
+            type="monotone" 
+            dataKey="target" 
+            stroke="#9333ea" 
+            strokeWidth={3}
+            strokeDasharray="5 5"
+            dot={{ fill: '#9333ea', r: 4 }}
+            activeDot={{ r: 6 }}
+            name="Target"
+          />
+          
+          {/* Achievement line - solid */}
+          <Line 
+            type="monotone" 
+            dataKey="achievement" 
+            stroke="#3b82f6" 
+            strokeWidth={3}
+            dot={{ fill: '#3b82f6', r: 5 }}
+            activeDot={{ r: 7 }}
+            name="Achievement"
+          />
+        </LineChart>
+      </ResponsiveContainer>
 
       {/* Summary stats */}
       <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-100">
@@ -687,14 +607,11 @@ export default function TargetAchievementChart() {
         </div>
         <div className="text-center">
           <p className="text-xs text-gray-500 mb-1">Avg Achievement</p>
-          <p className="text-2xl font-bold text-blue-600">{avgAchievement}</p>
+          <p className="text-2xl font-bold text-blue-600">107</p>
         </div>
         <div className="text-center">
           <p className="text-xs text-gray-500 mb-1">Performance</p>
-          <p className={`text-2xl font-bold flex items-center justify-center gap-1 ${performance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-            {performance >= 0 ? <TrendingUp size={20} /> : <TrendingDown size={20} />}
-            {performance >= 0 ? '+' : ''}{performance}%
-          </p>
+          <p className="text-2xl font-bold text-green-600">+7%</p>
         </div>
       </div>
     </div>
