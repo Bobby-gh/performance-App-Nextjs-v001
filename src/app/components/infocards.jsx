@@ -94,7 +94,7 @@ export function InformationalSummary() {
           <span className="flex flex-col items-end">
             <h3>{t("target")}</h3>
             <h3 className="font-bold text-3xl">200</h3>
-            <h3 className="font-bold text-sm">/100</h3>
+            <p className="font-bold text-sm">/100</p>
           </span>
         </div>
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
