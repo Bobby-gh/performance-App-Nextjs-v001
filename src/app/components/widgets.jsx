@@ -357,8 +357,8 @@ const FinancialCard = ({ data }) => {
       {/* Value display */}
       <div className="mb-2">
         <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-bold text-gray-900">{value}</span>
-          <span className="text-xl font-semibold text-gray-900">{unit}</span>
+          <span className="text-xl font-bold text-gray-900">{value}</span>
+          {/* <span className="text-xl font-semibold text-gray-900">{unit}</span> */}
         </div>
         <p className="text-gray-500 text-sm mt-1">Target {target}</p>
       </div>
@@ -367,7 +367,7 @@ const FinancialCard = ({ data }) => {
       <div className="flex items-end justify-between gap-3 h-24 mt-6">
         {chartData.map((val, idx) => {
           const height = (val / maxValue) * 100;
-          const labels = ['Target', 'Achieved']; // Note: This assumes only 2 data points based on your original code
+          const labels = ['Target', 'Achieved']; 
           
           const isFirst = idx === 0;
           const isLast = idx === chartData.length - 1;
@@ -375,15 +375,13 @@ const FinancialCard = ({ data }) => {
           let barColor = 'bg-gray-400'; // Default for middle bars
           
           if (isFirst) {
-            // Requirement: Initial value is blue
-            barColor = 'bg-blue-500';
+            barColor = 'bg-gray-500';
           } else if (isLast) {
-             // Requirement: Compare last value to the one before it
              const prevVal = chartData[idx - 1];
              if (val < prevVal) {
-               barColor = 'bg-red-500';   // Lower than previous
+               barColor = 'bg-red-500';   
              } else {
-               barColor = 'bg-green-500'; // Higher (or equal) than previous
+               barColor = 'bg-green-500'; 
              }
           }
 
