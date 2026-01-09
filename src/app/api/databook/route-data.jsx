@@ -24,6 +24,7 @@ import {
   USER_RATING,
   USER_RATING_BY_ID,
   USER_BADGES_TABLE,
+  CORPORATE_GOALS,
 } from "../routes";
 
 /************************************************Get ROutes*************************************/
