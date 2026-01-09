@@ -420,7 +420,7 @@ const FinancialProjections = () => {
       target: (target).toFixed(1),
       trend,
       trendValue: `${progressPercent}%`,
-      chartData: [achieved, target - achieved],
+      chartData: [target, achieved],
     };
   });
 
