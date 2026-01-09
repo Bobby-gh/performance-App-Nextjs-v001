@@ -503,6 +503,8 @@ export function NotAchievedChart() {
   );
 }
 
+//target achieved implementation
+
 export default function TargetAchievementChart() {
   // Dummy data - 12 months
   const data = [
@@ -520,34 +522,7 @@ export default function TargetAchievementChart() {
     { month: 'Dec', target: 100, achievement: 118 },
   ];
 
-  // Custom tooltip
-  const CustomTooltip = ({ active, payload }) => {
-    console.log({ payload: payload, active });
-    if (active && payload && payload.length) {
-      const achievement = payload.find(p => p.dataKey === 'achievement')?.value;
-      const target = payload.find(p => p.dataKey === 'target')?.value;
-      const difference = achievement - target;
-      const isAbove = difference >= 0;
-
-      return (
-        <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-          <p className="font-semibold text-gray-700 mb-2">{payload[0].payload.month}</p>
-          <div className="space-y-1">
-            <p className="text-sm">
-              <span className="text-purple-600 font-medium">Target:</span> {target}
-            </p>
-            <p className="text-sm">
-              <span className="text-blue-600 font-medium">Achievement:</span> {achievement}
-            </p>
-            <p className={`text-sm font-semibold ${isAbove ? 'text-green-600' : 'text-red-600'}`}>
-              {isAbove ? '↑' : '↓'} {Math.abs(difference)} ({isAbove ? 'Above' : 'Below'} Target)
-            </p>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
+  console.log({ data: data });
 
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -568,7 +543,7 @@ export default function TargetAchievementChart() {
             stroke="#9ca3af"
             style={{ fontSize: '12px' }}
           />
-          {/* <Tooltip content={<CustomTooltip />} /> */}
+          <Tooltip content={<CustomTooltip />} />
           <Legend 
             wrapperStyle={{ paddingTop: '20px' }}
             iconType="line"
@@ -617,6 +592,35 @@ export default function TargetAchievementChart() {
     </div>
   );
 }
+
+const CustomTooltip = ({ active, payload }) => {
+    console.log({ payload: payload, active });
+    if (active && payload && payload.length) {
+      const achievement = payload.find(p => p.dataKey === 'achievement')?.value;
+      const target = payload.find(p => p.dataKey === 'target')?.value;
+      const difference = achievement - target;
+      const isAbove = difference >= 0;
+
+      return (
+        <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+          <p className="font-semibold text-gray-700 mb-2">{payload[0].payload.month}</p>
+          <div className="space-y-1">
+            <p className="text-sm">
+              <span className="text-purple-600 font-medium">Target:</span> {target}
+            </p>
+            <p className="text-sm">
+              <span className="text-blue-600 font-medium">Achievement:</span> {achievement}
+            </p>
+            <p className={`text-sm font-semibold ${isAbove ? 'text-green-600' : 'text-red-600'}`}>
+              {isAbove ? '↑' : '↓'} {Math.abs(difference)} ({isAbove ? 'Above' : 'Below'} Target)
+            </p>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
 
 export function OrganizationPerformanceReport() {
   const { t } = useTranslation();
