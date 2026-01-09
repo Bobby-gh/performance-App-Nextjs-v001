@@ -4,6 +4,7 @@ import {
   FaTrophy,
   FaThumbsUp,
   FaRegSmileWink,
+  FaBullseye,
 } from "react-icons/fa";
 import { useGoalStatus } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
@@ -83,6 +84,33 @@ export function InformationalSummary() {
         <hr className="h-px my-6 border-0 dark:bg-gray-700" />
         <div className="flex">
           <span className="ml-2">{t("thanLastMonth")}</span>
+        </div>
+      </div>
+      <div className="card  bg-white rounded-lg p-4">
+        <div className="flex justify-between mb-16">
+          <span className="p-4 bg-blue-900 text-white rounded-lg">
+            <FaBullseye size={20} />
+          </span>
+          <span className="flex flex-col items-end">
+            <h3>{t("target")}</h3>
+            <h3 className="font-bold text-3xl">200</h3>
+            <h3 className="font-bold text-sm">/100</h3>
+          </span>
+        </div>
+        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
+        <div className="flex">
+          <div className="card  bg-white rounded-lg p-4">
+            <span className="flex flex-col items-end">
+            <h3>{t("remaining")}</h3>
+            <h3 className="font-bold text-3xl">40</h3>
+          </span>
+          </div>
+          <div className="card  bg-white rounded-lg p-4">
+            <span className="flex flex-col items-end">
+            <h3> Vs {t("lastMonth")}</h3>
+            <h3 className="font-bold text-3xl">30%</h3>
+          </span>
+          </div>
         </div>
       </div>
     </div>
