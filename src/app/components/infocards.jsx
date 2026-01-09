@@ -107,7 +107,7 @@ export function InformationalSummary() {
           </div>
           <div className="card  bg-blue rounded-lg p-1">
             <span className="flex flex-col items-end">
-            <h4> Vs {t("lastMonth")}</h4>
+            <h4> vs {t("lastMonth")}</h4>
             <h3 className="font-bold text-1xl">30% ↑</h3>
           </span>
           </div>
