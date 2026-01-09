@@ -40,7 +40,7 @@ export function InformationalSummary() {
   const { Completed, InProgress, NotStarted } = goalStatus;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 ">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 ">
       <div className="card  bg-white rounded-lg p-4">
         <div className="flex justify-between mb-16">
           <span className="p-4 bg-blue-900 rounded-lg text-white">
@@ -108,7 +108,7 @@ export function InformationalSummary() {
           <div className="card  bg-white rounded-lg p-4">
             <span className="flex flex-col items-end">
             <h3> Vs {t("lastMonth")}</h3>
-            <h3 className="font-bold text-3xl">30%</h3>
+            <h3 className="font-bold text-3xl">30% ↑</h3>
           </span>
           </div>
         </div>
