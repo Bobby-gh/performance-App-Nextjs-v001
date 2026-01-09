@@ -375,7 +375,7 @@ const FinancialCard = ({ data }) => {
           let barColor = 'bg-gray-400'; // Default for middle bars
           
           if (isFirst) {
-            barColor = 'bg-gray-300';
+            barColor = 'bg-gray-400';
           } else if (isLast) {
              const prevVal = chartData[idx - 1];
              if (val < prevVal) {
