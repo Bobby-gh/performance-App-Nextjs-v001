@@ -40,76 +40,92 @@ export function InformationalSummary() {
   const { Completed, InProgress, NotStarted } = goalStatus;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 ">
-      <div className="card  bg-white rounded-lg p-4">
-        <div className="flex justify-between mb-16">
-          <span className="p-4 bg-blue-900 rounded-lg text-white">
-            <FaTrophy size={20} />
-          </span>
-          <span className="flex flex-col items-end">
-            <h3>{t("completed")}</h3>
-            <h3 className="font-bold text-3xl">{Completed}</h3>
-          </span>
-        </div>
-        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
-        <div className="flex">
-          <span className="ml-2">{t("thanLastMonth")}</span>
-        </div>
-      </div>
-      <div className="card bg-white rounded-lg p-4">
-        <div className="flex justify-between mb-16">
-          <span className="p-4 bg-blue-900 text-white rounded-lg">
-            <FaThumbsUp size={20} />
-          </span>
-          <span className="flex flex-col items-end">
-            <h3>{t("inProgress")}</h3>
-            <h3 className="font-bold text-3xl">{InProgress}</h3>
-          </span>
-        </div>
-        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
-        <div className="flex">
-          <span className="ml-2">{t("thanLastMonth")}</span>
-        </div>
-      </div>
-      <div className="card  bg-white rounded-lg p-4">
-        <div className="flex justify-between mb-16">
-          <span className="p-4 bg-blue-900 text-white rounded-lg">
-            <FaThumbsDown size={20} />
-          </span>
-          <span className="flex flex-col items-end">
-            <h3>{t("notStarted")}</h3>
-            <h3 className="font-bold text-3xl">{NotStarted}</h3>
-          </span>
-        </div>
-        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
-        <div className="flex">
-          <span className="ml-2">{t("thanLastMonth")}</span>
-        </div>
-      </div>
-      <div className="card  bg-white rounded-lg p-4">
-        <div className="flex justify-between mb-16">
-          <span className="p-4 bg-blue-900 text-white rounded-lg">
-            <FaBullseye size={20} />
-          </span>
-          <span className="flex flex-col items-end">
-            <h3>{t("target")}</h3>
-            <h3 className="font-bold text-3xl">200</h3>
-            <p className="font-bold text-sm">/100</p>
-          </span>
-        </div>
-        <hr className="h-px my-6 border-0 dark:bg-gray-700" />
-        <div className="flex">
-          <div className="card  bg-red rounded-lg p-1">
-            <span className="flex flex-col items-end">
-            <h4>{t("remaining")}</h4>
-            <h3 className="font-bold text-1xl">40</h3>
-          </span>
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+      {/* Completed Card */}
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-green-500">
+        <div className="flex items-start justify-between mb-6">
+          <div className="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg">
+            <Trophy className="text-white" size={24} />
           </div>
-          <div className="card  bg-blue rounded-lg p-1">
-            <span className="flex flex-col items-end">
-            <h4> vs {t("lastMonth")}</h4>
-            <h3 className="font-bold text-1xl">30% ↑</h3>
-          </span>
+          <div className="text-right">
+            <p className="text-sm text-gray-500 font-medium mb-1">{t("completed")}</p>
+            <h3 className="text-4xl font-bold text-gray-800">{Completed}</h3>
+          </div>
+        </div>
+        
+        <div className="pt-4 border-t border-gray-100">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">{t("thanLastMonth")}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* In Progress Card */}
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-blue-500">
+        <div className="flex items-start justify-between mb-6">
+          <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+            <ThumbsUp className="text-white" size={24} />
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-gray-500 font-medium mb-1">{t("inProgress")}</p>
+            <h3 className="text-4xl font-bold text-gray-800">{InProgress}</h3>
+          </div>
+        </div>
+        
+        <div className="pt-4 border-t border-gray-100">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">{t("thanLastMonth")}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Not Started Card */}
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-orange-500">
+        <div className="flex items-start justify-between mb-6">
+          <div className="p-3 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg">
+            <Clock className="text-white" size={24} />
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-gray-500 font-medium mb-1">{t("notStarted")}</p>
+            <h3 className="text-4xl font-bold text-gray-800">{NotStarted}</h3>
+          </div>
+        </div>
+        
+        <div className="pt-4 border-t border-gray-100">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">{t("thanLastMonth")}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Target Card */}
+      <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-purple-500">
+        <div className="flex items-start justify-between mb-4">
+          <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg">
+            <Target className="text-white" size={24} />
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-gray-500 font-medium mb-1">{t("target")}</p>
+            <div className="flex items-baseline justify-end gap-1">
+              <h3 className="text-4xl font-bold text-gray-800">200</h3>
+              <span className="text-lg text-gray-400 font-semibold">/100</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="pt-4 border-t border-gray-100">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-red-50 rounded-lg p-2">
+              <p className="text-xs text-red-600 font-medium mb-1">{t("remaining")}</p>
+              <p className="text-xl font-bold text-red-700">40</p>
+            </div>
+            <div className="bg-purple-50 rounded-lg p-2">
+              <p className="text-xs text-purple-600 font-medium mb-1">vs {t("lastMonth")}</p>
+              <p className="text-xl font-bold text-purple-700 flex items-center gap-1">
+                30%
+                <TrendingUp size={16} />
+              </p>
+            </div>
           </div>
         </div>
       </div>
