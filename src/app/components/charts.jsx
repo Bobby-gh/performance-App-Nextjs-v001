@@ -505,7 +505,7 @@ export function NotAchievedChart() {
 
 export default function TargetAchievementChart() {
   // Dummy data - 12 months
-  const data = [
+  const payload = [
     { month: 'Jan', target: 100, achievement: 85 },
     { month: 'Feb', target: 100, achievement: 95 },
     { month: 'Mar', target: 100, achievement: 110 },
