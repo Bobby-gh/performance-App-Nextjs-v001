@@ -568,7 +568,7 @@ export default function TargetAchievementChart() {
             stroke="#9ca3af"
             style={{ fontSize: '12px' }}
           />
-          <Tooltip content={<CustomTooltip />} />
+          {/* <Tooltip content={<CustomTooltip />} /> */}
           <Legend 
             wrapperStyle={{ paddingTop: '20px' }}
             iconType="line"
