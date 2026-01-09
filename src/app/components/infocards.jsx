@@ -1255,43 +1255,41 @@ export function GoalDetails({ open, onClose }) {
   };
 
   const handleMarkAsCompleted = async () => {
-    if (!window.confirm(t('confirmMarkComplete') || 'Are you sure you want to mark this goal as completed?')) {
-      return;
-    }
-
-    setIsLoading(true);
-    const goalId = getGoalIdToUse();
-
-    try {
-      const res = await axios.patch(
-        UPDATE_GOAL_PROGRESS,
-        {
-          goalId,
-          progressIncrement: goal.target,
-          status: 'Completed',
-          comment: comment.trim() || t('defaultCompleteComment') || 'Goal completed',
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
-
-      if (res.status === 200) {
-        // showToast(t('goalMarkedCompleted'), 'success');
-        alert(t('goalMarkedCompleted') || 'Goal marked as completed!');
-        triggerComponent?.();
-        onClose?.(); // optional - close modal after success
+      if (!window.confirm(t('confirmMarkComplete') || "Are you sure you want to mark this goal as completed?")) {
+        return;
       }
-    } catch (err) {
-      console.error('Mark as completed failed:', err);
-      alert(`Error: ${err.response?.data?.message || err.message}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+
+      setIsLoading(true);
+      const goalId = getGoalIdToUse();
+
+      try {
+        const res = await axios.patch(
+          UPDATE_GOAL_PROGRESS,
+          {
+            goalId,
+            isComplete: true,              
+            comment: comment.trim() || t('defaultCompleteComment') || "Goal completed",
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.token}`,
+            },
+          }
+        );
+
+        if (res.status === 200) {
+          alert(t("goalMarkedCompleted") || "Goal marked as completed!");
+          triggerComponent?.();  
+          onClose?.();          
+        }
+      } catch (err) {
+        console.error("Failed to mark as completed:", err);
+        alert(`Error: ${err.response?.data?.message || err.message}`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
   const topInfoCards = [
     {
