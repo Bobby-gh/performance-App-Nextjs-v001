@@ -3,9 +3,9 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 i18n.use(initReactI18next).init({
-  fallbackLng: "en", // Default language
+  fallbackLng: "en",
   interpolation: {
-    escapeValue: false, // React already escapes values to prevent XSS
+    escapeValue: false,
   },
   resources: {
     en: {
@@ -14,7 +14,7 @@ i18n.use(initReactI18next).init({
         email: "Email",
         password: "Password",
         forgotPassword: "Forgot password?",
-        
+
         // Dashboard
         Dashboard: "Dashboard",
         performanceMatrix: "PERFORMANCE MATRIX",
@@ -34,7 +34,7 @@ i18n.use(initReactI18next).init({
         thanLastMonth: "Than last month",
         welcomeBack: "Welcome back",
         signOut: "Sign out",
-        averagePerformance: "AVERAGE PERFORMANCE",
+        averagePerformance: "Average Performance",
         selectDate: "Select Date",
         selectStaff: "Select a Staff",
         staff: "Staff",
@@ -99,7 +99,7 @@ i18n.use(initReactI18next).init({
         description: "Description",
         assignNewGoal: "Assign a New Goal",
         newDepartment: "New Department",
-        assessingRatingGoal: "ASSESING & RATING GOAL",
+        assessingRatingGoal: "ASSESSING & RATING GOAL",
         high: "High",
         low: "Low",
         medium: "Medium",
@@ -150,12 +150,11 @@ i18n.use(initReactI18next).init({
         lastSelected: "Last Selected",
         scorePercentage: "Score Percentage",
 
-        //infocards
+        // infocards
         goalId: "Goal ID",
         deadline: "Deadline",
         status: "Status",
         currentProgress: "Current Progress",
-        target: "Target",
         enterProgress: "Enter Progress",
         submitProgress: "Submit Progress",
         updateGoalProgress: "Update Goal Progress",
@@ -164,7 +163,7 @@ i18n.use(initReactI18next).init({
         highPerformingWorkers: "High Performing Workers",
         startDate: "Start Date",
 
-        //further reporting
+        // further reporting
         financialTrends: "Financial Trends",
         innovationalTrends: "Innovational Trends",
         addDepartmentPrompt: "Wishing to add new Department ?",
@@ -195,8 +194,8 @@ i18n.use(initReactI18next).init({
         ratings: "Ratings",
         performanceScore: "Performance Score",
 
-        // ExportReportComponent translations
-        exportReports: "Export Reports",
+        // ==================== EXPORT REPORT COMPONENT - FULLY COMPLETE ====================
+        exportReports: "Export Performance Reports",
         selectChartsToExport: "Select charts to include in your report",
         selectCharts: "Select Charts to Export",
         selectAll: "Select All",
@@ -204,30 +203,47 @@ i18n.use(initReactI18next).init({
         close: "Close",
         printReport: "Print Report",
         exportPDF: "Save as PDF",
+
         performanceReportChart: "Performance Report",
         comprehensiveAnalysis: "Comprehensive Performance Analysis",
         confidential: "Confidential - Internal Use Only",
-        balanceScorecard: "Balance Scorecard",
-        balanceScorecardDesc: "Overview of key performance indicators across all business dimensions",
-        organizationPerformance: "Organization Performance",
-        monthlyPerformanceOverview: "Monthly average performance across the organization",
+
         goalStatus: "Goal Status Overview",
         goalStatusDesc: "Current status of organizational goals and achievements",
+
+        balanceScorecard: "Balance Scorecard",
+        balanceScorecardDesc: "Overview of key performance indicators across all business dimensions",
+
+        organizationPerformance: "Organization Performance",
+        monthlyPerformanceOverview: "Monthly average performance across the organization",
+
         comparativeTrends: "Comparative Trends Analysis",
         comparativeTrendsDesc: "Comparative performance trends across categories",
+
         financialTrends: "Financial Performance Trends",
         financialTrendsDesc: "Monthly financial performance trends",
+
         innovationTrends: "Innovation Performance Trends",
         innovationTrendsDesc: "Monthly innovation performance trends",
+
+        // NEW: Financial Projections
+        financialProjections: "Financial Projections",
+        financialProjectionsDesc: "Projected financial performance and forecasts",
+
+        // Chart selection toggle labels (must match selectedCharts keys exactly)
+        achievedGoals: "Achieved Goals",
+        partiallyAchievedGoals: "Partially Achieved Goals",
+        notAchievedGoals: "Not Achieved Goals",
       },
     },
+
     fr: {
       translation: {
         // Login
         email: "Messagerie électronique",
         password: "Mot de passe",
         forgotPassword: "Mot de passe oublié ?",
-        
+
         // Dashboard
         Dashboard: "Tableau de Bord",
         Projects: "Projets",
@@ -313,7 +329,7 @@ i18n.use(initReactI18next).init({
         description: "Description",
         assignNewGoal: "Attribuer un Nouvel Objectif",
         newDepartment: "Nouveau Département",
-        assessingRatingGoal: "Évaluation et Natation des Objectifs",
+        assessingRatingGoal: "Évaluation et Notation des Objectifs",
         high: "Élevé",
         low: "Bas",
         medium: "Moyenne",
@@ -362,12 +378,11 @@ i18n.use(initReactI18next).init({
         lastSelected: "Dernier Sélectionné",
         scorePercentage: "Pourcentage du score",
 
-        //infocards
+        // infocards
         goalId: "ID de l'objectif",
         deadline: "Date limite",
         status: "Statut",
         currentProgress: "Progrès actuel",
-        target: "Cible",
         enterProgress: "Saisir le progrès",
         submitProgress: "Soumettre le progrès",
         updateGoalProgress: "Mettre à jour la progression de l'objectif",
@@ -376,7 +391,7 @@ i18n.use(initReactI18next).init({
         highPerformingWorkers: "Travailleurs très performants",
         startDate: "Date de début",
 
-        //further reporting
+        // further reporting
         financialTrends: "Tendances financières",
         innovationalTrends: "Tendances en innovation",
         addDepartmentPrompt: "Souhaitez-vous ajouter un nouveau département ?",
@@ -407,8 +422,8 @@ i18n.use(initReactI18next).init({
         ratings: "Évaluations",
         performanceScore: "Score de performance",
 
-        // ExportReportComponent translations
-        exportReports: "Exporter les Rapports",
+        // ==================== EXPORT REPORT COMPONENT - FULLY COMPLETE (FR) ====================
+        exportReports: "Exporter les Rapports de Performance",
         selectChartsToExport: "Sélectionnez les graphiques à inclure dans votre rapport",
         selectCharts: "Sélectionner les Graphiques à Exporter",
         selectAll: "Tout Sélectionner",
@@ -416,21 +431,37 @@ i18n.use(initReactI18next).init({
         close: "Fermer",
         printReport: "Imprimer le Rapport",
         exportPDF: "Enregistrer au format PDF",
+
         performanceReportChart: "Rapport de Performance",
         comprehensiveAnalysis: "Analyse Complète de la Performance",
         confidential: "Confidentiel - Usage Interne Uniquement",
-        balanceScorecard: "Tableau de Bord Équilibré",
-        balanceScorecardDesc: "Aperçu des indicateurs clés de performance dans toutes les dimensions de l'entreprise",
-        organizationPerformance: "Performance de l'Organisation",
-        monthlyPerformanceOverview: "Performance moyenne mensuelle de l'organisation",
+
         goalStatus: "Aperçu de l'État des Objectifs",
         goalStatusDesc: "État actuel des objectifs et réalisations de l'organisation",
+
+        balanceScorecard: "Tableau de Bord Équilibré",
+        balanceScorecardDesc: "Aperçu des indicateurs clés de performance dans toutes les dimensions de l'entreprise",
+
+        organizationPerformance: "Performance de l'Organisation",
+        monthlyPerformanceOverview: "Performance moyenne mensuelle de l'organisation",
+
         comparativeTrends: "Analyse des Tendances Comparatives",
         comparativeTrendsDesc: "Tendances de performance comparatives à travers les catégories",
+
         financialTrends: "Tendances de Performance Financière",
         financialTrendsDesc: "Tendances de performance financière mensuelle",
+
         innovationTrends: "Tendances de Performance en Innovation",
         innovationTrendsDesc: "Tendances de performance en innovation mensuelle",
+
+        // NEW: Financial Projections
+        financialProjections: "Projections Financières",
+        financialProjectionsDesc: "Performance financière projetée et prévisions",
+
+        // Chart selection toggle labels (must match selectedCharts keys exactly)
+        achievedGoals: "Objectifs Atteints",
+        partiallyAchievedGoals: "Objectifs Partiellement Atteints",
+        notAchievedGoals: "Objectifs Non Commencés",
       },
     },
   },
