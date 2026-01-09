@@ -14,7 +14,7 @@ export default function GoalAchievemnetReport() {
         <AchievedGoalChart />
         <PartiallyAchievedChart />
         <NotAchievedChart />
-        <TargetAchievementChart/>
+        {/* <TargetAchievementChart/> */}
       </div>
       <div className="mt-8 card bg-white rounded-lg">
         <SystemGoalTable/>
