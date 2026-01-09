@@ -415,9 +415,9 @@ const FinancialProjections = () => {
     return {
       title: goal.goalTitle.toUpperCase(),
       subtitle: goal.description,
-      value: (achieved / 1_000_000).toFixed(1), 
+      value: (achieved).toFixed(1), 
       unit: "M",
-      target: (target / 1_000_000).toFixed(1),
+      target: (target).toFixed(1),
       trend,
       trendValue: `${progressPercent}%`,
       chartData: [achieved, target - achieved],
