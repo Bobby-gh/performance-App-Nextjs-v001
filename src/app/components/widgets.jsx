@@ -367,7 +367,7 @@ const FinancialCard = ({ data }) => {
       <div className="flex items-end justify-between gap-3 h-24 mt-6">
         {chartData.map((val, idx) => {
           const height = (val / maxValue) * 100;
-          const labels = ['Prev 25', 'Att 25', 'Budg 26'];
+          const labels = ['Target', 'Achieved'];
           const isLast = idx === chartData.length - 1;
           
           return (
@@ -398,7 +398,7 @@ const FinancialProjections = () => {
       target: '26',
       trend: 'down',
       trendValue: '-44.7%',
-      chartData: [45, 85, 30]
+      chartData: [45, 85]
     },
     {
       title: 'ACTIONS',
@@ -408,7 +408,7 @@ const FinancialProjections = () => {
       target: '26',
       trend: 'up',
       trendValue: '+1605.3%',
-      chartData: [15, 5, 95]
+      chartData: [15, 5]
     },
     {
       title: 'FONDS',
@@ -418,7 +418,7 @@ const FinancialProjections = () => {
       target: '26',
       trend: 'down',
       trendValue: '-13.0%',
-      chartData: [45, 90, 70]
+      chartData: [45, 90]
     },
     {
       title: 'COURTAGE',
@@ -428,7 +428,7 @@ const FinancialProjections = () => {
       target: '26',
       trend: 'up',
       trendValue: '+6.7%',
-      chartData: [50, 75, 95]
+      chartData: [50, 75]
     },
     {
       title: 'COMPTES',
@@ -438,7 +438,7 @@ const FinancialProjections = () => {
       target: '26',
       trend: 'down',
       trendValue: '-35.4%',
-      chartData: [40, 95, 60]
+      chartData: [40, 95]
     },
     {
       title: 'PORTEFEUILLE',
@@ -448,7 +448,7 @@ const FinancialProjections = () => {
       target: '26',
       trend: 'up',
       trendValue: '+14.4%',
-      chartData: [55, 65, 85]
+      chartData: [55, 65]
     },
     {
       title: 'CHIFFRE D\'AFFAIRES',
@@ -458,7 +458,7 @@ const FinancialProjections = () => {
       target: '26',
       trend: 'up',
       trendValue: '+3.0%',
-      chartData: [60, 80, 90]
+      chartData: [60, 80]
     },
     {
       title: 'RÉSULTAT NET',
@@ -468,7 +468,7 @@ const FinancialProjections = () => {
       target: '26',
       trend: 'up',
       trendValue: '+27.8%',
-      chartData: [55, 70, 85]
+      chartData: [55, 70]
     }
   ];
 
