@@ -7,6 +7,7 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
+import { TrendingUp, TrendingDown } from 'lucide-react';
 import { Modaltrigger } from "../contex/context-context";
 import Select from "react-select";
 import { useDelete } from "../api/databook/route-data";
@@ -329,3 +330,158 @@ export const CategoryType = [
     label: "internalProcessingAndInnovation",
   },
 ];
+
+//Coporate Goals
+const FinancialCard = ({ data }) => {
+  const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
+  
+  const maxValue = Math.max(...chartData);
+  const isPositive = trend === 'up';
+  
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 w-80">
+      {/* Header with trend badge */}
+      <div className="flex justify-between items-start mb-4">
+        <div>
+          <h3 className="text-gray-600 text-sm font-medium mb-1">{title}</h3>
+          <p className="text-gray-800 text-xs font-semibold uppercase">{subtitle}</p>
+        </div>
+        <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
+          isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`}>
+          {isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+          {trendValue}
+        </div>
+      </div>
+      
+      {/* Value display */}
+      <div className="mb-2">
+        <div className="flex items-baseline gap-1">
+          <span className="text-4xl font-bold text-gray-900">{value}</span>
+          <span className="text-xl font-semibold text-gray-900">{unit}</span>
+        </div>
+        <p className="text-gray-500 text-sm mt-1">Target {target}</p>
+      </div>
+      
+      {/* Bar chart */}
+      <div className="flex items-end justify-between gap-3 h-24 mt-6">
+        {chartData.map((val, idx) => {
+          const height = (val / maxValue) * 100;
+          const labels = ['Prev 25', 'Att 25', 'Budg 26'];
+          const isLast = idx === chartData.length - 1;
+          
+          return (
+            <div key={idx} className="flex flex-col items-center flex-1">
+              <div className="w-full flex items-end justify-center h-20">
+                <div 
+                  className={`w-full rounded-t transition-all ${
+                    isLast ? 'bg-blue-500' : 'bg-gray-400'
+                  }`}
+                  style={{ height: `${height}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-600 mt-2">{labels[idx]}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+const FinancialProjections = () => {
+  const cardsData = [
+    {
+      title: 'OBLIGATIONS',
+      subtitle: 'PLACEMENT D\'OBLIGATIONS (OAT/BAT)',
+      value: '65.0',
+      unit: 'B',
+      target: '26',
+      trend: 'down',
+      trendValue: '-44.7%',
+      chartData: [45, 85, 30]
+    },
+    {
+      title: 'ACTIONS',
+      subtitle: 'PLACEMENT D\'ACTIONS',
+      value: '3.0',
+      unit: 'B',
+      target: '26',
+      trend: 'up',
+      trendValue: '+1605.3%',
+      chartData: [15, 5, 95]
+    },
+    {
+      title: 'FONDS',
+      subtitle: 'LEVÉE DE FONDS',
+      value: '100.0',
+      unit: 'B',
+      target: '26',
+      trend: 'down',
+      trendValue: '-13.0%',
+      chartData: [45, 90, 70]
+    },
+    {
+      title: 'COURTAGE',
+      subtitle: 'COURTAGE',
+      value: '8.0',
+      unit: 'B',
+      target: '26',
+      trend: 'up',
+      trendValue: '+6.7%',
+      chartData: [50, 75, 95]
+    },
+    {
+      title: 'COMPTES',
+      subtitle: 'OUVERTURE DE COMPTES',
+      value: '500',
+      unit: '',
+      target: '26',
+      trend: 'down',
+      trendValue: '-35.4%',
+      chartData: [40, 95, 60]
+    },
+    {
+      title: 'PORTEFEUILLE',
+      subtitle: 'PORTEFEUILLE CONSERVÉ',
+      value: '400.0',
+      unit: 'B',
+      target: '26',
+      trend: 'up',
+      trendValue: '+14.4%',
+      chartData: [55, 65, 85]
+    },
+    {
+      title: 'CHIFFRE D\'AFFAIRES',
+      subtitle: 'CHIFFRE D\'AFFAIRES',
+      value: '2.7',
+      unit: 'B',
+      target: '26',
+      trend: 'up',
+      trendValue: '+3.0%',
+      chartData: [60, 80, 90]
+    },
+    {
+      title: 'RÉSULTAT NET',
+      subtitle: 'RÉSULTAT NET',
+      value: '619.0',
+      unit: 'M',
+      target: '26',
+      trend: 'up',
+      trendValue: '+27.8%',
+      chartData: [55, 70, 85]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-8">
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">FINANCIAL PROJECTIONS 2025-2026</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {cardsData.map((card, index) => (
+          <FinancialCard key={index} data={card} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default FinancialProjections;
