@@ -367,20 +367,36 @@ const FinancialCard = ({ data }) => {
       <div className="flex items-end justify-between gap-3 h-24 mt-6">
         {chartData.map((val, idx) => {
           const height = (val / maxValue) * 100;
-          const labels = ['Target', 'Achieved'];
+          const labels = ['Target', 'Achieved']; // Note: This assumes only 2 data points based on your original code
+          
+          const isFirst = idx === 0;
           const isLast = idx === chartData.length - 1;
           
+          let barColor = 'bg-gray-400'; // Default for middle bars
+          
+          if (isFirst) {
+            // Requirement: Initial value is blue
+            barColor = 'bg-blue-500';
+          } else if (isLast) {
+             // Requirement: Compare last value to the one before it
+             const prevVal = chartData[idx - 1];
+             if (val < prevVal) {
+               barColor = 'bg-red-500';   // Lower than previous
+             } else {
+               barColor = 'bg-green-500'; // Higher (or equal) than previous
+             }
+          }
+
           return (
             <div key={idx} className="flex flex-col items-center flex-1">
               <div className="w-full flex items-end justify-center h-20">
                 <div 
-                  className={`w-full rounded-t transition-all ${
-                    isLast ? 'bg-blue-500' : 'bg-gray-400'
-                  }`}
+                  className={`w-full rounded-t transition-all ${barColor}`}
                   style={{ height: `${height}%` }}
                 />
               </div>
-              <span className="text-xs text-gray-600 mt-2">{labels[idx]}</span>
+              {/* Only show label if it exists in the labels array */}
+              <span className="text-xs text-gray-600 mt-2">{labels[idx] || ''}</span>
             </div>
           );
         })}
