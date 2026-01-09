@@ -29,7 +29,7 @@ import {
 } from "../api/databook/route-data";
 import { DataDateAccess } from "./infocards";
 import { StarOutline, StarSharp } from "@mui/icons-material";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 
@@ -522,34 +522,20 @@ export default function TargetAchievementChart() {
     { month: 'Dec', target: 100, achievement: 118 },
   ];
 
-  // Calculate Summary Stats Dynamically (Prevents math errors if data changes)
-  const stats = useMemo(() => {
-    if (!data || data.length === 0) return { avgTarget: 0, avgAch: 0, perf: 0 };
-    
-    const totalTarget = data.reduce((acc, curr) => acc + (curr.target || 0), 0);
-    const totalAch = data.reduce((acc, curr) => acc + (curr.achievement || 0), 0);
-    
-    const avgTarget = Math.round(totalTarget / data.length);
-    const avgAch = Math.round(totalAch / data.length);
-    const diffPercent = avgTarget === 0 ? 0 : Math.round(((avgAch - avgTarget) / avgTarget) * 100);
+  console.log({ data: data });
 
-    return { avgTarget, avgAch, diffPercent };
-  }, [data]);
-
-  // Custom tooltip with heavy safety checks
-  const CustomTooltip = ({ active, payload, label }) => {
+  // Custom tooltip
+  const CustomTooltip = ({ active, payload }) => {
+    console.log({ payload: payload, active });
     if (active && payload && payload.length) {
-      // Safe access using optional chaining (?.), defaults to 0 if missing
-      const achievement = payload.find(p => p.dataKey === 'achievement')?.value ?? 0;
-      const target = payload.find(p => p.dataKey === 'target')?.value ?? 0;
-      const currentMonth = label ?? payload[0]?.payload?.month ?? 'Unknown';
-      
+      const achievement = payload.find(p => p.dataKey === 'achievement')?.value;
+      const target = payload.find(p => p.dataKey === 'target')?.value;
       const difference = achievement - target;
       const isAbove = difference >= 0;
 
       return (
         <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-          <p className="font-semibold text-gray-700 mb-2">{currentMonth}</p>
+          <p className="font-semibold text-gray-700 mb-2">{payload[0].payload.month}</p>
           <div className="space-y-1">
             <p className="text-sm">
               <span className="text-purple-600 font-medium">Target:</span> {target}
@@ -568,79 +554,68 @@ export default function TargetAchievementChart() {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 w-full max-w-4xl mx-auto">
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
       <div className="mb-6">
         <h3 className="text-xl font-bold text-gray-800 mb-2">Target vs Achievement</h3>
         <p className="text-sm text-gray-500">Monthly performance comparison</p>
       </div>
 
-      {/* Container with explicit height to prevent collapse */}
-      <div style={{ width: '100%', height: 400 }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
-            <XAxis 
-              dataKey="month" 
-              stroke="#9ca3af"
-              tick={{ fill: '#6b7280', fontSize: 12 }}
-              tickLine={false}
-              axisLine={{ stroke: '#e5e7eb' }}
-            />
-            <YAxis 
-              stroke="#9ca3af"
-              tick={{ fill: '#6b7280', fontSize: 12 }}
-              tickLine={false}
-              axisLine={false}
-            />
-            <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#d1d5db', strokeWidth: 1 }} />
-            <Legend 
-              wrapperStyle={{ paddingTop: '20px' }}
-              iconType="circle"
-            />
-            
-            {/* Target line */}
-            <Line 
-              type="monotone" 
-              dataKey="target" 
-              stroke="#9333ea" 
-              strokeWidth={2}
-              strokeDasharray="5 5"
-              dot={{ fill: '#9333ea', r: 4, strokeWidth: 0 }}
-              activeDot={{ r: 6, strokeWidth: 0 }}
-              name="Target"
-              isAnimationActive={true}
-            />
-            
-            {/* Achievement line */}
-            <Line 
-              type="monotone" 
-              dataKey="achievement" 
-              stroke="#3b82f6" 
-              strokeWidth={3}
-              dot={{ fill: '#3b82f6', r: 5, strokeWidth: 2, stroke: '#fff' }}
-              activeDot={{ r: 7, strokeWidth: 0 }}
-              name="Achievement"
-              isAnimationActive={true}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <XAxis 
+            dataKey="month" 
+            stroke="#9ca3af"
+            style={{ fontSize: '12px' }}
+          />
+          <YAxis 
+            stroke="#9ca3af"
+            style={{ fontSize: '12px' }}
+          />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend 
+            wrapperStyle={{ paddingTop: '20px' }}
+            iconType="line"
+          />
+          
+          {/* Target line - dashed */}
+          <Line 
+            type="monotone" 
+            dataKey="target" 
+            stroke="#9333ea" 
+            strokeWidth={3}
+            strokeDasharray="5 5"
+            dot={{ fill: '#9333ea', r: 4 }}
+            activeDot={{ r: 6 }}
+            name="Target"
+          />
+          
+          {/* Achievement line - solid */}
+          <Line 
+            type="monotone" 
+            dataKey="achievement" 
+            stroke="#3b82f6" 
+            strokeWidth={3}
+            dot={{ fill: '#3b82f6', r: 5 }}
+            activeDot={{ r: 7 }}
+            name="Achievement"
+          />
+        </LineChart>
+      </ResponsiveContainer>
 
-      {/* Dynamic Summary Stats */}
+      {/* Summary stats */}
       <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-100">
         <div className="text-center">
-          <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Avg Target</p>
-          <p className="text-2xl font-bold text-purple-600">{stats.avgTarget}</p>
+          <p className="text-xs text-gray-500 mb-1">Avg Target</p>
+          <p className="text-2xl font-bold text-purple-600">100</p>
         </div>
         <div className="text-center">
-          <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Avg Achievement</p>
-          <p className="text-2xl font-bold text-blue-600">{stats.avgAch}</p>
+          <p className="text-xs text-gray-500 mb-1">Avg Achievement</p>
+          <p className="text-2xl font-bold text-blue-600">107</p>
         </div>
         <div className="text-center">
-          <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Performance</p>
-          <p className={`text-2xl font-bold ${stats.diffPercent >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-            {stats.diffPercent > 0 ? '+' : ''}{stats.diffPercent}%
-          </p>
+          <p className="text-xs text-gray-500 mb-1">Performance</p>
+          <p className="text-2xl font-bold text-green-600">+7%</p>
         </div>
       </div>
     </div>
