@@ -27,5 +27,6 @@ export const ACTION_ITEMS = "/goals/dept"
 export const USER_RATING = "/users/update-rating" 
 export const USER_RATING_BY_ID = "/goal-assessments/get-employee-summary" 
 export const USER_BADGES_TABLE = "/goal-assessments/get-all-users-badge"
+export const CORPORATE_GOALS = "/goals/corporate-goals"
 
 

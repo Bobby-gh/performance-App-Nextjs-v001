@@ -388,6 +388,7 @@ export function usePerformanceMatrixChartRouteData() {
   return { performanceMatrixChart };
 }
 
+
 export function useGoalStatus() {
   const { auth } = useContext(AuthContext);
   const [goalStatus, setGoalStatus] = useState([]);
@@ -414,29 +415,63 @@ export function useGoalStatus() {
   return { goalStatus };
 }
 
-export function useGoalCountRouteData() {
+export function useCorporateGoals() {
   const { auth } = useContext(AuthContext);
-  const [goalCount, setGoalCount] = useState([]);
+
+  const [goals, setGoals] = useState([]);
+  const [meta, setMeta] = useState({
+    totalGoals: 0,
+    page: 1,
+    pageSize: 8,
+    totalPages: 1,
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchGoals = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const response = await axios.get(GOAL_COUNT_URL, {
+        const response = await axios.get(CORPORATE_GOALS, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
           },
           withCredentials: true,
         });
-        setGoalCount(response.data);
+
+        const data = response.data;
+
+        setGoals(
+          data.goals.map(goal => ({
+            ...goal,
+            maintarget: Number(goal.maintarget),
+            targetAchieved: Number(goal.targetAchieved),
+          }))
+        );
+
+        setMeta({
+          totalGoals: data.totalGoals,
+          page: data.page,
+          pageSize: data.pageSize,
+          totalPages: data.totalPages,
+        });
       } catch (err) {
-        console.log(err);
+        console.error(err);
+        setError(err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchData();
-  }, [auth]);
-  return { goalCount };
+    if (auth?.token) {
+      fetchGoals();
+    }
+  }, [auth?.token]);
+
+  return { goals, meta, loading, error };
 }
 
 export function useGoalCategoryCountRouteData() {

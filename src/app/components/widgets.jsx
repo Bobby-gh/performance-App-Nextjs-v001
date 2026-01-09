@@ -10,7 +10,7 @@ import {
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import { Modaltrigger } from "../contex/context-context";
 import Select from "react-select";
-import { useDelete } from "../api/databook/route-data";
+import { useCorporateGoals, useDelete } from "../api/databook/route-data";
 import { showToast } from "./notification";
 
 export function Delete({ data, message, name, open, onClose }) {
@@ -403,88 +403,26 @@ const FinancialCard = ({ data }) => {
   );
 };
 const FinancialProjections = () => {
-  const cardsData = [
-    {
-      title: 'OBLIGATIONS',
-      subtitle: 'PLACEMENT D\'OBLIGATIONS (OAT/BAT)',
-      value: '65.0',
-      unit: 'B',
-      target: '26',
-      trend: 'down',
-      trendValue: '-44.7%',
-      chartData: [45, 85]
-    },
-    {
-      title: 'ACTIONS',
-      subtitle: 'PLACEMENT D\'ACTIONS',
-      value: '3.0',
-      unit: 'B',
-      target: '26',
-      trend: 'up',
-      trendValue: '+1605.3%',
-      chartData: [15, 5]
-    },
-    {
-      title: 'FONDS',
-      subtitle: 'LEVÉE DE FONDS',
-      value: '100.0',
-      unit: 'B',
-      target: '26',
-      trend: 'down',
-      trendValue: '-13.0%',
-      chartData: [45, 90]
-    },
-    {
-      title: 'COURTAGE',
-      subtitle: 'COURTAGE',
-      value: '8.0',
-      unit: 'B',
-      target: '26',
-      trend: 'up',
-      trendValue: '+6.7%',
-      chartData: [50, 75]
-    },
-    {
-      title: 'COMPTES',
-      subtitle: 'OUVERTURE DE COMPTES',
-      value: '500',
-      unit: '',
-      target: '26',
-      trend: 'down',
-      trendValue: '-35.4%',
-      chartData: [40, 95]
-    },
-    {
-      title: 'PORTEFEUILLE',
-      subtitle: 'PORTEFEUILLE CONSERVÉ',
-      value: '400.0',
-      unit: 'B',
-      target: '26',
-      trend: 'up',
-      trendValue: '+14.4%',
-      chartData: [55, 65]
-    },
-    {
-      title: 'CHIFFRE D\'AFFAIRES',
-      subtitle: 'CHIFFRE D\'AFFAIRES',
-      value: '2.7',
-      unit: 'B',
-      target: '26',
-      trend: 'up',
-      trendValue: '+3.0%',
-      chartData: [60, 80]
-    },
-    {
-      title: 'RÉSULTAT NET',
-      subtitle: 'RÉSULTAT NET',
-      value: '619.0',
-      unit: 'M',
-      target: '26',
-      trend: 'up',
-      trendValue: '+27.8%',
-      chartData: [55, 70]
-    }
-  ];
+  const { goals } = useCorporateGoals();
+
+  const cardsData = goals.map(goal => {
+    const achieved = Number(goal.targetAchieved);
+    const target = Number(goal.maintarget);
+
+    const progressPercent = ((achieved / target) * 100).toFixed(1);
+    const trend = achieved >= target ? "up" : "down";
+
+    return {
+      title: goal.goalTitle.toUpperCase(),
+      subtitle: goal.description,
+      value: (achieved / 1_000_000).toFixed(1), 
+      unit: "M",
+      target: (target / 1_000_000).toFixed(1),
+      trend,
+      trendValue: `${progressPercent}%`,
+      chartData: [achieved, target - achieved],
+    };
+  });
 
   return (
     <div className="min-h-screen mt-3">
