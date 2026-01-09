@@ -32,6 +32,7 @@ import {
   Cell,
 } from "recharts";
 import { FiTarget, FiCalendar, FiClock } from "react-icons/fi";
+import { Trophy, ThumbsUp, Clock, Target, TrendingUp, TrendingDown } from 'lucide-react';
 
 export function InformationalSummary() {
   const { t } = useTranslation();
