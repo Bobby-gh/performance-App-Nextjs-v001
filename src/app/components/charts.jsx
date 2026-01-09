@@ -13,6 +13,7 @@ import {
   Legend,
   LineChart,
   Line,
+  ReferenceLine,
 } from "recharts";
 import { Gauge, gaugeClasses, BarChart as MuiBarchart } from "@mui/x-charts";
 import { IoIosTime } from "react-icons/io";
@@ -30,7 +31,6 @@ import { DataDateAccess } from "./infocards";
 import { StarOutline, StarSharp } from "@mui/icons-material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
 
 
 export function OrganizationPerformanceDashboard() {
