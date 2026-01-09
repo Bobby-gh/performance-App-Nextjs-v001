@@ -41,7 +41,7 @@ export function InformationalSummary() {
   const { Completed, InProgress, NotStarted } = goalStatus;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-2">
       {/* Completed Card */}
       <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-green-500">
         <div className="flex items-start justify-between mb-6">
