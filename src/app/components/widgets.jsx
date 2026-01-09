@@ -473,8 +473,7 @@ const FinancialProjections = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">FINANCIAL PROJECTIONS 2025-2026</h1>
+    <div className="min-h-screen p-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {cardsData.map((card, index) => (
           <FinancialCard key={index} data={card} />
