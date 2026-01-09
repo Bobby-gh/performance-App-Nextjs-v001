@@ -30,6 +30,8 @@ import { DataDateAccess } from "./infocards";
 import { StarOutline, StarSharp } from "@mui/icons-material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
+
 
 export function OrganizationPerformanceDashboard() {
   const { t } = useTranslation();
@@ -495,6 +497,120 @@ export function NotAchievedChart() {
             })}
             text={({ value, valueMax }) => `${value} / ${valueMax}`}
           />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function TargetAchievementChart() {
+  // Dummy data - 12 months
+  const data = [
+    { month: 'Jan', target: 100, achievement: 85 },
+    { month: 'Feb', target: 100, achievement: 95 },
+    { month: 'Mar', target: 100, achievement: 110 },
+    { month: 'Apr', target: 100, achievement: 105 },
+    { month: 'May', target: 100, achievement: 92 },
+    { month: 'Jun', target: 100, achievement: 115 },
+    { month: 'Jul', target: 100, achievement: 108 },
+    { month: 'Aug', target: 100, achievement: 98 },
+    { month: 'Sep', target: 100, achievement: 120 },
+    { month: 'Oct', target: 100, achievement: 112 },
+    { month: 'Nov', target: 100, achievement: 125 },
+    { month: 'Dec', target: 100, achievement: 118 },
+  ];
+
+  // Custom tooltip
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const achievement = payload.find(p => p.dataKey === 'achievement')?.value;
+      const target = payload.find(p => p.dataKey === 'target')?.value;
+      const difference = achievement - target;
+      const isAbove = difference >= 0;
+
+      return (
+        <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+          <p className="font-semibold text-gray-700 mb-2">{payload[0].payload.month}</p>
+          <div className="space-y-1">
+            <p className="text-sm">
+              <span className="text-purple-600 font-medium">Target:</span> {target}
+            </p>
+            <p className="text-sm">
+              <span className="text-blue-600 font-medium">Achievement:</span> {achievement}
+            </p>
+            <p className={`text-sm font-semibold ${isAbove ? 'text-green-600' : 'text-red-600'}`}>
+              {isAbove ? '↑' : '↓'} {Math.abs(difference)} ({isAbove ? 'Above' : 'Below'} Target)
+            </p>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-gray-800 mb-2">Target vs Achievement</h3>
+        <p className="text-sm text-gray-500">Monthly performance comparison</p>
+      </div>
+
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <XAxis 
+            dataKey="month" 
+            stroke="#9ca3af"
+            style={{ fontSize: '12px' }}
+          />
+          <YAxis 
+            stroke="#9ca3af"
+            style={{ fontSize: '12px' }}
+          />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend 
+            wrapperStyle={{ paddingTop: '20px' }}
+            iconType="line"
+          />
+          
+          {/* Target line - dashed */}
+          <Line 
+            type="monotone" 
+            dataKey="target" 
+            stroke="#9333ea" 
+            strokeWidth={3}
+            strokeDasharray="5 5"
+            dot={{ fill: '#9333ea', r: 4 }}
+            activeDot={{ r: 6 }}
+            name="Target"
+          />
+          
+          {/* Achievement line - solid */}
+          <Line 
+            type="monotone" 
+            dataKey="achievement" 
+            stroke="#3b82f6" 
+            strokeWidth={3}
+            dot={{ fill: '#3b82f6', r: 5 }}
+            activeDot={{ r: 7 }}
+            name="Achievement"
+          />
+        </LineChart>
+      </ResponsiveContainer>
+
+      {/* Summary stats */}
+      <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-100">
+        <div className="text-center">
+          <p className="text-xs text-gray-500 mb-1">Avg Target</p>
+          <p className="text-2xl font-bold text-purple-600">100</p>
+        </div>
+        <div className="text-center">
+          <p className="text-xs text-gray-500 mb-1">Avg Achievement</p>
+          <p className="text-2xl font-bold text-blue-600">107</p>
+        </div>
+        <div className="text-center">
+          <p className="text-xs text-gray-500 mb-1">Performance</p>
+          <p className="text-2xl font-bold text-green-600">+7%</p>
         </div>
       </div>
     </div>

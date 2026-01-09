@@ -3,6 +3,7 @@ import {
   AchievedGoalChart,
   NotAchievedChart,
   PartiallyAchievedChart,
+  TargetAchievementChart,
 } from "@/app/components/charts";
 import { SystemGoalTable } from "@/app/components/tables";
 
@@ -13,6 +14,7 @@ export default function GoalAchievemnetReport() {
         <AchievedGoalChart />
         <PartiallyAchievedChart />
         <NotAchievedChart />
+        <TargetAchievementChart/>
       </div>
       <div className="mt-8 card bg-white rounded-lg">
         <SystemGoalTable/>
