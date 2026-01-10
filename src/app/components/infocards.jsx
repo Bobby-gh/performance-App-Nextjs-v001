@@ -1222,10 +1222,6 @@ export function GoalDetails({ open, onClose }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    if (progress > goal.target) {
-      alert(t("progressExceedsTarget"));
-      return;
-    }
     setLoading(true);
     const managerAssignedGoalId = isManager
       ? employeeGoals.find((emp) => emp.employeeEmail === auth.email)?.goalId
