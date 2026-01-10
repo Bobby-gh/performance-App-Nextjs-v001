@@ -1543,7 +1543,6 @@ export function GoalDetails({ open, onClose }) {
                     </label>
                     <input
                       type="number"
-                      value={progress}
                       onChange={(e) => setProgress(Number(e.target.value))}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 ${
                         progress > goal.target
