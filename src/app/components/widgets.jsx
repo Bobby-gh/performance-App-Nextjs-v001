@@ -415,10 +415,61 @@ const FinancialCard = ({ data }) => {
   );
 };
 
-const FinancialProjections = () => {
-  const { goals } = useCorporateGoals();
 
-  const cardsData = goals.map(goal => {
+const dummyGoals = [
+  {
+    goalTitle: "Placement d’obligations (OAT, BAT hors DAT)",
+    description: "Placement dobligations, OAT, BAT hors DAT",
+    targetAchieved: 65000000000,
+    maintarget: 118000000000,
+  },
+  {
+    goalTitle: "Placement d’actions",
+    description: "Placement d’actions sur le marché primaire et hors marché",
+    targetAchieved: 3000000000,
+    maintarget: 175833000,
+  },
+  {
+    goalTitle: "Structuration et levée de fonds",
+    description: "Structuration et levée de fonds",
+    targetAchieved: 100000000000,
+    maintarget: 115000000000,
+  },
+  {
+    goalTitle: "Courtage",
+    description: "Courtage (valeur transigée)",
+    targetAchieved: 6500000000,
+    maintarget: 7500000000,
+  },
+  {
+    goalTitle: "Ouverture de comptes",
+    description: "Ouverture de comptes",
+    targetAchieved: 400,
+    maintarget: 774,
+  },
+  {
+    goalTitle: "Portefeuille conservé",
+    description: "Portefeuille conservé",
+    targetAchieved: 385000000000,
+    maintarget: 383000000000,
+  },
+  {
+    goalTitle: "Chiffre d’Affaires",
+    description: "Chiffre d’Affaires",
+    targetAchieved: 2701304352,
+    maintarget: 2573669073,
+  },
+  {
+    goalTitle: "Résultat Net",
+    description: "Résultat Net",
+    targetAchieved: 641000000,
+    maintarget: 484483467,
+  },
+];
+
+const FinancialProjections = () => {
+
+  const cardsData = dummyGoals.map(goal => {
     const achieved = Number(goal.targetAchieved);
     const target = Number(goal.maintarget);
 
@@ -428,9 +479,9 @@ const FinancialProjections = () => {
     return {
       title: goal.goalTitle.toUpperCase(),
       subtitle: goal.description,
-      value: (achieved).toFixed(1), 
+      value: achieved.toFixed(1),
       unit: "M",
-      target: (target).toFixed(1),
+      target: target.toFixed(1),
       trend,
       trendValue: `${progressPercent}%`,
       chartData: [target, achieved],
