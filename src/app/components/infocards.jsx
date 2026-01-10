@@ -1554,12 +1554,12 @@ export function GoalDetails({ open, onClose }) {
                       }`}
                       required
                     />
-                    {progress > goal.target && (
+                    {/* {progress > goal.target && (
                       <p className="text-red-600 text-sm mt-2 flex items-center">
                         <span className="mr-1">⚠</span>
                         {t("progressExceedsTarget")}
                       </p>
-                    )}
+                    )} */}
                   </div>
                   
                   <div>
@@ -1584,9 +1584,8 @@ export function GoalDetails({ open, onClose }) {
                   <div className="flex justify-end pt-4">
                     <button
                       type="submit"
-                      disabled={isLoading || progress > goal.target}
                       className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
-                        isLoading || progress > goal.target
+                        isLoading
                           ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                           : "bg-slate-700 hover:bg-slate-800 text-white shadow-sm hover:shadow-md"
                       }`}

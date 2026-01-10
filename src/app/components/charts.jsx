@@ -503,6 +503,7 @@ export function NotAchievedChart() {
   );
 }
 
+
 export function OrganizationPerformanceReport() {
   const { t } = useTranslation();
   const { organizationalChart } =
