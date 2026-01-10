@@ -1184,57 +1184,60 @@ export function GoalDetails({ open, onClose }) {
   const { auth } = useContext(AuthContext);
   const { goal } = useContext(GoalSelectContext);
   const { triggerComponent } = useContext(Modaltrigger);
-  const [progress, setProgress] = useState(goal.actualProgress);
-  const [comment, setComment] = useState("");
-  const [isLoading, setLoading] = useState(false);
-  const [editableGoal, setEditableGoal] = useState({
-    title: goal.goalTitle,
-    description: goal.goalDescription,
-    target: goal.target,
-    startDate: goal.dateAssigned,
-    deadline: goal.goalDeadline,
-  });
 
-  const employeeGoals = goal.employeeGoals || [];
   const isManager = auth.refNum === "ref?2!";
   const isGoalAssignedToManager =
-    isManager && employeeGoals.some((emp) => emp.employeeEmail === auth.email);
-  const departmentProgressPercent = isManager
-    ? goal.actualProgressPercent
-    : null;
+    isManager && (goal.employeeGoals || []).some((emp) => emp.employeeEmail === auth.email);
 
-  // Calculate progress trend
+  // Progress handling
+  const currentProgress = isManager ? goal.actualProgressPercent : goal.actualProgress;
+  const [progressValue, setProgressValue] = useState(currentProgress);
+  const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [markAsComplete, setMarkAsComplete] = useState(false);
+
+  const employeeGoals = goal.employeeGoals || [];
+
+  // Trend calculation
   const lastUpdate = goal.progressUpdates?.[0] || {};
   const previousProgress = goal.progressUpdates?.[1]?.progress || 0;
   const progressTrend =
-    goal.actualProgressPercent > previousProgress
-      ? "up"
-      : goal.actualProgressPercent < previousProgress
-      ? "down"
-      : "neutral";
+    goal.actualProgressPercent > previousProgress ? "up" :
+    goal.actualProgressPercent < previousProgress ? "down" : "neutral";
 
-  // Check if goal is overdue
+  // Overdue check
   const isOverdue = new Date(goal.goalDeadline) < new Date();
+  const daysRemaining = Math.max(0, Math.ceil(
+    (new Date(goal.goalDeadline) - new Date()) / (1000 * 60 * 60 * 24)
+  ));
 
-  const currentProgressPercent = isManager
-    ? departmentProgressPercent
-    : goal.actualProgressPercent;
+  const isOnTrack = currentProgress >= 50; // you can adjust logic if needed
 
-  const handleUpdate = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (progressValue < currentProgress) return;
+
+    setIsSubmitting(true);
+
     const managerAssignedGoalId = isManager
       ? employeeGoals.find((emp) => emp.employeeEmail === auth.email)?.goalId
       : null;
     const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
+
     try {
+      let payload = {
+        goalId: goalIdToUse,
+        progressIncrement: progressValue,
+        comment,
+      };
+
+      if (markAsComplete) {
+        payload = { goalId: goalIdToUse, isCompleted: true };
+      }
+
       const res = await axios.patch(
         UPDATE_GOAL_PROGRESS,
-        JSON.stringify({
-          goalId: goalIdToUse,
-          progressIncrement: progress,
-          comment,
-        }),
+        JSON.stringify(payload),
         {
           headers: {
             "Content-Type": "application/json",
@@ -1242,419 +1245,380 @@ export function GoalDetails({ open, onClose }) {
           },
         }
       );
+
       if (res.status === 200) {
-        showToast(t("progressUpdated"), "success");
+        showToast(
+          markAsComplete ? t("goalMarkedAsComplete") : t("progressUpdated"),
+          "success"
+        );
         triggerComponent();
+        onClose?.();
       }
     } catch (err) {
       console.error(err);
-      alert(`Error: ${err.message}`);
+      showToast(`${t("error")}: ${err.message}`, "error");
     } finally {
-      setLoading(false);
-    }
-  };
-  const handleMarkAsComplete = async () => {
-    if (!window.confirm(t("confirmMarkComplete"))) return;
-
-    setLoading(true);
-
-    const managerAssignedGoalId = isManager
-      ? employeeGoals.find((emp) => emp.employeeEmail === auth.email)?.goalId
-      : null;
-    const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
-
-    try {
-      const res = await axios.patch(
-        UPDATE_GOAL_PROGRESS, 
-        JSON.stringify({
-          goalId: goalIdToUse,
-          isCompleted: true,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
-
-      if (res.status === 200) {
-        showToast(t("goalMarkedAsComplete"), "success");
-        triggerComponent(); // refresh goals
-        onClose?.();        // optional: close modal after completion
-      }
-    } catch (err) {
-      console.error("Mark complete error:", err);
-      alert(t("errorMarkingComplete") + ": " + err.message);
-    } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
-  const topInfoCards = [
-    {
-      label: t("target"),
-      value: goal.target,
-      icon: <FiTarget className="text-slate-500 w-5 h-5" />,
-    },
-    {
-      label: t("startDate"),
-      value: new Date(goal.dateAssigned).toLocaleString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      }),
-      icon: <FiCalendar className="text-slate-500 w-5 h-5" />,
-    },
-    {
-      label: t("deadline"),
-      value: new Date(goal.goalDeadline).toLocaleString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      }),
-      className: isOverdue ? "text-red-600" : "text-slate-700",
-      icon: (
-        <FiClock
-          className={`w-5 h-5 ${isOverdue ? "text-red-500" : "text-slate-500"}`}
-        />
-      ),
-    },
-  ];
-  
   return (
-    <Modal open={open} onClose={onClose}>
-      <Box
-        sx={{
-          ...ModalModifications,
-          maxHeight: "92vh",
-          overflowY: "auto",
-          backgroundColor: "#FAFAFA",
-          borderRadius: "12px",
-          border: "1px solid #E5E7EB",
-        }}>
-        {/* Header Section */}
-        <div className="sticky top-0 bg-white border-b border-gray-100 px-8 py-6 rounded-t-xl">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <h2 className="text-2xl font-semibold text-slate-800 mb-2 leading-tight">
-                {goal.goalTitle}
-              </h2>
-              <p className="text-slate-600 text-sm leading-relaxed max-w-3xl">
-                {goal.goalDescription}
-              </p>
+    <div className={`fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4 ${!open ? 'hidden' : ''}`}>
+      <div className="w-full max-w-6xl h-[92vh] bg-slate-100 rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+        {/* LEFT - Goal Info */}
+        <div className="w-full md:w-2/3 bg-white h-full overflow-y-auto border-r border-slate-200">
+          {/* Header */}
+          <div className="p-6 border-b border-slate-200 sticky top-0 bg-white z-10">
+            <div className="flex items-center justify-between mb-4">
+              <button
+                onClick={onClose}
+                className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                {t("backToObjectives")}
+              </button>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5 text-slate-500" />
+              </button>
             </div>
-            <button
-              onClick={onClose}
-              className="ml-4 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 flex-shrink-0">
-              <IoClose size={20} className="text-slate-500" />
-            </button>
+
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-1.5 bg-indigo-100 rounded-lg">
+                <Target className="w-4 h-4 text-indigo-600" />
+              </div>
+              <span className="text-xs font-semibold text-indigo-600 uppercase">
+                {t("objective")}
+              </span>
+            </div>
+
+            <h2 className="text-xl font-bold text-slate-900 mb-2">
+              {goal.goalTitle}
+            </h2>
+
+            <p className="text-sm text-slate-600 leading-relaxed">
+              {goal.goalDescription}
+            </p>
+          </div>
+
+          {/* Current Progress Section - Role based */}
+          <div className="p-6 border-b border-slate-200">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <span className="text-xs font-semibold text-slate-500 uppercase">
+                  {isManager ? t("departmentProgress") : t("currentProgress")}
+                </span>
+                <div className="text-3xl font-bold text-slate-900 mt-0.5">
+                  {currentProgress}%
+                </div>
+              </div>
+
+              <div className="text-right">
+                <span className="text-xs font-semibold text-slate-500 uppercase">
+                  {isManager ? t("totalTarget") : t("target")}
+                </span>
+                <div className="text-2xl font-bold text-slate-900">
+                  {goal.target}
+                </div>
+              </div>
+            </div>
+
+            <div className="relative mb-4">
+              <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    isManager
+                      ? "bg-gradient-to-r from-emerald-500 to-emerald-600"
+                      : "bg-gradient-to-r from-indigo-500 to-purple-500"
+                  }`}
+                  style={{ width: `${Math.min(100, currentProgress)}%` }}
+                />
+              </div>
+              <div className="flex justify-between text-xs text-slate-500 mt-1.5">
+                <span>0</span>
+                <span className="font-medium text-slate-700">
+                  {isManager ? "100%" : goal.target}
+                </span>
+              </div>
+            </div>
+
+            <div className={`flex items-center gap-2 px-4 py-2.5 rounded-lg ${
+              isOnTrack ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
+            }`}>
+              {isOnTrack ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+              <span className="text-sm font-semibold">
+                {isOnTrack ? t("onTrack") : t("needsAttention")}
+              </span>
+            </div>
+          </div>
+
+          {/* Details Grid */}
+          <div className="p-6 space-y-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Calendar className="w-4 h-4 text-slate-400" />
+                  <span className="text-xs font-semibold text-slate-500 uppercase">
+                    {t("startDate")}
+                  </span>
+                </div>
+                <p className="text-sm font-medium text-slate-900">
+                  {new Date(goal.dateAssigned).toLocaleDateString('en-US', {
+                    month: 'long', day: 'numeric', year: 'numeric'
+                  })}
+                </p>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Clock className="w-4 h-4 text-slate-400" />
+                  <span className="text-xs font-semibold text-slate-500 uppercase">
+                    {t("deadline")}
+                  </span>
+                </div>
+                <p className={`text-sm font-medium ${isOverdue ? 'text-red-600' : 'text-slate-900'}`}>
+                  {new Date(goal.goalDeadline).toLocaleDateString('en-US', {
+                    month: 'long', day: 'numeric', year: 'numeric'
+                  })}
+                  {isOverdue && <span className="ml-2 text-red-600 font-semibold">({t("overdue")})</span>}
+                </p>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <TrendingUp className="w-4 h-4 text-slate-400" />
+                  <span className="text-xs font-semibold text-slate-500 uppercase">
+                    {t("daysRemaining")}
+                  </span>
+                </div>
+                <p className="text-sm font-medium text-slate-900">
+                  {daysRemaining} {t("days")}
+                </p>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Target className="w-4 h-4 text-slate-400" />
+                  <span className="text-xs font-semibold text-slate-500 uppercase">
+                    {t("target")}
+                  </span>
+                </div>
+                <p className="text-sm font-medium text-slate-900">
+                  {goal.target}
+                </p>
+              </div>
+            </div>
+
+            {/* Assigned Goals - only for Manager */}
+            {isManager && employeeGoals.length > 0 && (
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+                <h3 className="text-sm font-semibold text-slate-700 uppercase mb-4 flex items-center gap-2">
+                  {t("assignedGoals")}
+                  <span className="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full text-xs">
+                    {employeeGoals.length}
+                  </span>
+                </h3>
+
+                <div className="space-y-4">
+                  {employeeGoals.map((emp, i) => {
+                    const isEmpOverdue =
+                      new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
+
+                    return (
+                      <div key={i} className="flex items-center justify-between group">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shadow-sm">
+                            {emp.employeeName?.split(' ').map(n => n[0]).join('') || '?'}
+                          </div>
+                          <div>
+                            <div className="text-base font-medium text-slate-900 leading-tight">
+                              {emp.employeeName}
+                            </div>
+                            <div className="text-xs text-slate-500 mt-0.5">
+                              {t("target")}: <span className="font-medium text-slate-700">{emp.target}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                          <div className="text-right">
+                            <div className={`text-lg font-bold ${isEmpOverdue ? 'text-red-600' :
+                              emp.status === "Completed" ? 'text-emerald-600' :
+                              'text-slate-800'}`}>
+                              {emp.progress || 0}%
+                            </div>
+                          </div>
+                          <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all ${
+                                isEmpOverdue ? 'bg-red-500' :
+                                emp.status === "Completed" ? 'bg-emerald-500' :
+                                'bg-indigo-500'
+                              }`}
+                              style={{ width: `${emp.progress || 0}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Content Section */}
-        <div className="px-8 py-6">
-          {/* Info Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            {topInfoCards.map(({ label, value, icon, className = "text-slate-700" }) => (
-              <div
-                key={label}
-                className="bg-white rounded-lg border border-gray-200 p-0 hover:shadow-sm transition-shadow duration-200"
+        {/* RIGHT - Update Progress Form - only if allowed */}
+        {(!isManager || isGoalAssignedToManager) && (
+          <div className="w-full md:w-1/3 flex flex-col h-full bg-slate-50 border-l border-slate-200">
+            {/* Top Bar */}
+            <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shrink-0">
+              <div>
+                <h2 className="text-xl font-bold text-slate-900">{t("updateProgress")}</h2>
+                <p className="text-sm text-slate-500 mt-0.5">{t("submitLatestUpdate")}</p>
+              </div>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
               >
-                <div className="grid grid-cols-3 h-full">
-                  {/* Icon Section (1/3) */}
-                  <div className="flex items-center justify-center bg-blue-50">
-                    <span className="text-blue-600 text-2xl">{icon}</span>
-                  </div>
+                <X className="w-5 h-5 text-slate-500" />
+              </button>
+            </div>
 
-                  {/* Text Section (2/3) */}
-                  <div className="col-span-2 flex flex-col justify-center px-4 py-3">
-                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">
-                      {label}
-                    </p>
-                    <p className={`text-lg font-semibold ${className} truncate`}>
-                      {value}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-
-          {/* Progress Sections */}
-          <div className="space-y-6">
-            {/* Individual Progress */}
-            {!isManager && (
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    {t("currentProgress")}
-                  </h3>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-2xl font-bold text-slate-700">
-                      {goal.actualProgressPercent}%
+            {/* Form */}
+            <div className="flex-1 overflow-y-auto p-5">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Progress Input */}
+                <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700 mb-2 block">
+                      {t("progressValue")} *
                     </span>
-                    {progressTrend !== "neutral" && (
-                      <span className={`text-sm ${progressTrend === "up" ? "text-green-600" : "text-red-500"}`}>
-                        {progressTrend === "up" ? "↗" : "↘"}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="relative">
-                  <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-slate-500 to-slate-600 transition-all duration-500 ease-out rounded-full"
-                      style={{ width: `${Math.min(goal.actualProgressPercent, 100)}%` }}
-                    />
-                  </div>
-                  <div className="flex justify-between text-xs text-slate-500 mt-2">
-                    <span>0</span>
-                    <span>{goal.target}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Department Progress */}
-            {isManager && (
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    {t("departmentProgress")}
-                  </h3>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-2xl font-bold text-slate-700">
-                      {departmentProgressPercent}%
-                    </span>
-                    {progressTrend !== "neutral" && (
-                      <span className={`text-sm ${progressTrend === "up" ? "text-green-600" : "text-red-500"}`}>
-                        {progressTrend === "up" ? "↗" : "↘"}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="relative">
-                  <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all duration-500 ease-out rounded-full"
-                      style={{ width: `${Math.min(departmentProgressPercent, 100)}%` }}
-                    />
-                  </div>
-                  <div className="flex justify-between text-xs text-slate-500 mt-2">
-                    <span>0</span>
-                    <span>100%</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Assigned Goals Table */}
-            {isManager && employeeGoals.length > 0 && (
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-100">
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    {t("assignedGoals")}
-                    <span className="ml-2 text-sm font-normal text-slate-500">
-                      ({employeeGoals.length} {t("employees")})
-                    </span>
-                  </h3>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-slate-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                          {t("name")}
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                          {t("goalName")}
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                          {t("target")}
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                          {t("status")}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {employeeGoals.map((e, i) => {
-                        const isEmpOverdue =
-                          new Date(goal.goalDeadline) < new Date() &&
-                          e.status !== "Completed";
-                        return (
-                          <tr key={i} className="hover:bg-slate-25 transition-colors duration-150">
-                            <td className="px-6 py-4 text-sm font-medium text-slate-800">
-                              {e.employeeName}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-slate-600">
-                              {e.goalTitle}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-slate-600">
-                              {e.target}
-                            </td>
-                            <td className="px-6 py-4">
-                              <span
-                                className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full ${
-                                  isEmpOverdue
-                                    ? "bg-red-50 text-red-700 border border-red-200"
-                                    : e.status === "Completed"
-                                    ? "bg-green-50 text-green-700 border border-green-200"
-                                    : e.status === "In Progress"
-                                    ? "bg-yellow-50 text-yellow-700 border border-yellow-200"
-                                    : "bg-gray-50 text-gray-600 border border-gray-200"
-                                }`}>
-                                {t(
-                                  isEmpOverdue
-                                    ? "overdue"
-                                    : e.status === "In Progress"
-                                    ? "inProgress"
-                                    : e.status === "Not Started"
-                                    ? "notStarted"
-                                    : "completed"
-                                )}
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-
-            {/* Progress Update Form */}
-            {(!isManager || isGoalAssignedToManager) && (
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-slate-800 mb-6">
-                  {t("updateProgress")}
-                </h3>
-                <form onSubmit={handleUpdate} className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      {t("enterProgress")}
-                    </label>
                     <input
                       type="number"
-                      onChange={(e) => setProgress(Number(e.target.value))}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 ${
-                        progress > goal.target
-                          ? "border-red-300 bg-red-50"
-                          : "border-gray-300 bg-white"
+                      min={currentProgress}
+                      max="100"
+                      value={progressValue}
+                      onChange={(e) => setProgressValue(Number(e.target.value))}
+                      className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-2 focus:border-indigo-500 transition-all text-lg font-semibold outline-none ${
+                        progressValue < currentProgress ? 'border-red-300 bg-red-50' : 'border-slate-200'
                       }`}
+                      placeholder={t("enterProgress")}
                       required
                     />
-                    {/* {progress > goal.target && (
-                      <p className="text-red-600 text-sm mt-2 flex items-center">
-                        <span className="mr-1">⚠</span>
-                        {t("progressExceedsTarget")}
-                      </p>
-                    )} */}
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      {t("comment")}
-                    </label>
+                    <span className="text-xs text-slate-500 mt-2 block">
+                      {t("current")}: {currentProgress}%
+                    </span>
+                  </label>
+
+                  {progressValue !== currentProgress && progressValue >= currentProgress && (
+                    <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                      <div className="flex items-center justify-between text-sm mb-2">
+                        <span className="font-semibold text-indigo-900">{t("preview")}</span>
+                        <span className="text-indigo-600 font-bold">
+                          +{progressValue - currentProgress}%
+                        </span>
+                      </div>
+                      <div className="h-2 bg-white rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-500"
+                          style={{ width: `${Math.min(100, progressValue)}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {progressValue < currentProgress && (
+                    <p className="text-xs text-red-600 mt-2 flex items-center gap-1.5">
+                      <AlertCircle className="w-4 h-4" />
+                      {t("cannotBeLessThanCurrent")}
+                    </p>
+                  )}
+                </div>
+
+                {/* Comment */}
+                <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700 mb-2 block">
+                      {t("progressComment")} *
+                    </span>
                     <textarea
-                      rows="4"
-                      placeholder={t("enterComment")}
+                      rows={4}
+                      placeholder={t("describeAchievementsChallengesNextSteps")}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      maxLength="200"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 resize-none"
+                      maxLength={500}
+                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:ring-2 focus:border-indigo-500 transition-all resize-none outline-none"
                       required
                     />
-                    <div className="flex justify-between text-sm text-slate-500 mt-2">
-                      <span></span>
-                      <span>{comment.length}/200 {t("characters")}</span>
+                    <div className="flex justify-end mt-2">
+                      <span className="text-xs font-medium text-slate-500">
+                        {comment.length}/500
+                      </span>
                     </div>
-                  </div>
-                  
-                  <div className="flex justify-end pt-4">
-                    <button
-                      type="submit"
-                      className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
-                        isLoading
-                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                          : "bg-slate-700 hover:bg-slate-800 text-white shadow-sm hover:shadow-md"
-                      }`}
+                  </label>
+
+                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      id="markComplete"
+                      checked={markAsComplete}
+                      onChange={(e) => setMarkAsComplete(e.target.checked)}
+                      className="w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <label
+                      htmlFor="markComplete"
+                      className="text-sm font-medium text-slate-700 cursor-pointer select-none"
                     >
-                      {isLoading ? (
-                        <span className="flex items-center">
-                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          {t("submitting")}
-                        </span>
-                      ) : (
-                        t("submitProgress")
-                      )}
-                    </button>
-
-                    <button
-                    type="button"
-                    onClick={handleMarkAsComplete}
-                    disabled={isLoading || goal.status === "Completed"}
-                    className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 min-w-[180px] ${
-                      isLoading || goal.status === "Completed"
-                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        : "bg-green-600 hover:bg-green-700 text-white shadow-sm hover:shadow-md"
-                    }`}
-                  >
-                    {goal.status === "Completed" ? t("alreadyCompleted") : t("markAsComplete")}
-                  </button>
-                  </div>
-                </form>
-              </div>
-            )}
-
-            {/* Recent Updates */}
-            {goal.progressUpdates?.length > 0 && (
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-100">
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    {t("recentUpdates")}
-                    <span className="ml-2 text-sm font-normal text-slate-500">
-                      ({goal.progressUpdates.length} {t("updates")})
-                    </span>
-                  </h3>
-                </div>
-                <div className="max-h-80 overflow-y-auto">
-                  <div className="divide-y divide-gray-100">
-                    {goal.progressUpdates.map((u, i) => (
-                      <div key={i} className="px-6 py-4 hover:bg-slate-25 transition-colors duration-150">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-slate-800 text-sm">
-                            {u.employeeName}
-                          </span>
-                          <time className="text-xs text-slate-500">
-                            {new Date(u.date).toLocaleString("en-US", {
-                              month: "short",
-                              day: "2-digit",
-                              year: "numeric",
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </time>
-                        </div>
-                        <p className="text-sm text-slate-600 leading-relaxed">
-                          {u.comment}
-                        </p>
-                      </div>
-                    ))}
+                      {t("markAsCompleted")}
+                    </label>
                   </div>
                 </div>
-              </div>
-            )}
+              </form>
+            </div>
+
+            {/* Action Bar */}
+            <div className="bg-white border-t border-slate-200 px-6 py-5 flex items-center justify-end gap-4 shrink-0">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-6 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                {t("cancel")}
+              </button>
+
+              <button
+                onClick={handleSubmit}
+                disabled={
+                  isSubmitting ||
+                  !comment.trim() ||
+                  progressValue < currentProgress ||
+                  goal.status === "Completed"
+                }
+                className="px-8 py-3 text-sm font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    {t("submitting")}
+                  </>
+                ) : (
+                  <>
+                    <TrendingUp className="w-4 h-4" />
+                    {goal.status === "Completed" ? t("alreadyCompleted") : t("submitUpdate")}
+                  </>
+                )}
+              </button>
+            </div>
           </div>
-        </div>
-      </Box>
-    </Modal>
+        )}
+      </div>
+    </div>
   );
 }
 
