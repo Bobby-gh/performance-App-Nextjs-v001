@@ -1412,6 +1412,7 @@ export function GoalDetails({ open, onClose }) {
             </div>
 
             {/* Assigned Goals - only for Manager */}
+            {/* Assigned Goals - only for Manager */}
             {isManager && employeeGoals.length > 0 && (
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 mt-6">
                 <h3 className="text-sm font-semibold text-slate-700 uppercase mb-4 flex items-center gap-2">
@@ -1421,56 +1422,99 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </h3>
 
-                <div className="space-y-5">
+                {/* Desktop/tablet header (hidden on mobile) */}
+                <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-3 py-2 bg-slate-100/70 rounded-lg text-xs font-semibold text-slate-600 uppercase mb-2">
+                  <div className="col-span-5">Employee</div>
+                  <div className="col-span-2 text-center">Target</div>
+                  <div className="col-span-2 text-center">Progress</div>
+                  <div className="col-span-3 text-center">Status</div>
+                </div>
+
+                <div className="space-y-4">
                   {employeeGoals.map((emp, i) => {
                     const isEmpOverdue =
                       new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
 
                     const empProgressPercent = emp.actualProgressPercent || 0;
-                    const empTarget = emp.target || goal.target; // fallback to parent goal target
+                    const empTarget = emp.target || goal.target;
 
+                    // Determine status display & color
+                    let statusText = emp.status;
+                    let statusColor = "bg-gray-100 text-gray-700";
+                    let statusTextColor = "text-gray-700";
+
+                    if (isEmpOverdue && emp.status !== "Completed") {
+                      statusText = "Overdue";
+                      statusColor = "bg-red-100 text-red-800 border border-red-200";
+                      statusTextColor = "text-red-800";
+                    } else if (emp.status === "Completed") {
+                      statusColor = "bg-emerald-100 text-emerald-800 border border-emerald-200";
+                      statusTextColor = "text-emerald-800";
+                    } else if (emp.status === "In Progress") {
+                      statusColor = "bg-amber-100 text-amber-800 border border-amber-200";
+                      statusTextColor = "text-amber-800";
+                    } else if (emp.status === "Not Started") {
+                      statusColor = "bg-slate-100 text-slate-700 border border-slate-200";
+                    }
+
+                    // Progress bar color logic
                     let progressColor = "bg-indigo-500";
                     if (isEmpOverdue) progressColor = "bg-red-500";
                     else if (emp.status === "Completed") progressColor = "bg-emerald-500";
+                    else if (empProgressPercent >= 100) progressColor = "bg-violet-500";
                     else if (empProgressPercent >= 80) progressColor = "bg-emerald-500";
                     else if (empProgressPercent >= 50) progressColor = "bg-amber-500";
                     else progressColor = "bg-orange-500";
 
                     return (
-                      <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 group hover:bg-white/60 p-3 rounded-lg transition-colors">
-                        {/* Left: Employee info */}
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shadow-sm flex-shrink-0">
-                            {emp.employeeName?.split(' ').map(n => n[0]).join('') || '?'}
+                      <div
+                        key={i}
+                        className="grid sm:grid-cols-12 gap-4 items-center p-3 bg-white rounded-lg border border-slate-100 hover:border-slate-200 transition-all group"
+                      >
+                        {/* Employee Info */}
+                        <div className="sm:col-span-5 flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shadow-sm flex-shrink-0">
+                            {emp.employeeName?.split(" ").map((n) => n[0]).join("") || "?"}
                           </div>
                           <div>
-                            <div className="text-base font-medium text-slate-900 leading-tight">
+                            <div className="text-base font-medium text-slate-900">
                               {emp.employeeName}
                             </div>
                             <div className="text-xs text-slate-500 mt-0.5">
-                              {t("target")}: <span className="font-medium text-slate-700">{empTarget}</span>
+                              {emp.goalTitle || goal.goalTitle}
                             </div>
                           </div>
                         </div>
 
-                        {/* Right: Progress */}
-                        <div className="flex items-center gap-4">
-                          <div className="text-right min-w-[60px]">
-                            <div className={`text-lg font-bold ${isEmpOverdue ? 'text-red-600' :
-                              emp.status === "Completed" ? 'text-emerald-600' :
-                              'text-slate-800'}`}>
-                              {empProgressPercent}%
-                            </div>
-                            <div className="text-xs text-slate-500">
-                              {emp.status === "Completed" ? t("completed") : isEmpOverdue ? t("overdue") : t(emp.status?.toLowerCase().replace(" ", ""))}
-                            </div>
-                          </div>
+                        {/* Target */}
+                        <div className="sm:col-span-2 text-center sm:text-center">
+                          <div className="text-sm font-medium text-slate-800">{empTarget}</div>
+                          <div className="text-xs text-slate-500 sm:hidden">Target</div>
+                        </div>
 
-                          <div className="w-32 sm:w-40 h-2.5 bg-slate-200 rounded-full overflow-hidden flex-shrink-0">
+                        {/* Progress */}
+                        <div className="sm:col-span-2 flex flex-col items-center sm:items-center gap-1">
+                          <div className={`text-lg font-bold ${isEmpOverdue ? "text-red-600" : emp.status === "Completed" ? "text-emerald-600" : "text-slate-800"}`}>
+                            {empProgressPercent.toFixed(0)}%
+                          </div>
+                          <div className="w-full max-w-[120px] h-2.5 bg-slate-100 rounded-full overflow-hidden">
                             <div
                               className={`h-full rounded-full transition-all duration-500 ${progressColor}`}
                               style={{ width: `${Math.min(100, empProgressPercent)}%` }}
                             />
+                          </div>
+                          <div className="text-xs text-slate-500 sm:hidden">Progress</div>
+                        </div>
+
+                        {/* Status */}
+                        <div className="sm:col-span-3 flex justify-center sm:justify-center">
+                          <span
+                            className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full ${statusColor}`}
+                          >
+                            {t(statusText.toLowerCase().replace(/\s+/g, "")) || statusText}
+                          </span>
+                          <div className="text-xs text-slate-500 sm:hidden mt-1 w-full text-center">
+                            Status
                           </div>
                         </div>
                       </div>
