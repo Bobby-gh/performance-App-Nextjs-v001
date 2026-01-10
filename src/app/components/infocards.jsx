@@ -1205,7 +1205,7 @@ export function GoalDetails({ open, onClose }) {
       : 'neutral';
 
   const isOverdue = new Date(goal.goalDeadline) < new Date();
-  const isAlreadyCompleted = goal.status === 'Completed';
+  const isAlreadyCompleted = goal.isComplete === true; // ← most accurate check
 
   const getGoalIdToUse = () => {
     if (isManager && isGoalAssignedToManager) {
@@ -1226,28 +1226,19 @@ export function GoalDetails({ open, onClose }) {
     const goalId = getGoalIdToUse();
 
     try {
-      const res = await axios.patch(
-        UPDATE_GOAL_PROGRESS,
-        {
-          goalId,
-          progressIncrement: Number(progress),
-          comment: comment.trim() || undefined,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
+      const res = await axios.patch(UPDATE_GOAL_PROGRESS, {
+        goalId,
+        progressIncrement: Number(progress),
+        comment: comment.trim() || undefined,
+      });
 
       if (res.status === 200) {
-        // showToast(t('progressUpdated'), 'success');
         alert(t('progressUpdated') || 'Progress updated successfully!');
-        triggerComponent?.();
+        setComment(''); 
+        triggerComponent?.(); 
       }
     } catch (err) {
-      console.error('Progress update error:', err);
+      console.error('Progress update failed:', err);
       alert(`Error: ${err.response?.data?.message || err.message}`);
     } finally {
       setIsLoading(false);
@@ -1255,41 +1246,32 @@ export function GoalDetails({ open, onClose }) {
   };
 
   const handleMarkAsCompleted = async () => {
-      if (!window.confirm(t('confirmMarkComplete') || "Are you sure you want to mark this goal as completed?")) {
-        return;
+    if (!window.confirm(t('confirmMarkComplete') || 'Are you sure you want to mark this goal as completed?')) {
+      return;
+    }
+
+    setIsLoading(true);
+    const goalId = getGoalIdToUse();
+
+    try {
+      const res = await axios.patch(UPDATE_GOAL_PROGRESS, {
+        goalId,
+        isComplete: true,                    
+        comment: comment.trim() || t('goalCompletedComment') || 'Goal completed',
+      });
+
+      if (res.status === 200) {
+        alert(t('goalMarkedCompleted') || 'Goal marked as completed!');
+        triggerComponent?.(); 
+        onClose?.();         
       }
-
-      setIsLoading(true);
-      const goalId = getGoalIdToUse();
-
-      try {
-        const res = await axios.post(
-          UPDATE_GOAL_PROGRESS,
-          {
-            goalId,
-            isComplete: true,              
-            comment: comment.trim() || t('defaultCompleteComment') || "Goal completed",
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${auth.token}`,
-            },
-          }
-        );
-
-        if (res.status === 200) {
-          alert(t("goalMarkedCompleted") || "Goal marked as completed!");
-          triggerComponent?.();  
-          onClose?.();          
-        }
-      } catch (err) {
-        console.error("Failed to mark as completed:", err);
-        alert(`Error: ${err.response?.data?.message || err.message}`);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    } catch (err) {
+      console.error('Failed to mark as completed:', err);
+      alert(`Error: ${err.response?.data?.message || err.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const topInfoCards = [
     {
@@ -1324,7 +1306,7 @@ export function GoalDetails({ open, onClose }) {
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          ...ModalModifications, // ← make sure this style object exists in your project
+          ...ModalModifications,
           maxHeight: '92vh',
           overflowY: 'auto',
           backgroundColor: '#FAFAFA',
@@ -1332,7 +1314,7 @@ export function GoalDetails({ open, onClose }) {
           border: '1px solid #E5E7EB',
         }}
       >
-        {/* Header Section */}
+        {/* Header */}
         <div className="sticky top-0 bg-white border-b border-gray-100 px-8 py-6 rounded-t-xl z-10">
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -1352,9 +1334,9 @@ export function GoalDetails({ open, onClose }) {
           </div>
         </div>
 
-        {/* Content Section */}
+        {/* Main content */}
         <div className="px-8 py-6">
-          {/* Info Cards */}
+          {/* Info cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {topInfoCards.map(({ label, value, icon, className = 'text-slate-700' }) => (
               <div
@@ -1376,23 +1358,18 @@ export function GoalDetails({ open, onClose }) {
             ))}
           </div>
 
-          {/* Progress Sections */}
           <div className="space-y-6">
-            {/* Individual Progress */}
+            {/* Individual Progress Bar */}
             {!isManager && (
               <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    {t('currentProgress')}
-                  </h3>
+                  <h3 className="text-lg font-semibold text-slate-800">{t('currentProgress')}</h3>
                   <div className="flex items-center space-x-2">
                     <span className="text-2xl font-bold text-slate-700">
                       {goal.actualProgressPercent}%
                     </span>
                     {progressTrend !== 'neutral' && (
-                      <span
-                        className={`text-sm ${progressTrend === 'up' ? 'text-green-600' : 'text-red-500'}`}
-                      >
+                      <span className={`text-sm ${progressTrend === 'up' ? 'text-green-600' : 'text-red-500'}`}>
                         {progressTrend === 'up' ? '↗' : '↘'}
                       </span>
                     )}
@@ -1413,21 +1390,17 @@ export function GoalDetails({ open, onClose }) {
               </div>
             )}
 
-            {/* Department Progress */}
+            {/* Department Progress Bar */}
             {isManager && (
               <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    {t('departmentProgress')}
-                  </h3>
+                  <h3 className="text-lg font-semibold text-slate-800">{t('departmentProgress')}</h3>
                   <div className="flex items-center space-x-2">
                     <span className="text-2xl font-bold text-slate-700">
                       {departmentProgressPercent}%
                     </span>
                     {progressTrend !== 'neutral' && (
-                      <span
-                        className={`text-sm ${progressTrend === 'up' ? 'text-green-600' : 'text-red-500'}`}
-                      >
+                      <span className={`text-sm ${progressTrend === 'up' ? 'text-green-600' : 'text-red-500'}`}>
                         {progressTrend === 'up' ? '↗' : '↘'}
                       </span>
                     )}
@@ -1448,7 +1421,7 @@ export function GoalDetails({ open, onClose }) {
               </div>
             )}
 
-            {/* Assigned Goals Table */}
+            {/* Assigned Goals Table (manager view) */}
             {isManager && employeeGoals.length > 0 && (
               <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-100">
@@ -1479,19 +1452,12 @@ export function GoalDetails({ open, onClose }) {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {employeeGoals.map((e, i) => {
-                        const isEmpOverdue =
-                          new Date(goal.goalDeadline) < new Date() && e.status !== 'Completed';
+                        const isEmpOverdue = new Date(goal.goalDeadline) < new Date() && e.status !== 'Completed';
                         return (
                           <tr key={i} className="hover:bg-slate-25 transition-colors duration-150">
-                            <td className="px-6 py-4 text-sm font-medium text-slate-800">
-                              {e.employeeName}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-slate-600">
-                              {e.goalTitle}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-slate-600">
-                              {e.target}
-                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-slate-800">{e.employeeName}</td>
+                            <td className="px-6 py-4 text-sm text-slate-600">{e.goalTitle}</td>
+                            <td className="px-6 py-4 text-sm text-slate-600">{e.target}</td>
                             <td className="px-6 py-4">
                               <span
                                 className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full ${
@@ -1527,9 +1493,8 @@ export function GoalDetails({ open, onClose }) {
             {/* Progress Update Form */}
             {(!isManager || isGoalAssignedToManager) && (
               <div className="bg-white rounded-lg border border-gray-200 p-6">
-                <h3 className="text-lg font-semibold text-slate-800 mb-6">
-                  {t('updateProgress')}
-                </h3>
+                <h3 className="text-lg font-semibold text-slate-800 mb-6">{t('updateProgress')}</h3>
+
                 <form onSubmit={handleUpdate} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -1559,16 +1524,16 @@ export function GoalDetails({ open, onClose }) {
                       {t('comment')}
                     </label>
                     <textarea
-                      rows="4"
+                      rows={4}
                       placeholder={t('enterComment')}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      maxLength="200"
+                      maxLength={200}
                       disabled={isLoading || isAlreadyCompleted}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all duration-200 resize-none"
                     />
                     <div className="flex justify-between text-sm text-slate-500 mt-2">
-                      <span></span>
+                      <span />
                       <span>{comment.length}/200 {t('characters')}</span>
                     </div>
                   </div>
@@ -1579,16 +1544,21 @@ export function GoalDetails({ open, onClose }) {
                         type="button"
                         onClick={handleMarkAsCompleted}
                         disabled={isLoading}
-                        className={`px-6 py-3 rounded-lg font-medium flex items-center gap-2 min-w-[180px] justify-center
-                          ${isLoading 
-                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-                            : 'bg-green-600 hover:bg-green-700 text-white shadow-sm hover:shadow'}`}
+                        className={`px-6 py-3 rounded-lg font-medium flex items-center gap-2 min-w-[180px] justify-center ${
+                          isLoading
+                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                            : 'bg-green-600 hover:bg-green-700 text-white shadow-sm hover:shadow'
+                        }`}
                       >
                         {isLoading ? (
                           <>
                             <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              />
                             </svg>
                             {t('marking') || 'Marking...'}
                           </>
@@ -1601,16 +1571,21 @@ export function GoalDetails({ open, onClose }) {
                     <button
                       type="submit"
                       disabled={isLoading || progress > goal.target || isAlreadyCompleted}
-                      className={`px-8 py-3 rounded-lg font-semibold min-w-[160px]
-                        ${isLoading || progress > goal.target || isAlreadyCompleted
+                      className={`px-8 py-3 rounded-lg font-semibold min-w-[160px] ${
+                        isLoading || progress > goal.target || isAlreadyCompleted
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                          : 'bg-slate-700 hover:bg-slate-800 text-white shadow-sm hover:shadow-md'}`}
+                          : 'bg-slate-700 hover:bg-slate-800 text-white shadow-sm hover:shadow-md'
+                      }`}
                     >
                       {isLoading ? (
                         <span className="flex items-center justify-center gap-2">
                           <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            />
                           </svg>
                           {t('submitting') || 'Submitting...'}
                         </span>
@@ -1645,9 +1620,7 @@ export function GoalDetails({ open, onClose }) {
                     {goal.progressUpdates.map((u, i) => (
                       <div key={i} className="px-6 py-4 hover:bg-slate-25 transition-colors duration-150">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-slate-800 text-sm">
-                            {u.employeeName}
-                          </span>
+                          <span className="font-medium text-slate-800 text-sm">{u.employeeName}</span>
                           <time className="text-xs text-slate-500">
                             {new Date(u.date).toLocaleString('en-US', {
                               month: 'short',
@@ -1658,9 +1631,7 @@ export function GoalDetails({ open, onClose }) {
                             })}
                           </time>
                         </div>
-                        <p className="text-sm text-slate-600 leading-relaxed">
-                          {u.comment}
-                        </p>
+                        <p className="text-sm text-slate-600 leading-relaxed">{u.comment}</p>
                       </div>
                     ))}
                   </div>
