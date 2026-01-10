@@ -1191,7 +1191,7 @@ export function GoalDetails({ open, onClose }) {
 
   // Progress handling
   const currentProgress = isManager ? goal.actualProgressPercent : goal.actualProgress;
-  const [progressValue, setProgressValue] = useState(currentProgress);
+  const [progressValue, setProgressValue] = useState("");
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [markAsComplete, setMarkAsComplete] = useState(false);
@@ -1412,7 +1412,6 @@ export function GoalDetails({ open, onClose }) {
             </div>
 
             {/* Assigned Goals - only for Manager */}
-            {/* Assigned Goals - only for Manager */}
             {isManager && employeeGoals.length > 0 && (
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 mt-6">
                 <h3 className="text-sm font-semibold text-slate-700 uppercase mb-4 flex items-center gap-2">
@@ -1548,51 +1547,81 @@ export function GoalDetails({ open, onClose }) {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Progress Input */}
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
-                  <label className="block">
-                    <span className="text-sm font-semibold text-slate-700 mb-2 block">
-                      {t("progressValue")} *
-                    </span>
-                    <input
-                      type="number"
-                      min={currentProgress}
-                      max="100"
-                      value={progressValue}
-                      onChange={(e) => setProgressValue(Number(e.target.value))}
-                      className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-2 focus:border-indigo-500 transition-all text-lg font-semibold outline-none ${
-                        progressValue < currentProgress ? 'border-red-300 bg-red-50' : 'border-slate-200'
-                      }`}
-                      placeholder={t("enterProgress")}
-                      required
-                    />
-                    <span className="text-xs text-slate-500 mt-2 block">
-                      {t("current")}: {currentProgress}%
-                    </span>
-                  </label>
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700 mb-2 block">
+                    New Progress Value * (absolute %)
+                  </span>
+                  <input
+                    type="number"
+                    value={progressValue}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === "" || (Number(val) >= 0 && Number(val) <= 100)) {
+                        setProgressValue(val);
+                      }
+                    }}
+                    placeholder="e.g. 65"
+                    className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-2 focus:border-indigo-500 transition-all text-lg font-semibold outline-none ${
+                      progressValue !== "" && Number(progressValue) < currentProgress
+                        ? "border-red-400 bg-red-50"
+                        : "border-slate-200"
+                    }`}
+                    required={!markAsComplete} // optional: allow empty if just marking complete
+                  />
+                  <span className="text-xs text-slate-500 mt-2 block">
+                    Current progress: <strong>{currentProgress}</strong>
+                  </span>
+                </label>
 
-                  {progressValue !== currentProgress && progressValue >= currentProgress && (
-                    <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                      <div className="flex items-center justify-between text-sm mb-2">
-                        <span className="font-semibold text-indigo-900">{t("preview")}</span>
-                        <span className="text-indigo-600 font-bold">
-                          +{progressValue - currentProgress}%
-                        </span>
+                {/* Preview - shows only when user entered a valid new value */}
+                {progressValue !== "" && !isNaN(Number(progressValue)) && (
+                  <div className="mt-5 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <span className="text-sm font-semibold text-indigo-900">New total progress</span>
+                        <div className="text-2xl font-bold text-indigo-700 mt-0.5">
+                          {Number(progressValue).toFixed(1)}%
+                        </div>
                       </div>
-                      <div className="h-2 bg-white rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-500"
-                          style={{ width: `${Math.min(100, progressValue)}%` }}
-                        />
+                      <div className="text-right">
+                        <div className="text-sm text-indigo-600 font-medium">
+                          {Number(progressValue) > currentProgress ? "+" : ""}
+                          {(Number(progressValue) - currentProgress).toFixed(1)}%
+                        </div>
+                        <div className="text-xs text-indigo-500">change from current</div>
                       </div>
                     </div>
-                  )}
 
-                  {progressValue < currentProgress && (
-                    <p className="text-xs text-red-600 mt-2 flex items-center gap-1.5">
-                      <AlertCircle className="w-4 h-4" />
-                      {t("cannotBeLessThanCurrent")}
-                    </p>
-                  )}
-                </div>
+                    {/* Visual comparison */}
+                    <div className="relative h-3 bg-slate-100 rounded-full overflow-hidden mb-2">
+                      {/* Old progress background */}
+                      <div
+                        className="absolute h-full bg-slate-300 transition-all duration-500"
+                        style={{ width: `${currentProgress}%` }}
+                      />
+                      {/* New progress overlay */}
+                      <div
+                        className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500 relative z-10"
+                        style={{ width: `${Math.min(100, Number(progressValue))}%` }}
+                      />
+                    </div>
+
+                    {Number(progressValue) < currentProgress && (
+                      <p className="text-xs text-red-600 mt-2 flex items-center gap-1.5 font-medium">
+                        <AlertCircle className="w-4 h-4" />
+                        New progress cannot be less than current ({currentProgress}%)
+                      </p>
+                    )}
+
+                    {Number(progressValue) > 100 && (
+                      <p className="text-xs text-amber-700 mt-2 flex items-center gap-1.5 font-medium">
+                        <AlertCircle className="w-4 h-4" />
+                        Progress over 100% — this may be allowed depending on your system
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
 
                 {/* Comment */}
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
