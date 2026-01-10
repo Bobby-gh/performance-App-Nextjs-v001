@@ -1257,6 +1257,43 @@ export function GoalDetails({ open, onClose }) {
       setLoading(false);
     }
   };
+  const handleMarkAsComplete = async () => {
+    if (!window.confirm(t("confirmMarkComplete"))) return;
+
+    setLoading(true);
+
+    const managerAssignedGoalId = isManager
+      ? employeeGoals.find((emp) => emp.employeeEmail === auth.email)?.goalId
+      : null;
+    const goalIdToUse = isManager ? managerAssignedGoalId : goal.id;
+
+    try {
+      const res = await axios.patch(
+        UPDATE_GOAL_PROGRESS, 
+        JSON.stringify({
+          goalId: goalIdToUse,
+          isComplete: true,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+
+      if (res.status === 200) {
+        showToast(t("goalMarkedAsComplete"), "success");
+        triggerComponent(); // refresh goals
+        onClose?.();        // optional: close modal after completion
+      }
+    } catch (err) {
+      console.error("Mark complete error:", err);
+      alert(t("errorMarkingComplete") + ": " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const topInfoCards = [
     {
@@ -1566,6 +1603,19 @@ export function GoalDetails({ open, onClose }) {
                         t("submitProgress")
                       )}
                     </button>
+
+                    <button
+                    type="button"
+                    onClick={handleMarkAsComplete}
+                    disabled={isLoading || goal.status === "Completed"}
+                    className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 min-w-[180px] ${
+                      isLoading || goal.status === "Completed"
+                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                        : "bg-green-600 hover:bg-green-700 text-white shadow-sm hover:shadow-md"
+                    }`}
+                  >
+                    {goal.status === "Completed" ? t("alreadyCompleted") : t("markAsComplete")}
+                  </button>
                   </div>
                 </form>
               </div>
