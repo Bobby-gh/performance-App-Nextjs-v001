@@ -334,67 +334,79 @@ export const CategoryType = [
 //Coporate Goals
 const FinancialCard = ({ data }) => {
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
-  
+
   const maxValue = Math.max(...chartData);
   const isPositive = trend === 'up';
-  
+
   return (
     <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full">
-      {/* Header with trend badge */}
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-gray-600 text-sm font-medium mb-1">{title}</h3>
-          <p className="text-gray-800 text-xs font-semibold uppercase">{subtitle}</p>
+
+      {/* Header */}
+      <div className="flex justify-between items-start mb-4 gap-3">
+        <div className="min-w-0">
+          {/* Title — 1 line */}
+          <h3
+            className="text-gray-600 text-sm font-medium mb-1 line-clamp-1"
+            title={title}
+          >
+            {title}
+          </h3>
+
+          {/* Subtitle — 2 lines */}
+          <p
+            className="text-gray-800 text-xs font-semibold uppercase line-clamp-2"
+            title={subtitle}
+          >
+            {subtitle}
+          </p>
         </div>
-        <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
-          isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-        }`}>
+
+        {/* Trend badge */}
+        <div
+          className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+            isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+          }`}
+        >
           {isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
           {trendValue}
         </div>
       </div>
-      
-      {/* Value display */}
+
+      {/* Value */}
       <div className="mb-2">
         <div className="flex items-baseline gap-1">
           <span className="text-xl font-bold text-gray-900">{value}</span>
-          {/* <span className="text-xl font-semibold text-gray-900">{unit}</span> */}
+          {unit && (
+            <span className="text-sm font-semibold text-gray-600">{unit}</span>
+          )}
         </div>
-        <p className="text-gray-500 text-sm mt-1">Target {target}</p>
+        <p className="text-gray-500 text-sm mt-1 truncate">
+          Target {target}
+        </p>
       </div>
-      
-      {/* Bar chart */}
+
+      {/* Chart */}
       <div className="flex items-end justify-between gap-3 h-24 mt-6">
         {chartData.map((val, idx) => {
           const height = (val / maxValue) * 100;
-          const labels = ['Target', 'Achieved']; 
-          
-          const isFirst = idx === 0;
-          const isLast = idx === chartData.length - 1;
-          
-          let barColor = 'bg-gray-400'; // Default for middle bars
-          
-          if (isFirst) {
-            barColor = 'bg-gray-400';
-          } else if (isLast) {
-             const prevVal = chartData[idx - 1];
-             if (val < prevVal) {
-               barColor = 'bg-red-500';   
-             } else {
-               barColor = 'bg-green-500'; 
-             }
+          const labels = ['Target', 'Achieved'];
+
+          let barColor = 'bg-gray-400';
+          if (idx === chartData.length - 1) {
+            barColor = val < chartData[idx - 1] ? 'bg-red-500' : 'bg-green-500';
           }
 
           return (
             <div key={idx} className="flex flex-col items-center flex-1">
               <div className="w-full flex items-end justify-center h-20">
-                <div 
+                <div
                   className={`w-full rounded-t transition-all ${barColor}`}
                   style={{ height: `${height}%` }}
                 />
               </div>
-              {/* Only show label if it exists in the labels array */}
-              <span className="text-xs text-gray-600 mt-2">{labels[idx] || ''}</span>
+              <span className="text-xs text-gray-600 mt-2">
+                {labels[idx] || ''}
+              </span>
             </div>
           );
         })}
@@ -402,6 +414,7 @@ const FinancialCard = ({ data }) => {
     </div>
   );
 };
+
 const FinancialProjections = () => {
   const { goals } = useCorporateGoals();
 
