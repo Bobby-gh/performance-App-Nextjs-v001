@@ -46,6 +46,7 @@
   "devDependencies": {
     "@eslint/config-array": "^0.20.0",
     "@eslint/object-schema": "^2.1.6",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "eslint": "^8.56.0",
     "eslint-config-next": "^15.4.0-canary.35",
     "postcss": "^8",
