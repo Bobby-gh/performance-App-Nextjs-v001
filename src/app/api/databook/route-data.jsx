@@ -444,6 +444,7 @@ export function useCorporateGoals() {
         });
 
         const data = response.data;
+        console.log("Raw response.data:", data);
 
         setGoals(
           data.goals.map(goal => ({
