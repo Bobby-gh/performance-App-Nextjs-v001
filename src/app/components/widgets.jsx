@@ -473,18 +473,25 @@ const FinancialProjections = () => {
     const achieved = Number(goal.targetAchieved);
     const target = Number(goal.maintarget);
 
+    // Decide unit based on largest value
+    const maxValue = Math.max(achieved, target);
+    const { unit, divisor } = getUnitAndDivisor(maxValue);
+
+    const formattedAchieved = formatByMagnitude(achieved, divisor);
+    const formattedTarget = formatByMagnitude(target, divisor);
+
     const progressPercent = ((achieved / target) * 100).toFixed(1);
     const trend = achieved >= target ? "up" : "down";
 
     return {
       title: goal.goalTitle.toUpperCase(),
       subtitle: goal.description,
-      value: achieved.toFixed(1),
-      unit: "M",
-      target: target.toFixed(1),
+      value: formattedAchieved,
+      unit,
+      target: formattedTarget,
       trend,
       trendValue: `${progressPercent}%`,
-      chartData: [target, achieved],
+      chartData: [target, achieved], // raw values for chart
     };
   });
 
@@ -500,3 +507,58 @@ const FinancialProjections = () => {
 };
 
 export default FinancialProjections;
+
+// const FinancialProjections = () => {
+//   const { goals } = useCorporateGoals();
+
+//   const cardsData = goals.map(goal => {
+//     const achieved = Number(goal.targetAchieved);
+//     const target = Number(goal.maintarget);
+
+//     const maxValue = Math.max(achieved, target);
+//     const { unit, divisor } = getUnitAndDivisor(maxValue);
+
+//     const formattedAchieved = formatByMagnitude(achieved, divisor);
+//     const formattedTarget = formatByMagnitude(target, divisor);
+
+//     const progressPercent = ((achieved / target) * 100).toFixed(1);
+//     const trend = achieved >= target ? "up" : "down";
+
+//     return {
+//       title: goal.goalTitle.toUpperCase(),
+//       subtitle: goal.description,
+//       value: formattedAchieved,
+//       unit,
+//       target: formattedTarget,
+//       trend,
+//       trendValue: `${progressPercent}%`,
+//       chartData: [target, achieved], // raw values for chart
+//     };
+//   });
+
+//   return (
+//     <div className="min-h-screen mt-3">
+//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+//         {cardsData.map((card, index) => (
+//           <FinancialCard key={index} data={card} />
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default FinancialProjections;
+
+
+// Financial Projections Helpers
+
+const formatByMagnitude = (value, divisor) => {
+  return (value / divisor).toFixed(1);
+};
+
+const getUnitAndDivisor = (maxValue) => {
+  if (maxValue >= 1_000_000_000) return { unit: "B", divisor: 1_000_000_000 };
+  if (maxValue >= 1_000_000) return { unit: "M", divisor: 1_000_000 };
+  if (maxValue >= 1_000) return { unit: "K", divisor: 1_000 };
+  return { unit: "", divisor: 1 };
+};
