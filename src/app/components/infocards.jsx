@@ -1413,7 +1413,7 @@ export function GoalDetails({ open, onClose }) {
 
             {/* Assigned Goals - only for Manager */}
             {isManager && employeeGoals.length > 0 && (
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 mt-6">
                 <h3 className="text-sm font-semibold text-slate-700 uppercase mb-4 flex items-center gap-2">
                   {t("assignedGoals")}
                   <span className="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full text-xs">
@@ -1421,15 +1421,26 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </h3>
 
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {employeeGoals.map((emp, i) => {
                     const isEmpOverdue =
                       new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
 
+                    const empProgressPercent = emp.actualProgressPercent || 0;
+                    const empTarget = emp.target || goal.target; // fallback to parent goal target
+
+                    let progressColor = "bg-indigo-500";
+                    if (isEmpOverdue) progressColor = "bg-red-500";
+                    else if (emp.status === "Completed") progressColor = "bg-emerald-500";
+                    else if (empProgressPercent >= 80) progressColor = "bg-emerald-500";
+                    else if (empProgressPercent >= 50) progressColor = "bg-amber-500";
+                    else progressColor = "bg-orange-500";
+
                     return (
-                      <div key={i} className="flex items-center justify-between group">
+                      <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 group hover:bg-white/60 p-3 rounded-lg transition-colors">
+                        {/* Left: Employee info */}
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shadow-sm">
+                          <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shadow-sm flex-shrink-0">
                             {emp.employeeName?.split(' ').map(n => n[0]).join('') || '?'}
                           </div>
                           <div>
@@ -1437,27 +1448,28 @@ export function GoalDetails({ open, onClose }) {
                               {emp.employeeName}
                             </div>
                             <div className="text-xs text-slate-500 mt-0.5">
-                              {t("target")}: <span className="font-medium text-slate-700">{emp.target}</span>
+                              {t("target")}: <span className="font-medium text-slate-700">{empTarget}</span>
                             </div>
                           </div>
                         </div>
 
+                        {/* Right: Progress */}
                         <div className="flex items-center gap-4">
-                          <div className="text-right">
+                          <div className="text-right min-w-[60px]">
                             <div className={`text-lg font-bold ${isEmpOverdue ? 'text-red-600' :
                               emp.status === "Completed" ? 'text-emerald-600' :
                               'text-slate-800'}`}>
-                              {emp.progress || 0}%
+                              {empProgressPercent}%
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              {emp.status === "Completed" ? t("completed") : isEmpOverdue ? t("overdue") : t(emp.status?.toLowerCase().replace(" ", ""))}
                             </div>
                           </div>
-                          <div className="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+
+                          <div className="w-32 sm:w-40 h-2.5 bg-slate-200 rounded-full overflow-hidden flex-shrink-0">
                             <div
-                              className={`h-full rounded-full transition-all ${
-                                isEmpOverdue ? 'bg-red-500' :
-                                emp.status === "Completed" ? 'bg-emerald-500' :
-                                'bg-indigo-500'
-                              }`}
-                              style={{ width: `${emp.progress || 0}%` }}
+                              className={`h-full rounded-full transition-all duration-500 ${progressColor}`}
+                              style={{ width: `${Math.min(100, empProgressPercent)}%` }}
                             />
                           </div>
                         </div>
