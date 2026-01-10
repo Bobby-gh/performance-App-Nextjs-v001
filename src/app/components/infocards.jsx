@@ -1272,7 +1272,7 @@ export function GoalDetails({ open, onClose }) {
         UPDATE_GOAL_PROGRESS, 
         JSON.stringify({
           goalId: goalIdToUse,
-          isComplete: true,
+          isCompleted: true,
         }),
         {
           headers: {
