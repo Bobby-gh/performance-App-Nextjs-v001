@@ -1216,7 +1216,8 @@ export function GoalDetails({ open, onClose }) {
     const progressNum = progressValue === "" ? 0 : Number(progressValue);
 
     if (progressNum < 0) return;
-    if (!progressValue && !markAsComplete && !comment.trim()) return;
+
+    if (!comment.trim()) return;
 
     setIsSubmitting(true);
 
@@ -1335,9 +1336,9 @@ export function GoalDetails({ open, onClose }) {
                 />
               </div>
               <div className="flex justify-between text-xs text-slate-500 mt-1.5">
-                <span>0</span>
+                <span>{t("zero")}</span>
                 <span className="font-medium text-slate-700">
-                  {isManager ? "100%" : goal.target}
+                  {isManager ? t("hundredPercent") : goal.target}
                 </span>
               </div>
             </div>
@@ -1414,10 +1415,10 @@ export function GoalDetails({ open, onClose }) {
                 </h3>
 
                 <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-3 py-2 bg-slate-100/70 rounded-lg text-xs font-semibold text-slate-600 uppercase mb-2">
-                  <div className="col-span-5">Employee</div>
-                  <div className="col-span-2 text-center">Target</div>
-                  <div className="col-span-2 text-center">Progress</div>
-                  <div className="col-span-3 text-center">Status</div>
+                  <div className="col-span-5">{t("employee")}</div>
+                  <div className="col-span-2 text-center">{t("target")}</div>
+                  <div className="col-span-2 text-center">{t("progress")}</div>
+                  <div className="col-span-3 text-center">{t("status")}</div>
                 </div>
 
                 <div className="space-y-4">
@@ -1473,7 +1474,7 @@ export function GoalDetails({ open, onClose }) {
 
                         <div className="sm:col-span-2 text-center">
                           <div className="text-sm font-medium text-slate-800">{empTarget}</div>
-                          <div className="text-xs text-slate-500 sm:hidden">Target</div>
+                          <div className="text-xs text-slate-500 sm:hidden">{t("target")}</div>
                         </div>
 
                         <div className="sm:col-span-2 flex flex-col items-center gap-1">
@@ -1486,7 +1487,7 @@ export function GoalDetails({ open, onClose }) {
                               style={{ width: `${Math.min(100, empProgressPercent)}%` }}
                             />
                           </div>
-                          <div className="text-xs text-slate-500 sm:hidden">Progress</div>
+                          <div className="text-xs text-slate-500 sm:hidden">{t("progress")}</div>
                         </div>
 
                         <div className="sm:col-span-3 flex justify-center">
@@ -1496,7 +1497,7 @@ export function GoalDetails({ open, onClose }) {
                             {t(emp.status.toLowerCase().replace(/\s+/g, "")) || emp.status}
                           </span>
                           <div className="text-xs text-slate-500 sm:hidden mt-1 w-full text-center">
-                            Status
+                            {t("status")}
                           </div>
                         </div>
                       </div>
@@ -1528,7 +1529,7 @@ export function GoalDetails({ open, onClose }) {
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
                   <label className="block">
                     <span className="text-sm font-semibold text-slate-700 mb-2 block">
-                      Progress to Add *
+                      {t("progressToAdd")}
                     </span>
                     <input
                       type="number"
@@ -1545,7 +1546,7 @@ export function GoalDetails({ open, onClose }) {
                       required={!markAsComplete}
                     />
                     <span className="text-xs text-slate-500 mt-2 block">
-                      Current progress: <strong>{currentProgress.toFixed(1)}</strong>
+                      {t("currentProgress")}: <strong>{currentProgress.toFixed(1)}%</strong>
                     </span>
                   </label>
                 </div>
@@ -1553,10 +1554,11 @@ export function GoalDetails({ open, onClose }) {
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
                   <label className="block">
                     <span className="text-sm font-semibold text-slate-700 mb-2 block">
-                      {t("progressComment")} *
+                      {t("progressComment")}
                     </span>
                     <textarea
                       rows={4}
+                      placeholder={t("describeAchievementsChallengesNextSteps")}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
                       maxLength={500}
