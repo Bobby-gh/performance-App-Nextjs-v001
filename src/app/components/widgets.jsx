@@ -405,7 +405,7 @@ const FinancialCard = ({ data }) => {
 
           return (
             <div key={idx} className="flex flex-col items-center flex-1">
-              <div className="w-lg flex items-end justify-center h-20">
+              <div className="w-full flex items-end justify-center h-20">
                 <div
                   className={`w-lg transition-all ${barColor}`}
                   style={{ height: `${height}%` }}
