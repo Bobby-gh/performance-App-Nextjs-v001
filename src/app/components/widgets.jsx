@@ -335,8 +335,7 @@ export const CategoryType = [
 const FinancialCard = ({ data }) => {
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
 
-  // const maxValue = Math.max(...chartData);
-  const maxValue = 400
+  const maxValue = Math.max(...chartData);
   const isPositive = trend === 'up';
 
   const labels = [
@@ -394,7 +393,7 @@ const FinancialCard = ({ data }) => {
       </div>
 
       {/* Chart */}
-      {/* <div className="flex items-end justify-between gap-3 h-24 mt-6">
+      <div className="flex items-end justify-between gap-3 h-24 mt-6">
         {chartData.map((val, idx) => {
           const height = (val / maxValue) * 100;
           const labels = ['Target', 'Achieved'];
@@ -418,53 +417,7 @@ const FinancialCard = ({ data }) => {
             </div>
           );
         })}
-      </div> */}
-
-      <div className="w-full bg-white p-6 rounded border">
-  <h2 className="text-center font-semibold text-gray-600 mb-6">
-    SGI DAT 2025
-  </h2>
-
-  <div className="relative flex items-end justify-center gap-16 h-64 perspective-[900px]">
-    {chartData.map((val, idx) => {
-      const height = (val / maxValue) * 100;
-
-      return (
-        <div key={idx} className="flex flex-col items-center">
-          {/* BAR */}
-          <div className="relative w-24 h-full flex items-end">
-            
-            {/* FRONT FACE */}
-            <div
-              className="relative w-full bg-sky-300 border border-sky-600"
-              style={{
-                height: `${height}%`,
-                backgroundImage:
-                  "repeating-linear-gradient(45deg, rgba(255,255,255,0.4) 0, rgba(255,255,255,0.4) 2px, transparent 2px, transparent 6px)",
-              }}
-            >
-              {/* VALUE */}
-              <span className="absolute inset-0 flex items-center justify-center font-semibold text-gray-700">
-                {val}
-              </span>
-
-              {/* TOP FACE */}
-              <div className="absolute -top-4 left-2 w-full h-4 bg-sky-200 border border-sky-600 transform skew-x-[-45deg]" />
-
-              {/* SIDE FACE */}
-              <div className="absolute top-0 -right-4 w-4 h-full bg-sky-400 border border-sky-600 transform skew-y-[-45deg]" />
-            </div>
-          </div>
-
-          {/* LABEL */}
-          <span className="text-xs text-gray-600 mt-4 text-center w-32">
-            {labels[idx]}
-          </span>
-        </div>
-      );
-    })}
-  </div>
-</div>
+      </div>
     </div>
   );
 };
