@@ -1663,7 +1663,6 @@ export function GoalDetails({ open, onClose }) {
                 disabled={
                   isSubmitting ||
                   !comment.trim() ||
-                  progressValue < currentProgress ||
                   goal.status === "Completed"
                 }
                 className="px-8 py-3 text-sm font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
