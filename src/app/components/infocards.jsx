@@ -1563,12 +1563,11 @@ export function GoalDetails({ open, onClose }) {
                           setProgressValue(val);
                         }
                       }}
-                      placeholder="Enter amount to add"
                       className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:ring-2 focus:border-indigo-500 focus:border-indigo-500 transition-all text-lg font-semibold outline-none"
                       required={!markAsComplete}
                     />
                     <span className="text-xs text-slate-500 mt-2 block">
-                      Current progress: <strong>{currentProgress.toFixed(1)}%</strong>
+                      Current progress: <strong>{currentProgress.toFixed(1)}</strong>
                     </span>
                   </label>
 
