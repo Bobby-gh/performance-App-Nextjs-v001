@@ -18,7 +18,7 @@ import axios from "../api/axios";
 import { UPDATE_GOAL_PROGRESS } from "../api/routes";
 import { useTranslation } from "react-i18next";
 import { showToast } from "./notification";
-import { FormInputField, ModalModification, ModalModifications } from "./widgets";
+import { formatBigNumber, FormInputField, ModalModification, ModalModifications } from "./widgets";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { IoClose } from "react-icons/io5";
@@ -1179,6 +1179,20 @@ export function AddDepartment() {
 //     </Modal>
 //   );
 // }
+import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { AuthContext } from "@/contexts/AuthContext"; // adjust path as needed
+import { GoalSelectContext } from "@/contexts/GoalSelectContext"; // adjust path
+import { Modaltrigger } from "@/contexts/ModalTriggerContext"; // adjust path
+import axios from "axios";
+import { 
+  ChevronLeft, X, Target, Calendar, Clock, TrendingUp, 
+  CheckCircle2, AlertCircle 
+} from "lucide-react"; // assuming you're using lucide-react icons
+
+// Assuming these constants exist in your project
+const UPDATE_GOAL_PROGRESS = "/api/goals/progress"; // adjust to your actual endpoint
+
 export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
@@ -1210,13 +1224,16 @@ export function GoalDetails({ open, onClose }) {
 
   const isOnTrack = currentProgress >= 50;
 
+ 
+
+  const showRightPanel = !isManager || isGoalAssignedToManager;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const progressNum = progressValue === "" ? 0 : Number(progressValue);
 
     if (progressNum < 0) return;
-
     if (!comment.trim()) return;
 
     setIsSubmitting(true);
@@ -1267,7 +1284,10 @@ export function GoalDetails({ open, onClose }) {
   return (
     <div className={`fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4 ${!open ? 'hidden' : ''}`}>
       <div className="w-full max-w-6xl h-[92vh] bg-slate-100 rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
-        <div className="w-full md:w-2/3 bg-white h-full overflow-y-auto border-r border-slate-200">
+        {/* Main content - takes full width when no right panel */}
+        <div 
+          className={`w-full ${showRightPanel ? 'md:w-2/3' : 'md:w-full'} bg-white h-full overflow-y-auto ${showRightPanel ? 'border-r border-slate-200' : ''}`}
+        >
           <div className="p-6 border-b border-slate-200 sticky top-0 bg-white z-10">
             <div className="flex items-center justify-between mb-4">
               <button
@@ -1310,7 +1330,7 @@ export function GoalDetails({ open, onClose }) {
                   {isManager ? t("departmentProgress") : t("currentProgress")}
                 </span>
                 <div className="text-3xl font-bold text-slate-900 mt-0.5">
-                  {currentProgress}%
+                  {currentProgress.toFixed(1)}%
                 </div>
               </div>
 
@@ -1319,7 +1339,7 @@ export function GoalDetails({ open, onClose }) {
                   {isManager ? t("totalTarget") : t("target")}
                 </span>
                 <div className="text-2xl font-bold text-slate-900">
-                  {goal.target}
+                  {formatBigNumber(goal.target)}
                 </div>
               </div>
             </div>
@@ -1336,9 +1356,9 @@ export function GoalDetails({ open, onClose }) {
                 />
               </div>
               <div className="flex justify-between text-xs text-slate-500 mt-1.5">
-                <span>{t("zero")}</span>
+                <span>0</span>
                 <span className="font-medium text-slate-700">
-                  {isManager ? t("hundredPercent") : goal.target}
+                  {isManager ? "100%" : formatBigNumber(goal.target)}
                 </span>
               </div>
             </div>
@@ -1354,7 +1374,7 @@ export function GoalDetails({ open, onClose }) {
           </div>
 
           <div className="p-6 space-y-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <Calendar className="w-4 h-4 text-slate-400" />
@@ -1389,18 +1409,6 @@ export function GoalDetails({ open, onClose }) {
                 </div>
                 <p className="text-sm font-medium text-slate-900">
                   {daysRemaining} {t("days")}
-                </p>
-              </div>
-
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <Target className="w-4 h-4 text-slate-400" />
-                  <span className="text-xs font-semibold text-slate-500 uppercase">
-                    {t("target")}
-                  </span>
-                </div>
-                <p className="text-sm font-medium text-slate-900">
-                  {goal.target}
                 </p>
               </div>
             </div>
@@ -1473,7 +1481,7 @@ export function GoalDetails({ open, onClose }) {
                         </div>
 
                         <div className="sm:col-span-2 text-center">
-                          <div className="text-sm font-medium text-slate-800">{empTarget}</div>
+                          <div className="text-sm font-medium text-slate-800">{formatBigNumber(empTarget)}</div>
                           <div className="text-xs text-slate-500 sm:hidden">{t("target")}</div>
                         </div>
 
@@ -1509,7 +1517,8 @@ export function GoalDetails({ open, onClose }) {
           </div>
         </div>
 
-        {(!isManager || isGoalAssignedToManager) && (
+        {/* Right panel - only shown when manager has assigned goal or user is not manager */}
+        {showRightPanel && (
           <div className="w-full md:w-1/3 flex flex-col h-full bg-slate-50 border-l border-slate-200">
             <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shrink-0">
               <div>

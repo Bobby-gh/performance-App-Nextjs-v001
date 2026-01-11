@@ -473,12 +473,8 @@ const FinancialProjections = () => {
     const achieved = Number(goal.targetAchieved);
     const target = Number(goal.maintarget);
 
-    // Decide unit based on largest value
-    const maxValue = Math.max(achieved, target);
-    const { unit, divisor } = getUnitAndDivisor(maxValue);
-
-    const formattedAchieved = formatByMagnitude(achieved, divisor);
-    const formattedTarget = formatByMagnitude(target, divisor);
+    const formattedAchieved = formatBigNumber(achieved);
+    const formattedTarget = formatBigNumber(target);
 
     const progressPercent = ((achieved / target) * 100).toFixed(1);
     const trend = achieved >= target ? "up" : "down";
@@ -552,13 +548,26 @@ export default FinancialProjections;
 
 // Financial Projections Helpers
 
-const formatByMagnitude = (value, divisor) => {
-  return (value / divisor).toFixed(1);
-};
+ // Number formatting helper (K, M, B with 1 decimal when needed)
+  export const formatBigNumber = (num) => {
+    if (num == null || isNaN(num)) return "—";
 
-const getUnitAndDivisor = (maxValue) => {
-  if (maxValue >= 1_000_000_000) return { unit: "B", divisor: 1_000_000_000 };
-  if (maxValue >= 1_000_000) return { unit: "M", divisor: 1_000_000 };
-  if (maxValue >= 1_000) return { unit: "K", divisor: 1_000 };
-  return { unit: "", divisor: 1 };
-};
+    const absNum = Math.abs(num);
+
+    if (absNum < 10000) {
+      return num.toLocaleString();
+    }
+
+    let formatted;
+    if (absNum >= 1_000_000_000) {
+      formatted = (absNum / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B";
+    } else if (absNum >= 1_000_000) {
+      formatted = (absNum / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+    } else if (absNum >= 10_000) {
+      formatted = (absNum / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+    } else {
+      formatted = absNum.toLocaleString();
+    }
+
+    return num < 0 ? "-" + formatted : formatted;
+  };
