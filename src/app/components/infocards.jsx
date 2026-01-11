@@ -1546,7 +1546,8 @@ export function GoalDetails({ open, onClose }) {
             {/* Form */}
             <div className="flex-1 overflow-y-auto p-5">
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Progress Input */}
+
+                {/* Progress to Add Input & Preview */}
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
                   <label className="block">
                     <span className="text-sm font-semibold text-slate-700 mb-2 block">
@@ -1558,28 +1559,27 @@ export function GoalDetails({ open, onClose }) {
                       value={progressValue}
                       onChange={(e) => {
                         const val = e.target.value;
-                        // Allow empty or valid non-negative numbers
                         if (val === "" || (!isNaN(Number(val)) && Number(val) >= 0)) {
                           setProgressValue(val);
                         }
                       }}
-                      placeholder="Enter amount to add"
-                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:ring-2 focus:border-indigo-500 focus:border-indigo-500 transition-all text-lg font-semibold outline-none"
+                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:ring-2 focus:border-indigo-500 transition-all text-lg font-semibold outline-none"
                       required={!markAsComplete}
                     />
                     <span className="text-xs text-slate-500 mt-2 block">
-                      Current progress: <strong>{currentProgress.toFixed(1)}%</strong>
+                      Current: <strong>{currentProgress.toFixed(1)}%</strong> 
+                      (accumulated: {goal.actualProgress} / {goal.target})
                     </span>
                   </label>
 
-                  {/* Preview - only when something is entered */}
+                  {/* Preview - only when valid increment is entered */}
                   {progressValue !== "" && !isNaN(Number(progressValue)) && Number(progressValue) > 0 && (
                     <div className="mt-5 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
                       <div className="flex items-center justify-between mb-3">
                         <div>
-                          <span className="text-sm font-semibold text-indigo-900">New total progress</span>
+                          <span className="text-sm font-semibold text-indigo-900">Progress Preview</span>
                           <div className="text-2xl font-bold text-indigo-700 mt-0.5">
-                            {(currentProgress + Number(progressValue)).toFixed(1)}%
+                            {newPreviewPercent.toFixed(1)}%
                           </div>
                         </div>
                         <div className="text-right">
@@ -1590,19 +1590,34 @@ export function GoalDetails({ open, onClose }) {
                         </div>
                       </div>
 
-                      {/* Visual progress bar preview */}
+                      {/* Progress bar preview - relative to TARGET */}
                       <div className="relative h-3 bg-slate-100 rounded-full overflow-hidden mb-2">
                         {/* Current progress background */}
                         <div
                           className="absolute h-full bg-slate-300 transition-all duration-500"
                           style={{ width: `${Math.min(100, currentProgress)}%` }}
                         />
-                        {/* New total overlay */}
+                        {/* New total preview overlay */}
                         <div
                           className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500 relative z-10"
-                          style={{ width: `${Math.min(100, currentProgress + Number(progressValue))}%` }}
+                          style={{ width: `${Math.min(100, newPreviewPercent)}%` }}
                         />
                       </div>
+
+                      {/* Calculations for preview */}
+                      {(() => {
+                        const target = Number(goal.target) || 100; // fallback to 100 if target missing
+                        const increment = Number(progressValue);
+                        const currentAccumulated = goal.actualProgress || 0;
+                        const newAccumulated = currentAccumulated + increment;
+                        const newPreviewPercent = target > 0 ? (newAccumulated / target) * 100 : 0;
+
+                        return (
+                          <>
+                            {newPreviewPercent > 100}
+                          </>
+                        );
+                      })()}
                     </div>
                   )}
                 </div>
