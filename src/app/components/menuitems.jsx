@@ -1,5 +1,5 @@
 import { FaHome } from "react-icons/fa";
-import { GoGoal } from "react-icons/go";
+import { LuGoal } from "react-icons/lu";
 import { MdAssessment, MdGroups2, MdAssignment } from "react-icons/md";
 import { PiChartDonutFill } from "react-icons/pi";
 import { IoPerson } from "react-icons/io5";
@@ -14,7 +14,7 @@ export const MenuItems = [
     {
         title: "Projects",
         path: "/home/goals",
-        icon: <GoGoal/>
+        icon: <LuGoal/>
     },
     {
         title: "assignGoals",
