@@ -393,7 +393,7 @@ const FinancialCard = ({ data }) => {
       </div>
 
       {/* Chart */}
-      <div className="flex items-end justify-between gap-3 h-24 mt-6">
+      {/* <div className="flex items-end justify-between gap-3 h-24 mt-6">
         {chartData.map((val, idx) => {
           const height = (val / maxValue) * 100;
           const labels = ['Target', 'Achieved'];
@@ -407,7 +407,7 @@ const FinancialCard = ({ data }) => {
             <div key={idx} className="flex flex-col items-center flex-1">
               <div className="w-full flex items-end justify-center h-20">
                 <div
-                  className={`w-lg transition-all ${barColor}`}
+                  className={`w-full transition-all ${barColor}`}
                   style={{ height: `${height}%` }}
                 />
               </div>
@@ -417,7 +417,34 @@ const FinancialCard = ({ data }) => {
             </div>
           );
         })}
+      </div> */}
+
+      <div className="flex items-end justify-between gap-3 h-24 mt-6">
+          {chartData.map((val, idx) => {
+            const height = (val / maxValue) * 100;
+             const labels = ['Target', 'Achieved'];
+        
+                  let barColor = 'bg-gray-400';
+                  if (idx === chartData.length - 1) {
+                    barColor = val < chartData[idx - 1] ? 'bg-red-500' : 'bg-green-500';
+                  }
+        
+              return (
+                <div key={idx} className="flex flex-col items-center">
+                  <div className="h-20 flex items-end">
+                    <div
+                      className="w-6 sm:w-8 md:w-10 bg-blue-500 rounded-t"
+                      style={{ height: `${height}%` }}
+                    />
+                  </div>
+                  <span className="text-xs text-gray-600 mt-2">
+                    {labels[idx] || ''}
+                  </span>
+                </div>
+            );
+          })}
       </div>
+
     </div>
   );
 };
