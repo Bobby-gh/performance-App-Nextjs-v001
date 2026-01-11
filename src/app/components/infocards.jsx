@@ -1563,7 +1563,6 @@ export function GoalDetails({ open, onClose }) {
                     </span>
                     <textarea
                       rows={4}
-                      placeholder={t("describeAchievementsChallengesNextSteps")}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
                       maxLength={500}
