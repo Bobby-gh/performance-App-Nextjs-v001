@@ -1681,7 +1681,7 @@ export function Goals({
         <h2 className="text-xl font-bold text-gray-800 mb-1">{goalTitle}</h2>
         <div className="flex justify-between">
           <p className="text-gray-600 text-sm italic">
-            Description:{goalDescription}
+            {t("description")}:{goalDescription}
           </p>
           {/* Deadline */}
           <div className="flex justify-end">
@@ -1699,7 +1699,7 @@ export function Goals({
             <strong>{progressLabel}:</strong> {displayedProgress.toFixed(1)}%
           </p>
           <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-            Target: 100%
+            {t("target")}: 100%
           </span>
         </div>
         <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden">
@@ -1717,7 +1717,7 @@ export function Goals({
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <span className="font-medium text-sm text-gray-600 mr-2">
-              Status:
+              {t("status")}:
             </span>
             <span
               className={`px-3 py-1 text-xs font-semibold rounded-full ${
@@ -1742,7 +1742,7 @@ export function Goals({
           </div>
         </div>
         <p className="text-xs text-gray-500 mt-2 text-center">
-          Assigned: {employeeGoals.length} employee
+          {t("assignedTo")}: {employeeGoals.length} {t("employee")}
           {employeeGoals.length !== 1 ? "s" : ""}
         </p>
       </div>
