@@ -1232,7 +1232,10 @@ export function GoalDetails({ open, onClose }) {
       };
 
       if (markAsComplete) {
-        payload = { goalId: goalIdToUse, isCompleted: true };
+        payload = { 
+        goalId: goalIdToUse, 
+        progressIncrement: progressValue, 
+        isCompleted: true };
       }
 
       const res = await axios.patch(
@@ -1547,81 +1550,64 @@ export function GoalDetails({ open, onClose }) {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Progress Input */}
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
-                <label className="block">
-                  <span className="text-sm font-semibold text-slate-700 mb-2 block">
-                    New Progress Value * (absolute %)
-                  </span>
-                  <input
-                    type="number"
-                    value={progressValue}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      if (val === "" || (Number(val) >= 0 && Number(val) <= 100)) {
-                        setProgressValue(val);
-                      }
-                    }}
-                    placeholder="e.g. 65"
-                    className={`w-full px-4 py-3 border-2 rounded-lg focus:ring-2 focus:border-indigo-500 transition-all text-lg font-semibold outline-none ${
-                      progressValue !== "" && Number(progressValue) < currentProgress
-                        ? "border-red-400 bg-red-50"
-                        : "border-slate-200"
-                    }`}
-                    required={!markAsComplete} // optional: allow empty if just marking complete
-                  />
-                  <span className="text-xs text-slate-500 mt-2 block">
-                    Current progress: <strong>{currentProgress}</strong>
-                  </span>
-                </label>
+                  <label className="block">
+                    <span className="text-sm font-semibold text-slate-700 mb-2 block">
+                      Progress to Add *
+                    </span>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={progressValue}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        // Allow empty or valid non-negative numbers
+                        if (val === "" || (!isNaN(Number(val)) && Number(val) >= 0)) {
+                          setProgressValue(val);
+                        }
+                      }}
+                      placeholder="Enter amount to add"
+                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:ring-2 focus:border-indigo-500 focus:border-indigo-500 transition-all text-lg font-semibold outline-none"
+                      required={!markAsComplete}
+                    />
+                    <span className="text-xs text-slate-500 mt-2 block">
+                      Current progress: <strong>{currentProgress.toFixed(1)}%</strong>
+                    </span>
+                  </label>
 
-                {/* Preview - shows only when user entered a valid new value */}
-                {progressValue !== "" && !isNaN(Number(progressValue)) && (
-                  <div className="mt-5 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <span className="text-sm font-semibold text-indigo-900">New total progress</span>
-                        <div className="text-2xl font-bold text-indigo-700 mt-0.5">
-                          {Number(progressValue).toFixed(1)}%
+                  {/* Preview - only when something is entered */}
+                  {progressValue !== "" && !isNaN(Number(progressValue)) && Number(progressValue) > 0 && (
+                    <div className="mt-5 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <span className="text-sm font-semibold text-indigo-900">New total progress</span>
+                          <div className="text-2xl font-bold text-indigo-700 mt-0.5">
+                            {(currentProgress + Number(progressValue)).toFixed(1)}%
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-xl font-bold text-emerald-600">
+                            +{Number(progressValue).toFixed(1)}
+                          </div>
+                          <div className="text-xs text-indigo-500">added this update</div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-sm text-indigo-600 font-medium">
-                          {Number(progressValue) > currentProgress ? "+" : ""}
-                          {(Number(progressValue) - currentProgress).toFixed(1)}%
-                        </div>
-                        <div className="text-xs text-indigo-500">change from current</div>
+
+                      {/* Visual progress bar preview */}
+                      <div className="relative h-3 bg-slate-100 rounded-full overflow-hidden mb-2">
+                        {/* Current progress background */}
+                        <div
+                          className="absolute h-full bg-slate-300 transition-all duration-500"
+                          style={{ width: `${Math.min(100, currentProgress)}%` }}
+                        />
+                        {/* New total overlay */}
+                        <div
+                          className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500 relative z-10"
+                          style={{ width: `${Math.min(100, currentProgress + Number(progressValue))}%` }}
+                        />
                       </div>
                     </div>
-
-                    {/* Visual comparison */}
-                    <div className="relative h-3 bg-slate-100 rounded-full overflow-hidden mb-2">
-                      {/* Old progress background */}
-                      <div
-                        className="absolute h-full bg-slate-300 transition-all duration-500"
-                        style={{ width: `${currentProgress}%` }}
-                      />
-                      {/* New progress overlay */}
-                      <div
-                        className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500 relative z-10"
-                        style={{ width: `${Math.min(100, Number(progressValue))}%` }}
-                      />
-                    </div>
-
-                    {Number(progressValue) < currentProgress && (
-                      <p className="text-xs text-red-600 mt-2 flex items-center gap-1.5 font-medium">
-                        <AlertCircle className="w-4 h-4" />
-                        New progress cannot be less than current ({currentProgress}%)
-                      </p>
-                    )}
-
-                    {Number(progressValue) > 100 && (
-                      <p className="text-xs text-amber-700 mt-2 flex items-center gap-1.5 font-medium">
-                        <AlertCircle className="w-4 h-4" />
-                        Progress over 100% — this may be allowed depending on your system
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
 
                 {/* Comment */}
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
