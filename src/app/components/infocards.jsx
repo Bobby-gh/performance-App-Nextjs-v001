@@ -1614,7 +1614,12 @@ export function GoalDetails({ open, onClose }) {
 
                         return (
                           <>
-                            {newPreviewPercent > 100}
+                            {newPreviewPercent > 100 && (
+                              <p className="text-xs text-amber-700 mt-2 flex items-center gap-1.5 font-medium">
+                                <AlertCircle className="w-4 h-4" />
+                                Progress will exceed target ({newPreviewPercent.toFixed(1)}%)
+                              </p>
+                            )}
                           </>
                         );
                       })()}
