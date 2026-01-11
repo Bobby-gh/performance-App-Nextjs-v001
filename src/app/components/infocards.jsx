@@ -1424,7 +1424,7 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </h3>
 
-                {/* Desktop/tablet header (hidden on mobile) */}
+                {/* Header row - visible on larger screens */}
                 <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-3 py-2 bg-slate-100/70 rounded-lg text-xs font-semibold text-slate-600 uppercase mb-2">
                   <div className="col-span-5">Employee</div>
                   <div className="col-span-2 text-center">Target</div>
@@ -1434,49 +1434,47 @@ export function GoalDetails({ open, onClose }) {
 
                 <div className="space-y-4">
                   {employeeGoals.map((emp, i) => {
-                    const isEmpOverdue =
-                      new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
-
                     const empProgressPercent = emp.actualProgressPercent || 0;
                     const empTarget = emp.target || goal.target;
 
-                    // Determine status display & color
-                    let statusText = emp.status;
-                    let statusColor = "bg-gray-100 text-gray-700";
+                    // Status colors - based ONLY on emp.status
+                    let statusColor = "bg-gray-100 text-gray-700 border border-gray-200";
                     let statusTextColor = "text-gray-700";
 
-                    if (isEmpOverdue && emp.status !== "Completed") {
-                      statusText = "Overdue";
-                      statusColor = "bg-red-100 text-red-800 border border-red-200";
-                      statusTextColor = "text-red-800";
-                    } else if (emp.status === "Completed") {
-                      statusColor = "bg-emerald-100 text-emerald-800 border border-emerald-200";
-                      statusTextColor = "text-emerald-800";
-                    } else if (emp.status === "In Progress") {
-                      statusColor = "bg-amber-100 text-amber-800 border border-amber-200";
-                      statusTextColor = "text-amber-800";
-                    } else if (emp.status === "Not Started") {
-                      statusColor = "bg-slate-100 text-slate-700 border border-slate-200";
+                    switch (emp.status) {
+                      case "Completed":
+                        statusColor = "bg-emerald-100 text-emerald-800 border border-emerald-200";
+                        statusTextColor = "text-emerald-800";
+                        break;
+                      case "In Progress":
+                        statusColor = "bg-amber-100 text-amber-800 border border-amber-200";
+                        statusTextColor = "text-amber-800";
+                        break;
+                      case "Not Started":
+                        statusColor = "bg-slate-100 text-slate-700 border border-slate-200";
+                        break;
+                      default:
+                        statusColor = "bg-gray-100 text-gray-700 border border-gray-200";
                     }
 
-                    // Progress bar color logic
+                    // Progress bar color
                     let progressColor = "bg-indigo-500";
-                    if (isEmpOverdue) progressColor = "bg-red-500";
-                    else if (emp.status === "Completed") progressColor = "bg-emerald-500";
+                    if (emp.status === "Completed") progressColor = "bg-emerald-500";
                     else if (empProgressPercent >= 100) progressColor = "bg-violet-500";
                     else if (empProgressPercent >= 80) progressColor = "bg-emerald-500";
                     else if (empProgressPercent >= 50) progressColor = "bg-amber-500";
-                    else progressColor = "bg-orange-500";
+
+                    const isOverdue = new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
 
                     return (
                       <div
                         key={i}
                         className="grid sm:grid-cols-12 gap-4 items-center p-3 bg-white rounded-lg border border-slate-100 hover:border-slate-200 transition-all group"
                       >
-                        {/* Employee Info */}
+                        {/* Employee */}
                         <div className="sm:col-span-5 flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shadow-sm flex-shrink-0">
-                            {emp.employeeName?.split(" ").map((n) => n[0]).join("") || "?"}
+                            {emp.employeeName?.split(" ").map(n => n[0]).join("") || "?"}
                           </div>
                           <div>
                             <div className="text-base font-medium text-slate-900">
@@ -1489,15 +1487,15 @@ export function GoalDetails({ open, onClose }) {
                         </div>
 
                         {/* Target */}
-                        <div className="sm:col-span-2 text-center sm:text-center">
+                        <div className="sm:col-span-2 text-center">
                           <div className="text-sm font-medium text-slate-800">{empTarget}</div>
                           <div className="text-xs text-slate-500 sm:hidden">Target</div>
                         </div>
 
                         {/* Progress */}
-                        <div className="sm:col-span-2 flex flex-col items-center sm:items-center gap-1">
-                          <div className={`text-lg font-bold ${isEmpOverdue ? "text-red-600" : emp.status === "Completed" ? "text-emerald-600" : "text-slate-800"}`}>
-                            {empProgressPercent.toFixed(0)}%
+                        <div className="sm:col-span-2 flex flex-col items-center gap-1">
+                          <div className={`text-lg font-bold ${isOverdue ? "text-red-600" : statusTextColor}`}>
+                            {empProgressPercent.toFixed(1)}%
                           </div>
                           <div className="w-full max-w-[120px] h-2.5 bg-slate-100 rounded-full overflow-hidden">
                             <div
@@ -1508,12 +1506,12 @@ export function GoalDetails({ open, onClose }) {
                           <div className="text-xs text-slate-500 sm:hidden">Progress</div>
                         </div>
 
-                        {/* Status */}
-                        <div className="sm:col-span-3 flex justify-center sm:justify-center">
+                        {/* Status - taken directly from emp.status */}
+                        <div className="sm:col-span-3 flex justify-center">
                           <span
                             className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full ${statusColor}`}
                           >
-                            {t(statusText.toLowerCase().replace(/\s+/g, "")) || statusText}
+                            {t(emp.status.toLowerCase().replace(/\s+/g, "")) || emp.status}
                           </span>
                           <div className="text-xs text-slate-500 sm:hidden mt-1 w-full text-center">
                             Status
