@@ -1213,8 +1213,10 @@ export function GoalDetails({ open, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!progressValue && !markAsComplete) return;
-    if (progressValue && Number(progressValue) < 1) return;
+    const progressNum = progressValue === "" ? 0 : Number(progressValue);
+
+    if (progressNum < 0) return;
+    if (!progressValue && !markAsComplete && !comment.trim()) return;
 
     setIsSubmitting(true);
 
@@ -1226,16 +1228,12 @@ export function GoalDetails({ open, onClose }) {
     try {
       let payload = {
         goalId: goalIdToUse,
-        progressIncrement: progressValue ? Number(progressValue) : 0,
+        progressIncrement: progressNum,
         comment,
       };
 
       if (markAsComplete) {
-        payload = {
-          goalId: goalIdToUse,
-          progressIncrement: progressValue ? Number(progressValue) : 0,
-          isCompleted: true
-        };
+        payload.isCompleted = true;
       }
 
       const res = await axios.patch(
@@ -1364,9 +1362,7 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </div>
                 <p className="text-sm font-medium text-slate-900">
-                  {new Date(goal.dateAssigned).toLocaleDateString('en-US', {
-                    month: 'long', day: 'numeric', year: 'numeric'
-                  })}
+                  {new Date(goal.dateAssigned).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                 </p>
               </div>
 
@@ -1378,9 +1374,7 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </div>
                 <p className={`text-sm font-medium ${isOverdue ? 'text-red-600' : 'text-slate-900'}`}>
-                  {new Date(goal.goalDeadline).toLocaleDateString('en-US', {
-                    month: 'long', day: 'numeric', year: 'numeric'
-                  })}
+                  {new Date(goal.goalDeadline).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                   {isOverdue && <span className="ml-2 text-red-600 font-semibold">({t("overdue")})</span>}
                 </p>
               </div>
@@ -1539,15 +1533,15 @@ export function GoalDetails({ open, onClose }) {
                     <input
                       type="number"
                       step="0.1"
-                      min="1"
+                      min="0"
                       value={progressValue}
                       onChange={(e) => {
                         const val = e.target.value;
-                        if (val === "" || (!isNaN(Number(val)) && Number(val) >= 1)) {
+                        if (val === "" || (!isNaN(Number(val)) && Number(val) >= 0)) {
                           setProgressValue(val);
                         }
                       }}
-                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:ring-2 focus:border-indigo-500 focus:border-indigo-500 transition-all text-lg font-semibold outline-none"
+                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:ring-2 focus:border-indigo-500 transition-all text-lg font-semibold outline-none"
                       required={!markAsComplete}
                     />
                     <span className="text-xs text-slate-500 mt-2 block">
@@ -1563,6 +1557,7 @@ export function GoalDetails({ open, onClose }) {
                     </span>
                     <textarea
                       rows={4}
+                      placeholder={t("describeAchievementsChallengesNextSteps")}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
                       maxLength={500}
@@ -1605,6 +1600,7 @@ export function GoalDetails({ open, onClose }) {
               </button>
 
               <button
+                type="button"
                 onClick={handleSubmit}
                 disabled={
                   isSubmitting ||
