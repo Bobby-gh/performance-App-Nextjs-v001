@@ -1189,7 +1189,6 @@ export function GoalDetails({ open, onClose }) {
   const isGoalAssignedToManager =
     isManager && (goal.employeeGoals || []).some((emp) => emp.employeeEmail === auth.email);
 
-  // Progress handling
   const currentProgress = isManager ? goal.actualProgressPercent : goal.actualProgress;
   const [progressValue, setProgressValue] = useState("");
   const [comment, setComment] = useState("");
@@ -1198,24 +1197,24 @@ export function GoalDetails({ open, onClose }) {
 
   const employeeGoals = goal.employeeGoals || [];
 
-  // Trend calculation
   const lastUpdate = goal.progressUpdates?.[0] || {};
   const previousProgress = goal.progressUpdates?.[1]?.progress || 0;
   const progressTrend =
     goal.actualProgressPercent > previousProgress ? "up" :
     goal.actualProgressPercent < previousProgress ? "down" : "neutral";
 
-  // Overdue check
   const isOverdue = new Date(goal.goalDeadline) < new Date();
   const daysRemaining = Math.max(0, Math.ceil(
     (new Date(goal.goalDeadline) - new Date()) / (1000 * 60 * 60 * 24)
   ));
 
-  const isOnTrack = currentProgress >= 50; // you can adjust logic if needed
+  const isOnTrack = currentProgress >= 50;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (progressValue < currentProgress) return;
+
+    if (!progressValue && !markAsComplete) return;
+    if (progressValue && Number(progressValue) < 1) return;
 
     setIsSubmitting(true);
 
@@ -1227,15 +1226,16 @@ export function GoalDetails({ open, onClose }) {
     try {
       let payload = {
         goalId: goalIdToUse,
-        progressIncrement: progressValue,
+        progressIncrement: progressValue ? Number(progressValue) : 0,
         comment,
       };
 
       if (markAsComplete) {
-        payload = { 
-        goalId: goalIdToUse, 
-        progressIncrement: progressValue, 
-        isCompleted: true };
+        payload = {
+          goalId: goalIdToUse,
+          progressIncrement: progressValue ? Number(progressValue) : 0,
+          isCompleted: true
+        };
       }
 
       const res = await axios.patch(
@@ -1268,9 +1268,7 @@ export function GoalDetails({ open, onClose }) {
   return (
     <div className={`fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4 ${!open ? 'hidden' : ''}`}>
       <div className="w-full max-w-6xl h-[92vh] bg-slate-100 rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
-        {/* LEFT - Goal Info */}
         <div className="w-full md:w-2/3 bg-white h-full overflow-y-auto border-r border-slate-200">
-          {/* Header */}
           <div className="p-6 border-b border-slate-200 sticky top-0 bg-white z-10">
             <div className="flex items-center justify-between mb-4">
               <button
@@ -1306,7 +1304,6 @@ export function GoalDetails({ open, onClose }) {
             </p>
           </div>
 
-          {/* Current Progress Section - Role based */}
           <div className="p-6 border-b border-slate-200">
             <div className="flex items-center justify-between mb-3">
               <div>
@@ -1357,7 +1354,6 @@ export function GoalDetails({ open, onClose }) {
             </div>
           </div>
 
-          {/* Details Grid */}
           <div className="p-6 space-y-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div>
@@ -1414,7 +1410,6 @@ export function GoalDetails({ open, onClose }) {
               </div>
             </div>
 
-            {/* Assigned Goals - only for Manager */}
             {isManager && employeeGoals.length > 0 && (
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 mt-6">
                 <h3 className="text-sm font-semibold text-slate-700 uppercase mb-4 flex items-center gap-2">
@@ -1424,7 +1419,6 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </h3>
 
-                {/* Header row - visible on larger screens */}
                 <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-3 py-2 bg-slate-100/70 rounded-lg text-xs font-semibold text-slate-600 uppercase mb-2">
                   <div className="col-span-5">Employee</div>
                   <div className="col-span-2 text-center">Target</div>
@@ -1437,7 +1431,6 @@ export function GoalDetails({ open, onClose }) {
                     const empProgressPercent = emp.actualProgressPercent || 0;
                     const empTarget = emp.target || goal.target;
 
-                    // Status colors - based ONLY on emp.status
                     let statusColor = "bg-gray-100 text-gray-700 border border-gray-200";
                     let statusTextColor = "text-gray-700";
 
@@ -1457,7 +1450,6 @@ export function GoalDetails({ open, onClose }) {
                         statusColor = "bg-gray-100 text-gray-700 border border-gray-200";
                     }
 
-                    // Progress bar color
                     let progressColor = "bg-indigo-500";
                     if (emp.status === "Completed") progressColor = "bg-emerald-500";
                     else if (empProgressPercent >= 100) progressColor = "bg-violet-500";
@@ -1471,7 +1463,6 @@ export function GoalDetails({ open, onClose }) {
                         key={i}
                         className="grid sm:grid-cols-12 gap-4 items-center p-3 bg-white rounded-lg border border-slate-100 hover:border-slate-200 transition-all group"
                       >
-                        {/* Employee */}
                         <div className="sm:col-span-5 flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-sm font-bold text-slate-600 shadow-sm flex-shrink-0">
                             {emp.employeeName?.split(" ").map(n => n[0]).join("") || "?"}
@@ -1486,13 +1477,11 @@ export function GoalDetails({ open, onClose }) {
                           </div>
                         </div>
 
-                        {/* Target */}
                         <div className="sm:col-span-2 text-center">
                           <div className="text-sm font-medium text-slate-800">{empTarget}</div>
                           <div className="text-xs text-slate-500 sm:hidden">Target</div>
                         </div>
 
-                        {/* Progress */}
                         <div className="sm:col-span-2 flex flex-col items-center gap-1">
                           <div className={`text-lg font-bold ${isOverdue ? "text-red-600" : statusTextColor}`}>
                             {empProgressPercent.toFixed(1)}%
@@ -1506,7 +1495,6 @@ export function GoalDetails({ open, onClose }) {
                           <div className="text-xs text-slate-500 sm:hidden">Progress</div>
                         </div>
 
-                        {/* Status - taken directly from emp.status */}
                         <div className="sm:col-span-3 flex justify-center">
                           <span
                             className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full ${statusColor}`}
@@ -1526,10 +1514,8 @@ export function GoalDetails({ open, onClose }) {
           </div>
         </div>
 
-        {/* RIGHT - Update Progress Form - only if allowed */}
         {(!isManager || isGoalAssignedToManager) && (
           <div className="w-full md:w-1/3 flex flex-col h-full bg-slate-50 border-l border-slate-200">
-            {/* Top Bar */}
             <div className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shrink-0">
               <div>
                 <h2 className="text-xl font-bold text-slate-900">{t("updateProgress")}</h2>
@@ -1543,10 +1529,8 @@ export function GoalDetails({ open, onClose }) {
               </button>
             </div>
 
-            {/* Form */}
             <div className="flex-1 overflow-y-auto p-5">
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Progress Input */}
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
                   <label className="block">
                     <span className="text-sm font-semibold text-slate-700 mb-2 block">
@@ -1555,11 +1539,11 @@ export function GoalDetails({ open, onClose }) {
                     <input
                       type="number"
                       step="0.1"
+                      min="1"
                       value={progressValue}
                       onChange={(e) => {
                         const val = e.target.value;
-                        // Allow empty or valid non-negative numbers
-                        if (val === "" || (!isNaN(Number(val)) && Number(val) >= 0)) {
+                        if (val === "" || (!isNaN(Number(val)) && Number(val) >= 1)) {
                           setProgressValue(val);
                         }
                       }}
@@ -1569,10 +1553,9 @@ export function GoalDetails({ open, onClose }) {
                     <span className="text-xs text-slate-500 mt-2 block">
                       Current progress: <strong>{currentProgress.toFixed(1)}</strong>
                     </span>
-                  </label>                  
+                  </label>
                 </div>
 
-                {/* Comment */}
                 <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
                   <label className="block">
                     <span className="text-sm font-semibold text-slate-700 mb-2 block">
@@ -1613,7 +1596,6 @@ export function GoalDetails({ open, onClose }) {
               </form>
             </div>
 
-            {/* Action Bar */}
             <div className="bg-white border-t border-slate-200 px-6 py-5 flex items-center justify-end gap-4 shrink-0">
               <button
                 type="button"
