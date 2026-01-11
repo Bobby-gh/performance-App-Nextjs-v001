@@ -335,7 +335,8 @@ export const CategoryType = [
 const FinancialCard = ({ data }) => {
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
 
-  const maxValue = Math.max(...chartData);
+  // const maxValue = Math.max(...chartData);
+  const maxValue = 400
   const isPositive = trend === 'up';
 
   const labels = [
