@@ -343,8 +343,7 @@ const FinancialCard = ({ data }) => {
   "RESULTS in BILLION CFA",
 ];
 
-const chartData = [65, 118];
-const maxValue = 140;
+
   
   return (
     <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full">
