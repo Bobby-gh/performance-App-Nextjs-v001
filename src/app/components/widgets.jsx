@@ -338,6 +338,13 @@ const FinancialCard = ({ data }) => {
   const maxValue = Math.max(...chartData);
   const isPositive = trend === 'up';
 
+  const labels = [
+  "TARGET in BILLIONS CFA",
+  "RESULTS in BILLION CFA",
+];
+
+
+  
   return (
     <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full">
 
@@ -400,7 +407,7 @@ const FinancialCard = ({ data }) => {
             <div key={idx} className="flex flex-col items-center flex-1">
               <div className="w-full flex items-end justify-center h-20">
                 <div
-                  className={`w-full rounded-t transition-all ${barColor}`}
+                  className={`w-24 transition-all ${barColor}`}
                   style={{ height: `${height}%` }}
                 />
               </div>
@@ -410,7 +417,7 @@ const FinancialCard = ({ data }) => {
             </div>
           );
         })}
-      </div>
+      </div> 
     </div>
   );
 };
