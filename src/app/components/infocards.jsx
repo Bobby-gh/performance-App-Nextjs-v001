@@ -1696,7 +1696,7 @@ export function Goals({
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
           <p className="text-gray-700 text-sm font-medium">
-            <strong>{progressLabel}:</strong> {displayedProgress}%
+            <strong>{progressLabel}:</strong> {displayedProgress.toFixed(1)}%
           </p>
           <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
             Target: 100%
