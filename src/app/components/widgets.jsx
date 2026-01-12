@@ -427,8 +427,8 @@ const dummyGoals = [
   {
     goalTitle: "Placement d’obligations (OAT, BAT hors DAT)",
     description: "Placement dobligations, OAT, BAT hors DAT",
-    targetAchieved: 65000000000,
-    maintarget: 118000000000,
+    maintarget: 65000000000,
+    targetAchieved: 118000000000,
   },
   {
     goalTitle: "Placement d’actions",

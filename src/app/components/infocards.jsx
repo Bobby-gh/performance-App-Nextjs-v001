@@ -1179,19 +1179,6 @@ export function AddDepartment() {
 //     </Modal>
 //   );
 // }
-import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { AuthContext } from "@/contexts/AuthContext"; // adjust path as needed
-import { GoalSelectContext } from "@/contexts/GoalSelectContext"; // adjust path
-import { Modaltrigger } from "@/contexts/ModalTriggerContext"; // adjust path
-import axios from "axios";
-import { 
-  ChevronLeft, X, Target, Calendar, Clock, TrendingUp, 
-  CheckCircle2, AlertCircle 
-} from "lucide-react"; // assuming you're using lucide-react icons
-
-// Assuming these constants exist in your project
-const UPDATE_GOAL_PROGRESS = "/api/goals/progress"; // adjust to your actual endpoint
 
 export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
