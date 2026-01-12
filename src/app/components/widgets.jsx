@@ -342,8 +342,6 @@ const FinancialCard = ({ data }) => {
   "TARGET in BILLIONS CFA",
   "RESULTS in BILLION CFA",
 ];
-
-
   
   return (
     <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full">
@@ -490,7 +488,7 @@ const FinancialProjections = () => {
       title: goal.goalTitle.toUpperCase(),
       subtitle: goal.description,
       value: formattedAchieved,
-      unit,
+      unit: '',
       target: formattedTarget,
       trend,
       trendValue: `${progressPercent}%`,
