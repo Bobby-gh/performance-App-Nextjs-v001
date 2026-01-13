@@ -658,7 +658,7 @@ export const CategoryType = [
         <div className="grid grid-cols-1 
             sm:grid-cols-2 
             lg:grid-cols-3 
-            xl:grid-cols-2
+            xl:grid-cols-4
             gap-4 md:gap-5 lg:gap-6">
           {cardsData.map((card, index) => (
             <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
