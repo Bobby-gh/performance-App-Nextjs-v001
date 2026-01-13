@@ -332,20 +332,22 @@ export const CategoryType = [
 ];
 
 //Coporate Goals
-const FinancialCard = ({ data }) => {
+const FinancialCard = ({ data, onClick }) => {
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
 
   const maxValue = Math.max(...chartData);
   const isPositive = trend === 'up';
 
   const labels = [
-  "TARGET in BILLIONS CFA",
-  "RESULTS in BILLION CFA",
-];
+    "TARGET in BILLIONS CFA",
+    "RESULTS in BILLION CFA",
+  ];
   
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full">
-
+    <div 
+      onClick={onClick}
+      className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+    >
       {/* Header */}
       <div className="flex justify-between items-start mb-4 gap-3">
         <div className="min-w-0">
@@ -420,17 +422,208 @@ const FinancialCard = ({ data }) => {
   );
 };
 
+const FinancialReportModal = ({ data, onClose }) => {
+  if (!data) return null;
+
+  const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
+  const maxValue = Math.max(...chartData);
+  const isPositive = trend === 'up';
+  const labels = ['Target', 'Achieved'];
+
+  // Calculate Y-axis scale
+  const roundToNice = (num) => {
+    const magnitude = Math.pow(10, Math.floor(Math.log10(num)));
+    return Math.ceil(num / magnitude) * magnitude;
+  };
+  const yMax = roundToNice(maxValue * 1.1);
+  const yStep = yMax / 5;
+  const yAxisLabels = Array.from({ length: 6 }, (_, i) => yMax - (i * yStep));
+
+  return (
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-8 z-50 animate-fadeIn"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-y-auto animate-slideUp"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="sticky top-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white p-8 rounded-t-3xl shadow-lg">
+          <div className="flex justify-between items-start gap-4">
+            <div className="flex-1">
+              <h2 className="text-3xl font-bold mb-3 leading-tight">{title}</h2>
+              <p className="text-purple-100 text-base font-medium leading-relaxed">{subtitle}</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-white hover:bg-opacity-20 rounded-full transition-all hover:rotate-90 duration-300"
+            >
+              <X size={28} />
+            </button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-8 space-y-8">
+          {/* Metrics Section - Horizontal */}
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl px-6 py-4 flex-1 border border-blue-200">
+              <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-gray-600 text-xs font-semibold uppercase mb-1">Achieved</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-bold text-gray-900">{value}</span>
+                  {unit && <span className="text-sm font-semibold text-gray-600">{unit}</span>}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl px-6 py-4 flex-1 border border-purple-200">
+              <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-gray-600 text-xs font-semibold uppercase mb-1">Target</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-bold text-gray-900">{target}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className={`flex items-center gap-3 px-6 py-4 rounded-2xl text-base font-bold shadow-lg ${
+              isPositive ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' : 'bg-gradient-to-r from-red-500 to-rose-500 text-white'
+            }`}>
+              {isPositive ? <TrendingUp size={24} /> : <TrendingDown size={24} />}
+              {trendValue}
+            </div>
+          </div>
+
+          {/* Enhanced Chart with Axis */}
+          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 border border-gray-200 shadow-inner">
+            <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <span className="w-1 h-6 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-full"></span>
+              Performance Analysis Chart
+            </h3>
+            
+            <div className="flex gap-8">
+              {/* Y-Axis */}
+              <div className="flex flex-col justify-between h-80 py-2 text-right pr-4">
+                {yAxisLabels.map((label, idx) => (
+                  <div key={idx} className="text-sm font-semibold text-gray-600">
+                    {Math.round(label).toLocaleString()}
+                  </div>
+                ))}
+              </div>
+
+              {/* Chart Area */}
+              <div className="flex-1 relative">
+                {/* Grid Lines */}
+                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+                  {yAxisLabels.map((_, idx) => (
+                    <div key={idx} className="border-t border-gray-300 border-dashed"></div>
+                  ))}
+                </div>
+
+                {/* Bars */}
+                <div className="relative flex items-end justify-around gap-12 h-80 px-8 pt-2">
+                  {chartData.map((val, idx) => {
+                    const height = Math.max((val / yMax) * 100, 2);
+
+                    let barGradient = 'from-gray-400 to-gray-500';
+                    if (idx === chartData.length - 1) {
+                      barGradient = val < chartData[idx - 1] 
+                        ? 'from-red-400 to-red-600' 
+                        : 'from-green-400 to-green-600';
+                    }
+
+                    return (
+                      <div key={idx} className="flex flex-col items-center flex-1 max-w-xs">
+                        <div className="w-full flex items-end justify-center h-full relative group">
+                          {/* 3D Bar Effect */}
+                          <div className="relative w-full max-w-[180px] h-full flex items-end">
+                            {/* Bar shadow */}
+                            <div 
+                              className="absolute bottom-0 left-2 w-full bg-black opacity-20 blur-sm transition-all duration-500 rounded-t-xl"
+                              style={{ height: `${height}%` }}
+                            />
+                            {/* Main bar */}
+                            <div
+                              className={`relative w-full bg-gradient-to-br ${barGradient} transition-all duration-500 rounded-t-xl shadow-xl hover:shadow-2xl group-hover:scale-105 border-2 border-white`}
+                              style={{ height: `${height}%`, minHeight: '8px' }}
+                            >
+                              {/* 3D top edge */}
+                              <div className="absolute top-0 left-0 right-0 h-3 bg-white opacity-30 rounded-t-xl"></div>
+                              {/* Side highlight */}
+                              <div className="absolute top-0 left-0 bottom-0 w-2 bg-white opacity-20"></div>
+                              {/* Value label */}
+                              <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                <span className="text-lg font-bold">{idx === 0 ? target : value}</span>
+                                {unit && <span className="text-xs ml-1">{unit}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {/* X-Axis Label */}
+                        <div className="mt-6 text-center">
+                          <span className="text-base font-bold text-gray-800 block">{labels[idx]}</span>
+                          <p className="text-xs text-gray-500 mt-1 font-medium">
+                            in CFA
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* X-Axis Line */}
+            <div className="ml-20 mr-8 mt-2 border-t-2 border-gray-400"></div>
+            <p className="text-center text-sm font-semibold text-gray-600 mt-3">Performance Metrics</p>
+          </div>
+
+          {/* Analysis Section */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-indigo-500 rounded-xl p-6 shadow-md">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-800 mb-2">Performance Analysis</h4>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {chartData[1] >= chartData[0] 
+                    ? `Outstanding performance! Results exceeded target by ${((chartData[1] - chartData[0]) / chartData[0] * 100).toFixed(1)}%. This represents strong execution and market positioning.`
+                    : `Current performance is ${((chartData[0] - chartData[1]) / chartData[0] * 100).toFixed(1)}% below target. Strategic focus and optimization needed to close the gap.`
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const dummyGoals = [
   {
-    goalTitle: "Placement d’obligations (OAT, BAT hors DAT)",
+    goalTitle: "Placement d'obligations (OAT, BAT hors DAT)",
     description: "Placement dobligations, OAT, BAT hors DAT",
     targetAchieved: 118000000000,
     maintarget: 65000000000,
   },
   {
-    goalTitle: "Placement d’actions",
-    description: "Placement d’actions sur le marché primaire et hors marché",
+    goalTitle: "Placement d'actions",
+    description: "Placement d'actions sur le marché primaire et hors marché",
     targetAchieved: 175833000,
     maintarget: 3000000000,
   },
@@ -449,7 +642,7 @@ const dummyGoals = [
   {
     goalTitle: "Ouverture de comptes",
     description: "Ouverture de comptes",
-    targetAchieved:  774,
+    targetAchieved: 774,
     maintarget: 400,
   },
   {
@@ -459,20 +652,21 @@ const dummyGoals = [
     maintarget: 385000000000,
   },
   {
-    goalTitle: "Chiffre d’Affaires",
-    description: "Chiffre d’Affaires",
-    targetAchieved:  2573669073,
+    goalTitle: "Chiffre d'Affaires",
+    description: "Chiffre d'Affaires",
+    targetAchieved: 2573669073,
     maintarget: 2701304352,
   },
   {
     goalTitle: "Résultat Net",
     description: "Résultat Net",
-    targetAchieved:  484483467,
+    targetAchieved: 484483467,
     maintarget: 641000000,
   },
 ];
 
-const FinancialProjections = () => {
+export const FinancialProjections = () => {
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const cardsData = dummyGoals.map(goal => {
     const achieved = Number(goal.targetAchieved);
@@ -481,7 +675,7 @@ const FinancialProjections = () => {
     const formattedAchieved = formatBigNumber(achieved);
     const formattedTarget = formatBigNumber(target);
 
-    const progressPercent = ((target / achieved) * 100).toFixed(1);
+    const progressPercent = ((achieved / target) * 100).toFixed(1);
     const trend = achieved >= target ? "up" : "down";
 
     return {
@@ -492,7 +686,7 @@ const FinancialProjections = () => {
       target: formattedTarget,
       trend,
       trendValue: `${progressPercent}%`,
-      chartData: [target, achieved], // raw values for chart
+      chartData: [target, achieved],
     };
   });
 
@@ -500,14 +694,49 @@ const FinancialProjections = () => {
     <div className="min-h-screen mt-3">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-3">
         {cardsData.map((card, index) => (
-          <FinancialCard key={index} data={card} />
+          <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
         ))}
       </div>
+
+      {selectedCard && (
+        <FinancialReportModal 
+          data={selectedCard} 
+          onClose={() => setSelectedCard(null)} 
+        />
+      )}
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+        
+        .animate-slideUp {
+          animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+      `}</style>
     </div>
   );
 };
 
 export default FinancialProjections;
+
+
 
 // const FinancialProjections = () => {
 //   const { goals } = useCorporateGoals();
