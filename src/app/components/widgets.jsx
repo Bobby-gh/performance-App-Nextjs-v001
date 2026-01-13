@@ -540,7 +540,6 @@ const FinancialReportModal = ({ data, onClose }) => {
                       <div className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">
                         {idx === 0 ? target : value}
                       </div>
-                      <p className="text-xs sm:text-sm text-gray-500 font-medium">in CFA</p>
                     </div>
                   </div>
                 );
