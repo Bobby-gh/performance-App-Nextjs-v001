@@ -346,7 +346,14 @@ const FinancialCard = ({ data, onClick }) => {
   return (
     <div 
       onClick={onClick}
-      className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+      className="bg-white rounded-lg shadow-md cursor-pointer
+        hover:shadow-xl hover:scale-[1.01] active:scale-[0.99]
+        transition-all duration-300
+        w-full
+        aspect-[1/1]
+        flex flex-col
+        min-h-[260px] sm:min-h-[280px] md:min-h-[300px]
+        overflow-hidden]"
     >
       {/* Header */}
       <div className="flex justify-between items-start mb-4 gap-3">
@@ -654,7 +661,11 @@ const FinancialProjections = () => {
 
   return (
     <div className="min-h-screen mt-3">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 
+          sm:grid-cols-2 
+          lg:grid-cols-3 
+          xl:grid-cols-4 
+          gap-4 md:gap-5 lg:gap-6">
         {cardsData.map((card, index) => (
           <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
         ))}
