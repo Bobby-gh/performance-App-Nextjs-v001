@@ -7,7 +7,7 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { TrendingUp, TrendingDown, X } from 'lucide-react';
 import { Modaltrigger } from "../contex/context-context";
 import Select from "react-select";
 import { useCorporateGoals, useDelete } from "../api/databook/route-data";
