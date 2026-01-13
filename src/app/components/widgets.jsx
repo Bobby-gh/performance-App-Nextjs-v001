@@ -342,22 +342,20 @@ const FinancialCard = ({ data, onClick }) => {
     "TARGET in BILLIONS CFA",
     "RESULTS in BILLION CFA",
   ];
-
+  
   return (
-    <div
+    <div 
       onClick={onClick}
-      className="
-        bg-white rounded-lg shadow-md cursor-pointer
+      className="bg-white rounded-lg shadow-md cursor-pointer
         hover:shadow-xl hover:scale-[1.01] active:scale-[0.99]
         transition-all duration-300
         w-full
         aspect-[1/1]
         flex flex-col
         min-h-[260px] sm:min-h-[280px] md:min-h-[300px]
-        overflow-hidden
-      "
+        overflow-hidden"
     >
-      {/* Header - unchanged */}
+      {/* Header */}
       <div className="flex justify-between items-start mb-4 gap-3 px-4 sm:px-6 pt-4 sm:pt-6">
         <div className="min-w-0">
           <h3
@@ -366,6 +364,7 @@ const FinancialCard = ({ data, onClick }) => {
           >
             {title}
           </h3>
+
           <p
             className="text-gray-800 text-xs font-semibold uppercase line-clamp-2"
             title={subtitle}
@@ -384,7 +383,7 @@ const FinancialCard = ({ data, onClick }) => {
         </div>
       </div>
 
-      {/* Value section - unchanged */}
+      {/* Value */}
       <div className="mb-2 px-4 sm:px-6">
         <div className="flex items-baseline gap-1">
           <span className="text-xl font-bold text-gray-900">{value}</span>
@@ -397,11 +396,11 @@ const FinancialCard = ({ data, onClick }) => {
         </p>
       </div>
 
-      {/* Chart - FIXED: now responsive in height & width */}
+      {/* Chart - removed fixed heights, made it grow */}
       <div className="flex-grow px-4 sm:px-6 pb-4 sm:pb-6 flex flex-col">
         <div className="flex-grow flex items-end justify-between gap-3 sm:gap-6">
           {chartData.map((val, idx) => {
-            const heightPercent = maxValue > 0 ? (val / maxValue) * 100 : 0;
+            const height = maxValue > 0 ? (val / maxValue) * 100 : 0;
 
             let barColor = 'bg-gray-400';
             if (idx === chartData.length - 1) {
@@ -410,24 +409,20 @@ const FinancialCard = ({ data, onClick }) => {
 
             return (
               <div key={idx} className="flex flex-col items-center flex-1 min-w-0">
-                <div className="w-full flex items-end justify-center flex-grow min-h-[50px] sm:min-h-[70px]">
+                <div className="w-full flex items-end justify-center flex-grow min-h-[60px]">
                   <div
-                    className={`
-                      w-full 
-                      max-w-[55px] xs:max-w-[65px] sm:max-w-[80px] md:max-w-[90px] 
-                      ${barColor} rounded-t transition-all duration-300
-                    `}
-                    style={{ height: `${heightPercent}%` }}
+                    className={`w-full max-w-[60px] sm:max-w-[80px] ${barColor} rounded-t transition-all`}
+                    style={{ height: `${height}%` }}
                   />
                 </div>
-                <span className="text-xs text-gray-600 mt-2 sm:mt-3">
+                <span className="text-xs text-gray-600 mt-2">
                   {labels[idx] || ''}
                 </span>
               </div>
             );
           })}
         </div>
-      </div>
+      </div> 
     </div>
   );
 };
