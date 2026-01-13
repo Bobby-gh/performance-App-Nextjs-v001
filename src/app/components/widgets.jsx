@@ -439,7 +439,7 @@ const FinancialReportModal = ({ data, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Compact Header */}
-        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white px-6 py-3 flex-shrink-0">
+        <div className="bg-gradient-to-r from-green-600 via-purple-600 to-gray-500 text-white px-6 py-3 flex-shrink-0">
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1 min-w-0">
               <h2 className="text-lg font-bold mb-0.5 leading-tight break-words">{title}</h2>
@@ -510,7 +510,7 @@ const FinancialReportModal = ({ data, onClose }) => {
               {chartData.map((val, idx) => {
                 const height = (val / maxValue) * 100;
 
-                let barColor = 'bg-indigo-400';
+                let barColor = 'bg-gray-400';
                 if (idx === 1) {
                   const targetVal = chartData[0];
                   barColor = val < targetVal ? 'bg-red-500' : 'bg-green-500';
