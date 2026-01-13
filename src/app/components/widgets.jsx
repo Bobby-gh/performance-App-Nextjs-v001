@@ -346,7 +346,7 @@ const FinancialCard = ({ data, onClick }) => {
   return (
     <div 
       onClick={onClick}
-      className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] pb-[100%] md:pb-[90%]"
+      className="bg-white rounded-lg shadow-md p-4 sm:p-6 w-full cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
     >
       {/* Header */}
       <div className="flex justify-between items-start mb-4 gap-3">
