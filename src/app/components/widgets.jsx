@@ -637,7 +637,7 @@ const FinancialProjections = () => {
     const formattedAchieved = formatBigNumber(achieved);
     const formattedTarget = formatBigNumber(target);
 
-    const progressPercent = ((achieved / target) * 100).toFixed(1);
+    const progressPercent = (((achieved / target) * 100) - 100).toFixed(1);
     const trend = achieved >= target ? "up" : "down";
 
     return {
