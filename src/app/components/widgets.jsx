@@ -332,11 +332,10 @@ export const CategoryType = [
 ];
 
 //Coporate Goals
-  const FinancialCard = ({ data, onClick }) => {
+ const FinancialCard = ({ data, onClick }) => {
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
 
-  // chartData = [target, achieved] — both numbers
-  const maxValue = Math.max(...chartData, 1); // prevent division by zero
+  const maxValue = Math.max(...chartData, 1);
   const isPositive = trend === 'up';
 
   const labels = ["TARGET", "RESULTS"];
@@ -350,7 +349,7 @@ export const CategoryType = [
         w-full aspect-[1/1] flex flex-col min-h-[260px] sm:min-h-[280px] md:min-h-[300px]
         overflow-hidden"
     >
-      {/* Header */}
+      {/* Header – unchanged */}
       <div className="flex justify-between items-start mb-3 sm:mb-4 gap-3 px-4 sm:px-6 pt-4 sm:pt-6">
         <div className="min-w-0">
           <h3 className="text-gray-600 text-sm font-medium mb-1 line-clamp-1" title={title}>
@@ -371,47 +370,48 @@ export const CategoryType = [
         </div>
       </div>
 
-      {/* Main value */}
+      {/* Value – unchanged */}
       <div className="mb-3 px-4 sm:px-6">
         <div className="flex items-baseline gap-1">
           <span className="text-xl sm:text-2xl font-bold text-gray-900">{value}</span>
           {unit && <span className="text-sm font-semibold text-gray-600">{unit}</span>}
         </div>
-        <p className="text-gray-500 text-sm mt-1">
-          Target: {target}
-        </p>
+        <p className="text-gray-500 text-sm mt-1">Target: {target}</p>
       </div>
 
-      {/* Bars - simplified & reliable */}
-      <div className="flex-grow px-5 sm:px-7 pb-4 sm:pb-6 flex flex-col">
-        <div className="flex-grow flex items-end justify-between gap-4 sm:gap-8">
+      {/* ─── FIXED & VISIBLE BAR AREA ─── */}
+      <div className="flex-grow px-6 pb-5 flex flex-col">
+        {/* This wrapper gives bars real space to grow into */}
+        <div className="flex items-end justify-between gap-6 sm:gap-10 grow">
           {chartData.map((val, idx) => {
-            // Use a minimum visible height even when value is very small
             const relative = val / maxValue;
-            const heightPercent = Math.max(relative * 90, 8); // 8–90% range → always visible
+            // Scale aggressively so differences are visible, but keep min height
+            const heightPercent = Math.max(relative * 100, 10); // 10–100%
 
-            const isAchievedBar = idx === 1;
-            const barColor = isAchievedBar
-              ? val >= chartData[0]
-                ? 'bg-green-500'
-                : 'bg-red-500'
-              : 'bg-blue-400/70';
+            const barColor =
+              idx === 0
+                ? 'bg-indigo-200'
+                : val >= chartData[0]
+                ? 'bg-green-600'
+                : 'bg-red-600';
 
             return (
-              <div key={idx} className="flex flex-col items-center flex-1">
-                <div className="w-full flex items-end justify-center flex-grow">
+              <div key={idx} className="flex-1 flex flex-col items-center min-w-0">
+                {/* Bar + value label on top of bar */}
+                <div className="w-full flex flex-col items-center justify-end grow">
+                  <span className="text-[10px] sm:text-xs font-semibold text-gray-700 mb-1">
+                    {val.toLocaleString()}
+                  </span>
                   <div
-                    className={`w-full ${barColor} rounded-t-md transition-all duration-300 shadow-sm`}
+                    className={`${barColor} w-full rounded-t-lg transition-all duration-300 shadow-sm`}
                     style={{ height: `${heightPercent}%` }}
                   />
                 </div>
 
+                {/* Label under bar */}
                 <div className="mt-2 text-center">
-                  <div className="text-[10px] sm:text-xs font-medium text-gray-600 leading-tight">
+                  <div className="text-[10px] sm:text-xs font-medium text-gray-600">
                     {labels[idx]}
-                  </div>
-                  <div className="text-[11px] sm:text-xs font-semibold text-gray-800 mt-0.5">
-                    {val.toLocaleString()}
                   </div>
                 </div>
               </div>
@@ -658,7 +658,7 @@ export const CategoryType = [
         <div className="grid grid-cols-1 
             sm:grid-cols-2 
             lg:grid-cols-3 
-            xl:grid-cols-4
+            xl:grid-cols-2
             gap-4 md:gap-5 lg:gap-6">
           {cardsData.map((card, index) => (
             <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
