@@ -332,7 +332,7 @@ export const CategoryType = [
 ];
 
 //Coporate Goals
- const FinancialCard = ({ data, onClick }) => {
+const FinancialCard = ({ data, onClick }) => {
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
 
   const maxValue = Math.max(...chartData, 1);
@@ -346,11 +346,12 @@ export const CategoryType = [
       className="bg-white rounded-lg shadow-md cursor-pointer
         hover:shadow-xl hover:scale-[1.01] active:scale-[0.99]
         transition-all duration-300
-        w-full aspect-[1/1] flex flex-col min-h-[260px] sm:min-h-[280px] md:min-h-[300px]
+        w-full flex flex-col
         overflow-hidden"
+      style={{ height: '320px' }}
     >
-      {/* Header – unchanged */}
-      <div className="flex justify-between items-start mb-3 sm:mb-4 gap-3 px-4 sm:px-6 pt-4 sm:pt-6">
+      {/* Header */}
+      <div className="flex justify-between items-start mb-3 gap-3 px-4 sm:px-6 pt-4 sm:pt-6 flex-shrink-0">
         <div className="min-w-0">
           <h3 className="text-gray-600 text-sm font-medium mb-1 line-clamp-1" title={title}>
             {title}
@@ -361,7 +362,7 @@ export const CategoryType = [
         </div>
 
         <div
-          className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+          className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap flex-shrink-0 ${
             isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
           }`}
         >
@@ -370,8 +371,8 @@ export const CategoryType = [
         </div>
       </div>
 
-      {/* Value – unchanged */}
-      <div className="mb-3 px-4 sm:px-6">
+      {/* Value */}
+      <div className="mb-3 px-4 sm:px-6 flex-shrink-0">
         <div className="flex items-baseline gap-1">
           <span className="text-xl sm:text-2xl font-bold text-gray-900">{value}</span>
           {unit && <span className="text-sm font-semibold text-gray-600">{unit}</span>}
@@ -379,14 +380,12 @@ export const CategoryType = [
         <p className="text-gray-500 text-sm mt-1">Target: {target}</p>
       </div>
 
-      {/* ─── FIXED & VISIBLE BAR AREA ─── */}
-      <div className="flex-grow px-6 pb-5 flex flex-col">
-        {/* This wrapper gives bars real space to grow into */}
-        <div className="flex items-end justify-between gap-6 sm:gap-10 grow">
+      {/* Bar Chart Area - FIXED */}
+      <div className="flex-1 px-6 pb-5 flex flex-col min-h-0">
+        <div className="flex items-end justify-between gap-6 sm:gap-10 h-full">
           {chartData.map((val, idx) => {
             const relative = val / maxValue;
-            // Scale aggressively so differences are visible, but keep min height
-            const heightPercent = Math.max(relative * 100, 10); // 10–100%
+            const heightPercent = Math.max(relative * 100, 10);
 
             const barColor =
               idx === 0
@@ -396,9 +395,9 @@ export const CategoryType = [
                 : 'bg-red-600';
 
             return (
-              <div key={idx} className="flex-1 flex flex-col items-center min-w-0">
-                {/* Bar + value label on top of bar */}
-                <div className="w-full flex flex-col items-center justify-end grow">
+              <div key={idx} className="flex-1 flex flex-col items-center min-w-0 h-full">
+                {/* Bar container with explicit height */}
+                <div className="w-full flex flex-col items-center justify-end flex-1">
                   <span className="text-[10px] sm:text-xs font-semibold text-gray-700 mb-1">
                     {val.toLocaleString()}
                   </span>
@@ -409,7 +408,7 @@ export const CategoryType = [
                 </div>
 
                 {/* Label under bar */}
-                <div className="mt-2 text-center">
+                <div className="mt-2 text-center flex-shrink-0">
                   <div className="text-[10px] sm:text-xs font-medium text-gray-600">
                     {labels[idx]}
                   </div>
