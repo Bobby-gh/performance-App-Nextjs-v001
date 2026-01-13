@@ -332,19 +332,14 @@ export const CategoryType = [
 ];
 
 //Coporate Goals
-const FinancialCard = ({ data, onClick }) => {
+  const FinancialCard = ({ data, onClick }) => {
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
 
-  // chartData = [target, achieved]
-  const [targetVal, achievedVal] = chartData;
-  const maxVal = Math.max(targetVal, achievedVal, 1); // avoid /0
-
+  // chartData = [target, achieved] — both numbers
+  const maxValue = Math.max(...chartData, 1); // prevent division by zero
   const isPositive = trend === 'up';
 
   const labels = ["TARGET", "RESULTS"];
-
-  // Fixed bar container height in pixels → makes bars reliably visible
-  const BAR_AREA_HEIGHT = 140; // adjust this value if needed (120–180 px)
 
   return (
     <div
@@ -356,19 +351,19 @@ const FinancialCard = ({ data, onClick }) => {
         overflow-hidden"
     >
       {/* Header */}
-      <div className="flex justify-between items-start mb-3 gap-3 px-4 sm:px-6 pt-4 sm:pt-5">
-        <div className="min-w-0 flex-1">
-          <h3 className="text-gray-700 text-sm font-medium mb-1 line-clamp-1" title={title}>
+      <div className="flex justify-between items-start mb-3 sm:mb-4 gap-3 px-4 sm:px-6 pt-4 sm:pt-6">
+        <div className="min-w-0">
+          <h3 className="text-gray-600 text-sm font-medium mb-1 line-clamp-1" title={title}>
             {title}
           </h3>
-          <p className="text-gray-600 text-xs font-semibold uppercase line-clamp-2" title={subtitle}>
+          <p className="text-gray-800 text-xs font-semibold uppercase line-clamp-2" title={subtitle}>
             {subtitle}
           </p>
         </div>
 
         <div
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold shrink-0 ${
-            isPositive ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
+          className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+            isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
           }`}
         >
           {isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
@@ -376,41 +371,43 @@ const FinancialCard = ({ data, onClick }) => {
         </div>
       </div>
 
-      {/* Current value */}
-      <div className="px-4 sm:px-6 pb-2">
-        <div className="flex items-baseline gap-1.5">
-          <span className="text-2xl font-bold text-gray-900">{value}</span>
+      {/* Main value */}
+      <div className="mb-3 px-4 sm:px-6">
+        <div className="flex items-baseline gap-1">
+          <span className="text-xl sm:text-2xl font-bold text-gray-900">{value}</span>
           {unit && <span className="text-sm font-semibold text-gray-600">{unit}</span>}
         </div>
-        <p className="text-gray-500 text-xs mt-0.5">Target: {target}</p>
+        <p className="text-gray-500 text-sm mt-1">
+          Target: {target}
+        </p>
       </div>
 
-      {/* === BARS SECTION - FIXED HEIGHT === */}
-      <div className="flex-grow px-5 sm:px-7 pb-4 sm:pb-5 flex flex-col">
-        {/* Fixed height wrapper */}
-        <div 
-          className="w-full flex items-end justify-between gap-5 sm:gap-8"
-          style={{ height: `${BAR_AREA_HEIGHT}px` }}
-        >
+      {/* Bars - simplified & reliable */}
+      <div className="flex-grow px-5 sm:px-7 pb-4 sm:pb-6 flex flex-col">
+        <div className="flex-grow flex items-end justify-between gap-4 sm:gap-8">
           {chartData.map((val, idx) => {
-            // Scale to fixed container height + minimum visible size
-            const heightPx = Math.max((val / maxVal) * BAR_AREA_HEIGHT, 12); // min 12px
+            // Use a minimum visible height even when value is very small
+            const relative = val / maxValue;
+            const heightPercent = Math.max(relative * 90, 8); // 8–90% range → always visible
 
-            const barColor = idx === 1 // achieved bar
-              ? (achievedVal >= targetVal ? 'bg-green-500' : 'bg-red-500')
-              : 'bg-blue-400';
+            const isAchievedBar = idx === 1;
+            const barColor = isAchievedBar
+              ? val >= chartData[0]
+                ? 'bg-green-500'
+                : 'bg-red-500'
+              : 'bg-blue-400/70';
 
             return (
-              <div key={idx} className="flex-1 flex flex-col items-center">
-                {/* Bar */}
-                <div
-                  className={`${barColor} w-full rounded-t transition-all duration-300 shadow-sm`}
-                  style={{ height: `${heightPx}px` }}
-                />
+              <div key={idx} className="flex flex-col items-center flex-1">
+                <div className="w-full flex items-end justify-center flex-grow">
+                  <div
+                    className={`w-full ${barColor} rounded-t-md transition-all duration-300 shadow-sm`}
+                    style={{ height: `${heightPercent}%` }}
+                  />
+                </div>
 
-                {/* Labels below bar */}
-                <div className="mt-2.5 text-center">
-                  <div className="text-[10px] sm:text-xs font-medium text-gray-600">
+                <div className="mt-2 text-center">
+                  <div className="text-[10px] sm:text-xs font-medium text-gray-600 leading-tight">
                     {labels[idx]}
                   </div>
                   <div className="text-[11px] sm:text-xs font-semibold text-gray-800 mt-0.5">
