@@ -665,7 +665,7 @@ const dummyGoals = [
   },
 ];
 
-export const FinancialProjections = () => {
+const FinancialProjections = () => {
   const [selectedCard, setSelectedCard] = useState(null);
 
   const cardsData = dummyGoals.map(goal => {
@@ -778,9 +778,6 @@ export default FinancialProjections;
 // };
 
 // export default FinancialProjections;
-
-
-// Financial Projections Helpers
 
  // Number formatting helper (K, M, B with 1 decimal when needed)
   export const formatBigNumber = (num) => {
