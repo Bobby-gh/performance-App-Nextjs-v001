@@ -398,7 +398,7 @@ const FinancialCard = ({ data, onClick }) => {
                 {/* Bar container with explicit height */}
                 <div className="w-full flex flex-col items-center justify-end flex-1">
                   <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold text-gray-700 mb-0.5 sm:mb-1">
-                    {val.toLocaleString()}
+                    {formatBigNumber(val)}
                   </span>
                   <div
                     className={`${barColor} w-full rounded-t-lg transition-all duration-300 shadow-sm`}
@@ -656,7 +656,7 @@ const FinancialProjections = () => {
       <div className="grid grid-cols-1 
           sm:grid-cols-2 
           lg:grid-cols-3 
-          xl:grid-cols-4
+          xl:grid-cols-2
           gap-4 md:gap-5 lg:gap-6">
         {cardsData.map((card, index) => (
           <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
