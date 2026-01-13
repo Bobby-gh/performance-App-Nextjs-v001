@@ -338,111 +338,93 @@ const FinancialCard = ({ data, onClick }) => {
   const maxValue = Math.max(...chartData);
   const isPositive = trend === 'up';
 
-  // You had two label versions – using short ones under bars (cleaner)
-  const chartLabels = ['Target', 'Achieved'];
-
+  const labels = [
+    "TARGET in BILLIONS CFA",
+    "RESULTS in BILLION CFA",
+  ];
+  
   return (
-    <div
+    <div 
       onClick={onClick}
-      className="
-        bg-white rounded-lg shadow-md cursor-pointer
+      className="bg-white rounded-lg shadow-md cursor-pointer
         hover:shadow-xl hover:scale-[1.01] active:scale-[0.99]
         transition-all duration-300
         w-full
         aspect-[1/1]
         flex flex-col
-        min-h-[240px] xs:min-h-[260px] sm:min-h-[280px] md:min-h-[300px]
-        overflow-hidden
-      "
+        min-h-[260px] sm:min-h-[280px] md:min-h-[300px]
+        overflow-hidden]"
     >
-      <div className="flex-grow p-4 sm:p-5 lg:p-6 flex flex-col">
-        {/* Header */}
-        <div className="flex justify-between items-start mb-3 sm:mb-4 gap-2 sm:gap-3">
-          <div className="min-w-0 flex-1">
-            <h3
-              className="text-gray-600 text-sm sm:text-base font-medium mb-0.5 sm:mb-1 line-clamp-1"
-              title={title}
-            >
-              {title}
-            </h3>
-            <p
-              className="text-gray-800 text-[10px] xs:text-xs sm:text-sm font-semibold uppercase line-clamp-2 leading-tight"
-              title={subtitle}
-            >
-              {subtitle}
-            </p>
-          </div>
-
-          {/* Trend badge */}
-          <div
-            className={`
-              flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 
-              rounded-full text-[10px] xs:text-xs font-semibold whitespace-nowrap flex-shrink-0
-              ${isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}
-            `}
+      {/* Header */}
+      <div className="flex justify-between items-start mb-4 gap-3">
+        <div className="min-w-0">
+          {/* Title — 1 line */}
+          <h3
+            className="text-gray-600 text-sm font-medium mb-1 line-clamp-1"
+            title={title}
           >
-            {isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-            {trendValue}
-          </div>
-        </div>
+            {title}
+          </h3>
 
-        {/* Value */}
-        <div className="mb-3 sm:mb-4 mt-1 sm:mt-2">
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-              {value}
-            </span>
-            {unit && (
-              <span className="text-base sm:text-lg font-semibold text-gray-600">
-                {unit}
-              </span>
-            )}
-          </div>
-          <p className="text-gray-500 text-xs sm:text-sm mt-0.5 sm:mt-1 truncate">
-            Target {target}
+          {/* Subtitle — 2 lines */}
+          <p
+            className="text-gray-800 text-xs font-semibold uppercase line-clamp-2"
+            title={subtitle}
+          >
+            {subtitle}
           </p>
         </div>
 
-        {/* Chart – takes all remaining vertical space */}
-        <div className="flex-grow flex flex-col mt-2 sm:mt-3">
-          <div className="flex-grow flex items-end justify-between gap-4 sm:gap-6 lg:gap-8">
-            {chartData.map((val, idx) => {
-              const heightPercent = maxValue > 0 ? (val / maxValue) * 100 : 0;
-              let barColor = 'bg-gray-300';
-              if (idx === 1) {
-                barColor = val >= chartData[0] ? 'bg-green-500' : 'bg-red-500';
-              }
-
-              return (
-                <div
-                  key={idx}
-                  className="flex flex-col items-center flex-1 min-w-0"
-                >
-                  {/* Bar wrapper – grows vertically */}
-                  <div className="w-full flex items-end justify-center flex-grow min-h-[60px] sm:min-h-[80px]">
-                    <div
-                      className={`
-                        w-full 
-                        max-w-[50px] xs:max-w-[60px] sm:max-w-[70px] md:max-w-[80px] lg:max-w-[90px]
-                        ${barColor} rounded-t-md sm:rounded-t-lg
-                        transition-all duration-400
-                      `}
-                      style={{ height: `${heightPercent}%` }}
-                    />
-                  </div>
-
-                  {/* Label */}
-                  <div className="mt-1.5 sm:mt-2 text-center">
-                    <span className="text-[10px] xs:text-xs sm:text-sm text-gray-600 font-medium">
-                      {chartLabels[idx]}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        {/* Trend badge */}
+        <div
+          className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+            isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+          }`}
+        >
+          {isPositive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+          {trendValue}
         </div>
       </div>
+
+      {/* Value */}
+      <div className="mb-2">
+        <div className="flex items-baseline gap-1">
+          <span className="text-xl font-bold text-gray-900">{value}</span>
+          {unit && (
+            <span className="text-sm font-semibold text-gray-600">{unit}</span>
+          )}
+        </div>
+        <p className="text-gray-500 text-sm mt-1 truncate">
+          Target {target}
+        </p>
+      </div>
+
+      {/* Chart */}
+      <div className="flex items-end justify-between gap-3 h-24 mt-6">
+        {chartData.map((val, idx) => {
+          const height = (val / maxValue) * 100;
+          const labels = ['Target', 'Achieved'];
+
+          let barColor = 'bg-gray-400';
+          if (idx === chartData.length - 1) {
+            barColor = val < chartData[idx - 1] ? 'bg-red-500' : 'bg-green-500';
+          }
+
+          return (
+            <div key={idx} className="flex flex-col items-center flex-1">
+              <div className="w-full flex items-end justify-center h-20">
+                <div
+                  className={`w-24 transition-all ${barColor}`}
+                  style={{ height: `${height}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-600 mt-2">
+                {labels[idx] || ''}
+              </span>
+            </div>
+          );
+        })}
+      </div> 
     </div>
   );
 };
