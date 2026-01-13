@@ -431,112 +431,112 @@ const FinancialReportModal = ({ data, onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 sm:p-6 lg:p-8 z-50 animate-fadeIn overflow-y-auto"
+      className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 animate-fadeIn"
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-5xl my-8 animate-slideUp"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] flex flex-col animate-slideUp overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white p-4 sm:p-6 lg:p-8 rounded-t-2xl sm:rounded-t-3xl shadow-lg z-10">
+        {/* Compact Header */}
+        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white px-6 py-3 flex-shrink-0">
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 leading-tight break-words">{title}</h2>
-              <p className="text-purple-100 text-sm sm:text-base font-medium leading-relaxed break-words">{subtitle}</p>
+              <h2 className="text-lg font-bold mb-0.5 leading-tight break-words">{title}</h2>
+              <p className="text-purple-100 text-xs font-medium leading-relaxed break-words">{subtitle}</p>
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-white hover:bg-opacity-20 rounded-full transition-all hover:rotate-90 duration-300 flex-shrink-0"
+              className="p-1.5 hover:bg-white hover:bg-opacity-20 rounded-full transition-all hover:rotate-90 duration-300 flex-shrink-0"
             >
-              <X size={24} className="sm:w-7 sm:h-7" />
+              <X size={18} />
             </button>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 max-h-[calc(85vh-120px)] overflow-y-auto">
-          {/* Metrics Section - Responsive Stack/Horizontal */}
-          <div className="flex flex-col sm:flex-row items-stretch gap-4 sm:gap-6">
-            <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-4 flex-1 border border-blue-200">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="p-5 flex-1 overflow-y-auto lg:overflow-y-visible">
+          {/* Compact Metrics Row */}
+          <div className="flex items-center gap-3 mb-4">
+            {/* Achieved */}
+            <div className="flex items-center gap-2 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg px-3 py-2 flex-1 border border-blue-200">
+              <div className="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center flex-shrink-0">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
               <div className="min-w-0">
-                <p className="text-gray-600 text-xs font-semibold uppercase mb-1">Achieved</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-xl sm:text-2xl font-bold text-gray-900 truncate">{value}</span>
-                  {unit && <span className="text-sm font-semibold text-gray-600">{unit}</span>}
+                <p className="text-gray-600 text-[10px] font-semibold uppercase">Achieved</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-lg font-bold text-gray-900">{value}</span>
+                  {unit && <span className="text-xs font-semibold text-gray-600">{unit}</span>}
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 sm:gap-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-4 flex-1 border border-purple-200">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {/* Target */}
+            <div className="flex items-center gap-2 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg px-3 py-2 flex-1 border border-purple-200">
+              <div className="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center flex-shrink-0">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
               </div>
               <div className="min-w-0">
-                <p className="text-gray-600 text-xs font-semibold uppercase mb-1">Target</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-xl sm:text-2xl font-bold text-gray-900 truncate">{target}</span>
+                <p className="text-gray-600 text-[10px] font-semibold uppercase">Target</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-lg font-bold text-gray-900">{target}</span>
                 </div>
               </div>
             </div>
 
-            <div className={`flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold shadow-lg ${
+            {/* Trend */}
+            <div className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-bold shadow-md ${
               isPositive ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' : 'bg-gradient-to-r from-red-500 to-rose-500 text-white'
             }`}>
-              {isPositive ? <TrendingUp size={20} className="sm:w-6 sm:h-6" /> : <TrendingDown size={20} className="sm:w-6 sm:h-6" />}
-              <span className="whitespace-nowrap">{trendValue}</span>
+              {isPositive ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
+              <span className="text-lg">{trendValue}</span>
             </div>
           </div>
 
-          {/* Enhanced Chart - Simple Visual Representation */}
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-200 shadow-inner">
-            <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6 flex items-center gap-2">
-              <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-full"></span>
-              Performance Analysis Chart
+          {/* Large Chart - Square with Tall Bars */}
+          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200 shadow-inner mb-4">
+            <h3 className="text-base font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <span className="w-1 h-4 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-full"></span>
+              Performance Chart
             </h3>
             
-            {/* Chart Area - Simple and Responsive */}
-            <div className="flex flex-col sm:flex-row items-end justify-around gap-8 sm:gap-12 lg:gap-16 px-4 sm:px-8 py-6">
+            {/* Chart Area - Tall Square */}
+            <div className="flex items-end justify-around gap-20 px-16" style={{ height: '400px' }}>
               {chartData.map((val, idx) => {
-                // Simple percentage calculation relative to max value
                 const height = (val / maxValue) * 100;
 
-                let barColor = 'bg-gray-400';
+                let barColor = 'bg-indigo-400';
                 if (idx === 1) {
                   const targetVal = chartData[0];
                   barColor = val < targetVal ? 'bg-red-500' : 'bg-green-500';
                 }
 
                 return (
-                  <div key={idx} className="flex flex-col items-center flex-1 w-full sm:w-auto">
+                  <div key={idx} className="flex flex-col items-center flex-1 h-full">
                     {/* Bar container */}
-                    <div className="w-full flex items-end justify-center h-48 sm:h-56 lg:h-64 relative group mb-4">
-                      <div className="relative w-full max-w-[200px] h-full flex items-end">
-                        {/* Main bar */}
+                    <div className="w-full flex items-end justify-center flex-1 relative group mb-3">
+                      <div className="relative w-full max-w-[220px] h-full flex items-end">
                         <div
                           className={`relative w-full ${barColor} transition-all duration-500 rounded-t-lg shadow-lg group-hover:opacity-90`}
-                          style={{ height: `${height}%`, minHeight: '30px' }}
+                          style={{ height: `${height}%`, minHeight: '60px' }}
                         >
-                          {/* Value display on hover */}
-                          <div className="absolute -top-16 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none">
-                            <div className="text-lg font-bold">{idx === 0 ? target : value}</div>
-                            <div className="text-xs text-gray-300 mt-1">{labels[idx]}</div>
+                          {/* Hover tooltip */}
+                          <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-3 py-1.5 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none z-10">
+                            <div className="text-sm font-bold">{idx === 0 ? target : value}</div>
                           </div>
                         </div>
                       </div>
                     </div>
                     
-                    {/* X-Axis Label */}
+                    {/* Label */}
                     <div className="text-center">
-                      <div className="text-base sm:text-lg font-bold text-gray-800 mb-1">{labels[idx]}</div>
-                      <div className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">
+                      <div className="text-sm font-bold text-gray-800 mb-0.5">{labels[idx]}</div>
+                      <div className="text-xl font-bold text-gray-900">
                         {idx === 0 ? target : value}
                       </div>
                     </div>
@@ -545,22 +545,21 @@ const FinancialReportModal = ({ data, onClose }) => {
               })}
             </div>
             
-            {/* Bottom line */}
-            <div className="mx-4 sm:mx-8 mt-6 border-t-2 border-gray-400"></div>
-            <p className="text-center text-xs sm:text-sm font-semibold text-gray-600 mt-3">Performance Metrics</p>
+            <div className="mx-16 mt-4 border-t-2 border-gray-400"></div>
+            <p className="text-center text-xs font-semibold text-gray-600 mt-2">Performance Metrics</p>
           </div>
 
-          {/* Analysis Section */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-indigo-500 rounded-xl p-4 sm:p-6 shadow-md">
-            <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
-              <div className="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {/* Analysis Section Below */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-indigo-500 rounded-xl p-3 shadow-md">
+            <div className="flex items-start gap-2">
+              <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
               <div className="flex-1">
-                <h4 className="font-bold text-gray-800 mb-2 text-sm sm:text-base">Performance Analysis</h4>
-                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                <h4 className="font-bold text-gray-800 mb-1 text-xs">Performance Analysis</h4>
+                <p className="text-[11px] text-gray-700 leading-relaxed">
                   {chartData[1] >= chartData[0] 
                     ? `Outstanding performance! Results exceeded target by ${((chartData[1] - chartData[0]) / chartData[0] * 100).toFixed(1)}%. This represents strong execution and market positioning.`
                     : `Current performance is ${((chartData[0] - chartData[1]) / chartData[0] * 100).toFixed(1)}% below target. Strategic focus and optimization needed to close the gap.`
