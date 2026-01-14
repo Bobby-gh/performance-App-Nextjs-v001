@@ -1,4 +1,5 @@
 "use client";
+
 import {
   FaThumbsDown,
   FaTrophy,
@@ -8,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { useGoalStatus } from "../api/databook/route-data";
 import { MdOutlineAddToPhotos } from "react-icons/md";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AuthContext,
   GoalSelectContext,
