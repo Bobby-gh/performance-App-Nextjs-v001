@@ -1,17 +1,32 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { IoGlobeOutline } from "react-icons/io5";
+import Cookies from "js-cookie";
+
+const FLAGS = {
+  en: "https://th.bing.com/th/id/OIP.YMOZI-eYNMGLsKvGOfDSLgHaDt?rs=1&pid=ImgDetMain",
+  fr: "https://th.bing.com/th/id/R.98ed847d113e4f1899819db4904e9a3b?rik=Ar%2ftjBrb4NJl4Q&pid=ImgRaw&r=0"
+};
 
 export function LanguageButton() {
   const { i18n } = useTranslation();
-  const [selectedFlag, setSelectedFlag] = useState("https://th.bing.com/th/id/OIP.YMOZI-eYNMGLsKvGOfDSLgHaDt?rs=1&pid=ImgDetMain"); 
+  // Initialize state from cookie or default to 'en'
+  const [selectedFlag, setSelectedFlag] = useState(FLAGS.en);
+
+  useEffect(() => {
+    const savedLng = Cookies.get("i18next") || "en";
+    if (FLAGS[savedLng]) {
+      setSelectedFlag(FLAGS[savedLng]);
+    }
+  }, []);
 
   const changeLanguage = (event) => {
     const lng = event.target.value;
     if (lng) {
       i18n.changeLanguage(lng);
-      setSelectedFlag(lng === "en" ? "https://th.bing.com/th/id/OIP.YMOZI-eYNMGLsKvGOfDSLgHaDt?rs=1&pid=ImgDetMain" : "https://th.bing.com/th/id/R.98ed847d113e4f1899819db4904e9a3b?rik=Ar%2ftjBrb4NJl4Q&pid=ImgRaw&r=0");
+      Cookies.set("i18next", lng, { expires: 365 }); // Save for 1 year
+      setSelectedFlag(FLAGS[lng]);
     }
   };
 
@@ -20,23 +35,18 @@ export function LanguageButton() {
       <select
         className="border-2 border-blue-500 p-0.5 focus:text-blue-500"
         onChange={changeLanguage}
-        value={i18n.language} // make sure the select shows the current language
+        value={i18n.language}
         style={{
           background: `url(${selectedFlag}) 8px center / 20px 15px no-repeat`,
           paddingLeft: "35px",
         }}
       >
-        <option value="en">
-          English
-        </option>
-        <option value="fr">
-          French
-        </option>
+        <option value="en">English</option>
+        <option value="fr">French</option>
       </select>
     </div>
   );
 }
-
 
 export function InnerLanguageButton() {
   const { i18n } = useTranslation();
@@ -47,21 +57,16 @@ export function InnerLanguageButton() {
     { code: "fr", label: "French", flag: "🇫🇷" },
   ];
 
-  const toggleDropdown = () => setOpen(!open);
-
   const changeLanguage = (langCode) => {
     i18n.changeLanguage(langCode);
+    Cookies.set("i18next", langCode, { expires: 365 });
     setOpen(false);
   };
 
-  
-
   return (
     <div className="relative inline-block text-left">
-      <button
-        onClick={toggleDropdown}
-      >
-        <IoGlobeOutline/>
+      <button onClick={() => setOpen(!open)}>
+        <IoGlobeOutline size={24} />
       </button>
 
       {open && (
@@ -80,5 +85,3 @@ export function InnerLanguageButton() {
     </div>
   );
 }
-
-
