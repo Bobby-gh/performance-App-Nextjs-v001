@@ -625,141 +625,47 @@ const dummyGoals = [
   },
 ];
 
-const FinancialProjections = () => {
-  const [selectedCard, setSelectedCard] = useState(null);
-
-  const cardsData = dummyGoals.map(goal => {
-    const achieved = Number(goal.targetAchieved);
-    const target = Number(goal.maintarget);
-
-    const formattedAchieved = formatBigNumber(achieved);
-    const formattedTarget = formatBigNumber(target);
-
-    const progressPercent = (((achieved / target) * 100) - 100).toFixed(1);
-    const trend = achieved >= target ? "up" : "down";
-
-    return {
-      title: goal.goalTitle.toUpperCase(),
-      subtitle: goal.description,
-      value: formattedAchieved,
-      unit: '',
-      target: formattedTarget,
-      trend,
-      trendValue: `${progressPercent}%`,
-      chartData: [target, achieved],
-    };
-  });
-
-  return (
-    <div className="min-h-screen mt-3">
-      <div className="grid grid-cols-1 
-          sm:grid-cols-2 
-          lg:grid-cols-3 
-          xl:grid-cols-2
-          gap-4 md:gap-5 lg:gap-6">
-        {cardsData.map((card, index) => (
-          <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
-        ))}
-      </div>
-
-      {selectedCard && (
-        <FinancialReportModal 
-          data={selectedCard} 
-          onClose={() => setSelectedCard(null)} 
-        />
-      )}
-
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-        
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
-        
-        .animate-slideUp {
-          animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-      `}</style>
-    </div>
-  );
-};
-
-export default FinancialProjections;
-
-
-
 // const FinancialProjections = () => {
-//   const { goals } = useCorporateGoals();
 //   const [selectedCard, setSelectedCard] = useState(null);
 
-//   const cardsData = goals.map(goal => {
-//     const achieved = Number(goal.targetAchieved ?? 0);
-//     const target   = Number(goal.maintarget ?? 0);
+//   const cardsData = dummyGoals.map(goal => {
+//     const achieved = Number(goal.targetAchieved);
+//     const target = Number(goal.maintarget);
 
-//     // Optional: keep your dynamic unit logic (K, M, B, etc.)
-//     const maxValue = Math.max(achieved, target);
-//     const { unit, divisor } = getUnitAndDivisor(maxValue); // your existing helper
+//     const formattedAchieved = formatBigNumber(achieved);
+//     const formattedTarget = formatBigNumber(target);
 
-//     const formattedAchieved = formatByMagnitude(achieved, divisor);
-//     const formattedTarget   = formatByMagnitude(target, divisor);
-
-//     // For progress: show how far OVER or UNDER the target (matches dummy version)
-//     const progressPercent = target !== 0 
-//       ? (((achieved / target) * 100) - 100).toFixed(1) 
-//       : '0.0';
-
-//     const trend = achieved >= target ? 'up' : 'down';
+//     const progressPercent = (((achieved / target) * 100) - 100).toFixed(1);
+//     const trend = achieved >= target ? "up" : "down";
 
 //     return {
-//       title: goal.goalTitle?.toUpperCase() || 'UNTITLED GOAL',
-//       subtitle: goal.description || '',
+//       title: goal.goalTitle.toUpperCase(),
+//       subtitle: goal.description,
 //       value: formattedAchieved,
-//       unit: unit || '',               // your dynamic unit (%, K, M, etc.)
+//       unit: '',
 //       target: formattedTarget,
 //       trend,
 //       trendValue: `${progressPercent}%`,
-//       chartData: [target, achieved],  // raw numbers → chart can scale properly
+//       chartData: [target, achieved],
 //     };
 //   });
 
 //   return (
 //     <div className="min-h-screen mt-3">
-//       <div
-//         className="
-//           grid grid-cols-1 
+//       <div className="grid grid-cols-1 
 //           sm:grid-cols-2 
 //           lg:grid-cols-3 
 //           xl:grid-cols-2
-//           gap-4 md:gap-5 lg:gap-6
-//         "
-//       >
+//           gap-4 md:gap-5 lg:gap-6">
 //         {cardsData.map((card, index) => (
-//           <FinancialCard
-//             key={index}
-//             data={card}
-//             onClick={() => setSelectedCard(card)}
-//           />
+//           <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
 //         ))}
 //       </div>
 
 //       {selectedCard && (
-//         <FinancialReportModal
-//           data={selectedCard}
-//           onClose={() => setSelectedCard(null)}
+//         <FinancialReportModal 
+//           data={selectedCard} 
+//           onClose={() => setSelectedCard(null)} 
 //         />
 //       )}
 
@@ -793,6 +699,100 @@ export default FinancialProjections;
 // };
 
 // export default FinancialProjections;
+
+
+
+const FinancialProjections = () => {
+  const { goals } = useCorporateGoals();
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const cardsData = goals.map(goal => {
+    const achieved = Number(goal.targetAchieved ?? 0);
+    const target   = Number(goal.maintarget ?? 0);
+
+    // Optional: keep your dynamic unit logic (K, M, B, etc.)
+    const maxValue = Math.max(achieved, target);
+    const { unit, divisor } = getUnitAndDivisor(maxValue); // your existing helper
+
+    const formattedAchieved = formatByMagnitude(achieved, divisor);
+    const formattedTarget   = formatByMagnitude(target, divisor);
+
+    // For progress: show how far OVER or UNDER the target (matches dummy version)
+    const progressPercent = target !== 0 
+      ? (((achieved / target) * 100) - 100).toFixed(1) 
+      : '0.0';
+
+    const trend = achieved >= target ? 'up' : 'down';
+
+    return {
+      title: goal.goalTitle?.toUpperCase() || 'UNTITLED GOAL',
+      subtitle: goal.description || '',
+      value: formattedAchieved,
+      unit: unit || '',               // your dynamic unit (%, K, M, etc.)
+      target: formattedTarget,
+      trend,
+      trendValue: `${progressPercent}%`,
+      chartData: [target, achieved],  // raw numbers → chart can scale properly
+    };
+  });
+
+  return (
+    <div className="min-h-screen mt-3">
+      <div
+        className="
+          grid grid-cols-1 
+          sm:grid-cols-2 
+          lg:grid-cols-3 
+          xl:grid-cols-2
+          gap-4 md:gap-5 lg:gap-6
+        "
+      >
+        {cardsData.map((card, index) => (
+          <FinancialCard
+            key={index}
+            data={card}
+            onClick={() => setSelectedCard(card)}
+          />
+        ))}
+      </div>
+
+      {selectedCard && (
+        <FinancialReportModal
+          data={selectedCard}
+          onClose={() => setSelectedCard(null)}
+        />
+      )}
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+        
+        .animate-slideUp {
+          animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default FinancialProjections;
 
  
 //Number formatting helper (K, M, B with 1 decimal when needed)
