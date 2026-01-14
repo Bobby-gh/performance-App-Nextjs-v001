@@ -1180,6 +1180,11 @@ export function AddDepartment() {
 //   );
 // }
 
+//date helper
+const parseSafeDate = (dateStr) => {
+  const date = new Date(dateStr);
+  return isNaN(date.getTime()) ? null : date;
+};
 export function GoalDetails({ open, onClose }) {
   const { t } = useTranslation();
   const { auth } = useContext(AuthContext);
@@ -1204,10 +1209,15 @@ export function GoalDetails({ open, onClose }) {
     goal.actualProgressPercent > previousProgress ? "up" :
     goal.actualProgressPercent < previousProgress ? "down" : "neutral";
 
-  const isOverdue = new Date(goal.goalDeadline) < new Date();
-  const daysRemaining = Math.max(0, Math.ceil(
-    (new Date(goal.goalDeadline) - new Date()) / (1000 * 60 * 60 * 24)
-  ));
+  const deadlineDate = parseSafeDate(goal.goalDeadline);
+  const assignedDate = parseSafeDate(goal.dateAssigned);
+  const now = new Date();
+
+  // Logic with fallbacks to prevent NaN
+  const isOverdue = deadlineDate ? deadlineDate < now : false;
+  const daysRemaining = deadlineDate 
+    ? Math.max(0, Math.ceil((deadlineDate - now) / (1000 * 60 * 60 * 24)))
+    : 0;
 
   const isOnTrack = currentProgress >= 50;
 
@@ -1370,7 +1380,9 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </div>
                 <p className="text-sm font-medium text-slate-900">
-                  {new Date(goal.dateAssigned).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                  {assignedDate 
+                    ? assignedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                    : "---"}
                 </p>
               </div>
 
@@ -1382,8 +1394,10 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </div>
                 <p className={`text-sm font-medium ${isOverdue ? 'text-red-600' : 'text-slate-900'}`}>
-                  {new Date(goal.goalDeadline).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                  {isOverdue && <span className="ml-2 text-red-600 font-semibold">({t("overdue")})</span>}
+                  {deadlineDate 
+                    ? deadlineDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                    : "---"}
+                  {isOverdue && deadlineDate && <span className="ml-2 text-red-600 font-semibold">({t("overdue")})</span>}
                 </p>
               </div>
 
@@ -1446,7 +1460,8 @@ export function GoalDetails({ open, onClose }) {
                     else if (empProgressPercent >= 80) progressColor = "bg-emerald-500";
                     else if (empProgressPercent >= 50) progressColor = "bg-amber-500";
 
-                    const isOverdue = new Date(goal.goalDeadline) < new Date() && emp.status !== "Completed";
+                    const empDeadline = parseSafeDate(goal.goalDeadline);
+                    const isOverdue = empDeadline ? (empDeadline < new Date() && emp.status !== "Completed") : false;
 
                     return (
                       <div
