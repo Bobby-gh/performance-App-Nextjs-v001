@@ -1181,9 +1181,33 @@ export function AddDepartment() {
 //   );
 // }
 
-//date helper
+//date helper - handles various date formats for cross-browser compatibility
 const parseSafeDate = (dateStr) => {
-  const date = new Date(dateStr);
+  if (!dateStr) return null;
+  
+  // If already a Date object
+  if (dateStr instanceof Date) {
+    return isNaN(dateStr.getTime()) ? null : dateStr;
+  }
+  
+  // Try standard parsing first
+  let date = new Date(dateStr);
+  
+  // If invalid, try replacing dashes with slashes (Safari fix)
+  if (isNaN(date.getTime()) && typeof dateStr === 'string') {
+    // Handle YYYY-MM-DD format (Safari doesn't like dashes)
+    date = new Date(dateStr.replace(/-/g, '/'));
+  }
+  
+  // If still invalid, try parsing ISO string manually
+  if (isNaN(date.getTime()) && typeof dateStr === 'string') {
+    // Handle ISO format: 2024-01-15T00:00:00.000Z
+    const isoMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (isoMatch) {
+      date = new Date(parseInt(isoMatch[1]), parseInt(isoMatch[2]) - 1, parseInt(isoMatch[3]));
+    }
+  }
+  
   return isNaN(date.getTime()) ? null : date;
 };
 export function GoalDetails({ open, onClose }) {
