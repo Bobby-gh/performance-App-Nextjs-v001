@@ -60,7 +60,7 @@ export function CreateGoal() {
       }
 
       if (inputTarget > allowed) {
-        showToast("Assigned target exceeds remaining assignable target", "error");
+        showToast(t("targetExceedsRemaining"), "error");
         console.warn("Target validation failed");
         setLoading(false);
         return;
@@ -187,7 +187,7 @@ export function CreateGoal() {
               <>
                 <CustomSelect
                   id="mainGoal"
-                  label="Department Goal"
+                  label={t("departmentGoal")}
                   value={formData.mainGoal}
                   onChange={(selectedValue) => {
 
@@ -209,10 +209,10 @@ export function CreateGoal() {
                 {formData.mainGoal && (
                   <div className="bg-gray-100 p-3 rounded text-sm space-y-1">
                     <div>
-                      <strong>Main Target:</strong> {formData.mainGoal.mainTarget}
+                      <strong>{t("mainTarget")}:</strong> {formData.mainGoal.mainTarget}
                     </div>
                     <div>
-                      <strong>Assignable Target:</strong> {formData.mainGoal.remainingTarget}
+                      <strong>{t("assignableTarget")}:</strong> {formData.mainGoal.remainingTarget}
                     </div>
                   </div>
                 )}
@@ -313,7 +313,7 @@ export function CreateGoal() {
 
           <div className="px-10 my-4">
             <CustomButton
-              label="Submit"
+              label={t("submit")}
               onClick={handleSubmit}
               type="submit"
               className="custom-class"
@@ -627,7 +627,7 @@ export function AccessGoal() {
           </div>
           <div className="px-10">
              <CustomButton
-              label="Submit"
+              label={t("submit")}
               onClick={handleSubmit}
               type="submit"
               className="custom-class"
@@ -782,7 +782,7 @@ export function Userforms() {
 
               <div className="px-10">
                 <CustomButton
-                  label="Submit"
+                  label={t("submit")}
                   onClick={handleSubmit}
                   type="submit"
                   className="custom-class"
@@ -878,7 +878,7 @@ export function Departmentforms() {
           </div>
           <div className="px-10">
             <CustomButton
-              label="Submit"
+              label={t("submit")}
               onClick={handleSubmit}
               type="submit"
               className="custom-class"

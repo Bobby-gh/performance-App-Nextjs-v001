@@ -12,11 +12,13 @@ import { Modaltrigger } from "../contex/context-context";
 import Select from "react-select";
 import { useCorporateGoals, useDelete } from "../api/databook/route-data";
 import { showToast } from "./notification";
+import { useTranslation } from "react-i18next";
 
 export function Delete({ data, message, name, open, onClose }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { triggerComponent } = useContext(Modaltrigger);
   const { deleteFunction } = useDelete();
+  const { t } = useTranslation();
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -91,11 +93,11 @@ export function Delete({ data, message, name, open, onClose }) {
               disabled={isSubmitting}>
               {isSubmitting ? (
                 <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">loading...</p>
+                  <p className="text-sm pr-2">{t("loading")}...</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
-                "Yes"
+                t("yes")
               )}
             </button>
           </div>
@@ -156,7 +158,9 @@ export function ModalFormSelect({
   required = false,
   error = "",
   id,
+  placeholder,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="mb-1">
       <div className="flex">
@@ -180,7 +184,7 @@ export function ModalFormSelect({
           ${error ? "border border-red-500" : ""} 
           ${disabled ? "bg-gray-100" : ""}`}>
         <option value="" disabled>
-          Select ...
+          {placeholder || t("selectOption")}
         </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>

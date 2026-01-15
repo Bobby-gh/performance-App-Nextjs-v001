@@ -267,11 +267,11 @@ export function AssignGoal({ data, open, onClose }) {
               disabled={isLoading}>
               {isLoading ? (
                 <div className="flex flex-row justify-center items-center">
-                  <p className="text-sm pr-2">Loading...</p>
+                  <p className="text-sm pr-2">{t("loading")}...</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
-                "Save"
+                t("save")
               )}
             </button>
           </div>

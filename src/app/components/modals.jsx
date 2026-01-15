@@ -76,7 +76,7 @@ export function LogOut() {
             </div>
             <div className="ml-2">
               <Typography component="h2">
-                Are you sure you want to Logout?
+                {t("confirmLogout")}
               </Typography>
             </div>
           </div>
@@ -89,11 +89,11 @@ export function LogOut() {
             >
               {isLoading ? (
                 <div className="flex flex-row justify-center">
-                  <p className="text-sm pr-2">Loading</p>
+                  <p className="text-sm pr-2">{t("loading")}</p>
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
-                "Yes"
+                t("yes")
               )}
             </button>
           </div>

@@ -1,13 +1,23 @@
 'use client'
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-i18n.use(initReactI18next).init({
-  fallbackLng: "en",
-  interpolation: {
-    escapeValue: false,
-  },
-  resources: {
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: "en",
+    interpolation: {
+      escapeValue: false,
+    },
+    detection: {
+      order: ["cookie", "localStorage", "navigator"],
+      caches: ["cookie"],
+      cookieMinutes: 525600, // 1 year
+      lookupCookie: "i18next",
+    },
+    resources: {
     en: {
       translation: {
         // Login
@@ -149,6 +159,44 @@ i18n.use(initReactI18next).init({
         organizationalDepartment: "Organizational Department",
         lastSelected: "Last Selected",
         scorePercentage: "Score Percentage",
+
+        // Modal confirmations
+        confirmLogout: "Are you sure you want to Logout?",
+        confirmDeleteGoal: "Are you sure you want to delete Goal?",
+        confirmDeleteAssessment: "Are you sure you want to delete Assessment?",
+        confirmDeleteDepartment: "Are you sure you want to delete Department?",
+        confirmDeleteUser: "Are you sure you want to delete User?",
+        yes: "Yes",
+        no: "No",
+
+        // Password visibility
+        showPassword: "show password",
+        hidePassword: "hide password",
+
+        // Table headers
+        Performance: "Performance",
+        badge: "Badge",
+        pending: "Pending ...",
+
+        // Form placeholders
+        selectOption: "Select ...",
+        nameOfDepartment: "Name of Department",
+
+        // Totals and summaries
+        total: "Total",
+        viewAll: "View all",
+
+        // Department goals (manager view)
+        departmentGoal: "Department Goal",
+        mainTarget: "Main Target",
+        assignableTarget: "Assignable Target",
+        targetExceedsRemaining: "Assigned target exceeds remaining assignable target",
+
+        // Financial projections modal
+        achieved: "Achieved",
+        performanceChart: "Performance Chart",
+        performanceMetrics: "Performance Metrics",
+        performanceAnalysis: "Performance Analysis",
 
         // infocards
         goalId: "Goal ID",
@@ -401,6 +449,44 @@ i18n.use(initReactI18next).init({
         goalScorePercentage: "Pourcentage du score des objectifs",
         lastSelected: "Dernier Sélectionné",
         scorePercentage: "Pourcentage du score",
+
+        // Modal confirmations
+        confirmLogout: "Êtes-vous sûr de vouloir vous déconnecter ?",
+        confirmDeleteGoal: "Êtes-vous sûr de vouloir supprimer cet objectif ?",
+        confirmDeleteAssessment: "Êtes-vous sûr de vouloir supprimer cette évaluation ?",
+        confirmDeleteDepartment: "Êtes-vous sûr de vouloir supprimer ce département ?",
+        confirmDeleteUser: "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+        yes: "Oui",
+        no: "Non",
+
+        // Password visibility
+        showPassword: "afficher le mot de passe",
+        hidePassword: "masquer le mot de passe",
+
+        // Table headers
+        Performance: "Performance",
+        badge: "Badge",
+        pending: "En attente ...",
+
+        // Form placeholders
+        selectOption: "Sélectionner ...",
+        nameOfDepartment: "Nom du département",
+
+        // Totals and summaries
+        total: "Total",
+        viewAll: "Voir tout",
+
+        // Department goals (manager view)
+        departmentGoal: "Objectif du département",
+        mainTarget: "Cible principale",
+        assignableTarget: "Cible assignable",
+        targetExceedsRemaining: "La cible assignée dépasse la cible restante assignable",
+
+        // Financial projections modal
+        achieved: "Atteint",
+        performanceChart: "Graphique de performance",
+        performanceMetrics: "Indicateurs de performance",
+        performanceAnalysis: "Analyse de performance",
 
         // infocards
         goalId: "ID de l'objectif",

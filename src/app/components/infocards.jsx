@@ -135,7 +135,7 @@ export function UserPerformanceSummary() {
           <a
             href="#"
             className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-            View all
+            {t("viewAll")}
           </a>
         </div>
         <div className="flow-root">

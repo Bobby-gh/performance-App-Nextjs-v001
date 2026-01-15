@@ -138,7 +138,7 @@ export function LoginForm() {
           <div className="flex justify-between">
             <div onClick={toggleShowPassword}>
               <h4 className="text-blue italic text-sm text-[#08376B] cursor-pointer">
-                {showPassword ? "hide password" : "show password"}
+                {showPassword ? t("hidePassword") : t("showPassword")}
               </h4>
             </div>
             <Link href="/forget-password" prefetch={false}>
@@ -584,7 +584,7 @@ export function SignUpForm() {
                   <CircularProgress size={27} thickness={6} color="primary" />
                 </div>
               ) : (
-                "Submit"
+                t("submit")
               )}
             </button>
           </div>

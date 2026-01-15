@@ -157,7 +157,7 @@ export function GoalTable() {
       {deleteRow && (
         <Delete
           data={deleteItem}
-          message="Are you sure you want to delete Goal?"
+          message={t("confirmDeleteGoal")}
           name="goal"
           open={deleteItem}
           onClose={handleCloseDelete}
@@ -458,7 +458,7 @@ export function AccessGoalTable() {
       {deleteRow && (
         <Delete
           data={deleteItem}
-          message="Are you sure you want to delete Assessment?"
+          message={t("confirmDeleteAssessment")}
           name="accessGoal"
           open={deleteItem}
           onClose={handleCloseDelete}
@@ -539,7 +539,7 @@ export function DepartmentTable() {
       {deleteRow && (
         <Delete
           data={deleteItem}
-          message="Are you sure you want to delete Department?"
+          message={t("confirmDeleteDepartment")}
           name="department"
           open={deleteItem}
           onClose={handleCloseDelete}
@@ -673,7 +673,7 @@ export function EmployeeTable() {
       {deleteRow && (
         <Delete
           data={deleteItem}
-          message="Are you sure you want to delete User?"
+          message={t("confirmDeleteUser")}
           name="user"
           open={deleteItem}
           onClose={handleCloseDelete}
