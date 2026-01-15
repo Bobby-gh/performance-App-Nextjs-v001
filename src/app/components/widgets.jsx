@@ -35,7 +35,7 @@ export function Delete({ data, message, name, open, onClose }) {
       const response = await deleteFunction(data, name);
 
       if (response?.status === 200) {
-        showToast(`${name} deleted successfuly`, "success");
+        showToast(t("deletedSuccessfully"), "success");
         onClose();
         triggerComponent();
       } else {
@@ -43,7 +43,7 @@ export function Delete({ data, message, name, open, onClose }) {
       }
     } catch (error) {
       console.error("Delete error:", error);
-      showToast("System Error please try again Later", "error");
+      showToast(t("systemError"), "error");
     } finally {
       setIsSubmitting(false);
     }

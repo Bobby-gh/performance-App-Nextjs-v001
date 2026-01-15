@@ -101,11 +101,11 @@ export function AssignGoal({ data, open, onClose }) {
       const response = await editFunction(updateData, id, name);
 
       if (response?.status === 200) {
-        showToast("Edit Saved successfully", "success");
+        showToast(t("editSavedSuccessfully"), "success");
         triggerComponent();
         onClose();
       } else {
-        showToast("Edit failed to save. Try again later.", "error");
+        showToast(t("editFailedToSave"), "error");
       }
     } catch (error) {
       console.log("Edit error:", error);
@@ -243,7 +243,7 @@ export function AssignGoal({ data, open, onClose }) {
                     />
 
                     <FormInputField
-                      label="Target"
+                      label={t("target")}
                       id="target"
                       value={editableFields.target}
                       onChange={(e) => handleChange("target", e.target.value)}
@@ -342,11 +342,11 @@ export function AssessGoal({ data, open, onClose }) {
       const response = await editFunction(updateData, id, name);
 
       if (response?.status === 200) {
-        showToast("Edit Saved successfully", "success");
+        showToast(t("editSavedSuccessfully"), "success");
         triggerComponent();
         onClose();
       } else {
-        showToast("Edit failed to save. Try again later.", "error");
+        showToast(t("editFailedToSave"), "error");
       }
     } catch (error) {
       console.log("Edit error:", error);
@@ -545,13 +545,13 @@ export function EmployeeDetails({ data, open, onClose, onUpdate }) {
       const response = await editFunction(updateData, id, name);
 
       if (response?.status === 200) {
-        showToast("Edit Saved successfully:", "success");
+        showToast(t("editSavedSuccessfully"), "success");
         triggerComponent();
         onUpdate({ ...editableFields });
         onClose();
         window.location.reload();
       } else {
-        showToast("Edit failed to Save, kindly Try Again Later:", "error");
+        showToast(t("editFailedToSave"), "error");
       }
     } catch (error) {
       console.log("Edit error:", error);

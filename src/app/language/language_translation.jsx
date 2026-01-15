@@ -198,6 +198,18 @@ i18n
         performanceMetrics: "Performance Metrics",
         performanceAnalysis: "Performance Analysis",
 
+        // Toast messages
+        editSavedSuccessfully: "Edit saved successfully",
+        editFailedToSave: "Edit failed to save. Try again later.",
+        systemError: "System error, please try again later",
+        goalCreatedSuccessfully: "Goal created successfully",
+        checkInputDetails: "Please check input details",
+        serverDown: "Server is currently down. Contact your admin",
+        taskAssessedSuccessfully: "Task assessed successfully",
+        userSavedSuccessfully: "User saved successfully",
+        departmentCreatedSuccessfully: "Department created successfully",
+        deletedSuccessfully: "Deleted successfully",
+
         // infocards
         goalId: "Goal ID",
         deadline: "Deadline",
@@ -488,6 +500,18 @@ i18n
         performanceChart: "Graphique de performance",
         performanceMetrics: "Indicateurs de performance",
         performanceAnalysis: "Analyse de performance",
+
+        // Toast messages
+        editSavedSuccessfully: "Modification enregistrée avec succès",
+        editFailedToSave: "Échec de l'enregistrement. Veuillez réessayer plus tard.",
+        systemError: "Erreur système, veuillez réessayer plus tard",
+        goalCreatedSuccessfully: "Objectif créé avec succès",
+        checkInputDetails: "Veuillez vérifier les détails saisis",
+        serverDown: "Le serveur est actuellement indisponible. Contactez votre administrateur",
+        taskAssessedSuccessfully: "Tâche évaluée avec succès",
+        userSavedSuccessfully: "Utilisateur enregistré avec succès",
+        departmentCreatedSuccessfully: "Département créé avec succès",
+        deletedSuccessfully: "Supprimé avec succès",
 
         // infocards
         goalId: "ID de l'objectif",

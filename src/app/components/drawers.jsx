@@ -87,7 +87,7 @@ export function CreateGoal() {
           },
         }
       );
-      showToast("Goal Created Successfully", "success");
+      showToast(t("goalCreatedSuccessfully"), "success");
 
       await refreshActionItems(); 
 
@@ -97,9 +97,9 @@ export function CreateGoal() {
     } catch (error) {
       console.error("Submission error:", error);
       if (error.response?.status === 400) {
-        showToast("Kindly check Input details", "error");
+        showToast(t("checkInputDetails"), "error");
       } else if (error.response?.status === 500) {
-        showToast("Server is currently down Contact your admin", "error");
+        showToast(t("serverDown"), "error");
       }
       handleClose();
       reload();
@@ -381,15 +381,15 @@ export function AccessGoal() {
           withCredentials: true,
         }
       );
-      showToast("Task Assessed Successfuly", "success");
+      showToast(t("taskAssessedSuccessfully"), "success");
       triggerComponent();
       handleClose();
       reload();
     } catch (error) {
       if (error.response.status === 400) {
-        showToast("Kindly check Input details", "error");
+        showToast(t("checkInputDetails"), "error");
       } else if (error.response.status === 500) {
-        showToast("Server is currently down Contact your admin", "error");
+        showToast(t("serverDown"), "error");
       }
       console.log(error);
       handleClose();
@@ -671,15 +671,15 @@ export function Userforms() {
           },
         }
       );
-      showToast("User Ssaved Successfully", "success");
+      showToast(t("userSavedSuccessfully"), "success");
       triggerComponent();
       handleClose();
       reload();
     } catch (error) {
       if (error.response.status === 400) {
-        showToast("Kindly check Input details", "error");
+        showToast(t("checkInputDetails"), "error");
       } else if (error.response.status === 500) {
-        showToast("Server is currently down Contact your admin", "error");
+        showToast(t("serverDown"), "error");
       }
       console.log(error);
       handleClose();
@@ -822,15 +822,15 @@ export function Departmentforms() {
           withCredentials: true,
         }
       );
-      showToast("Department Created Successfully", "success");
+      showToast(t("departmentCreatedSuccessfully"), "success");
       handleClose();
       triggerComponent();
       reload();
     } catch (error) {
       if (error.response.status === 400) {
-        showToast("Kindly check Input details", "error");
+        showToast(t("checkInputDetails"), "error");
       } else if (error.response.status === 500) {
-        showToast("Server is currently down Contact your admin", "error");
+        showToast(t("serverDown"), "error");
       }
       console.log(error);
       handleClose();
