@@ -1238,6 +1238,27 @@ export function GoalDetails({ open, onClose }) {
   const assignedDate = parseSafeDate(goal.dateAssigned);
   const now = new Date();
 
+  // Fallback string for display if date parsing fails
+  const getDisplayDate = (parsedDate, rawDate) => {
+    if (parsedDate) {
+      return parsedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+    // If parsing failed but we have a raw value, show it as-is
+    if (rawDate) {
+      // Try to extract just the date part if it's an ISO string
+      if (typeof rawDate === 'string') {
+        const match = rawDate.match(/^(\d{4}-\d{2}-\d{2})/);
+        if (match) return match[1];
+        return rawDate;
+      }
+      return String(rawDate);
+    }
+    return "---";
+  };
+
+  const deadlineDisplay = getDisplayDate(deadlineDate, goal.goalDeadline);
+  const assignedDateDisplay = getDisplayDate(assignedDate, goal.dateAssigned);
+
   // Logic with fallbacks to prevent NaN
   const isOverdue = deadlineDate ? deadlineDate < now : false;
   const daysRemaining = deadlineDate 
@@ -1405,9 +1426,7 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </div>
                 <p className="text-sm font-medium text-slate-900">
-                  {assignedDate 
-                    ? assignedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-                    : "---"}
+                  {assignedDateDisplay}
                 </p>
               </div>
 
@@ -1419,9 +1438,7 @@ export function GoalDetails({ open, onClose }) {
                   </span>
                 </div>
                 <p className={`text-sm font-medium ${isOverdue ? 'text-red-600' : 'text-slate-900'}`}>
-                  {deadlineDate 
-                    ? deadlineDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-                    : "---"}
+                  {deadlineDisplay}
                   {isOverdue && deadlineDate && <span className="ml-2 text-red-600 font-semibold">({t("overdue")})</span>}
                 </p>
               </div>
