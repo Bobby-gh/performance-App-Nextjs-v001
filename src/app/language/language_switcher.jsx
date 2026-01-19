@@ -10,7 +10,7 @@ const FLAGS = {
 };
 
 export function LanguageButton() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   // Initialize state from cookie or default to 'en'
   const [selectedFlag, setSelectedFlag] = useState(FLAGS.en);
 
@@ -41,20 +41,20 @@ export function LanguageButton() {
           paddingLeft: "35px",
         }}
       >
-        <option value="en">English</option>
-        <option value="fr">French</option>
+        <option value="en">{t('english')}</option>
+        <option value="fr">{t('french')}</option>
       </select>
     </div>
   );
 }
 
 export function InnerLanguageButton() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const languages = [
-    { code: "en", label: "English", flag: "🇬🇧" },
-    { code: "fr", label: "French", flag: "🇫🇷" },
+    { code: "en", labelKey: "english", flag: "🇬🇧" },
+    { code: "fr", labelKey: "french", flag: "🇫🇷" },
   ];
 
   const changeLanguage = (langCode) => {
@@ -77,7 +77,7 @@ export function InnerLanguageButton() {
               onClick={() => changeLanguage(lang.code)}
               className="flex items-center w-full px-4 py-2 hover:bg-blue-100 text-sm text-left"
             >
-              <span className="mr-2">{lang.flag}</span> {lang.label}
+              <span className="mr-2">{lang.flag}</span> {t(lang.labelKey)}
             </button>
           ))}
         </div>

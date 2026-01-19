@@ -436,14 +436,14 @@ export function AddDepartment() {
           </div>
           <div>
             <button className="flex flex-row items-center text-blue-500 bg-blue-100 p-3 rounded-lg">
-              <div className="px-6 text-sm">Department</div>
+              <div className="px-6 text-sm">{t("department")}</div>
               <MdOutlineAddToPhotos size={25} />
             </button>
           </div>
         </div>
         <div className="pt-4">
           <input
-            placeholder="Name of Department"
+            placeholder={t("nameOfDepartment")}
             autoComplete="off"
             type="text"
             className="border rounded-lg p-4 my-2 w-full border-slate-400"
