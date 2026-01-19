@@ -711,6 +711,8 @@ const FinancialProjections = () => {
     const { goals } = useCorporateGoals();
   const [selectedCard, setSelectedCard] = useState(null);
 
+  console.log("Corporate Goals Data:", goals);
+
   const cardsData = goals.map(goal => {
     const achieved = Number(goal.targetAchieved);
     const target = Number(goal.maintarget);
