@@ -429,51 +429,69 @@ export function useCorporateGoals() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const fetchGoals = async (page = 1) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get(`${CORPORATE_GOALS}?page=${page}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        withCredentials: true,
+      });
+
+      const data = response.data;
+      console.log("Raw response.data:", data);
+
+      setGoals(
+        data.goals.map(goal => ({
+          ...goal,
+          maintarget: Number(goal.maintarget),
+          targetAchieved: Number(goal.targetAchieved),
+        }))
+      );
+
+      setMeta({
+        totalGoals: data.totalGoals,
+        page: data.page,
+        pageSize: data.pageSize,
+        totalPages: data.totalPages,
+      });
+    } catch (err) {
+      console.error(err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= meta.totalPages) {
+      fetchGoals(page);
+    }
+  };
+
+  const nextPage = () => {
+    if (meta.page < meta.totalPages) {
+      fetchGoals(meta.page + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (meta.page > 1) {
+      fetchGoals(meta.page - 1);
+    }
+  };
+
   useEffect(() => {
-    const fetchGoals = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await axios.get(CORPORATE_GOALS, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-          withCredentials: true,
-        });
-
-        const data = response.data;
-        console.log("Raw response.data:", data);
-
-        setGoals(
-          data.goals.map(goal => ({
-            ...goal,
-            maintarget: Number(goal.maintarget),
-            targetAchieved: Number(goal.targetAchieved),
-          }))
-        );
-
-        setMeta({
-          totalGoals: data.totalGoals,
-          page: data.page,
-          pageSize: data.pageSize,
-          totalPages: data.totalPages,
-        });
-      } catch (err) {
-        console.error(err);
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (auth?.token) {
-      fetchGoals();
+      fetchGoals(1);
     }
   }, [auth?.token]);
 
-  return { goals, meta, loading, error };
+  return { goals, meta, loading, error, goToPage, nextPage, prevPage };
 }
 
 export function useGoalCategoryCountRouteData() {

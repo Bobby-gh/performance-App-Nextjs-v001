@@ -708,7 +708,8 @@ const dummyGoals = [
 // export default FinancialProjections;
 
 const FinancialProjections = () => {
-    const { goals } = useCorporateGoals();
+  const { t } = useTranslation();
+  const { goals, meta, loading, nextPage, prevPage, goToPage } = useCorporateGoals();
   const [selectedCard, setSelectedCard] = useState(null);
 
   console.log("Corporate Goals Data:", goals);
@@ -737,15 +738,66 @@ const FinancialProjections = () => {
 
   return (
     <div className="min-h-screen mt-3">
-      <div className="grid grid-cols-1 
-          sm:grid-cols-2 
-          lg:grid-cols-3 
-          xl:grid-cols-2
-          gap-4 md:gap-5 lg:gap-6">
-        {cardsData.map((card, index) => (
-          <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 
+              sm:grid-cols-2 
+              lg:grid-cols-3 
+              xl:grid-cols-2
+              gap-4 md:gap-5 lg:gap-6">
+            {cardsData.map((card, index) => (
+              <FinancialCard key={index} data={card} onClick={() => setSelectedCard(card)} />
+            ))}
+          </div>
+
+          {/* Pagination Controls */}
+          {meta.totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-8 pb-4">
+              <button
+                onClick={prevPage}
+                disabled={meta.page === 1}
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  meta.page === 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+              >
+                ←
+              </button>
+              
+              {Array.from({ length: meta.totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => goToPage(page)}
+                  className={`w-10 h-10 rounded-lg font-medium transition-all ${
+                    meta.page === page
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+              
+              <button
+                onClick={nextPage}
+                disabled={meta.page === meta.totalPages}
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  meta.page === meta.totalPages
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+              >
+                →
+              </button>
+            </div>
+          )}
+        </>
+      )}
 
       {selectedCard && (
         <FinancialReportModal 
