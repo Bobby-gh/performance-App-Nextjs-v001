@@ -10,6 +10,28 @@ export const useGoalSettingColumn = () => {
   const {auth} = useContext(AuthContext);
   const isManager = auth?.refNum;
 
+  // Helper to translate goal category
+  const translateCategory = (category) => {
+    if (!category) return "";
+    const categoryLower = category.toLowerCase();
+    if (categoryLower.includes("financial")) return t("financial");
+    if (categoryLower.includes("human")) return t("humanRelationship");
+    if (categoryLower.includes("customer")) return t("customerCentred");
+    if (categoryLower.includes("innovation") || categoryLower.includes("process")) return t("processAndInnovation");
+    return category;
+  };
+
+  // Helper to translate goal status
+  const translateStatus = (status) => {
+    if (!status) return "";
+    const statusLower = status.toLowerCase();
+    if (statusLower === "completed") return t("completed");
+    if (statusLower === "in progress" || statusLower === "in-progress") return t("inProgress");
+    if (statusLower === "not started" || statusLower === "not-started") return t("notStarted");
+    if (statusLower === "pending") return t("pending");
+    return status;
+  };
+
   return [
     {
       accessorKey: "goalTitle",
@@ -18,6 +40,7 @@ export const useGoalSettingColumn = () => {
     {
       accessorKey: "goalType",
       header: t("goalCategory"),
+      Cell: ({ cell }) => translateCategory(cell.getValue()),
     },
     {
       accessorKey: "taskAssignedToId",
@@ -30,6 +53,7 @@ export const useGoalSettingColumn = () => {
     {
       accessorKey: "status",
       header: t("goalStatus"),
+      Cell: ({ cell }) => translateStatus(cell.getValue()),
     },
   ];
 };
@@ -61,6 +85,17 @@ export const useEmployeeRatingColumn = () => {
 export const useBalanceScoreCardColumn = () => {
   const { t } = useTranslation();
 
+  // Helper to translate goal category
+  const translateCategory = (category) => {
+    if (!category) return "";
+    const categoryLower = category.toLowerCase();
+    if (categoryLower.includes("financial")) return t("financial");
+    if (categoryLower.includes("human")) return t("humanRelationship");
+    if (categoryLower.includes("customer")) return t("customerCentred");
+    if (categoryLower.includes("innovation") || categoryLower.includes("process")) return t("processAndInnovation");
+    return category;
+  };
+
   return [
     {
       field: "goalTitle",
@@ -73,6 +108,7 @@ export const useBalanceScoreCardColumn = () => {
       headerName: t("goalCategory"),
       flex: 1,
       headerClassName: "header-table",
+      renderCell: (params) => translateCategory(params.value),
     },
     {
       field: "taskAssignedToId",
