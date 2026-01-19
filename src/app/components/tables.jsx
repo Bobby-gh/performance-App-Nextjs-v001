@@ -122,6 +122,9 @@ export function GoalTable() {
     enablePagination: true,
     enableRowActions: true,
     positionActionsColumn: "last",
+    initialState: {
+      sorting: [{ id: "goalDeadline", desc: true }],
+    },
     renderRowActionMenuItems: ({ closeMenu, row }) => [
       <MenuItem
         key="edit"

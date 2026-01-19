@@ -32,6 +32,18 @@ export const useGoalSettingColumn = () => {
     return status;
   };
 
+  // Helper to format date
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString;
+      return date.toLocaleDateString();
+    } catch {
+      return dateString;
+    }
+  };
+
   return [
     {
       accessorKey: "goalTitle",
@@ -49,6 +61,7 @@ export const useGoalSettingColumn = () => {
     {
       accessorKey: "goalDeadline",
       header: t("endDate"),
+      Cell: ({ cell }) => formatDate(cell.getValue()),
     },
     {
       accessorKey: "status",
@@ -96,6 +109,18 @@ export const useBalanceScoreCardColumn = () => {
     return category;
   };
 
+  // Helper to format date
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString;
+      return date.toLocaleDateString();
+    } catch {
+      return dateString;
+    }
+  };
+
   return [
     {
       field: "goalTitle",
@@ -121,6 +146,7 @@ export const useBalanceScoreCardColumn = () => {
       headerName: t("endDate"),
       flex: 0.5,
       headerClassName: "header-table",
+      renderCell: (params) => formatDate(params.value),
     },
     {
       field: "detail",
