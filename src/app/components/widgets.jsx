@@ -387,7 +387,7 @@ const FinancialCard = ({ data, onClick }) => {
 
       {/* Bar Chart Area - Responsive & Square-Aware */}
       <div className="flex-1 px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-5 flex flex-col min-h-0">
-        <div className="flex items-end justify-between gap-4 sm:gap-6 md:gap-10 h-full">
+        <div className="flex items-end justify-center gap-8 sm:gap-12 md:gap-16 h-full">
           {chartData.map((val, idx) => {
             const relative = val / maxValue;
             const heightPercent = Math.max(relative * 100, 10);
@@ -400,14 +400,14 @@ const FinancialCard = ({ data, onClick }) => {
                 : 'bg-red-600';
 
             return (
-              <div key={idx} className="flex-1 flex flex-col items-center min-w-0 h-full">
+              <div key={idx} className="w-1/4 flex flex-col items-center min-w-0 h-full">
                 {/* Bar container with explicit height */}
                 <div className="w-full flex flex-col items-center justify-end flex-1">
                   <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold text-gray-700 mb-0.5 sm:mb-1">
                     {formatBigNumber(val)}
                   </span>
                   <div
-                    className={`${barColor} w-full rounded-t-lg transition-all duration-300 shadow-sm`}
+                    className={`${barColor} w-full max-w-[60px] mx-auto rounded-t-lg transition-all duration-300 shadow-sm`}
                     style={{ height: `${heightPercent}%` }}
                   />
                 </div>
@@ -513,7 +513,7 @@ const FinancialReportModal = ({ data, onClose }) => {
             </h3>
             
             {/* Chart Area - Tall Square */}
-            <div className="flex items-end justify-around gap-20 px-16" style={{ height: '400px' }}>
+            <div className="flex items-end justify-center gap-24 px-16" style={{ height: '400px' }}>
               {chartData.map((val, idx) => {
                 const height = (val / maxValue) * 100;
 
@@ -524,10 +524,10 @@ const FinancialReportModal = ({ data, onClose }) => {
                 }
 
                 return (
-                  <div key={idx} className="flex flex-col items-center flex-1 h-full">
+                  <div key={idx} className="flex flex-col items-center w-32 h-full">
                     {/* Bar container */}
                     <div className="w-full flex items-end justify-center flex-1 relative group mb-3">
-                      <div className="relative w-full max-w-[220px] h-full flex items-end">
+                      <div className="relative w-full max-w-[100px] h-full flex items-end justify-center">
                         <div
                           className={`relative w-full ${barColor} transition-all duration-500 rounded-t-lg shadow-lg group-hover:opacity-90`}
                           style={{ height: `${height}%`, minHeight: '60px' }}

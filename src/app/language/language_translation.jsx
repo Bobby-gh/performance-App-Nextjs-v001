@@ -24,6 +24,8 @@ i18n
         email: "Email",
         password: "Password",
         forgotPassword: "Forgot password?",
+        english: "English",
+        french: "French",
 
         // Dashboard
         Dashboard: "Dashboard",
@@ -337,6 +339,8 @@ i18n
         email: "Messagerie électronique",
         password: "Mot de passe",
         forgotPassword: "Mot de passe oublié ?",
+        english: "Anglais",
+        french: "Français",
 
         // Dashboard
         Dashboard: "Tableau de Bord",
