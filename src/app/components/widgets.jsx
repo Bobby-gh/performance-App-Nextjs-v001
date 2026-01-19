@@ -246,6 +246,7 @@ export function CustomButton({
   disabled = false,
   loading = false,
   className = "",
+  loadingText = "Loading...",
 }) {
   return (
     <button
@@ -277,7 +278,7 @@ export function CustomButton({
               d="M4 12a8 8 0 018-8V4a10 10 0 00-10 10h2zm2 5.292A7.964 7.964 0 014 12H2a10 10 0 0016.292 7.292l-1.414-1.414A8.003 8.003 0 016 17.292z"
             />
           </svg>
-          Loading...
+          {loadingText}
         </span>
       ) : (
         label
@@ -337,12 +338,13 @@ export const CategoryType = [
 
 //Coporate Goals
 const FinancialCard = ({ data, onClick }) => {
+  const { t } = useTranslation();
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
 
   const maxValue = Math.max(...chartData, 1);
   const isPositive = trend === 'up';
 
-  const labels = ["TARGET", "ACHIEVED"];
+  const labels = [t('target').toUpperCase(), t('achieved').toUpperCase()];
 
   return (
     <div
@@ -380,7 +382,7 @@ const FinancialCard = ({ data, onClick }) => {
           <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">{value}</span>
           {unit && <span className="text-xs sm:text-sm font-semibold text-gray-600">{unit}</span>}
         </div>
-        <p className="text-gray-500 text-xs sm:text-sm mt-0.5 sm:mt-1">Target: {target}</p>
+        <p className="text-gray-500 text-xs sm:text-sm mt-0.5 sm:mt-1">{t('target')}: {target}</p>
       </div>
 
       {/* Bar Chart Area - Responsive & Square-Aware */}
@@ -426,12 +428,13 @@ const FinancialCard = ({ data, onClick }) => {
 };
 
 const FinancialReportModal = ({ data, onClose }) => {
+  const { t } = useTranslation();
   if (!data) return null;
 
   const { title, subtitle, value, unit, target, trend, trendValue, chartData } = data;
   const maxValue = Math.max(...chartData);
   const isPositive = trend === 'up';
-  const labels = ['Target', 'Achieved'];
+  const labels = [t('target'), t('achieved')];
 
   return (
     <div 
@@ -470,7 +473,7 @@ const FinancialReportModal = ({ data, onClose }) => {
                 </svg>
               </div>
               <div className="min-w-0">
-                <p className="text-gray-600 text-[10px] font-semibold uppercase">Achieved</p>
+                <p className="text-gray-600 text-[10px] font-semibold uppercase">{t('achieved')}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-lg font-bold text-gray-900">{value}</span>
                   {unit && <span className="text-xs font-semibold text-gray-600">{unit}</span>}
@@ -486,7 +489,7 @@ const FinancialReportModal = ({ data, onClose }) => {
                 </svg>
               </div>
               <div className="min-w-0">
-                <p className="text-gray-600 text-[10px] font-semibold uppercase">Target</p>
+                <p className="text-gray-600 text-[10px] font-semibold uppercase">{t('target')}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-lg font-bold text-gray-900">{target}</span>
                 </div>
@@ -506,7 +509,7 @@ const FinancialReportModal = ({ data, onClose }) => {
           <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200 shadow-inner mb-4">
             <h3 className="text-base font-bold text-gray-800 mb-4 flex items-center gap-2">
               <span className="w-1 h-4 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-full"></span>
-              Performance Chart
+              {t('performanceChart')}
             </h3>
             
             {/* Chart Area - Tall Square */}
@@ -550,7 +553,7 @@ const FinancialReportModal = ({ data, onClose }) => {
             </div>
             
             <div className="mx-16 mt-4 border-t-2 border-gray-400"></div>
-            <p className="text-center text-xs font-semibold text-gray-600 mt-2">Performance Metrics</p>
+            <p className="text-center text-xs font-semibold text-gray-600 mt-2">{t('performanceMetrics')}</p>
           </div>
 
           {/* Analysis Section Below */}
@@ -562,11 +565,11 @@ const FinancialReportModal = ({ data, onClose }) => {
                 </svg>
               </div>
               <div className="flex-1">
-                <h4 className="font-bold text-gray-800 mb-1 text-xs">Performance Analysis</h4>
+                <h4 className="font-bold text-gray-800 mb-1 text-xs">{t('performanceAnalysis')}</h4>
                 <p className="text-[11px] text-gray-700 leading-relaxed">
                   {chartData[1] >= chartData[0] 
-                    ? `Outstanding performance! Results exceeded target by ${((chartData[1] - chartData[0]) / chartData[0] * 100).toFixed(1)}%. This represents strong execution and market positioning.`
-                    : `Current performance is ${((chartData[0] - chartData[1]) / chartData[0] * 100).toFixed(1)}% below target. Strategic focus and optimization needed to close the gap.`
+                    ? `${t('performanceExceeded')} ${((chartData[1] - chartData[0]) / chartData[0] * 100).toFixed(1)}%. ${t('exceededTargetMessage')}`
+                    : `${t('performanceBelow')} ${((chartData[0] - chartData[1]) / chartData[0] * 100).toFixed(1)}% ${t('belowTargetMessage')}`
                   }
                 </p>
               </div>

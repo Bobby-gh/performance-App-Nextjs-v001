@@ -678,8 +678,8 @@ function BalanceScorecardChart() {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="value" fill="#08397e" name="Achieved" />
-            <Bar dataKey="max" fill="#e0e0e0" name="Target" />
+            <Bar dataKey="value" fill="#08397e" name={t('achieved') || 'Achieved'} />
+            <Bar dataKey="max" fill="#e0e0e0" name={t('target') || 'Target'} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -708,7 +708,7 @@ function BalanceScorecardChart() {
           <div key={index} className="bg-white p-2 rounded-lg border border-gray-200 shadow-sm">
             <h4 className="text-sm font-semibold text-gray-600 mb-1">{item.category}</h4>
             <p className="text-lg font-bold text-gray-900">{item.value} / {item.max}</p>
-            <p className="text-xs text-gray-500 mt-1">{item.percentage.toFixed(1)}% Complete</p>
+            <p className="text-xs text-gray-500 mt-1">{item.percentage.toFixed(1)}% {t('completed') || 'Complete'}</p>
           </div>
         ))}
       </div>
@@ -772,7 +772,7 @@ function AchievedGoalsChart() {
           <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-sm font-semibold text-green-600 mt-2">{percentage}% Complete</p>
+      <p className="text-sm font-semibold text-green-600 mt-2">{percentage}% {t('completed') || 'Complete'}</p>
     </div>
   );
 }
@@ -805,7 +805,7 @@ function PartiallyAchievedGoalsChart() {
           <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-sm font-semibold text-yellow-600 mt-2">{percentage}% In Progress</p>
+      <p className="text-sm font-semibold text-yellow-600 mt-2">{percentage}% {t('inProgress') || 'In Progress'}</p>
     </div>
   );
 }
@@ -838,7 +838,7 @@ function NotAchievedGoalsChart() {
           <span className="text-xs text-gray-600">/ {Total}</span>
         </div>
       </div>
-      <p className="text-sm font-semibold text-red-600 mt-2">{percentage}% Not Started</p>
+      <p className="text-sm font-semibold text-red-600 mt-2">{percentage}% {t('notStarted') || 'Not Started'}</p>
     </div>
   );
 }

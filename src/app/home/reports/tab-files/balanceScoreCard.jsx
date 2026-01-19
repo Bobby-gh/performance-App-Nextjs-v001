@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useTranslation } from 'react-i18next';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import {
@@ -11,6 +12,7 @@ import { GoalTable } from "@/app/components/tables";
 import { Building2} from 'lucide-react';
 
 export default function BalanceScoreCard() {
+  const { t } = useTranslation();
   // 1. Create a ref to target the chart container
   const chartsRef = useRef(null); 
 
@@ -42,7 +44,7 @@ export default function BalanceScoreCard() {
         onClick={exportChartsAsPDF} 
         className="p-2 text-blue rounded mb-4"
       >
-        Export Charts to PDF
+        {t('exportChartsToPDF') || 'Export Charts to PDF'}
       </button>
       {/* <div >
         <div className="space-y-4">

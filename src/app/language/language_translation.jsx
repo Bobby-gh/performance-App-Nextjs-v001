@@ -197,6 +197,10 @@ i18n
         performanceChart: "Performance Chart",
         performanceMetrics: "Performance Metrics",
         performanceAnalysis: "Performance Analysis",
+        performanceExceeded: "Outstanding performance! Results exceeded target by",
+        performanceBelow: "Current performance is",
+        belowTargetMessage: "below target. Strategic focus and optimization needed to close the gap.",
+        exceededTargetMessage: "This represents strong execution and market positioning.",
 
         // Toast messages
         editSavedSuccessfully: "Edit saved successfully",
@@ -288,6 +292,11 @@ i18n
         close: "Close",
         printReport: "Print Report",
         exportPDF: "Save as PDF",
+        exportChartsToPDF: "Export Charts to PDF",
+        exportAllReports: "Export All Report Charts",
+        percentComplete: "Complete",
+        percentInProgress: "In Progress",
+        percentNotStarted: "Not Started",
 
         performanceReportChart: "Performance Report",
         comprehensiveAnalysis: "Comprehensive Performance Analysis",
@@ -500,6 +509,10 @@ i18n
         performanceChart: "Graphique de performance",
         performanceMetrics: "Indicateurs de performance",
         performanceAnalysis: "Analyse de performance",
+        performanceExceeded: "Performance exceptionnelle ! Les résultats ont dépassé l'objectif de",
+        performanceBelow: "La performance actuelle est de",
+        belowTargetMessage: "en dessous de l'objectif. Une concentration stratégique et une optimisation sont nécessaires pour combler l'écart.",
+        exceededTargetMessage: "Cela représente une exécution solide et un bon positionnement sur le marché.",
 
         // Toast messages
         editSavedSuccessfully: "Modification enregistrée avec succès",
@@ -591,6 +604,11 @@ i18n
         close: "Fermer",
         printReport: "Imprimer le Rapport",
         exportPDF: "Enregistrer au format PDF",
+        exportChartsToPDF: "Exporter les Graphiques en PDF",
+        exportAllReports: "Exporter Tous les Graphiques du Rapport",
+        percentComplete: "Terminé",
+        percentInProgress: "En Cours",
+        percentNotStarted: "Non Commencé",
 
         performanceReportChart: "Rapport de Performance",
         comprehensiveAnalysis: "Analyse Complète de la Performance",
