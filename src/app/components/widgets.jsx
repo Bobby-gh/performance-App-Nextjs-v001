@@ -407,7 +407,7 @@ const FinancialCard = ({ data, onClick }) => {
                     {formatBigNumber(val)}
                   </span>
                   <div
-                    className={`${barColor} w-full max-w-[60px] mx-auto rounded-t-lg transition-all duration-300 shadow-sm`}
+                    className={`${barColor} w-full max-w-[110px] mx-auto rounded-t-lg transition-all duration-300 shadow-sm`}
                     style={{ height: `${heightPercent}%` }}
                   />
                 </div>
@@ -527,7 +527,7 @@ const FinancialReportModal = ({ data, onClose }) => {
                   <div key={idx} className="flex flex-col items-center w-32 h-full">
                     {/* Bar container */}
                     <div className="w-full flex items-end justify-center flex-1 relative group mb-3">
-                      <div className="relative w-full max-w-[100px] h-full flex items-end justify-center">
+                      <div className="relative w-full max-w-[150px] h-full flex items-end justify-center">
                         <div
                           className={`relative w-full ${barColor} transition-all duration-500 rounded-t-lg shadow-lg group-hover:opacity-90`}
                           style={{ height: `${height}%`, minHeight: '60px' }}
