@@ -35,7 +35,14 @@ export function Delete({ data, message, name, open, onClose }) {
       const response = await deleteFunction(data, name);
 
       if (response?.status === 200) {
-        showToast(t("deletedSuccessfully"), "success");
+        // Use specific success message based on what was deleted
+        const successMessages = {
+          goal: t("goalDeletedSuccessfully"),
+          accessGoal: t("assessmentDeletedSuccessfully"),
+          department: t("departmentDeletedSuccessfully"),
+          user: t("userDeletedSuccessfully"),
+        };
+        showToast(successMessages[name] || t("deletedSuccessfully"), "success");
         onClose();
         triggerComponent();
       } else {
@@ -43,7 +50,26 @@ export function Delete({ data, message, name, open, onClose }) {
       }
     } catch (error) {
       console.error("Delete error:", error);
-      showToast(t("systemError"), "error");
+      const errorMsg = error.response?.data?.error || error.response?.data?.message;
+      const errorCode = error.response?.data?.errorCode;
+      
+      if (error.response?.status === 403) {
+        if (errorMsg?.includes("Administrator")) {
+          showToast(t("cannotDeleteAdmin"), "error");
+        } else {
+          showToast(errorMsg || t("accessDenied"), "error");
+        }
+      } else if (error.response?.status === 404) {
+        const notFoundMessages = {
+          goal: t("goalNotFound"),
+          accessGoal: t("assessmentNotFound"),
+          department: t("departmentNotFound"),
+          user: t("userNotFound"),
+        };
+        showToast(notFoundMessages[name] || errorMsg, "error");
+      } else {
+        showToast(errorMsg || t("systemError"), "error");
+      }
     } finally {
       setIsSubmitting(false);
     }

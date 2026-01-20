@@ -54,7 +54,7 @@ export function CreateGoal() {
       const allowed = parseFloat(formData.mainGoal?.remainingTarget ?? 0);
 
       if (isNaN(inputTarget)) {
-        showToast("Target must be a valid number", "error");
+        showToast(t("targetMustBeNumber"), "error");
         setLoading(false);
         return;
       }
@@ -96,10 +96,15 @@ export function CreateGoal() {
       reload();
     } catch (error) {
       console.error("Submission error:", error);
-      if (error.response?.status === 400) {
-        showToast(t("checkInputDetails"), "error");
+      const errorMsg = error.response?.data?.error || error.response?.data?.message;
+      if (error.response?.status === 403) {
+        showToast(errorMsg || t("permissionDenied"), "error");
+      } else if (error.response?.status === 400) {
+        showToast(errorMsg || t("checkInputDetails"), "error");
       } else if (error.response?.status === 500) {
         showToast(t("serverDown"), "error");
+      } else {
+        showToast(errorMsg || t("systemError"), "error");
       }
       handleClose();
       reload();
@@ -258,7 +263,7 @@ export function CreateGoal() {
                   const maxAllowed = parseFloat(formData.mainGoal.remainingTarget);
 
                   if (!isNaN(parsed) && parsed > maxAllowed) {
-                    showToast(`Target cannot exceed ${maxAllowed}`, "error");
+                    showToast(t("targetExceedsRemaining"), "error");
                     return;
                   }
 
@@ -386,10 +391,17 @@ export function AccessGoal() {
       handleClose();
       reload();
     } catch (error) {
-      if (error.response.status === 400) {
-        showToast(t("checkInputDetails"), "error");
-      } else if (error.response.status === 500) {
+      const errorMsg = error.response?.data?.error || error.response?.data?.message;
+      if (error.response?.status === 403) {
+        showToast(errorMsg || t("permissionDenied"), "error");
+      } else if (error.response?.status === 404) {
+        showToast(errorMsg || t("goalNotFound"), "error");
+      } else if (error.response?.status === 400) {
+        showToast(errorMsg || t("checkInputDetails"), "error");
+      } else if (error.response?.status === 500) {
         showToast(t("serverDown"), "error");
+      } else {
+        showToast(errorMsg || t("systemError"), "error");
       }
       console.log(error);
       handleClose();
@@ -676,10 +688,23 @@ export function Userforms() {
       handleClose();
       reload();
     } catch (error) {
-      if (error.response.status === 400) {
-        showToast(t("checkInputDetails"), "error");
-      } else if (error.response.status === 500) {
+      const errorMsg = error.response?.data?.error || error.response?.data?.message;
+      const errorCode = error.response?.data?.errorCode;
+      
+      if (errorCode === "USER_ALREADY_EXISTS" || error.response?.status === 409) {
+        showToast(t("userAlreadyExists"), "error");
+      } else if (errorCode === "DEPARTMENT_REQUIRED") {
+        showToast(t("departmentRequired"), "error");
+      } else if (errorCode === "INVALID_DEPARTMENT" || error.response?.status === 404) {
+        showToast(t("invalidDepartment"), "error");
+      } else if (error.response?.status === 401) {
+        showToast(t("invalidToken"), "error");
+      } else if (error.response?.status === 400) {
+        showToast(errorMsg || t("checkInputDetails"), "error");
+      } else if (error.response?.status === 500) {
         showToast(t("serverDown"), "error");
+      } else {
+        showToast(errorMsg || t("systemError"), "error");
       }
       console.log(error);
       handleClose();
@@ -827,10 +852,15 @@ export function Departmentforms() {
       triggerComponent();
       reload();
     } catch (error) {
-      if (error.response.status === 400) {
-        showToast(t("checkInputDetails"), "error");
-      } else if (error.response.status === 500) {
+      const errorMsg = error.response?.data?.error || error.response?.data?.message;
+      if (error.response?.status === 403) {
+        showToast(t("accessDenied"), "error");
+      } else if (error.response?.status === 400) {
+        showToast(errorMsg || t("checkInputDetails"), "error");
+      } else if (error.response?.status === 500) {
         showToast(t("serverDown"), "error");
+      } else {
+        showToast(errorMsg || t("systemError"), "error");
       }
       console.log(error);
       handleClose();

@@ -581,16 +581,28 @@ export function GoalDetails({ open, onClose }) {
       );
 
       if (res.status === 200) {
-        showToast(
-          markAsComplete ? t("goalMarkedAsComplete") : t("progressUpdated"),
-          "success"
-        );
+        const message = res.data?.message;
+        if (message?.includes("completed")) {
+          showToast(t("goalMarkedAsComplete"), "success");
+        } else {
+          showToast(t("progressUpdated"), "success");
+        }
         triggerComponent();
         onClose?.();
       }
     } catch (err) {
       console.error(err);
-      showToast(`${t("error")}: ${err.message}`, "error");
+      const errorMsg = err.response?.data?.error || err.response?.data?.message;
+      
+      if (err.response?.status === 403) {
+        showToast(errorMsg || t("permissionDenied"), "error");
+      } else if (err.response?.status === 404) {
+        showToast(t("goalNotFound"), "error");
+      } else if (err.response?.status === 422) {
+        showToast(t("goalAlreadyAssessed"), "error");
+      } else {
+        showToast(errorMsg || t("systemError"), "error");
+      }
     } finally {
       setIsSubmitting(false);
     }
