@@ -349,112 +349,76 @@ const FinancialCard = ({ data, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="relative cursor-pointer group"
-      style={{ perspective: '1000px' }}
+      className="bg-white rounded-lg shadow-md cursor-pointer
+        hover:shadow-xl hover:scale-[1.01] active:scale-[0.99]
+        transition-all duration-300
+        w-full aspect-square flex flex-col
+        overflow-hidden"
     >
-      {/* 3D Cuboid Card */}
-      <div
-        className="relative bg-gradient-to-br from-white to-gray-50 rounded-xl
-          w-full aspect-square flex flex-col overflow-hidden
-          transition-all duration-300 ease-out
-          group-hover:translate-y-[-4px]"
-        style={{
-          boxShadow: `
-            0 4px 0 0 #cbd5e1,
-            0 8px 0 0 #94a3b8,
-            0 12px 20px -5px rgba(0, 0, 0, 0.2),
-            0 20px 40px -10px rgba(0, 0, 0, 0.15)
-          `,
-          transform: 'rotateX(2deg)',
-          transformStyle: 'preserve-3d',
-        }}
-      >
-        {/* Top edge highlight */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500 rounded-t-xl" />
-        
-        {/* Left edge (3D effect) */}
-        <div 
-          className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl"
-          style={{
-            background: 'linear-gradient(to bottom, #e2e8f0, #cbd5e1)',
-          }}
-        />
-
-        {/* Header */}
-        <div className="flex justify-between items-start mb-2 sm:mb-3 gap-2 sm:gap-3 px-3 sm:px-4 md:px-6 pt-4 sm:pt-5 md:pt-6 flex-shrink-0">
-          <div className="min-w-0">
-            <h3 className="text-gray-600 text-xs sm:text-sm font-medium mb-1 line-clamp-1" title={title}>
-              {title}
-            </h3>
-            <p className="text-gray-800 text-[10px] sm:text-xs font-semibold uppercase line-clamp-2" title={subtitle}>
-              {subtitle}
-            </p>
-          </div>
-
-          <div
-            className={`flex items-center gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold whitespace-nowrap flex-shrink-0 shadow-md ${
-              isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-            }`}
-          >
-            {isPositive ? <TrendingUp size={10} className="sm:w-3 sm:h-3" /> : <TrendingDown size={10} className="sm:w-3 sm:h-3" />}
-            {trendValue}
-          </div>
+      {/* Header */}
+      <div className="flex justify-between items-start mb-2 sm:mb-3 gap-2 sm:gap-3 px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 md:pt-6 flex-shrink-0">
+        <div className="min-w-0">
+          <h3 className="text-gray-600 text-xs sm:text-sm font-medium mb-1 line-clamp-1" title={title}>
+            {title}
+          </h3>
+          <p className="text-gray-800 text-[10px] sm:text-xs font-semibold uppercase line-clamp-2" title={subtitle}>
+            {subtitle}
+          </p>
         </div>
 
-        {/* Value */}
-        <div className="mb-2 sm:mb-3 px-3 sm:px-4 md:px-6 flex-shrink-0">
-          <div className="flex items-baseline gap-1">
-            <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">{value}</span>
-            {unit && <span className="text-xs sm:text-sm font-semibold text-gray-600">{unit}</span>}
-          </div>
-          <p className="text-gray-500 text-xs sm:text-sm mt-0.5 sm:mt-1">{t('target')}: {target}</p>
+        <div
+          className={`flex items-center gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold whitespace-nowrap flex-shrink-0 ${
+            isPositive ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+          }`}
+        >
+          {isPositive ? <TrendingUp size={10} className="sm:w-3 sm:h-3" /> : <TrendingDown size={10} className="sm:w-3 sm:h-3" />}
+          {trendValue}
         </div>
+      </div>
 
-        {/* Bar Chart Area */}
-        <div className="flex-1 px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-5 flex flex-col min-h-0">
-          <div className="flex items-end justify-center gap-8 sm:gap-12 md:gap-16 h-full">
-            {chartData.map((val, idx) => {
-              const relative = val / maxValue;
-              const heightPercent = Math.max(relative * 100, 10);
+      {/* Value */}
+      <div className="mb-2 sm:mb-3 px-3 sm:px-4 md:px-6 flex-shrink-0">
+        <div className="flex items-baseline gap-1">
+          <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">{value}</span>
+          {unit && <span className="text-xs sm:text-sm font-semibold text-gray-600">{unit}</span>}
+        </div>
+        <p className="text-gray-500 text-xs sm:text-sm mt-0.5 sm:mt-1">{t('target')}: {target}</p>
+      </div>
 
-              const barColor =
-                idx === 0
-                  ? 'bg-indigo-300'
-                  : val >= chartData[0]
-                  ? 'bg-green-500'
-                  : 'bg-red-500';
+      {/* Bar Chart Area */}
+      <div className="flex-1 px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-5 flex flex-col min-h-0">
+        <div className="flex items-end justify-center gap-8 sm:gap-12 md:gap-16 h-full">
+          {chartData.map((val, idx) => {
+            const relative = val / maxValue;
+            const heightPercent = Math.max(relative * 100, 10);
 
-              const barShadow =
-                idx === 0
-                  ? '4px 0 0 0 #818cf8'
-                  : val >= chartData[0]
-                  ? '4px 0 0 0 #16a34a'
-                  : '4px 0 0 0 #dc2626';
+            const barColor =
+              idx === 0
+                ? 'bg-indigo-200'
+                : val >= chartData[0]
+                ? 'bg-green-600'
+                : 'bg-red-600';
 
-              return (
-                <div key={idx} className="w-1/4 flex flex-col items-center min-w-0 h-full">
-                  <div className="w-full flex flex-col items-center justify-end flex-1">
-                    <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold text-gray-700 mb-0.5 sm:mb-1">
-                      {formatBigNumber(val)}
-                    </span>
-                    <div
-                      className={`${barColor} w-full max-w-[110px] mx-auto rounded-t-lg transition-all duration-300`}
-                      style={{ 
-                        height: `${heightPercent}%`,
-                        boxShadow: barShadow,
-                      }}
-                    />
-                  </div>
+            return (
+              <div key={idx} className="w-1/4 flex flex-col items-center min-w-0 h-full">
+                <div className="w-full flex flex-col items-center justify-end flex-1">
+                  <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold text-gray-700 mb-0.5 sm:mb-1">
+                    {formatBigNumber(val)}
+                  </span>
+                  <div
+                    className={`${barColor} w-full max-w-[110px] mx-auto rounded-t-lg transition-all duration-300 shadow-sm`}
+                    style={{ height: `${heightPercent}%` }}
+                  />
+                </div>
 
-                  <div className="mt-1 sm:mt-2 text-center flex-shrink-0">
-                    <div className="text-[9px] sm:text-[10px] md:text-xs font-medium text-gray-600">
-                      {labels[idx]}
-                    </div>
+                <div className="mt-1 sm:mt-2 text-center flex-shrink-0">
+                  <div className="text-[9px] sm:text-[10px] md:text-xs font-medium text-gray-600">
+                    {labels[idx]}
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
