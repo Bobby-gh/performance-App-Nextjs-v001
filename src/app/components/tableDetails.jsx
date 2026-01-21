@@ -108,7 +108,7 @@ export function AssignGoal({ data, open, onClose }) {
         showToast(t("editFailedToSave"), "error");
       }
     } catch (error) {
-      console.log("Edit error:", error);
+      // console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
       setEditMode(false);
@@ -349,7 +349,7 @@ export function AssessGoal({ data, open, onClose }) {
         showToast(t("editFailedToSave"), "error");
       }
     } catch (error) {
-      console.log("Edit error:", error);
+      // console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
       setEditMode(false);
@@ -554,7 +554,7 @@ export function EmployeeDetails({ data, open, onClose, onUpdate }) {
         showToast(t("editFailedToSave"), "error");
       }
     } catch (error) {
-      console.log("Edit error:", error);
+      // console.log("Edit error:", error);
     } finally {
       setIsLoading(false);
       setEditMode(false);
@@ -677,7 +677,7 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     const fetchUserRating = async () => {
       try {
         const res = await getUserRatingById(data?.userId);
-        console.log({ res: res });
+        // console.log({ res: res });
         setPieData(res?.data.goalStatus);
         setBarData(res?.data.performance);
         setCurrentRating(res?.data.ratings);
@@ -696,9 +696,9 @@ export const EmployeeRating = ({ open, onClose, data }) => {
     setLoading(true);
     try {
       const response = await createUserRating(data?.userId, rating);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
     }

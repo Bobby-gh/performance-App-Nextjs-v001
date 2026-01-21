@@ -168,7 +168,7 @@ export function ProgressBarChat() {
 
 export function EmployeePerformance() {
   const { badges } = useMyGoalBadgesData();
-  console.log({ completedvrsuncompleted: badges });
+  // console.log({ completedvrsuncompleted: badges });
   return (
     <div className=" items-center flex flex-col px-4 pb-5">
       <ResponsiveContainer height={250}>
@@ -192,7 +192,7 @@ export function FinancialGoal() {
   const value = goalCateoryCount.Financial?.financial?.value;
   const valueMax = goalCateoryCount.Financial?.financial?.valueMax;
 
-  console.log(goalCateoryCount);
+  // console.log(goalCateoryCount);
 
   return (
     <div>
@@ -536,7 +536,7 @@ export function FinancialTrendsReport() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
   const trendsData = trends?.financial;
-  console.log({ trends: trends });
+  // console.log({ trends: trends });
 
   return (
     <div className=" p-7 bg-white rounded-lg">
@@ -563,7 +563,7 @@ export function InnovationTrendsReport() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
   const innovationData = trends?.innovation;
-  console.log({ trends: trends });
+  // console.log({ trends: trends });
 
   return (
     <div className=" p-7 bg-white rounded-lg">
@@ -591,7 +591,7 @@ export function InnovationTrendsReport() {
 export function ComparativeTrendsReport() {
   const { t } = useTranslation();
   const { trends } = useAchievedGoalsData();
-  console.log({ trends: trends });
+  // console.log({ trends: trends });
 
   const months = [
     "Jan",
@@ -662,7 +662,7 @@ export function ComparativeTrendsReport() {
 export function BadgesReport() {
   const { t } = useTranslation();
   const { badges } = useMyGoalBadgesData();
-  console.log({badges:badges})
+  // console.log({badges:badges})
   const Outstanding = badges.ratingsSummary?.Outstanding;
   const ExceedsExpectations = badges.ratingsSummary?.ExceedsExpectations;
   const MeetsExpectations = badges.ratingsSummary?.MeetsExpectations;

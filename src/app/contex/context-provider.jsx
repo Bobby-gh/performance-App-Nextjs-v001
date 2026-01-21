@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     email: "",
     refNum: "",
   });
-  console.log({"auth": auth})
+  // console.log({"auth": auth})
 
   useEffect(() => {
     const savedEmail = Cookies.get("email");

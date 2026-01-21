@@ -281,7 +281,7 @@ export const useTopGoalColumn = () => {
       flex: 0.5,
       renderCell: (params) => {
         const handleEditClick = () => {
-          console.log(`Editing row with ID: ${params.row._id}`);
+          // console.log(`Editing row with ID: ${params.row._id}`);
         };
 
         return (

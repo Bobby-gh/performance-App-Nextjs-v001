@@ -403,7 +403,7 @@ export function AccessGoal() {
       } else {
         showToast(errorMsg || t("systemError"), "error");
       }
-      console.log(error);
+      // console.log(error);
       handleClose();
       reload();
     } finally {
@@ -706,7 +706,7 @@ export function Userforms() {
       } else {
         showToast(errorMsg || t("systemError"), "error");
       }
-      console.log(error);
+      // console.log(error);
       handleClose();
       reload();
     } finally {
@@ -862,7 +862,7 @@ export function Departmentforms() {
       } else {
         showToast(errorMsg || t("systemError"), "error");
       }
-      console.log(error);
+      // console.log(error);
       handleClose();
       reload();
     } finally {

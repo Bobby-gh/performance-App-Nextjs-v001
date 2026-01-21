@@ -38,7 +38,7 @@ import { Trophy, ThumbsUp, Clock, Target, TrendingUp, TrendingDown, Calendar, Ch
 export function InformationalSummary() {
   const { t } = useTranslation();
   const { goalStatus } = useGoalStatus();
-  console.log({ "goal count desctruction": goalStatus });
+  // console.log({ "goal count desctruction": goalStatus });
   const { Completed, InProgress, NotStarted, Total } = goalStatus;
 
   return (

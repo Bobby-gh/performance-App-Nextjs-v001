@@ -27,7 +27,7 @@ export function LogOut() {
       Cookies.remove('name')
       clearAuth()
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
     }

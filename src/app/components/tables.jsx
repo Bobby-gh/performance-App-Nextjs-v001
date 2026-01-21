@@ -77,7 +77,7 @@ export function GoalTable() {
   }, [trigger]);
 
   const handleEdit = (row) => {
-    console.log("Edit", row);
+    // console.log("Edit", row);
     setAssignGoalInfo(row.original);
     setOpen(true);
   };
@@ -88,7 +88,7 @@ export function GoalTable() {
   };
 
   const handleDelete = (row) => {
-    console.log("Notifications", row);
+    // console.log("Notifications", row);
     setDeleteItem(row.original._id);
     setDeleteRow(true);
   };
@@ -323,7 +323,7 @@ export function AccessGoalTable() {
   };
 
   const handleEdit = (row) => {
-    console.log("Edit", row);
+    // console.log("Edit", row);
     setAssessGoalInfo(row.original);
     setOpen(true);
   };
@@ -487,7 +487,7 @@ export function DepartmentTable() {
   };
 
   const handleDelete = (row) => {
-    console.log("Notifications", row);
+    // console.log("Notifications", row);
     setDeleteItem(row.original.departmentId);
     setDeleteRow(true);
   };
@@ -572,13 +572,13 @@ export function EmployeeTable() {
   };
 
   const handleEdit = (row) => {
-    console.log("Edit", row);
+    // console.log("Edit", row);
     setEmployeeInfo(row.original);
     setOpen(true);
   };
 
   const handleRating = (row) => {
-    console.log("row", row);
+    // console.log("row", row);
     setEmployeeRating(row.original);
     setRatingRow(true);
   };
@@ -589,7 +589,7 @@ export function EmployeeTable() {
   };
 
   const handleDelete = (row) => {
-    console.log("Notifications", row);
+    // console.log("Notifications", row);
     setDeleteItem(row.original.userId);
     setDeleteRow(true);
   };

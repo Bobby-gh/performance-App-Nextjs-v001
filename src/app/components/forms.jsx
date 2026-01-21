@@ -51,7 +51,7 @@ export function LoginForm() {
         }
       );
       if (response.request.status === 200) {
-        console.log({ "oringal auth": response.data });
+        // console.log({ "oringal auth": response.data });
         setAuth({
           token: response.data.token,
           name: response.data.fullName,
@@ -79,7 +79,7 @@ export function LoginForm() {
       }
     } catch (err) {
       alert(err);
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
     }
@@ -217,7 +217,7 @@ export function ForgetPassword() {
       }
     } catch (err) {
       alert(err);
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setEmailSent(false);
@@ -318,7 +318,7 @@ export function ResetPassword() {
       }
     } catch (err) {
       alert(err);
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
     }
@@ -622,10 +622,10 @@ export function VerifyEmailForm() {
     token: "",
   });
 
-  console.log({
-    code: userDetails.token,
-    email: Cookies.get("email"),
-  });
+  // console.log({
+  //   code: userDetails.token,
+  //   email: Cookies.get("email"),
+  // });
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -646,7 +646,7 @@ export function VerifyEmailForm() {
       }
     } catch (err) {
       alert(err.response.data);
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
     }

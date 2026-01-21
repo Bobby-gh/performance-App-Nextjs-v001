@@ -44,7 +44,7 @@ export function useGoalRouteData() {
       });
       setDepartmenttable(response);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -68,10 +68,10 @@ export function useMyGoalRouteData() {
         },
         withCredentials: true,
       });
-      console.log(response.data);
+      // console.log(response.data);
       setMygoal(response.data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -84,7 +84,7 @@ export function useMyGoalRouteData() {
     goalDeadline: new Date(goal.goalDeadline).toLocaleDateString(),
   }));
 
-  console.log({ "personal goals": mygoal });
+  // console.log({ "personal goals": mygoal });
 
   return { mygoal, fetchData };
 }
@@ -104,14 +104,14 @@ export function useMyGoalBadgesData() {
         });
         setBadges(response.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
     fetchData();
   }, [auth]);
 
-  console.log({ "badges goals": badges });
+  // console.log({ "badges goals": badges });
   return { badges };
 }
 
@@ -131,7 +131,7 @@ export function useAchievedGoalsData() {
         });
         setTrends(response.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -158,7 +158,7 @@ export function useUnassessedGoalRouteData() {
 
         setUnaccessedGoal(response.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -175,7 +175,7 @@ export function useEmployeesRouteData() {
 
   const fetchData = async () => {
     try {
-      console.log("Fetching goal count data...");
+      // console.log("Fetching goal count data...");
       const response = await axios.get(EMPLOYEES_URL, {
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +185,7 @@ export function useEmployeesRouteData() {
       });
       setEmployeetable(response.data.usersResponse);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -195,7 +195,7 @@ export function useEmployeesRouteData() {
 
   useEffect(() => {
     if (trigger) {
-      console.log("Trigger is active, fetching data...");
+      // console.log("Trigger is active, fetching data...");
       fetchData();
       resettriggerComponent();
     }
@@ -220,7 +220,7 @@ export function useDepartmentRouteData() {
       });
       setDepartmenttable(response.data.departments);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -230,7 +230,7 @@ export function useDepartmentRouteData() {
 
   useEffect(() => {
     if (trigger) {
-      console.log("Trigger is active, fetching data...");
+      // console.log("Trigger is active, fetching data...");
       fetchData();
       resettriggerComponent();
     }
@@ -255,7 +255,7 @@ export function useTopGoalsRouteData() {
         });
         setTopGoal(response.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -298,7 +298,7 @@ export function useGoalAccessmentRouteData() {
 
   useEffect(() => {
     if (trigger) {
-      console.log("Trigger is active, fetching data...");
+      // console.log("Trigger is active, fetching data...");
       fetchData();
       resettriggerComponent();
     }
@@ -323,7 +323,7 @@ export function useGeneralPerformanceChartRouteData() {
         });
         setGeneralPerformance(response.data.overallAverage);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -353,14 +353,14 @@ export function useOrganizationalAveragePerMonthChartRouteData() {
         );
         setOrganizationalChart(response.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
     fetchData();
   }, [auth]);
 
-  console.log({ "Average performance": organizationalChart });
+  // console.log({ "Average performance": organizationalChart });
   return { organizationalChart };
 }
 export function usePerformanceMatrixChartRouteData() {
@@ -379,7 +379,7 @@ export function usePerformanceMatrixChartRouteData() {
         });
         setPerformanceMatrixChart(response.data.groupedAssessments);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -406,7 +406,7 @@ export function useGoalStatus() {
         });
         setGoalStatus(response.data);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -444,7 +444,7 @@ export function useCorporateGoals() {
         });
 
         const data = response.data;
-        console.log("Raw response.data:", data);
+        // // console.log("Raw response.data:", data);
 
         setGoals(
           data.goals.map(goal => ({
@@ -507,7 +507,7 @@ export function useGoalCategoryCountRouteData() {
           Inovation: inovationValue,
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -564,7 +564,7 @@ export function useUserGoalRatingByID() {
       );
       return response;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -589,7 +589,7 @@ export function useUserGoalBadgesTableData() {
       });
       setUserBadgesTable(response);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -607,7 +607,7 @@ export function useCreateDepartment() {
   const { auth } = useContext(AuthContext);
 
   const createDepartment = async (departmentName) => {
-    console.log(departmentName);
+    // console.log(departmentName);
     try {
       const response = await axios.post(
         CREATE_DEPRATMENT,
@@ -624,7 +624,7 @@ export function useCreateDepartment() {
       );
       return response;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -655,7 +655,7 @@ export function useUserRating() {
       );
       return response;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
