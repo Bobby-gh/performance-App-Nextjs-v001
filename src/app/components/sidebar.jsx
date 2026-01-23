@@ -73,7 +73,7 @@ export function Sidebar() {
 
     <main className="w-24 h-full rounded-lg">
       <div className="flex justify-center p-4 mb-6">
-        {/* Logo image - SGI TOGO or Afriquetek fallback */}
+        {/* Logo images */}
         <img
           src={auth.organizationName?.trim() === "SGI TOGO" 
             ? "/sgilogo.png" 
