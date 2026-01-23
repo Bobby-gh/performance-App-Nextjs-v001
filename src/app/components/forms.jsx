@@ -51,7 +51,7 @@ export function LoginForm() {
         }
       );
       if (response.request.status === 200) {
-        // console.log({ "oringal auth": response.data });
+        console.log({ "original auth response": response.data });
         setAuth({
           token: response.data.token,
           name: response.data.fullName,
