@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     token: "",
     email: "",
     refNum: "",
+    organizationName: "",
   });
   console.log({"auth": auth})
 
@@ -17,12 +18,14 @@ export const AuthProvider = ({ children }) => {
     const savedToken = Cookies.get("token");
     const savedName = Cookies.get("name");
     const savedRef = Cookies.get("refNum");
+    const savedOrgName = Cookies.get("organizationName");
     if (savedEmail || savedToken) {
       setAuth({
         email: savedEmail ? savedEmail : null,
         token: savedToken ? savedToken : null,
         name: savedName ? savedName : null,
         refNum: savedRef ? savedRef : null,
+        organizationName: savedOrgName ? savedOrgName : null,
       });
     }
   }, []);
@@ -33,6 +36,7 @@ export const AuthProvider = ({ children }) => {
       token: "",
       email: "",
       refNum: "",
+      organizationName: "",
     });
   };
 

@@ -57,6 +57,7 @@ export function LoginForm() {
           name: response.data.fullName,
           refNum: response.data.refNum,
           email: response.data.email,
+          organizationName: response.data.organizationName,
         });
 
         Cookies.set("token", response.data.token, {
@@ -72,6 +73,10 @@ export function LoginForm() {
           sameSite: "Strict",
         });
         Cookies.set("email", response.data.email, {
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "Strict",
+        });
+        Cookies.set("organizationName", response.data.organizationName, {
           secure: process.env.NODE_ENV === "production",
           sameSite: "Strict",
         });
