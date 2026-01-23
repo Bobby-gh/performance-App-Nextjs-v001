@@ -73,10 +73,12 @@ export function Sidebar() {
 
     <main className="w-24 h-full rounded-lg">
       <div className="flex justify-center p-4 mb-6">
-        {/* Logo image */}
+        {/* Logo image - SGI TOGO or Afriquetek fallback */}
         <img
-          src="https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"
-          alt="Paris"
+          src={auth.organizationName?.trim() === "SGI TOGO" 
+            ? "/sgilogo.png" 
+            : "https://afriquetek.com/wp-content/uploads/2023/07/afriquetek-logo-1.png"}
+          alt={auth.organizationName?.trim() === "SGI TOGO" ? "SGI TOGO" : "Afriquetek"}
           className="w-16 h-auto"
         />
       </div>
